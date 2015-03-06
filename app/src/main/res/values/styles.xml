@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Watchdog" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/actionbar_background</item>
+    </style>
+
+</resources>

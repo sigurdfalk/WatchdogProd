@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- ActionBar -->
+    <color name="actionbar_title_color">#FFF</color>
+    <color name="actionbar_subtitle_color">#f2f2f2</color>
+    <color name="actionbar_background">#0091d2</color>
+    <color name="actionbar_button_pressed_dark_red">#B00</color>
+    <color name="actionbar_button_pressed_medium_red">#CF0404</color>
+
+    <!-- Application Background -->
+    <color name="application_background">#292b2d</color>
+
+    <!-- ListView -->
+    <color name="list_pressed">#cecece</color>
+    <color name="list_multiselected">#c4e1f3</color>
+    <color name="list_focused">#c4e1f3</color>
+    <color name="list_element_opened">#EBEBEB</color>
+    
+</resources>
