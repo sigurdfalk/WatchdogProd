@@ -40,6 +40,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
+        <activity android:name=".PermissionListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ApplicationDetailActivity" />
+        </activity>
 
         <receiver
             android:name=".receivers.NewAppInstalledReceiver"

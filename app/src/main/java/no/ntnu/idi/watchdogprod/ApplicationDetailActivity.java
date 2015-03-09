@@ -37,9 +37,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
         Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
+        Button showPermissionList = (Button) findViewById(R.id.app_detail_permissions);
 
-        showRuleViolations.setOnClickListener(new ButtonListener());
-        showDataUsage.setOnClickListener(new ButtonListener());
+        ButtonListener buttonListener = new ButtonListener();
+
+        showRuleViolations.setOnClickListener(buttonListener);
+        showDataUsage.setOnClickListener(buttonListener);
+        showPermissionList.setOnClickListener(buttonListener);
     }
 
     private class ButtonListener implements View.OnClickListener {
@@ -48,6 +52,14 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId() == R.id.app_detail_show_rules) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ApplicationListActivity.PACKAGE_NAME, packageInfo.packageName);
+                i.putExtras(bundle);
+
+                startActivity(i);
+            } else if (v.getId() == R.id.app_detail_permissions) {
+                Intent i = new Intent(ApplicationDetailActivity.this, PermissionListActivity.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString(ApplicationListActivity.PACKAGE_NAME, packageInfo.packageName);

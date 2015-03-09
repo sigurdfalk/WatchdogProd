@@ -1,6 +1,5 @@
 package no.ntnu.idi.watchdogprod;
 
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,32 +12,31 @@ import java.util.ArrayList;
 /**
  * Created by sigurdhf on 09.03.2015.
  */
-public class RuleViolationsActivity extends ActionBarActivity {
+public class PermissionListActivity extends ActionBarActivity {
     private String applicationPackageName;
+    private PackageInfo packageInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rule_violations);
+        setContentView(R.layout.activity_permission_list);
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        ListView listView = (ListView) findViewById(R.id.rule_violations_list);
-
-        PackageInfo packageInfo = null;
 
         try {
             packageInfo = ApplicationHelper.getPackageInfo(applicationPackageName, this);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            // ToDo implement error handling
+            //ToDo implement error handling
         }
 
-        ArrayList<Rule> violatedRules = RuleHelper.getViolatedRules(packageInfo.requestedPermissions, this);
-        RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo, this));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        ListView listView = (ListView) findViewById(R.id.list_permissions);
+        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(packageInfo.requestedPermissions, this);
+        PermissionListAdapter adapter = new PermissionListAdapter(this, permissionDescriptions);
         listView.setAdapter(adapter);
     }
 }
