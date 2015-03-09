@@ -15,7 +15,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * Created by sigurdhf on 09.03.2015.
  */
 public class RuleHelper {
-    public static final String RULESET_FILE_NAME = "ruleset.txt";
+    public static final String FILE_NAME = "ruleset.txt";
 
     private static ArrayList<Rule> rules;
 
@@ -57,7 +57,7 @@ public class RuleHelper {
         AssetManager assetManager = context.getAssets();
 
         try {
-            InputStream csvStream = assetManager.open(RULESET_FILE_NAME);
+            InputStream csvStream = assetManager.open(FILE_NAME);
             InputStreamReader csvStreamReader = new InputStreamReader(csvStream);
             CSVReader csvReader = new CSVReader(csvStreamReader);
             String[] line;

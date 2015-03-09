@@ -13,5 +13,6 @@
     <string name="background_label">Bakgrunn</string>
     <string name="foreground_label">Forgrunn</string>
     <string name="data_usage_label">Databruk</string>
+    <string name="show_permissions">Vis tillatelser</string>
 
 </resources>
