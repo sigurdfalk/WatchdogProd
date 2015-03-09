@@ -40,8 +40,22 @@ public class RuleListAdapter extends ArrayAdapter<Rule> {
 
         firstLine.setText(rule.getName());
         secondLine.setText(Arrays.toString(rule.getPermissions()));
-        image.setBackgroundColor(context.getResources().getColor(R.color.risk_red));
+        setImageColorFromRiskLevel(image, rule);
 
         return convertView;
+    }
+
+    private void setImageColorFromRiskLevel(ImageView imageView, Rule rule) {
+        switch (rule.getRiskLevel()) {
+            case Rule.RISK_LEVEL_LOW:
+                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
+                break;
+            case Rule.RISK_LEVEL_MEDIUM:
+                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_orange));
+                break;
+            case Rule.RISK_LEVEL_HIGH:
+                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_red));
+                break;
+        }
     }
 }

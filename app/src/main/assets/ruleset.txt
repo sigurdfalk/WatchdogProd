@@ -1,4 +1,4 @@
 Name,Permissions,RiskLevel,Description
-SEND_SMS,android.permission.SEND_SMS:android.permission.WRITE_SMS,4,
-FILE_ACCESS_AND_INTERNET,android.permission.READ_EXTERNAL_STORAGE:android.permission.INTERNET,3,
-TRANSMIT_FINE_LOCATION,android.permission.ACCESS_FINE_LOCATION:android.permission.INTERNET,4,
+SEND_SMS,android.permission.SEND_SMS:android.permission.WRITE_SMS,3,
+FILE_ACCESS_AND_INTERNET,android.permission.READ_EXTERNAL_STORAGE:android.permission.INTERNET,2,
+TRANSMIT_FINE_LOCATION,android.permission.ACCESS_FINE_LOCATION:android.permission.INTERNET,1,

@@ -35,6 +35,10 @@ public class RuleHelper {
 
         ArrayList<Rule> violatedRules = new ArrayList<>();
 
+        if (reqPermissions == null) {
+            return violatedRules;
+        }
+
         for (Rule rule : rules) {
             if (rule.isViolated(reqPermissions)) {
                 violatedRules.add(rule);

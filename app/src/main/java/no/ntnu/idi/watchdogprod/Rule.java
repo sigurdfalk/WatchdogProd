@@ -8,6 +8,10 @@ import java.util.List;
  * Created by sigurdhf on 09.03.2015.
  */
 public class Rule {
+    public static final int RISK_LEVEL_LOW = 1;
+    public static final int RISK_LEVEL_MEDIUM = 2;
+    public static final int RISK_LEVEL_HIGH = 3;
+
     public static final int NAME = 0;
     public static final int PERMISSIONS = 1;
     public static final int RISK_LEVEL = 2;
