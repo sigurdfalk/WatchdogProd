@@ -36,7 +36,28 @@
         <activity
             android:name=".DataUsageActivity"
             android:label="@string/title_activity_data_usage" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ApplicationDetailActivity" />
         </activity>
+
+        <receiver
+            android:name=".receivers.NewAppInstalledReceiver"
+            android:label="NewAppInstalledReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receivers.UpdatedAppInstalledReceiver"
+            android:label="UpdatedAppInstalledReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

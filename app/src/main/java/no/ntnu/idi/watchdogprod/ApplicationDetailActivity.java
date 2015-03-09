@@ -56,6 +56,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 startActivity(i);
             } else if (v.getId() == R.id.app_detail_data_usage) {
                 Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
+                i.putExtra("packageName",applicationPackageName);
+                i.putExtra("appName", ApplicationHelper.getApplicationName(packageInfo, getBaseContext()));
                 startActivity(i);
             }
         }

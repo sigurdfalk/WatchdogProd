@@ -10,6 +10,8 @@
     <string name="show_rule_violations">Vis regelbrudd</string>
     <string name="show_data_usage">Vis databruk</string>
     <string name="title_activity_data_usage">DataUsageActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="background_label">Bakgrunn</string>
+    <string name="foreground_label">Forgrunn</string>
+    <string name="data_usage_label">Databruk</string>
 
 </resources>
