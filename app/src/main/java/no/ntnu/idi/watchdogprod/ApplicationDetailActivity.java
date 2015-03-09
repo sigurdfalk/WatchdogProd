@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +22,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_application_detail);
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
-        packageInfo = ApplicationHelper.getPackageInfo(applicationPackageName, this);
+
+        try {
+            packageInfo = ApplicationHelper.getPackageInfo(applicationPackageName, this);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            //ToDo implement error handling
+        }
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo, this));
@@ -32,6 +39,11 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(ApplicationListActivity.PACKAGE_NAME, packageInfo.packageName);
+                i.putExtras(bundle);
+
                 startActivity(i);
             }
         });
