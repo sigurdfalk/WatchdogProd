@@ -50,10 +50,10 @@ public class PermissionListAdapter extends ArrayAdapter<PermissionDescription> {
         int randomNum = rand.nextInt((3 - 1) + 1) + 1;
         switch (randomNum) {
             case Rule.RISK_LEVEL_LOW:
-                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
+                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_green));
                 break;
             case Rule.RISK_LEVEL_MEDIUM:
-                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_orange));
+                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
                 break;
             case Rule.RISK_LEVEL_HIGH:
                 imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_red));
