@@ -29,6 +29,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationListActivity" />
         </activity>
+        
+        <activity android:name=".RuleViolationsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ApplicationDetailActivity" />
+        </activity>
     </application>
 
 </manifest>
