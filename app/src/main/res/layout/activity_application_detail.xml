@@ -9,4 +9,10 @@
         android:id="@+id/app_detail_show_rules"
         android:text="@string/show_rule_violations"/>
 
+    <Button
+        android:id="@+id/app_detail_data_usage"
+        android:text="@string/show_data_usage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

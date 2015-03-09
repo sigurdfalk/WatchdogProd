@@ -16,24 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ApplicationListActivity"
-            android:label="@string/applications">
+        <activity
+            android:name=".ApplicationListActivity"
+            android:label="@string/applications" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-        <activity android:name=".ApplicationDetailActivity">
+        <activity android:name=".ApplicationDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationListActivity" />
         </activity>
-        
-        <activity android:name=".RuleViolationsActivity">
+        <activity android:name=".RuleViolationsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
+        </activity>
+        <activity
+            android:name=".DataUsageActivity"
+            android:label="@string/title_activity_data_usage" >
         </activity>
     </application>
 

@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -28,12 +29,23 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
-        showRuleViolations.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
+
+        showRuleViolations.setOnClickListener(new ButtonListener());
+        showDataUsage.setOnClickListener(new ButtonListener());
+    }
+
+    private class ButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.app_detail_show_rules) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
                 startActivity(i);
+            } else if (v.getId() == R.id.app_detail_data_usage) {
+                Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
+                startActivity(i);
             }
-        });
+        }
     }
 }
