@@ -5,7 +5,8 @@
     <item android:id="@+id/action_datausage_readmore"
         android:title="@string/action_datausage_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+         />
     <item android:id="@+id/action_settings"
-        android:title=""
+        android:title="@string/warning_settings_datausage"
+        android:orderInCategory="100"/>
 </menu>
