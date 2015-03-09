@@ -42,7 +42,7 @@ public class ApplicationListAdapter extends ArrayAdapter<PackageInfo> {
         PackageInfo packageInfo = objects.get(position);
 
         icon.setImageDrawable(packageInfo.applicationInfo.loadIcon(context.getPackageManager()));
-        firstLine.setText(packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString());
+        firstLine.setText(ApplicationHelper.getApplicationName(packageInfo, context));
         secondLine.setText(packageInfo.packageName);
 
         return convertView;

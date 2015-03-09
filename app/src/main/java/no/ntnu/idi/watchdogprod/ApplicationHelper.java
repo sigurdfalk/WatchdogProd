@@ -15,7 +15,7 @@ public class ApplicationHelper {
     private static ArrayList<PackageInfo> thirdPartyApplications;
 
     public static ArrayList<PackageInfo> getThirdPartyApplications(Context context) {
-        if (thirdPartyApplications != null && !thirdPartyApplications.isEmpty()) {
+        if (isThirdPartyApplicationsPopulated()) {
             return thirdPartyApplications;
         }
 
@@ -29,5 +29,27 @@ public class ApplicationHelper {
         }
 
         return thirdPartyApplications;
+    }
+
+    public static PackageInfo getPackageInfo(String packageName, Context context) {
+        if (!isThirdPartyApplicationsPopulated()) {
+            thirdPartyApplications = getThirdPartyApplications(context);
+        }
+
+        for (PackageInfo packageInfo : thirdPartyApplications) {
+            if (packageInfo.packageName.equals(packageName)) {
+                return packageInfo;
+            }
+        }
+
+        throw new IllegalArgumentException("Package not found.");
+    }
+
+    public static String getApplicationName(PackageInfo packageInfo, Context context) {
+        return packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+    }
+
+    private static boolean isThirdPartyApplicationsPopulated() {
+        return thirdPartyApplications != null && !thirdPartyApplications.isEmpty();
     }
 }
