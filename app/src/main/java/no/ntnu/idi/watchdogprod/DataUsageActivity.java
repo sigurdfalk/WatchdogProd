@@ -1,19 +1,31 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class DataUsageActivity extends ActionBarActivity {
+    String packageName;
+    String appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_usage);
-    }
 
+        packageName = getIntent().getExtras().getString("packageName");
+        appName = getIntent().getExtras().getString("appName");
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(appName);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
