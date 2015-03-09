@@ -20,6 +20,7 @@
     <!-- Risk level -->
     <color name="risk_red">#e50000</color>
     <color name="risk_yellow">#ffd911</color>
+    <color name="risk_green">#007622</color>
     <color name="risk_orange">#ff6600</color>
-    
+
 </resources>
