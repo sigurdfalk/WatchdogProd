@@ -16,5 +16,10 @@
     <color name="list_multiselected">#c4e1f3</color>
     <color name="list_focused">#c4e1f3</color>
     <color name="list_element_opened">#EBEBEB</color>
+
+    <!-- Risk level -->
+    <color name="risk_red">#e50000</color>
+    <color name="risk_yellow">#ffd911</color>
+    <color name="risk_green">#007622</color>
     
 </resources>
