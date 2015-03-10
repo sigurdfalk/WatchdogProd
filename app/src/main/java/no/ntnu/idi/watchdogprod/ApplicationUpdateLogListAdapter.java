@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
@@ -41,9 +42,41 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
         AppInfo appInfo = objects.get(position);
 
         firstLine.setText(appInfo.getPackageName());
-        secondLine.setText(Integer.toString(appInfo.getVersionCode()));
+        secondLine.setText(getAddedAndRemovedPermissionsString(appInfo, position));
         thirdLine.setText(new Date(appInfo.getLastUpdateTime()).toString());
 
         return convertView;
+    }
+
+    public String getAddedAndRemovedPermissionsString(AppInfo newAppInfo, int position) {
+        if (position == 0) {
+            return "First installation";
+        }
+
+        AppInfo oldAppInfo = objects.get(position - 1);
+        ArrayList<String> newPermissions = PermissionHelper.newRequestedPermissions(oldAppInfo.getPermissions(), newAppInfo.getPermissions());
+        ArrayList<String> removedPermissions = PermissionHelper.removedPermissions(oldAppInfo.getPermissions(), newAppInfo.getPermissions());
+        System.out.println("New permissions: " + Arrays.toString(newPermissions.toArray()));
+        System.out.println("Removed permissions: " + Arrays.toString(removedPermissions.toArray()));
+
+        StringBuilder sb = new StringBuilder();
+
+        if (newPermissions.size() > 0) {
+            sb.append("New permissions:").append("\n");
+
+            for (String permission : newPermissions) {
+                sb.append(permission).append("\n");
+            }
+        }
+
+        if (removedPermissions.size() > 0) {
+            sb.append("Removed permissions:").append("\n");
+
+            for (String permission : removedPermissions) {
+                sb.append(permission).append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 }
