@@ -8,6 +8,8 @@ package no.ntnu.idi.watchdogprod;
         import java.util.ArrayList;
         import java.util.List;
 
+        import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+
 /**
  * Created by sigurdhf on 06.03.2015.
  */
@@ -37,6 +39,12 @@ public class ApplicationHelper {
 
     public static String getApplicationName(PackageInfo packageInfo, Context context) {
         return packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString();
+    }
+
+    public static AppInfo getAppInfo(String packageName, Context context) throws PackageManager.NameNotFoundException {
+        PackageInfo packageInfo = getPackageInfo(packageName, context);
+
+        return new AppInfo(packageInfo.packageName, packageInfo.requestedPermissions != null ? packageInfo.requestedPermissions : new String[]{}, packageInfo.versionCode, packageInfo.lastUpdateTime);
     }
 
     private static boolean isThirdPartyApplicationsPopulated() {
