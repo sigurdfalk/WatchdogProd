@@ -25,6 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Oversikt over applikasjonens databruk det siste døgnet" />
+            <CheckBox
+                android:text="Overvåk applikasjonens databruk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="fill_parent"
@@ -32,16 +36,37 @@
                 android:background="@android:color/darker_gray" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Nedlasting"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
+
             <TextView
+                android:id="@+id/textfield_data_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Totalt nedlastet: 15KB \nTotalt nedlastet i bakgrunn: 13KB \nTotalt nedlastet i forgrunn: 5KB"/>
+                android:text="Totalt nedlastet: 15KB \nBakgrunn: 13KB \nForgrunn: 5KB"
+                android:textSize="15dp" />
+
+            <RadioGroup
+                android:id="@+id/radiogroup_download"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radiobutton_download_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="De siste 24 timene" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_download_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="De siste 7 dagene" />
+            </RadioGroup>
 
             <com.androidplot.xy.XYPlot
                 android:id="@+id/mySimpleXYPlotDOWN"
@@ -49,8 +74,8 @@
                 androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
                 androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
                 androidPlot.graphWidget.gridLinePaint.color="#000000"
-                androidPlot.graphWidget.marginBottom="25dp"
-                androidPlot.graphWidget.marginLeft="15dp"
+                androidPlot.graphWidget.marginBottom="35dp"
+                androidPlot.graphWidget.marginLeft="20dp"
                 androidPlot.graphWidget.marginRight="10dp"
                 androidPlot.graphWidget.marginTop="20dp"
                 androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_label_font_size"
@@ -64,20 +89,45 @@
                 androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
                 android:layout_width="fill_parent"
                 android:layout_height="300dp" />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:id="@+id/total_uploaded"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="Opplasting"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/textfield_data_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Totalt opplastet: 15KB \nTotalt opplastet i bakgrunn: 13KB \nTotalt opplastet i forgrunn: 5KB"/>
+                android:text="Totalt opplastet: 15KB \nBakgrunn: 13KB \nForgrunn: 5KB"
+                android:textSize="15dp" />
+
+            <RadioGroup
+                android:id="@+id/radiogroup_upload"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radiobutton_upload_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="De siste 24 timene" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_upload_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="De siste 7 dagene" />
+            </RadioGroup>
 
             <com.androidplot.xy.XYPlot
                 android:id="@+id/mySimpleXYPlotUP"

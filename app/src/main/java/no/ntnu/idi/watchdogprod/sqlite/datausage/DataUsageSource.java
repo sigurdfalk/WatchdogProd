@@ -6,9 +6,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by fredsten on 09.03.2015.
@@ -54,7 +57,7 @@ public class DataUsageSource {
     public void PrintDatabase() {
         Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             System.out.println("DATE " + cursor.getString(1) + " DATATEST " + cursor.getLong(3));
         }
     }
@@ -63,8 +66,8 @@ public class DataUsageSource {
         ArrayList<DataLog> datalogs = new ArrayList<>();
         Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            if(cursor.getString(2).equals(packageName)) {
+        while (cursor.moveToNext()) {
+            if (cursor.getString(2).equals(packageName)) {
                 datalogs.add(new DataLog(cursor.getLong(0), cursor.getString(1), cursor.getString(2), Long.parseLong(cursor.getString(3)), Long.parseLong(cursor.getString(4)), Long.parseLong(cursor.getString(5)), Long.parseLong(cursor.getString(6))));
             }
         }
@@ -75,8 +78,8 @@ public class DataUsageSource {
         ArrayList<DataLog> dataLogs = new ArrayList<>();
         Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            if(cursor.getString(2).equals(packageName)) {
+        while (cursor.moveToNext()) {
+            if (cursor.getString(2).equals(packageName)) {
                 dataLogs.add(new DataLog(cursor.getLong(0), cursor.getString(1), cursor.getString(2), Long.parseLong(cursor.getString(3)), Long.parseLong(cursor.getString(4)), Long.parseLong(cursor.getString(5)), Long.parseLong(cursor.getString(6))));
             }
         }
@@ -84,13 +87,45 @@ public class DataUsageSource {
         long downfront = 0;
         long upback = 0;
         long upfront = 0;
-        for(DataLog dataLog : dataLogs) {
+        for (DataLog dataLog : dataLogs) {
             downback += dataLog.getAmountDownBackground();
             downfront += dataLog.getAmountDownForeground();
-            upback =+ dataLog.getAmountUpBackground();
-            upfront =+ dataLog.getAmountUpForeground();
+            upback = +dataLog.getAmountUpBackground();
+            upfront = +dataLog.getAmountUpForeground();
         }
-        return new DataLog(-1,null,null, downfront,downback, upfront,upback);
+        return new DataLog(-1, null, null, downfront, downback, upfront, upback);
+    }
+
+    public ArrayList<DataLog> getLastWeek(String packageName) {
+        ArrayList<DataLog> dataLogs = new ArrayList<>();
+        Calendar aWeekAgo = Calendar.getInstance();
+        aWeekAgo.add(Calendar.DAY_OF_MONTH, -7);
+        DataLog dayLog = null;
+
+        return dataLogs;
+    }
+
+    public ArrayList<DataLog> getLastDay(String packageName) throws ParseException {
+        ArrayList<DataLog> hoursDataLog = new ArrayList<>();
+        Calendar today = Calendar.getInstance();
+        Calendar current = null;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+
+        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
+        cursor.moveToFirst();
+
+
+        while (cursor.moveToNext()) {
+            if (cursor.getString(2).equals(packageName)) {
+                current.setTime(sdf.parse(cursor.getString(1)));
+
+
+            }
+        }
+        return hoursDataLog;
+
+
     }
 
     public void close() {
