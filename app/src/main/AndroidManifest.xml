@@ -47,7 +47,7 @@
         </activity>
 
         <receiver
-            android:name=".receivers.NewAppInstalledReceiver"
+            android:name=".receivers.ApplicationInstalledReceiver"
             android:label="NewAppInstalledReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
@@ -55,12 +55,10 @@
             </intent-filter>
         </receiver>
 
-        <receiver
-            android:name=".receivers.UpdatedAppInstalledReceiver"
-            android:label="UpdatedAppInstalledReceiver">
+        <receiver android:name=".receivers.ApplicationUpdatedReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
     </application>

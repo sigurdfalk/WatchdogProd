@@ -1,12 +1,12 @@
-NAME,Description,RiskValue
+Name,Description,RiskValue
 ACCESS_CHECKIN_PROPERTIES,"Allows read/write access to the ""properties"" table in the checkin database, to change values that get uploaded.",
 ACCESS_COARSE_LOCATION,"Lar appen se den omtrenlige posisjonen din. Denne posisjonen hentes fra posisjonstjenester som benytter posisjonskilder som for eksamepl basestasjoner og Wi-Fi. Disse posisjonstejenestene må være slått på og tilgjenbgeklig for enheten din, for at appen skal bruke dem. Apper kan bruke dette til ut omtrent hvor du er.",
 ACCESS_FINE_LOCATION,"Lar appen se den nøyaktige posisjonen din ved hjelp av GPS (Global Positioning System) eller posisjonstjenester for nettverk, for for eksempel basestasjoner og Wi-Fi. Disse posisjonstejenestene må være slått på og tilgjenbgeklig for enheten din, for at appen skal bruke dem. Apper kan bruke dette til å fastslå hvor du er, og funksjonen kan medføre økt batteribruk",
 ACCESS_LOCATION_EXTRA_COMMANDS,Allows an application to access extra location provider commands,
 ACCESS_MOCK_LOCATION,Allows an application to create mock location providers for testing,
 ACCESS_NETWORK_STATE,Tillater en app å vise tilstanden for alle netverk.,
-ACCESS_SURFACE_FLINGER,Allows an application to use SurfaceFlinger's low level features.,
-ACCESS_WIFI_STATE,Tillater en app å vise informasjonen om Wi-Fi status.,
+ACCESS_SURFACE_FLINGER,Allows an application to use SurfaceFlinger's low level features.,4
+ACCESS_WIFI_STATE,Tillater en app å vise informasjonen om Wi-Fi status.,2
 ACCOUNT_MANAGER,Allows applications to call into AccountAuthenticators.,
 ADD_VOICEMAIL,Allows an application to add voicemails into the system.,
 AUTHENTICATE_ACCOUNTS,Tillater en app å be om godkjenningstegn?,
