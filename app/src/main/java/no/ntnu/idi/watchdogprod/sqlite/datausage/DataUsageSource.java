@@ -21,7 +21,6 @@ public class DataUsageSource {
     private SQLiteOpenHelperDataUsage dbHelper;
     private String[] allColumns = {SQLiteOpenHelperDataUsage.COLUMN_ID_DATA, SQLiteOpenHelperDataUsage.COLUMN_TIMESTAMP_DATA, SQLiteOpenHelperDataUsage.COLUMN_INFO_DATA,
             SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNFOREGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNBACKGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPFOREGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPBACKGROUND};
-
     public DataUsageSource(Context context) {
         this.dbHelper = new SQLiteOpenHelperDataUsage(context);
     }
