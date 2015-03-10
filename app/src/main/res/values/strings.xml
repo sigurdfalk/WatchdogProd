@@ -16,5 +16,6 @@
     <string name="data_usage_label">Databruk</string>
     <string name="show_permissions">Vis tillatelser</string>
     <string name="warning_settings_datausage">Varsler</string>
+    <string name="show_update_log">Vis oppdateringer</string>
 
 </resources>

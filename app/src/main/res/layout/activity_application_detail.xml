@@ -21,4 +21,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/app_detail_update_log"
+        android:text="@string/show_update_log"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
