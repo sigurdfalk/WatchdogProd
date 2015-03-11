@@ -24,8 +24,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setLocationSendingAlarm();
-        //setDatabaseLoggingAlarm();
+//        setDataUsageSendingAlarm();
+//        setDatabaseLoggingAlarm();
 
         Button privacyAnalysisBtn = (Button) findViewById(R.id.main_privacy_analysis_btn);
         privacyAnalysisBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
         } catch (Exception e) {
 
         }
-        int timeForAlarm=10000;
+        int timeForAlarm=5000;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+timeForAlarm, timeForAlarm,pendingIntent);
     }
 
@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
 //        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
-        long timeForAlarm = 100000;
+        long timeForAlarm = 20000;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+ timeForAlarm, timeForAlarm,pendingIntent);
     }
 }

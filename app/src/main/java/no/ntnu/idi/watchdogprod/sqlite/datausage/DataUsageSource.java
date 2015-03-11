@@ -10,8 +10,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
+import no.ntnu.idi.watchdogprod.domain.DataUsage;
 
 /**
  * Created by fredsten on 09.03.2015.
@@ -45,6 +50,7 @@ public class DataUsageSource {
         cursor.moveToFirst();
         DataLog newDataLog = cursorToDataLog(cursor);
         cursor.close();
+        System.out.println("LA INN " + newDataLog.getTimestamp());
         return newDataLog;
     }
 
@@ -92,6 +98,10 @@ public class DataUsageSource {
             upback = +dataLog.getAmountUpBackground();
             upfront = +dataLog.getAmountUpForeground();
         }
+        System.out.println("DOWNBACK " + downback);
+        System.out.println("DOWNBACK " + downfront);
+        System.out.println("DOWNBACK " + upback);
+        System.out.println("DOWNBACK " + upfront);
         return new DataLog(-1, null, null, downfront, downback, upfront, upback);
     }
 
@@ -109,7 +119,7 @@ public class DataUsageSource {
         Calendar today = Calendar.getInstance();
         Calendar current = null;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
         Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
@@ -117,14 +127,23 @@ public class DataUsageSource {
 
         while (cursor.moveToNext()) {
             if (cursor.getString(2).equals(packageName)) {
-                current.setTime(sdf.parse(cursor.getString(1)));
-
-
+//                current.setTime(sdf.parse(cursor.getString(1)));
+//                if(current.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
+                    hoursDataLog.add(new DataLog(cursor.getLong(0), cursor.getString(1), cursor.getString(2), Long.parseLong(cursor.getString(3)), Long.parseLong(cursor.getString(4)), Long.parseLong(cursor.getString(5)), Long.parseLong(cursor.getString(6))));
+//                }
             }
         }
+        Collections.sort(hoursDataLog, new Comparator<DataLog>() {
+            public int compare(DataLog o1, DataLog o2) {
+                try {
+                    return sdf.parse(o1.getTimestamp()).compareTo(sdf.parse(o2.getTimestamp()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        });
         return hoursDataLog;
-
-
     }
 
     public void close() {

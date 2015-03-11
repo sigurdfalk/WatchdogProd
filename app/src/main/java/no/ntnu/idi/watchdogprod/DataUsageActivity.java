@@ -29,6 +29,7 @@ import com.androidplot.xy.XYStepMode;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +68,11 @@ public class DataUsageActivity extends ActionBarActivity {
         packageName = getIntent().getExtras().getString("packageName");
         appName = getIntent().getExtras().getString("appName");
 
+        downBackground = new ArrayList<>();
+        downForeground = new ArrayList<>();
+        upBackground = new ArrayList<>();;
+        upForeground = new ArrayList<>();;
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(appName);
@@ -82,13 +88,14 @@ public class DataUsageActivity extends ActionBarActivity {
         radioButtonUploadDay.setChecked(true);
 
         textViewDataDown = (TextView)findViewById(R.id.textfield_data_down);
-        textViewDataDown = (TextView)findViewById(R.id.textfield_data_down);
+        textViewDataUp = (TextView)findViewById(R.id.textfield_data_up);
 
         //GRAPH-PLOT
 
         DataUsageSource dataDBSource = new DataUsageSource(this);
         dataDBSource.open();
-        ArrayList<DataLog> dataLogs = dataDBSource.getDataLogsForApp(packageName);
+        ArrayList<DataLog> dataLogs = null;
+          dataLogs = dataDBSource.getDataLogsForApp(packageName);
 
         for (DataLog dataLog : dataLogs) {
             downBackground.add(dataLog.getAmountDownBackground());
@@ -97,14 +104,14 @@ public class DataUsageActivity extends ActionBarActivity {
             upForeground.add(dataLog.getAmountUpForeground());
         }
 
-//        DataLog total = dataDBSource.getDataTotals(packageName);
-//        textViewDataDown.setText("Nedlastet i bakgrunnen: ~" + total.getAmountDownBackground() + "\nNedlastet i forgrunnen: ~" + total.getAmountDownForeground());
-//        textViewDataUp.setText("Opplastet i bakgrunnen: ~" + total.getAmountUpBackground() + "\nOpplastet i forgrunnen: ~" + total.getAmountUpForeground());
-
+        DataLog total = dataDBSource.getDataTotals(packageName);
+        textViewDataDown.setText("Nedlastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownBackground(),true) + "\nNedlastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownForeground(),true));
+        textViewDataUp.setText("Opplastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpBackground(),true) + "\nOpplastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpForeground(),true));
         dataDBSource.close();
 
         Number[] hoursValues = {1,2,3,4,5,6,7,8,9,10,11,12};
         Number[] daysValues = {1,2,3,4,5,6,7};
+        Number[] randomLoL = {1,5,2,6,1,3,5};
 
         plotDown = (XYPlot) findViewById(R.id.mySimpleXYPlotDOWN);
         plotDown.setBorderStyle(Plot.BorderStyle.NONE, null, null);
@@ -127,7 +134,8 @@ public class DataUsageActivity extends ActionBarActivity {
         plotDown.setDomainStepValue(1);
 
         XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(new Number []{2,3,8,1,2}),
+//                Arrays.asList(new Number []{2,3,8,1,2}),
+                downBackground,
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
            "Bakgrunn");
 
@@ -265,19 +273,19 @@ public class DataUsageActivity extends ActionBarActivity {
                 0, SizeLayoutType.FILL));
 
         XYSeries series1Up = new SimpleXYSeries(
-                Arrays.asList(daysValues),
+                Arrays.asList(randomLoL),
                 SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
                 "Bakgrunn");
-        XYSeries series2Up = new SimpleXYSeries(
-                Arrays.asList(daysValues),
-                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
-                "Forgrunn");
+//        XYSeries series2Up = new SimpleXYSeries(
+//                Arrays.asList(daysValues),
+//                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
+//                "Forgrunn");
 
         LineAndPointFormatter series1UpFormat = new LineAndPointFormatter(Color.rgb(0, 200, 0), Color.rgb(0, 100, 0), Color.CYAN, new PointLabelFormatter());
         plotUp.addSeries(series1Up, series1UpFormat);
 
         LineAndPointFormatter series2UpFormat = new LineAndPointFormatter(Color.rgb(0, 300, 0), Color.rgb(0, 100, 0), Color.RED, new PointLabelFormatter());
-        plotUp.addSeries(series2Up, series2UpFormat);
+//        plotUp.addSeries(series2Up, series2UpFormat);
 
         plotUp.setTicksPerRangeLabel(3);
         plotUp.getGraphWidget().setDomainLabelOrientation(0);
