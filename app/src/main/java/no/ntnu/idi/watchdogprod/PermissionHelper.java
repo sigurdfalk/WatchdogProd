@@ -80,8 +80,51 @@ public class PermissionHelper {
         String name = line[PermissionDescription.NAME];
         //int riskLevel = Integer.parseInt(line[PermissionDescription.RISK_LEVEL]);
         int riskLevel = 0;
+        // ToDo remove
         String description = line[PermissionDescription.DESCRIPTION];
 
         return new PermissionDescription(name, description, riskLevel);
+    }
+
+    public static ArrayList<String> newRequestedPermissions(String[] oldPermissions, String[] newPermissions) {
+        ArrayList<String> newReqPerm = new ArrayList<>();
+
+        for (String newPermission : newPermissions) {
+            boolean exists = false;
+
+            for (String oldPermission : oldPermissions) {
+                if (newPermission.equals(oldPermission)) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                newReqPerm.add(newPermission);
+            }
+        }
+
+        return newReqPerm;
+    }
+
+    public static ArrayList<String> removedPermissions(String[] oldPermissions, String[] newPermissions) {
+        ArrayList<String> removedPerm = new ArrayList<>();
+
+        for (String oldPermission : oldPermissions) {
+            boolean exist = false;
+
+            for (String newPermission : newPermissions) {
+                if (oldPermission.equals(newPermission)) {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (!exist) {
+                removedPerm.add(oldPermission);
+            }
+        }
+
+        return removedPerm;
     }
 }
