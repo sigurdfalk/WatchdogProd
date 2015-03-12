@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -35,48 +37,40 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
             convertView = inflater.inflate(R.layout.list_item_application_update_log, parent, false);
         }
 
-        TextView firstLine = (TextView) convertView.findViewById(R.id.item_update_log_firstLine);
-        TextView secondLine = (TextView) convertView.findViewById(R.id.item_update_log_secondLine);
-        TextView thirdLine = (TextView) convertView.findViewById(R.id.item_update_log_thirdLine);
+        TextView date = (TextView) convertView.findViewById(R.id.item_update_log_date);
+        TextView version = (TextView) convertView.findViewById(R.id.item_update_log_version);
+        LinearLayout addedPermissionsView = (LinearLayout) convertView.findViewById(R.id.item_update_log_container_added);
+        LinearLayout removedPermissionsView = (LinearLayout) convertView.findViewById(R.id.item_update_log_container_removed);
 
         AppInfo appInfo = objects.get(position);
 
-        firstLine.setText(appInfo.getPackageName());
-        secondLine.setText(getAddedAndRemovedPermissionsString(appInfo, position));
-        thirdLine.setText(new Date(appInfo.getLastUpdateTime()).toString());
+        if (position == 0) {
+            addedPermissionsView.setVisibility(View.GONE);
+            removedPermissionsView.setVisibility(View.GONE);
+        } else {
+            AppInfo oldAppInfo = objects.get(position - 1);
+            ArrayList<String> newPermissions = PermissionHelper.newRequestedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
+            ArrayList<String> removedPermissions = PermissionHelper.removedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
+
+            if (newPermissions.size() > 0) {
+                TextView newPermissionsTextView = (TextView) convertView.findViewById(R.id.item_update_log_added_permissions);
+                newPermissionsTextView.setText(Arrays.toString(newPermissions.toArray()));
+            } else {
+                addedPermissionsView.setVisibility(View.GONE);
+            }
+
+            if (removedPermissions.size() > 0) {
+                TextView removedPermissionsTextView = (TextView) convertView.findViewById(R.id.item_update_log_removed_permissions);
+                removedPermissionsTextView.setText(Arrays.toString(removedPermissions.toArray()));
+            } else {
+                removedPermissionsView.setVisibility(View.GONE);
+            }
+        }
+
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        date.setText(dt.format(new Date(appInfo.getLastUpdateTime())));
+        version.setText("v." + appInfo.getVersionCode());
 
         return convertView;
-    }
-
-    public String getAddedAndRemovedPermissionsString(AppInfo newAppInfo, int position) {
-        if (position == 0) {
-            return "First installation";
-        }
-
-        AppInfo oldAppInfo = objects.get(position - 1);
-        ArrayList<String> newPermissions = PermissionHelper.newRequestedPermissions(oldAppInfo.getPermissions(), newAppInfo.getPermissions());
-        ArrayList<String> removedPermissions = PermissionHelper.removedPermissions(oldAppInfo.getPermissions(), newAppInfo.getPermissions());
-        System.out.println("New permissions: " + Arrays.toString(newPermissions.toArray()));
-        System.out.println("Removed permissions: " + Arrays.toString(removedPermissions.toArray()));
-
-        StringBuilder sb = new StringBuilder();
-
-        if (newPermissions.size() > 0) {
-            sb.append("New permissions:").append("\n");
-
-            for (String permission : newPermissions) {
-                sb.append(permission).append("\n");
-            }
-        }
-
-        if (removedPermissions.size() > 0) {
-            sb.append("Removed permissions:").append("\n");
-
-            for (String permission : removedPermissions) {
-                sb.append(permission).append("\n");
-            }
-        }
-
-        return sb.toString();
     }
 }

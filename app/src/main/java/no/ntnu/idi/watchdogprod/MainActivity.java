@@ -4,6 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,11 +16,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
 import no.ntnu.idi.watchdogprod.services.DataUsageService;
 
 
 public class MainActivity extends ActionBarActivity {
+    public static final String KEY_INITIAL_LAUNCH = "initLaunch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
         Button mainSettings = (Button)findViewById(R.id.main_settings_btn);
         mainSettings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +52,42 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
+        if (isInitialLaunch()) {
+            writeAllApplicationsToUpdateLog();
+        }
+    }
+
+    private boolean isInitialLaunch() {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        boolean isInitialLaunch = sharedPref.getBoolean(KEY_INITIAL_LAUNCH, true);
+
+        if (isInitialLaunch) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(KEY_INITIAL_LAUNCH, false);
+            editor.commit();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void writeAllApplicationsToUpdateLog() {
+        ArrayList<PackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+
+        ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
+        dataSource.open();
+
+        for (PackageInfo app : applications) {
+            try {
+                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.packageName, this));
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        dataSource.close();
+
     }
 
     private void setDataUsageSendingAlarm() {
