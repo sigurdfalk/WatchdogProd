@@ -3,7 +3,7 @@ package no.ntnu.idi.watchdogprod.sqlite.datausage;
 /**
  * Created by fredsten on 09.03.2015.
  */
-public class DataLog {
+public class DataLog{
     private long id;
     private String timestamp;
     private String dataInfo;

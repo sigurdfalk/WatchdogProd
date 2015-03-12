@@ -32,6 +32,8 @@ public class DataUsagePosterService extends Service{
         dataDBSource.close();
 
         DataUsageService.appDataValues = new HashMap<>(); //Nuller ut etter databaseinnlegg.
+
+        System.out.println("DB POSER SERVICE RUNNING");
         return START_NOT_STICKY;
     }
 }

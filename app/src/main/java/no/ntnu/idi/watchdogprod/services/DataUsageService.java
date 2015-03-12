@@ -96,6 +96,8 @@ public class DataUsageService extends Service {
             Toast.makeText(getApplicationContext(), "No application is running", Toast.LENGTH_LONG).show();
         }
 
+        System.out.println("USAGE SERVICE RUNNING");
+
         return START_NOT_STICKY;
     }
 }
