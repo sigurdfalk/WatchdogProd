@@ -35,6 +35,14 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             }
         });
+
+        Button mainSettings = (Button)findViewById(R.id.main_settings_btn);
+        mainSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void setDataUsageSendingAlarm() {

@@ -17,5 +17,6 @@
     <string name="show_permissions">Vis tillatelser</string>
     <string name="warning_settings_datausage">Varsler</string>
     <string name="show_update_log">Vis oppdateringer</string>
+    <string name="main_settings">Instillinger</string>
 
 </resources>

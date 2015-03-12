@@ -124,7 +124,6 @@ public class DataUsageSource {
         Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
 
-
         while (cursor.moveToNext()) {
             if (cursor.getString(2).equals(packageName)) {
 //                current.setTime(sdf.parse(cursor.getString(1)));
