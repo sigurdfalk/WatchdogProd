@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
@@ -42,6 +43,7 @@ public class ApplicationUpdateLogActivity extends ActionBarActivity {
 
         ListView listView = (ListView) findViewById(R.id.application_update_log_list);
         ArrayList<AppInfo> updateLog = dataSource.getApplicationUpdatesByPackageName(applicationPackageName);
+        Collections.sort(updateLog);
         ApplicationUpdateLogListAdapter adapter = new ApplicationUpdateLogListAdapter(this, updateLog);
         listView.setAdapter(adapter);
     }

@@ -17,5 +17,7 @@
     <string name="show_permissions">Vis tillatelser</string>
     <string name="warning_settings_datausage">Varsler</string>
     <string name="show_update_log">Vis oppdateringer</string>
+    <string name="removed_permissions">Følgende tillatelser ble fjernet</string>
+    <string name="added_permissions">Følgende tillatelser ble lagt til</string>
 
 </resources>

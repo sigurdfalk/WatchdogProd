@@ -25,13 +25,10 @@ public class ApplicationUpdatedReceiver extends BroadcastReceiver {
         Toast toast = Toast.makeText(context, packageName + " is updated!", Toast.LENGTH_LONG);
         toast.show();
 
-        System.out.println("PACKAGE_REPLACED: " + packageName);
-
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(context);
         dataSource.open();
         try {
             AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(packageName, context));
-            System.out.println(appInfo);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,12 @@
 package no.ntnu.idi.watchdogprod.sqlite.applicationupdates;
 
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by sigurdhf on 10.03.2015.
  */
-public class AppInfo {
+public class AppInfo implements Comparable<AppInfo> {
     private long id;
     private String packageName;
     private String[] permissions;
@@ -53,5 +54,19 @@ public class AppInfo {
                 ", versionCode=" + versionCode +
                 ", lastUpdateTime=" + lastUpdateTime +
                 '}';
+    }
+
+    @Override
+    public int compareTo(AppInfo another) {
+        Date thisDate = new Date(this.getLastUpdateTime());
+        Date anotherDate = new Date(another.getLastUpdateTime());
+
+        if (thisDate.before(anotherDate)) {
+            return 1;
+        } else if (thisDate.after(anotherDate)) {
+            return -1;
+        }
+
+        return 0;
     }
 }

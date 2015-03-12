@@ -31,13 +31,10 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         Toast toast = Toast.makeText(context, packageName + " is installed!", Toast.LENGTH_LONG);
         toast.show();
 
-        System.out.println("PACKAGE_ADDED: " + packageName);
-
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(context);
         dataSource.open();
         try {
             AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(packageName, context));
-            System.out.println(appInfo);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
