@@ -29,7 +29,8 @@ public class PrivacyNoticeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_notice);
 
-        Button accept = (Button) findViewById(R.id.privacy_notice_accept);
+        final Button accept = (Button) findViewById(R.id.privacy_notice_accept);
+        accept.setEnabled(false);
         Button decline = (Button) findViewById(R.id.privacy_notice_decline);
 
         accept.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +57,7 @@ public class PrivacyNoticeActivity extends Activity {
         scrollView.setOnBottomReachedListener(new InteractiveScrollView.OnBottomReachedListener() {
             @Override
             public void onBottomReached() {
-                Toast toast = Toast.makeText(PrivacyNoticeActivity.this, "Bottom reached!", Toast.LENGTH_SHORT);
-                toast.show();
+                accept.setEnabled(true);
             }
         });
     }
