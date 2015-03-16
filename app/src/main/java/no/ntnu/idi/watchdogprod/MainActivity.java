@@ -44,6 +44,15 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+
+        Button mainSettings = (Button)findViewById(R.id.main_settings_btn);
+        mainSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         if (isInitialLaunch()) {
             writeAllApplicationsToUpdateLog();
         }
@@ -78,6 +87,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         dataSource.close();
+
     }
 
     private void setDataUsageSendingAlarm() {

@@ -9,4 +9,10 @@
         android:text="@string/privacy_analysis"
         android:id="@+id/main_privacy_analysis_btn"/>
 
+    <Button
+        android:id="@+id/main_settings_btn"
+        android:text="@string/main_settings"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
