@@ -43,12 +43,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".PermissionListActivity">
+        <activity android:name=".PermissionListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".ApplicationUpdateLogActivity">
+        <activity android:name=".ApplicationUpdateLogActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
@@ -56,22 +56,28 @@
 
         <receiver
             android:name=".receivers.ApplicationInstalledReceiver"
-            android:label="NewAppInstalledReceiver">
+            android:label="NewAppInstalledReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".receivers.ApplicationUpdatedReceiver">
+        <receiver android:name=".receivers.ApplicationUpdatedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".services.DataUsageService"></service>
-        <service android:name=".services.DataUsagePosterService"></service>
+        <service android:name=".services.DataUsageService" />
+        <service android:name=".services.DataUsagePosterService" />
+
+        <activity
+            android:name=".UserQuestionActivity"
+            android:label="@string/title_activity_user_question" >
+        </activity>
     </application>
 
 </manifest>
