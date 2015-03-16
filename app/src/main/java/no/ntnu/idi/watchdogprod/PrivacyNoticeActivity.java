@@ -36,7 +36,9 @@ public class PrivacyNoticeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(PrivacyNoticeActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                finish();
             }
         });
 
