@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_terms_of_use"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:padding="10sp"/>
+
+    <no.ntnu.idi.watchdogprod.InteractiveScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:layout_margin="6sp"
+        android:id="@+id/privacy_notice_scrollView">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="slkdhflkjashflkjahsdfkljahsdf"
+            android:textColor="@color/black"
+            android:padding="5sp"
+            android:id="@+id/privacy_notice_text"/>
+    </no.ntnu.idi.watchdogprod.InteractiveScrollView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5sp">
+
+        <Button
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/decline"
+            android:id="@+id/privacy_notice_decline"/>
+
+        <Button
+            android:layout_width="0sp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/accept"
+            android:id="@+id/privacy_notice_accept"/>
+
+        </LinearLayout>
+
+</LinearLayout>

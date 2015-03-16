@@ -19,5 +19,8 @@
     <string name="show_update_log">Vis oppdateringer</string>
     <string name="removed_permissions">Følgende tillatelser ble fjernet</string>
     <string name="added_permissions">Følgende tillatelser ble lagt til</string>
+    <string name="accept">Aksepter</string>
+    <string name="decline">Avslå</string>
+    <string name="app_terms_of_use">Applikasjonsvilkår</string>
 
 </resources>

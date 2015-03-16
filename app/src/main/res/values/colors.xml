@@ -23,4 +23,8 @@
     <color name="risk_green">#007622</color>
     <color name="risk_orange">#ff6600</color>
 
+    <!-- Base colors -->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
 </resources>
