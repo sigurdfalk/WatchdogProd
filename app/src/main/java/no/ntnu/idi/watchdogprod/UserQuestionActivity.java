@@ -7,22 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 
 public class UserQuestionActivity extends ActionBarActivity {
-    Button next;
-    Button previous;
-    TextView questionTitle;
-    TextView questionText;
-    private int questionCounter;
-    ArrayList<UserQuestion> questions;
-    UserQuestion current;
-    boolean first;
+    Button okAndSubmit;
+    Button decline;
+    TextView questionInfoTitle;
+    TextView questionInfoText;
+    ScrollView scrollView;
+
+
+    SeekBar seekBarQ1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +29,22 @@ public class UserQuestionActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Spørsmål");
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        next = (Button)findViewById(R.id.question_next_btn);
-        previous = (Button)findViewById(R.id.question_previous_btn);
-        questionCounter = 0;
+        questionInfoTitle = (TextView)findViewById(R.id.question_info_title);
+        questionInfoText = (TextView)findViewById(R.id.question_info_text);
 
-        questionTitle = (TextView)findViewById(R.id.question_title);
-        questionText = (TextView)findViewById(R.id.question_text);
+        seekBarQ1 = (SeekBar)findViewById(R.id.seekbar_q1);
+        seekBarQ1.setProgress(3);
+        seekBarQ1.incrementProgressBy(1);
+        seekBarQ1.setMax(4);
 
-        first = true;
+        scrollView =(ScrollView)findViewById(R.id.question_scrollview);
 
-        next.setOnClickListener(new QuestionButtonListener());
-        previous.setOnClickListener(new QuestionButtonListener());
+        okAndSubmit = (Button)findViewById(R.id.question_next_btn);
+        decline = (Button)findViewById(R.id.question_previous_btn);
 
-        UserQuestion q1 = new UserQuestion("Sp1","HEi1","lol");
-        UserQuestion q2 = new UserQuestion("Sp2","HEi2","lol");
-        UserQuestion q3 = new UserQuestion("Sp3","HEi3","lol");
-        UserQuestion q4 = new UserQuestion("Sp4","HEi4","lol");
-
-        questions = new ArrayList<>();
-        questions.add(q1);
-        questions.add(q2);
-        questions.add(q3);
-        questions.add(q4);
-
+        okAndSubmit.setOnClickListener(new QuestionButtonListener());
+        decline.setOnClickListener(new QuestionButtonListener());
     }
 
     private class QuestionButtonListener implements View.OnClickListener {
@@ -65,34 +54,18 @@ public class UserQuestionActivity extends ActionBarActivity {
             if(v.getId() == R.id.question_next_btn) {
                 showQuestions();
             } else if (v.getId() == R.id.question_previous_btn) {
+                UserQuestionActivity.this.finish();
 
             }
         }
     }
 
     public void showQuestions() {
-    }
+        questionInfoTitle.setVisibility(View.GONE);
+        questionInfoText.setVisibility(View.GONE);
+        decline.setVisibility(View.GONE);
+        okAndSubmit.setText("Lagre");
+        scrollView.setVisibility(View.VISIBLE);
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_question, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
