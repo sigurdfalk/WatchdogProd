@@ -22,5 +22,10 @@
     <string name="added_permissions">Følgende tillatelser ble lagt til</string>
     <string name="title_activity_user_question">UserQuestionActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="accept">Aksepter</string>
+    <string name="decline">Avslå</string>
+    <string name="app_terms_of_use">Applikasjonsvilkår</string>
+
+>>>>>>> 61ff8b27736960b8dd96b6441d7a2def7f08d444
 
 </resources>

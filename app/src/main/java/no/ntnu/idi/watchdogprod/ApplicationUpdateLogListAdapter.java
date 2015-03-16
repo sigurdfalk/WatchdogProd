@@ -44,11 +44,11 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
 
         AppInfo appInfo = objects.get(position);
 
-        if (position == 0) {
+        if (position == objects.size() - 1 || objects.size() == 1) {
             addedPermissionsView.setVisibility(View.GONE);
             removedPermissionsView.setVisibility(View.GONE);
         } else {
-            AppInfo oldAppInfo = objects.get(position - 1);
+            AppInfo oldAppInfo = objects.get(position + 1);
             ArrayList<String> newPermissions = PermissionHelper.newRequestedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
             ArrayList<String> removedPermissions = PermissionHelper.removedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
 
