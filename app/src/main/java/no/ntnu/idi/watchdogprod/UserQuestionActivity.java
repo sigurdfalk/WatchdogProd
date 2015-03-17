@@ -13,14 +13,16 @@ import android.widget.TextView;
 
 
 public class UserQuestionActivity extends ActionBarActivity {
-    Button okAndSubmit;
+    Button agree;
     Button decline;
+    Button submit;
     TextView questionInfoTitle;
     TextView questionInfoText;
     ScrollView scrollView;
 
-
     SeekBar seekBarQ1;
+    SeekBar seekBarQ2;
+    SeekBar seekBarQ3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +32,31 @@ public class UserQuestionActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Spørsmål");
 
-        questionInfoTitle = (TextView)findViewById(R.id.question_info_title);
-        questionInfoText = (TextView)findViewById(R.id.question_info_text);
+        questionInfoTitle = (TextView) findViewById(R.id.question_info_title);
+        questionInfoText = (TextView) findViewById(R.id.question_info_text);
 
-        seekBarQ1 = (SeekBar)findViewById(R.id.seekbar_q1);
-        seekBarQ1.setProgress(3);
+        seekBarQ1 = (SeekBar) findViewById(R.id.seekbar_q1);
+        seekBarQ1.setProgress(2);
         seekBarQ1.incrementProgressBy(1);
         seekBarQ1.setMax(4);
 
-        scrollView =(ScrollView)findViewById(R.id.question_scrollview);
+        seekBarQ2 = (SeekBar) findViewById(R.id.seekbar_q2);
+        seekBarQ2.setProgress(2);
+        seekBarQ2.incrementProgressBy(1);
+        seekBarQ2.setMax(4);
 
-        okAndSubmit = (Button)findViewById(R.id.question_next_btn);
-        decline = (Button)findViewById(R.id.question_previous_btn);
+        seekBarQ3 = (SeekBar) findViewById(R.id.seekbar_q3);
+        seekBarQ3.setProgress(2);
+        seekBarQ3.incrementProgressBy(1);
+        seekBarQ3.setMax(4);
 
-        okAndSubmit.setOnClickListener(new QuestionButtonListener());
+        scrollView = (ScrollView) findViewById(R.id.question_scrollview);
+
+        agree = (Button) findViewById(R.id.question_agree_btn);
+        decline = (Button) findViewById(R.id.question_cancel_btn);
+        submit = (Button) findViewById(R.id.questions_submit_btn);
+
+        agree.setOnClickListener(new QuestionButtonListener());
         decline.setOnClickListener(new QuestionButtonListener());
     }
 
@@ -51,11 +64,12 @@ public class UserQuestionActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.question_next_btn) {
+            if (v.getId() == R.id.question_agree_btn) {
                 showQuestions();
-            } else if (v.getId() == R.id.question_previous_btn) {
+            } else if (v.getId() == R.id.question_cancel_btn) {
                 UserQuestionActivity.this.finish();
-
+            } else if (v.getId() == R.id.questions_submit_btn) {
+                submitAnswers();
             }
         }
     }
@@ -64,8 +78,13 @@ public class UserQuestionActivity extends ActionBarActivity {
         questionInfoTitle.setVisibility(View.GONE);
         questionInfoText.setVisibility(View.GONE);
         decline.setVisibility(View.GONE);
-        okAndSubmit.setText("Lagre");
         scrollView.setVisibility(View.VISIBLE);
+    }
 
+    public int[] submitAnswers() {
+        int q1 = seekBarQ1.getProgress();
+        int q2 = seekBarQ2.getProgress();
+        int q3 = seekBarQ3.getProgress();
+        return new int[]{q1, q2, q3};
     }
 }
