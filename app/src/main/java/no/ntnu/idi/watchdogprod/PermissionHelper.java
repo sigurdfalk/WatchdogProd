@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -14,7 +15,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * Created by sigurdhf on 09.03.2015.
  */
 public class PermissionHelper {
-    public static final String FILE_NAME = "permissiondescriptions.txt";
+    public static final String FILE_NAME = "permissiondescriptions.csv";
 
     private static ArrayList<PermissionDescription> permissionDescriptions;
 
@@ -64,7 +65,7 @@ public class PermissionHelper {
             String[] line;
 
             // throw away the header
-            csvReader.readNext();
+            //csvReader.readNext();
 
             while ((line = csvReader.readNext()) != null) {
                 permDescList.add(getPermissionDescriptionFromCSVLine(line));
@@ -78,12 +79,18 @@ public class PermissionHelper {
 
     private static PermissionDescription getPermissionDescriptionFromCSVLine(String[] line) {
         String name = line[PermissionDescription.NAME];
-        //int riskLevel = Integer.parseInt(line[PermissionDescription.RISK_LEVEL]);
-        int riskLevel = 0;
-        // ToDo remove
+        String designation = line[PermissionDescription.DESIGNATION];
+        String group = line[PermissionDescription.GROUP];
+        String level = line[PermissionDescription.LEVEL];
+        int risk = 0;
+        try {
+            risk = Integer.parseInt(line[PermissionDescription.RISK]);
+        } catch (NumberFormatException e) {
+            // Do nothing.
+        }
         String description = line[PermissionDescription.DESCRIPTION];
 
-        return new PermissionDescription(name, description, riskLevel);
+        return new PermissionDescription(name.trim(), designation.trim(), group.trim(), level.trim(), risk, description.trim());
     }
 
     public static ArrayList<String> newRequestedPermissions(String[] oldPermissions, String[] newPermissions) {
