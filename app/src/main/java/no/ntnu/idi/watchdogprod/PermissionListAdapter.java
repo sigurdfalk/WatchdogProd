@@ -38,7 +38,7 @@ public class PermissionListAdapter extends ArrayAdapter<PermissionDescription> {
 
         PermissionDescription permissionDescription = objects.get(position);
 
-        firstLine.setText(permissionDescription.getName());
+        firstLine.setText(permissionDescription.getDesignation());
         secondLine.setText(permissionDescription.getDescription());
         setImageColorFromRiskLevel(image, permissionDescription);
 
@@ -46,9 +46,8 @@ public class PermissionListAdapter extends ArrayAdapter<PermissionDescription> {
     }
 
     private void setImageColorFromRiskLevel(ImageView imageView, PermissionDescription permissionDescription) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((3 - 1) + 1) + 1;
-        switch (randomNum) {
+
+        switch (permissionDescription.getRisk()) {
             case Rule.RISK_LEVEL_LOW:
                 imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_green));
                 break;
