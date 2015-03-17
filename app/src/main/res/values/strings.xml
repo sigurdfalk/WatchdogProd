@@ -17,14 +17,15 @@
     <string name="show_permissions">Vis tillatelser</string>
     <string name="warning_settings_datausage">Varsler</string>
     <string name="show_update_log">Vis oppdateringer</string>
-
     <string name="main_settings">Instillinger</string>
-
     <string name="removed_permissions">Følgende tillatelser ble fjernet</string>
     <string name="added_permissions">Følgende tillatelser ble lagt til</string>
+    <string name="title_activity_user_question">UserQuestionActivity</string>
+    <string name="hello_world">Hello world!</string>
     <string name="accept">Aksepter</string>
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
 
+>>>>>>> 61ff8b27736960b8dd96b6441d7a2def7f08d444
 
 </resources>
