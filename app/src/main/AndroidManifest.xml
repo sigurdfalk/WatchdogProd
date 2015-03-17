@@ -63,13 +63,6 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.ApplicationUpdatedReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
 
         <service android:name=".services.DataUsageService" />
         <service android:name=".services.DataUsagePosterService" />
