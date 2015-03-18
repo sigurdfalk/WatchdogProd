@@ -94,15 +94,15 @@ public class DataUsageActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(appName);
 
-//        radioGroupDownload = (RadioGroup) findViewById(R.id.radiogroup_download);
-//        radioGroupUpload = (RadioGroup) findViewById(R.id.radiogroup_upload);
-//        radioButtonDownloadDay = (RadioButton) findViewById(R.id.radiobutton_download_day);
-//        radioButtonDownloadWeek = (RadioButton) findViewById(R.id.radiobutton_download_week);
-//        radioButtonUploadDay = (RadioButton) findViewById(R.id.radiobutton_upload_day);
-//        radioButtonUploadWeek = (RadioButton) findViewById(R.id.radiobutton_upload_week);
-//
-//        radioButtonDownloadDay.setChecked(true);
-//        radioButtonUploadDay.setChecked(true);
+        radioGroupDownload = (RadioGroup) findViewById(R.id.radiogroup_download);
+        radioGroupUpload = (RadioGroup) findViewById(R.id.radiogroup_upload);
+        radioButtonDownloadDay = (RadioButton) findViewById(R.id.radiobutton_download_day);
+        radioButtonDownloadWeek = (RadioButton) findViewById(R.id.radiobutton_download_week);
+        radioButtonUploadDay = (RadioButton) findViewById(R.id.radiobutton_upload_day);
+        radioButtonUploadWeek = (RadioButton) findViewById(R.id.radiobutton_upload_week);
+
+        radioButtonDownloadDay.setChecked(true);
+        radioButtonUploadDay.setChecked(true);
 
         textViewDataDown = (TextView) findViewById(R.id.textfield_data_down);
         textViewDataUp = (TextView) findViewById(R.id.textfield_data_up);
@@ -130,182 +130,182 @@ public class DataUsageActivity extends ActionBarActivity {
         Number[] daysValues = {1, 2, 3, 4, 5, 6, 7};
         Number[] randomLoL = {1, 5, 2, 6, 1, 3, 5};
 
-//        plotDown = (XYPlot) findViewById(R.id.mySimpleXYPlotDOWN);
-//        plotDown.setBorderStyle(Plot.BorderStyle.NONE, null, null);
-//        plotDown.setPlotMargins(0, 0, 0, 0);
-//        plotDown.setPlotPadding(0, 0, 0, 0);
-//        plotDown.setGridPadding(0, 10, 5, 0);
-//
-//        plotDown.getBackgroundPaint().setColor(Color.WHITE);
-//
-//        plotDown.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
-//
-//        plotDown.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-//
-//        plotDown.getGraphWidget().setSize(new SizeMetrics(
-//                0, SizeLayoutType.FILL,
-//                0, SizeLayoutType.FILL));
-//
-//        plotDown.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
-//        plotDown.setDomainValueFormat(new DecimalFormat("0"));
-//        plotDown.setDomainStepValue(1);
-//
-//        XYSeries series1 = new SimpleXYSeries(
-////                Arrays.asList(new Number []{2,3,8,1,2}),
-//                downBackground,
-//                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
-//           "Bakgrunn");
-//
-//        Paint lineFill = new Paint();
-//        lineFill.setAlpha(200);
-//        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
-//
-//        LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.rgb(0, 200, 0), Color.rgb(0, 100, 0), Color.CYAN, new PointLabelFormatter());
-//        series1Format.setFillPaint(lineFill);
-//        plotDown.addSeries(series1, series1Format);
-//
-//
-//        XYSeries series2 = new SimpleXYSeries(
+        plotDown = (XYPlot) findViewById(R.id.mySimpleXYPlotDOWN);
+        plotDown.setBorderStyle(Plot.BorderStyle.NONE, null, null);
+        plotDown.setPlotMargins(0, 0, 0, 0);
+        plotDown.setPlotPadding(0, 0, 0, 0);
+        plotDown.setGridPadding(0, 10, 5, 0);
+
+        plotDown.getBackgroundPaint().setColor(Color.WHITE);
+
+        plotDown.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
+
+        plotDown.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+
+        plotDown.getGraphWidget().setSize(new SizeMetrics(
+                0, SizeLayoutType.FILL,
+                0, SizeLayoutType.FILL));
+
+        plotDown.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1);
+        plotDown.setDomainValueFormat(new DecimalFormat("0"));
+        plotDown.setDomainStepValue(1);
+
+        XYSeries series1 = new SimpleXYSeries(
 //                Arrays.asList(new Number []{2,3,8,1,2}),
+                downBackground,
+                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
+           "Bakgrunn");
+
+        Paint lineFill = new Paint();
+        lineFill.setAlpha(200);
+        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.GREEN, Shader.TileMode.MIRROR));
+
+        LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.rgb(0, 200, 0), Color.rgb(0, 100, 0), Color.CYAN, new PointLabelFormatter());
+        series1Format.setFillPaint(lineFill);
+        plotDown.addSeries(series1, series1Format);
+
+
+        XYSeries series2 = new SimpleXYSeries(
+                Arrays.asList(new Number []{2,3,8,1,2}),
+                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
+                "Forgrunn");
+
+        Paint lineFill2 = new Paint();
+        lineFill.setAlpha(200);
+        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.RED, Shader.TileMode.MIRROR));
+
+        LineAndPointFormatter series2Format = new LineAndPointFormatter(Color.rgb(0, 300, 0), Color.rgb(0, 100, 0), Color.RED, new PointLabelFormatter());
+        series2Format.setFillPaint(lineFill2);
+//        plotDown.addSeries(series2, series2Format);
+
+//        plotDown.setTicksPerRangeLabel(3);
+//        plotDown.getGraphWidget().setDomainLabelOrientation(0);
+
+        plotDown.setDomainBoundaries(1,13, BoundaryMode.FIXED);
+
+        //WEEK
+        plotDown.setDomainValueFormat(new Format() {
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                Number num = (Number) obj;
+                switch (num.intValue()) {
+                    case 1:
+                        toAppendTo.append("Man");
+                        break;
+                    case 2:
+                        toAppendTo.append("Tir");
+                        break;
+                    case 3:
+                        toAppendTo.append("Ons");
+                        break;
+                    case 4:
+                        toAppendTo.append("Tor");
+                        break;
+                    case 5:
+                        toAppendTo.append("Fre");
+                        break;
+                    case 6:
+                        toAppendTo.append("Lør");
+                        break;
+                    case 7:
+                        toAppendTo.append("Søn");
+                        break;
+                    default:
+                        toAppendTo.append("FEIL");
+                        break;
+                }
+                return toAppendTo;
+            }
+
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+
+        //DAY
+        plotDown.setDomainValueFormat(new Format() {
+            @Override
+            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+                Number num = (Number) obj;
+                switch (num.intValue()) {
+                    case 1:
+                        toAppendTo.append("00");
+                        break;
+                    case 2:
+                        toAppendTo.append("02");
+                        break;
+                    case 3:
+                        toAppendTo.append("04");
+                        break;
+                    case 4:
+                        toAppendTo.append("06");
+                        break;
+                    case 5:
+                        toAppendTo.append("08");
+                        break;
+                    case 6:
+                        toAppendTo.append("10");
+                        break;
+                    case 7:
+                        toAppendTo.append("12");
+                        break;
+                    case 8:
+                        toAppendTo.append("14");
+                        break;
+                    case 9:
+                        toAppendTo.append("16");
+                        break;
+                    case 10:
+                        toAppendTo.append("18");
+                        break;
+                    case 11:
+                        toAppendTo.append("20");
+                        break;
+                    case 12:
+                        toAppendTo.append("22");
+                        break;
+                    case 13:
+                        toAppendTo.append("24");
+                        break;
+                    default:
+                        toAppendTo.append("FEIL");
+                        break;
+                }
+                return toAppendTo;
+            }
+
+            @Override
+            public Object parseObject(String source, ParsePosition pos) {
+                return null;
+            }
+        });
+
+        plotUp = (XYPlot) findViewById(R.id.mySimpleXYPlotUP);
+        plotUp.getBackgroundPaint().setColor(Color.WHITE);
+        plotUp.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
+        plotUp.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
+        plotUp.getGraphWidget().setSize(new SizeMetrics(
+                0, SizeLayoutType.FILL,
+                0, SizeLayoutType.FILL));
+
+        XYSeries series1Up = new SimpleXYSeries(
+                Arrays.asList(randomLoL),
+                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
+                "Bakgrunn");
+//        XYSeries series2Up = new SimpleXYSeries(
+//                Arrays.asList(daysValues),
 //                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
 //                "Forgrunn");
-//
-//        Paint lineFill2 = new Paint();
-//        lineFill.setAlpha(200);
-//        lineFill.setShader(new LinearGradient(0, 0, 0, 250, Color.WHITE, Color.RED, Shader.TileMode.MIRROR));
-//
-//        LineAndPointFormatter series2Format = new LineAndPointFormatter(Color.rgb(0, 300, 0), Color.rgb(0, 100, 0), Color.RED, new PointLabelFormatter());
-//        series2Format.setFillPaint(lineFill2);
-////        plotDown.addSeries(series2, series2Format);
-//
-////        plotDown.setTicksPerRangeLabel(3);
-////        plotDown.getGraphWidget().setDomainLabelOrientation(0);
-//
-//        plotDown.setDomainBoundaries(1,13, BoundaryMode.FIXED);
-//
-//        //WEEK
-//        plotDown.setDomainValueFormat(new Format() {
-//            @Override
-//            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-//                Number num = (Number) obj;
-//                switch (num.intValue()) {
-//                    case 1:
-//                        toAppendTo.append("Man");
-//                        break;
-//                    case 2:
-//                        toAppendTo.append("Tir");
-//                        break;
-//                    case 3:
-//                        toAppendTo.append("Ons");
-//                        break;
-//                    case 4:
-//                        toAppendTo.append("Tor");
-//                        break;
-//                    case 5:
-//                        toAppendTo.append("Fre");
-//                        break;
-//                    case 6:
-//                        toAppendTo.append("Lør");
-//                        break;
-//                    case 7:
-//                        toAppendTo.append("Søn");
-//                        break;
-//                    default:
-//                        toAppendTo.append("FEIL");
-//                        break;
-//                }
-//                return toAppendTo;
-//            }
-//
-//            @Override
-//            public Object parseObject(String source, ParsePosition pos) {
-//                return null;
-//            }
-//        });
-//
-//        //DAY
-//        plotDown.setDomainValueFormat(new Format() {
-//            @Override
-//            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-//                Number num = (Number) obj;
-//                switch (num.intValue()) {
-//                    case 1:
-//                        toAppendTo.append("00");
-//                        break;
-//                    case 2:
-//                        toAppendTo.append("02");
-//                        break;
-//                    case 3:
-//                        toAppendTo.append("04");
-//                        break;
-//                    case 4:
-//                        toAppendTo.append("06");
-//                        break;
-//                    case 5:
-//                        toAppendTo.append("08");
-//                        break;
-//                    case 6:
-//                        toAppendTo.append("10");
-//                        break;
-//                    case 7:
-//                        toAppendTo.append("12");
-//                        break;
-//                    case 8:
-//                        toAppendTo.append("14");
-//                        break;
-//                    case 9:
-//                        toAppendTo.append("16");
-//                        break;
-//                    case 10:
-//                        toAppendTo.append("18");
-//                        break;
-//                    case 11:
-//                        toAppendTo.append("20");
-//                        break;
-//                    case 12:
-//                        toAppendTo.append("22");
-//                        break;
-//                    case 13:
-//                        toAppendTo.append("24");
-//                        break;
-//                    default:
-//                        toAppendTo.append("FEIL");
-//                        break;
-//                }
-//                return toAppendTo;
-//            }
-//
-//            @Override
-//            public Object parseObject(String source, ParsePosition pos) {
-//                return null;
-//            }
-//        });
-//
-//        plotUp = (XYPlot) findViewById(R.id.mySimpleXYPlotUP);
-//        plotUp.getBackgroundPaint().setColor(Color.WHITE);
-//        plotUp.getGraphWidget().getBackgroundPaint().setColor(Color.WHITE);
-//        plotUp.getGraphWidget().getGridBackgroundPaint().setColor(Color.WHITE);
-//        plotUp.getGraphWidget().setSize(new SizeMetrics(
-//                0, SizeLayoutType.FILL,
-//                0, SizeLayoutType.FILL));
-//
-//        XYSeries series1Up = new SimpleXYSeries(
-//                Arrays.asList(randomLoL),
-//                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
-//                "Bakgrunn");
-////        XYSeries series2Up = new SimpleXYSeries(
-////                Arrays.asList(daysValues),
-////                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,
-////                "Forgrunn");
-//
-//        LineAndPointFormatter series1UpFormat = new LineAndPointFormatter(Color.rgb(0, 200, 0), Color.rgb(0, 100, 0), Color.CYAN, new PointLabelFormatter());
-//        plotUp.addSeries(series1Up, series1UpFormat);
-//
-//        LineAndPointFormatter series2UpFormat = new LineAndPointFormatter(Color.rgb(0, 300, 0), Color.rgb(0, 100, 0), Color.RED, new PointLabelFormatter());
-////        plotUp.addSeries(series2Up, series2UpFormat);
-//
-//        plotUp.setTicksPerRangeLabel(3);
-//        plotUp.getGraphWidget().setDomainLabelOrientation(0);
+
+        LineAndPointFormatter series1UpFormat = new LineAndPointFormatter(Color.rgb(0, 200, 0), Color.rgb(0, 100, 0), Color.CYAN, new PointLabelFormatter());
+        plotUp.addSeries(series1Up, series1UpFormat);
+
+        LineAndPointFormatter series2UpFormat = new LineAndPointFormatter(Color.rgb(0, 300, 0), Color.rgb(0, 100, 0), Color.RED, new PointLabelFormatter());
+//        plotUp.addSeries(series2Up, series2UpFormat);
+
+        plotUp.setTicksPerRangeLabel(3);
+        plotUp.getGraphWidget().setDomainLabelOrientation(0);
 
     }
 

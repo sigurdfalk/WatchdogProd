@@ -36,17 +36,17 @@ public class UserQuestionActivity extends ActionBarActivity {
         questionInfoText = (TextView) findViewById(R.id.question_info_text);
 
         seekBarQ1 = (SeekBar) findViewById(R.id.seekbar_q1);
-        seekBarQ1.setProgress(2);
+        seekBarQ1.setProgress(1);
         seekBarQ1.incrementProgressBy(1);
         seekBarQ1.setMax(4);
 
         seekBarQ2 = (SeekBar) findViewById(R.id.seekbar_q2);
-        seekBarQ2.setProgress(2);
+        seekBarQ2.setProgress(1);
         seekBarQ2.incrementProgressBy(1);
         seekBarQ2.setMax(4);
 
         seekBarQ3 = (SeekBar) findViewById(R.id.seekbar_q3);
-        seekBarQ3.setProgress(2);
+        seekBarQ3.setProgress(1);
         seekBarQ3.incrementProgressBy(1);
         seekBarQ3.setMax(4);
 
@@ -85,6 +85,7 @@ public class UserQuestionActivity extends ActionBarActivity {
         int q1 = seekBarQ1.getProgress();
         int q2 = seekBarQ2.getProgress();
         int q3 = seekBarQ3.getProgress();
+        //DB here
         return new int[]{q1, q2, q3};
     }
 }
