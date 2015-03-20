@@ -3,7 +3,7 @@
 
     <string name="app_name">Telenor Watchdog</string>
     <string name="action_settings">Settings</string>
-    <string name="action_datausage_settings">Les mer om databruk</string>
+    <string name="action_datausage_settings">Vis oversikt over databruk</string>
     <string name="privacy_analysis">Personvernsanalyse</string>
     <string name="applications">Dine applikasjoner</string>
     <string name="application_icon_description">Application icon</string>
@@ -25,7 +25,5 @@
     <string name="accept">Aksepter</string>
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
-
->>>>>>> 61ff8b27736960b8dd96b6441d7a2def7f08d444
 
 </resources>

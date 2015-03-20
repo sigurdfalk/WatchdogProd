@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -76,17 +77,19 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
                 startActivity(i);
             } else if (v.getId() == R.id.app_detail_data_usage) {
-//                Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
-                Intent i = new Intent(ApplicationDetailActivity.this, UserQuestionActivity.class);
+                Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
+//                Intent i = new Intent(ApplicationDetailActivity.this, UserQuestionActivity.class);
 
-//                Intent i = new Intent(Settings.);
-//                PackageManager manager = getPackageManager();
-//                i = manager.getLaunchIntentForPackage(applicationPackageName);
-//                i.addCategory(Intent.CATEGORY_LAUNCHER);
-//                startActivity(i);
                 i.putExtra("packageName",applicationPackageName);
                 i.putExtra("appName", ApplicationHelper.getApplicationName(packageInfo, getBaseContext()));
                 startActivity(i);
+
+
+//                Intent intent = new Intent(Intent.ACTION_MAIN);
+//                intent.setComponent(new ComponentName("com.android.settings",
+//                        "com.android.settings.Settings$DataUsageSummaryActivity"));
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
             } else if (v.getId() == R.id.app_detail_update_log) {
                 Intent i = new Intent(ApplicationDetailActivity.this, ApplicationUpdateLogActivity.class);
 

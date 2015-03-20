@@ -1,16 +1,29 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.androidplot.Plot;
@@ -39,6 +52,7 @@ import no.ntnu.idi.watchdogprod.sqlite.datausage.DataUsageSource;
 
 
 public class DataUsageActivity extends ActionBarActivity {
+    Context context;
     String packageName;
     String appName;
     private XYPlot plotDown;
@@ -60,18 +74,21 @@ public class DataUsageActivity extends ActionBarActivity {
     TextView textViewDataDown;
     TextView textViewDataUp;
 
+    public final String [] dataMeasures =  {"B","KB","MB","GB"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_usage);
+
+        context = getApplicationContext();
 
         packageName = getIntent().getExtras().getString("packageName");
         appName = getIntent().getExtras().getString("appName");
 
         downBackground = new ArrayList<>();
         downForeground = new ArrayList<>();
-        upBackground = new ArrayList<>();;
-        upForeground = new ArrayList<>();;
+        upBackground = new ArrayList<>();
+        upForeground = new ArrayList<>();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -87,15 +104,15 @@ public class DataUsageActivity extends ActionBarActivity {
         radioButtonDownloadDay.setChecked(true);
         radioButtonUploadDay.setChecked(true);
 
-        textViewDataDown = (TextView)findViewById(R.id.textfield_data_down);
-        textViewDataUp = (TextView)findViewById(R.id.textfield_data_up);
+        textViewDataDown = (TextView) findViewById(R.id.textfield_data_down);
+        textViewDataUp = (TextView) findViewById(R.id.textfield_data_up);
 
         //GRAPH-PLOT
 
         DataUsageSource dataDBSource = new DataUsageSource(this);
         dataDBSource.open();
         ArrayList<DataLog> dataLogs = null;
-          dataLogs = dataDBSource.getDataLogsForApp(packageName);
+        dataLogs = dataDBSource.getDataLogsForApp(packageName);
 
         for (DataLog dataLog : dataLogs) {
             downBackground.add(dataLog.getAmountDownBackground());
@@ -105,13 +122,13 @@ public class DataUsageActivity extends ActionBarActivity {
         }
 
         DataLog total = dataDBSource.getDataTotals(packageName);
-        textViewDataDown.setText("Nedlastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownBackground(),true) + "\nNedlastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownForeground(),true));
-        textViewDataUp.setText("Opplastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpBackground(),true) + "\nOpplastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpForeground(),true));
+        textViewDataDown.setText("Nedlastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownBackground(), true) + "\nNedlastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountDownForeground(), true));
+        textViewDataUp.setText("Opplastet i bakgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpBackground(), true) + "\nOpplastet i forgrunnen: ~" + DataUtils.humanReadableByteCount(total.getAmountUpForeground(), true));
         dataDBSource.close();
 
-        Number[] hoursValues = {1,2,3,4,5,6,7,8,9,10,11,12};
-        Number[] daysValues = {1,2,3,4,5,6,7};
-        Number[] randomLoL = {1,5,2,6,1,3,5};
+        Number[] hoursValues = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+        Number[] daysValues = {1, 2, 3, 4, 5, 6, 7};
+        Number[] randomLoL = {1, 5, 2, 6, 1, 3, 5};
 
         plotDown = (XYPlot) findViewById(R.id.mySimpleXYPlotDOWN);
         plotDown.setBorderStyle(Plot.BorderStyle.NONE, null, null);
@@ -307,10 +324,56 @@ public class DataUsageActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_datausage_readmore) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setComponent(new ComponentName("com.android.settings",
+                    "com.android.settings.Settings$DataUsageSummaryActivity"));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        } else if (id == R.id.action_settings) {
+            DialogFragment newFragment = new FireMissilesDialogFragment();
+            newFragment.show(getSupportFragmentManager(), "missiles");
+
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public class FireMissilesDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Varsler");
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+
+            View v = inflater.inflate(R.layout.data_notification_dialog_layout, null);
+
+            Spinner spinner = (Spinner)v.findViewById(R.id.data_usage_spinner);
+            spinner.setAdapter(new ArrayAdapter<>(context,
+                    android.R.layout.simple_spinner_item, dataMeasures));
+
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(v)
+                    // Add action buttons
+                    .setPositiveButton("Angi", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    })
+                    .setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            FireMissilesDialogFragment.this.getDialog().cancel();
+                        }
+                    });
+            return builder.create();
+        }
+    }
+
 }
+
+
+
