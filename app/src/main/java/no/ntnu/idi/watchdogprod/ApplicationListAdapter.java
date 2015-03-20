@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created by sigurdhf on 05.03.2015.
  */
-public class ApplicationListAdapter extends ArrayAdapter<PackageInfo> {
+public class ApplicationListAdapter extends ArrayAdapter<ExtendedPackageInfo> {
     private final Context context;
-    private final ArrayList<PackageInfo> objects;
+    private final ArrayList<ExtendedPackageInfo> objects;
 
-    public ApplicationListAdapter(Context context, ArrayList<PackageInfo> objects) {
+    public ApplicationListAdapter(Context context, ArrayList<ExtendedPackageInfo> objects) {
         super(context, R.layout.list_item_application, objects);
         this.context = context;
         this.objects = objects;
@@ -39,11 +39,11 @@ public class ApplicationListAdapter extends ArrayAdapter<PackageInfo> {
         TextView firstLine = (TextView) convertView.findViewById(R.id.list_applications_firstLine);
         TextView secondLine = (TextView) convertView.findViewById(R.id.list_applications_secondLine);
 
-        PackageInfo packageInfo = objects.get(position);
+        ExtendedPackageInfo extendedPackageInfo = objects.get(position);
 
-        icon.setImageDrawable(packageInfo.applicationInfo.loadIcon(context.getPackageManager()));
-        firstLine.setText(ApplicationHelper.getApplicationName(packageInfo, context));
-        secondLine.setText(packageInfo.packageName);
+        icon.setImageDrawable(extendedPackageInfo.getPackageInfo().applicationInfo.loadIcon(context.getPackageManager()));
+        firstLine.setText(ApplicationHelper.getApplicationName(extendedPackageInfo.getPackageInfo(), context));
+        secondLine.setText("Privacy Score: " + extendedPackageInfo.getPrivacyScore());
 
         return convertView;
     }

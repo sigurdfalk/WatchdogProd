@@ -73,14 +73,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void writeAllApplicationsToUpdateLog() {
-        ArrayList<PackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
 
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 
-        for (PackageInfo app : applications) {
+        for (ExtendedPackageInfo app : applications) {
             try {
-                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.packageName, this));
+                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.getPackageInfo().packageName, this));
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }

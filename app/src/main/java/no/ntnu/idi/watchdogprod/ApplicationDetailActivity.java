@@ -10,6 +10,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by sigurdhf on 06.03.2015.
@@ -47,6 +50,9 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         showDataUsage.setOnClickListener(buttonListener);
         showPermissionList.setOnClickListener(buttonListener);
         showUpdateLog.setOnClickListener(buttonListener);
+
+        TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
+        // ToDo
     }
 
     private class ButtonListener implements View.OnClickListener {

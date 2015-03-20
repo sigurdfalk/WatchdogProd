@@ -31,11 +31,11 @@ public class ApplicationListActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PackageInfo packageInfo = adapter.getItem(position);
+                ExtendedPackageInfo extendedPackageInfo = adapter.getItem(position);
                 Intent i = new Intent(ApplicationListActivity.this, ApplicationDetailActivity.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString(PACKAGE_NAME, packageInfo.packageName);
+                bundle.putString(PACKAGE_NAME, extendedPackageInfo.getPackageInfo().packageName);
                 i.putExtras(bundle);
 
                 startActivity(i);
