@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,7 +56,26 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         showUpdateLog.setOnClickListener(buttonListener);
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
-        // ToDo
+        ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
+        privacyScore.setText("Privacy Score: " + extendedPackageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_information, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_information_info:
+                // ToDo show dialog
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private class ButtonListener implements View.OnClickListener {

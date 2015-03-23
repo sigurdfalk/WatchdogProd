@@ -37,6 +37,20 @@ public class ApplicationHelper {
         return thirdPartyApplications;
     }
 
+    public static ExtendedPackageInfo getExtendedPackageInfo(Context context, String packageName) {
+        if (!isThirdPartyApplicationsPopulated()) {
+            getThirdPartyApplications(context);
+        }
+
+        for (ExtendedPackageInfo extendedPackageInfo : thirdPartyApplications) {
+            if (extendedPackageInfo.getPackageInfo().packageName.equals(packageName)) {
+                return extendedPackageInfo;
+            }
+        }
+
+        throw new IllegalArgumentException("Package (" + packageName + ") not found!");
+    }
+
     public static ExtendedPackageInfo getThirdPartyApplication(Context context, String packageName) {
         List<PackageInfo> applications = context.getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
         ExtendedPackageInfo app = null;
