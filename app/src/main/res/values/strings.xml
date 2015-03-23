@@ -26,5 +26,6 @@
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="permission_info">Permission risk information</string>
 
 </resources>
