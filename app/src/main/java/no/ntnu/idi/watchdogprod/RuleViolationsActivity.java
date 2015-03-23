@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -41,4 +44,23 @@ public class RuleViolationsActivity extends ActionBarActivity {
         RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
         listView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_information, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_information_info:
+                // ToDo show dialog
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
 }

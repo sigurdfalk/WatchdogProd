@@ -49,14 +49,14 @@ public class PermissionListActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_app_permissions, menu);
+        inflater.inflate(R.menu.menu_information, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_permissions_info:
+            case R.id.menu_information_info:
                 showInformationDialog();
                 return true;
             default:

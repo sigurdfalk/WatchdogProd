@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,5 +53,16 @@ public class ApplicationListActivity extends ActionBarActivity {
         searchView.setQueryHint(this.getString(R.string.search));
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_applications_info:
+                // ToDo show dialog
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
