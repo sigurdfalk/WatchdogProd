@@ -21,5 +21,8 @@ public class Profile {
         this.utilityOverPrivacy = 3.0;
     }
 
+    public double getOverallProfileScore(){
+        return -1;
+    }
 
 }

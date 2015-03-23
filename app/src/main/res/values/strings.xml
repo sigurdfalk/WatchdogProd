@@ -25,5 +25,6 @@
     <string name="accept">Aksepter</string>
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

@@ -37,6 +37,27 @@ public class ApplicationHelper {
         return thirdPartyApplications;
     }
 
+    public static ExtendedPackageInfo getThirdPartyApplication(Context context, String packageName) {
+        List<PackageInfo> applications = context.getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
+        ExtendedPackageInfo app = null;
+
+        System.out.println("INN " + packageName);
+
+        for (PackageInfo packageInfo : applications) {
+            if (!((packageInfo.applicationInfo.flags & packageInfo.applicationInfo.FLAG_SYSTEM) != 0)) {
+                System.out.println("LETER " + packageInfo.packageName);
+                if(packageInfo.packageName.equals(packageName)) {
+                    ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(packageInfo.requestedPermissions, context);
+                    ArrayList<Rule> violatedRules = RuleHelper.getViolatedRules(packageInfo.requestedPermissions, context);
+                    app = new ExtendedPackageInfo(packageInfo,permissionDescriptions,violatedRules);
+                    System.out.println("FANT  OG SATTE APPEN");
+                    break;
+                }
+            }
+        }
+        return app;
+    }
+
     public static PackageInfo getPackageInfo(String packageName, Context context) throws PackageManager.NameNotFoundException {
         return context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA | PackageManager.GET_RECEIVERS | PackageManager.GET_PERMISSIONS);
     }
