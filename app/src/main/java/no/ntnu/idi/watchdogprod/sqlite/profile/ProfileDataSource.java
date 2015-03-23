@@ -43,16 +43,28 @@ public class ProfileDataSource {
                 values);
     }
 
-    public ArrayList getEventsForApp(String packageName) {
+    public ArrayList getSpecificEvents(String eventType) {
         ArrayList<ProfileEvent> events = new ArrayList<>();
         Cursor cursor = db.query(SQLiteOpenHelperProfile.TABLE_PROFILE, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
-            if (cursor.getString(4).equals(packageName)) {
+            if (cursor.getString(2).equals(eventType)) {
                 events.add(new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             }
         }
         return events;
+    }
+
+    public ProfileEvent getSpecificEventForApp(String eventType, String packageName) {
+        ProfileEvent profileEvent = null;
+        Cursor cursor = db.query(SQLiteOpenHelperProfile.TABLE_PROFILE, allColumns, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            if (cursor.getString(2).equals(eventType) && cursor.getString(4).equals(packageName)) {
+                profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+            }
+        }
+        return profileEvent;
     }
 
 

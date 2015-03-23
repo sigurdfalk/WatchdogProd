@@ -7,8 +7,7 @@
         android:icon="@mipmap/telenor_logo_blue_scaled"
         android:label="@string/app_name"
         android:theme="@style/Watchdog" >
-
-        <activity android:name=".PrivacyNoticeActivity">
+        <activity android:name=".PrivacyNoticeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,6 +62,15 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receivers.ApplicationUninstalledReceiver"
+            android:label="UninstalledReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_FULLY_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
         <service android:name=".services.DataUsageService" />
         <service android:name=".services.DataUsagePosterService" />
@@ -70,6 +78,10 @@
         <activity
             android:name=".UserQuestionActivity"
             android:label="@string/title_activity_user_question" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 

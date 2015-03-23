@@ -17,4 +17,16 @@ public class ProfileEvent {
         this.value = value;
         this.packageName = packageName;
     }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
 }

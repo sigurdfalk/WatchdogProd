@@ -20,4 +20,9 @@ public class Profile {
         this.concernedForLeaks = 5.0;
         this.utilityOverPrivacy = 3.0;
     }
+
+    public double getOverallProfileScore(){
+        return -1;
+    }
+
 }

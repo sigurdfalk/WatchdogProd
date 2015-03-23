@@ -48,7 +48,8 @@ public class MainActivity extends ActionBarActivity {
         profilBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, UserQuestionActivity.class);
+//                Intent i = new Intent(MainActivity.this, UserQuestionActivity.class);
+                Intent i = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(i);
             }
         });
