@@ -56,7 +56,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         showUpdateLog.setOnClickListener(buttonListener);
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
-        // ToDo
+        ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
+        privacyScore.setText("Privacy Score: " + extendedPackageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
     }
 
     @Override
