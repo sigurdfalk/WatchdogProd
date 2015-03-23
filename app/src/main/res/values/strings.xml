@@ -26,6 +26,9 @@
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="permission_info">Permission risk information</string>
+    <string name="permission_info">Beskrivelse av risiko</string>
+    <string name="close">Lukk</string>
+
+    <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
 
 </resources>
