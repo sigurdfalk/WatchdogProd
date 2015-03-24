@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by sigurdhf on 06.03.2015.
  */
-public class ApplicationDetailActivity extends ActionBarActivity {
+public class ApplicationDetailActivity extends ActionBarActivity implements QuestionDialogFragment.QuestionDialogListener {
     private String applicationPackageName;
     private PackageInfo packageInfo;
 
@@ -83,25 +83,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private void showQuestionDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
+        QuestionDialogFragment dialog = new QuestionDialogFragment();
+        dialog.show(this.getFragmentManager(), "QuestionDialogFragment");
+    }
 
-        builder.setView(inflater.inflate(R.layout.dialog_feeling_question, null));
-        builder.setPositiveButton(R.string.show_more, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // sign in the user ...
-            }
-        });
-        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // sign in the user ...
-            }
-        });
-
-        builder.create();
-        builder.show();
+    @Override
+    public void onQuestionnaireFinished() {
+        // ToDo implement
     }
 
     private class ButtonListener implements View.OnClickListener {
