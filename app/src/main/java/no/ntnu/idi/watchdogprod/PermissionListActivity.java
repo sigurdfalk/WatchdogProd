@@ -69,7 +69,7 @@ public class PermissionListActivity extends ActionBarActivity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.dialog_permission_information, null));
-        builder.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 // sign in the user ...

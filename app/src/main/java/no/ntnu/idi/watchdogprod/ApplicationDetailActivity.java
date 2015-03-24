@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by sigurdhf on 06.03.2015.
  */
-public class ApplicationDetailActivity extends ActionBarActivity {
+public class ApplicationDetailActivity extends ActionBarActivity implements QuestionDialogFragment.QuestionDialogListener {
     private String applicationPackageName;
     private PackageInfo packageInfo;
 
@@ -47,6 +49,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
         Button showPermissionList = (Button) findViewById(R.id.app_detail_permissions);
         Button showUpdateLog = (Button) findViewById(R.id.app_detail_update_log);
+        Button showQuestionDialog = (Button) findViewById(R.id.app_detail_questions);
 
         ButtonListener buttonListener = new ButtonListener();
 
@@ -54,6 +57,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         showDataUsage.setOnClickListener(buttonListener);
         showPermissionList.setOnClickListener(buttonListener);
         showUpdateLog.setOnClickListener(buttonListener);
+        showQuestionDialog.setOnClickListener(buttonListener);
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
@@ -76,6 +80,16 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showQuestionDialog() {
+        QuestionDialogFragment dialog = new QuestionDialogFragment();
+        dialog.show(this.getFragmentManager(), "QuestionDialogFragment");
+    }
+
+    @Override
+    public void onQuestionnaireFinished() {
+        // ToDo implement
     }
 
     private class ButtonListener implements View.OnClickListener {
@@ -120,6 +134,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 i.putExtras(bundle);
 
                 startActivity(i);
+            } else if (v.getId() == R.id.app_detail_questions) {
+                showQuestionDialog();
             }
         }
     }
