@@ -28,6 +28,8 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="permission_info">Beskrivelse av risiko</string>
     <string name="close">Lukk</string>
+    <string name="opinion_information">Hva føler du om denne informasjonen?</string>
+    <string name="show_more">Vis mer</string>
 
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
 
