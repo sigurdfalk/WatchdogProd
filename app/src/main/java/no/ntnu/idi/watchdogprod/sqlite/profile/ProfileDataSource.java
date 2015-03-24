@@ -55,6 +55,27 @@ public class ProfileDataSource {
         return events;
     }
 
+    public long insertNewProfileValue(String type, String value) {
+        ContentValues values = new ContentValues();
+        values.put(SQLiteOpenHelperProfile.COLUMN_APP_PACKAGE, "");
+        values.put(SQLiteOpenHelperProfile.COLUMN_TIMESTAMP_PROFILE, new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date()));
+        values.put(SQLiteOpenHelperProfile.COLUMN_EVENT, type);
+        values.put(SQLiteOpenHelperProfile.COLUMN_VALUE, value);
+        return db.insert(SQLiteOpenHelperProfile.TABLE_PROFILE, null,
+                values);
+    }
+
+    public double getLatestProfileValue(String type) {
+        Cursor cursor = db.query(SQLiteOpenHelperProfile.TABLE_PROFILE, allColumns, null, null, null, null, SQLiteOpenHelperProfile.COLUMN_ID_PROFILE + " DESC");
+        cursor.moveToFirst();
+        while (cursor.moveToNext()) {
+            if (cursor.getString(2).equals(type)) {
+                return Double.parseDouble(cursor.getString(3));
+            }
+        }
+        return -1;
+    }
+
     public ProfileEvent getSpecificEventForApp(String eventType, String packageName) {
         ProfileEvent profileEvent = null;
         Cursor cursor = db.query(SQLiteOpenHelperProfile.TABLE_PROFILE, allColumns, null, null, null, null, null);
