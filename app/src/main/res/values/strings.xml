@@ -27,6 +27,8 @@
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="permission_info">Beskrivelse av risiko</string>
+    <string name="profile_info">Informasjon</string>
+    <string name="profile_tips">Tips</string>
     <string name="close">Lukk</string>
     <string name="opinion_information">Hva føler du om denne informasjonen?</string>
     <string name="show_more">Videre</string>

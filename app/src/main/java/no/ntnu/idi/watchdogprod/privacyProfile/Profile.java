@@ -1,7 +1,5 @@
 package no.ntnu.idi.watchdogprod.privacyProfile;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
@@ -54,5 +52,40 @@ public class Profile {
 
     public double getConcernedForLeaks() {
         return concernedForLeaks;
+    }
+
+//    private double calculateUninstalledDangerousAppRatio() {
+//        ProfileDataSource profileDataSource = new ProfileDataSource(this);
+//        profileDataSource.open();
+//        ArrayList<ProfileEvent> events = profileDataSource.getSpecificEvents(Profile.UNINSTALLED_DANGEROUS_APP);
+//        profileDataSource.close();
+//        return events;
+//    }
+
+    public boolean isTrendIncreasing() {
+        int [] history = new int [10];
+        final int DELTA_T = 1;
+        double sum1 = 0;
+        double sum2 = 0;
+
+        for (int i = 0; i < history.length ; i++) {
+            sum1 = history[i];
+        }
+
+        for (int i = 0; i < history.length; i++) {
+            sum2 = history[i]*i;
+        }
+        double b0 = (2*(2*history.length) * sum1 - ( 6* sum2))
+                / (history.length* (history.length -1));
+        double b1 = (12* sum2 - 6* (history.length +1)) * sum1
+                / (DELTA_T * history.length *((history.length-1)*(history.length+1)));
+
+        if(b1 < 0) {
+            return false;
+        } else if(b1 < b0) {
+            return false;
+        }
+        else
+            return true;
     }
 }
