@@ -67,8 +67,12 @@ public class Profile {
         final int DELTA_T = 1;
         double sum1 = 0;
         double sum2 = 0;
+
         for (int i = 0; i < history.length ; i++) {
             sum1 = history[i];
+        }
+
+        for (int i = 0; i < history.length; i++) {
             sum2 = history[i]*i;
         }
         double b0 = (2*(2*history.length) * sum1 - ( 6* sum2))
