@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,11 +16,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
+import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileEvent;
@@ -26,12 +32,18 @@ import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileEvent;
 
 public class ProfileActivity extends ActionBarActivity {
 
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        TextView dbTest = (TextView) findViewById(R.id.database_test_profile);
+        listView = (ListView) findViewById(R.id.profile_behavior_list);
+        ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
+        listView.setAdapter(arrayAdapter);
+
+//        TextView dbTest = (TextView) findViewById(R.id.database_test_profile);
 
         ArrayList<ProfileEvent> events = getUninstalledAppsHistory();
         Profile profile = getProfileValues();
@@ -40,7 +52,7 @@ public class ProfileActivity extends ActionBarActivity {
         for (ProfileEvent event : events) {
             stringBuilder.append(event.getPackageName() + " " + event.getEvent() + " " + event.getValue() + "\n");
         }
-        dbTest.setText("uninstalled apps: " + stringBuilder.toString() + "\nScreenLOCK: " + isDeviceSecured());
+//        dbTest.setText("uninstalled apps: " + stringBuilder.toString() + "\nScreenLOCK: " + isDeviceSecured());
 
 
         boolean answeredQuestions = checkAnsweredQuestionsState();
@@ -48,6 +60,18 @@ public class ProfileActivity extends ActionBarActivity {
             Intent intent = new Intent(ProfileActivity.this, UserQuestionActivity.class);
             startActivity(intent);
         }
+    }
+
+
+    public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
+        ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",2));
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",1));
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",3));
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",2));
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",3));
+        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",1));
+        return profileBehaviors;
     }
 
     public boolean checkAnsweredQuestionsState() {

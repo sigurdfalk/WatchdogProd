@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <TextView
-        android:text="Din Profil"
-        android:textSize="25dp"
-        android:gravity="center"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Din Profil"
+        android:textSize="25dp" />
+
+    <ImageView
+        android:src="@mipmap/telenor_logo_blue_scaled"
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+    <TextView
+        android:text="Grafisk fremstilling av profil"
+        android:layout_width="fill_parent"
+        android:gravity="center"
         android:layout_height="wrap_content" />
 
-
-    <ScrollView
+    <View
+        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/database_test_profile"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-        </ScrollView>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Adferd"
+        android:textSize="20dp" />
 
-
+    <ListView
+        android:divider="@null"
+        android:id="@+id/profile_behavior_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
