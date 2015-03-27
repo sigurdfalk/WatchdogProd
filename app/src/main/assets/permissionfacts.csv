@@ -1,0 +1,3 @@
+permissions,header,fact
+android.permission.ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
+android.permission.ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
