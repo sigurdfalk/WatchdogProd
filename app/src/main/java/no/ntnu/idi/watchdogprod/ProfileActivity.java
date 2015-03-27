@@ -1,12 +1,19 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.app.AlertDialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.lang.reflect.Method;
@@ -34,6 +41,18 @@ public class ProfileActivity extends ActionBarActivity {
             stringBuilder.append(event.getPackageName() + " " + event.getEvent() + " " + event.getValue() + "\n");
         }
         dbTest.setText("uninstalled apps: " + stringBuilder.toString() + "\nScreenLOCK: " + isDeviceSecured());
+
+
+        boolean answeredQuestions = checkAnsweredQuestionsState();
+        if(!answeredQuestions) {
+            Intent intent = new Intent(ProfileActivity.this, UserQuestionActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public boolean checkAnsweredQuestionsState() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        return settings.getBoolean("answeredQuestions", false);
     }
 
 
@@ -56,7 +75,6 @@ public class ProfileActivity extends ActionBarActivity {
         return profile;
     }
 
-
     private boolean isDeviceSecured() {
         String LOCKSCREEN_UTILS = "com.android.internal.widget.LockPatternUtils";
         try {
@@ -76,7 +94,6 @@ public class ProfileActivity extends ActionBarActivity {
         return false;
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -92,10 +109,38 @@ public class ProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.profile_information) {
             return true;
+        } else if(id == R.id.profile_tips) {
+            showTipsDialog();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showTipsDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.dialog_profile_tips,null);
+
+        TextView textView = (TextView)v.findViewById(R.id.profile_dialog_tips_text);
+        boolean screenLock = isDeviceSecured();
+        if(screenLock) {
+            textView.setText("For å ytterligere øke sikkerheten på telefonen kan du: \n - Aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du for eksempel skulle miste den.");
+        } else {
+            textView.setText("Ingen tips tilgjengelig for øyeblikket");
+        }
+
+        builder.setView(v);
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+               dialog.dismiss();
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }
