@@ -84,6 +84,11 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
 
     private void showQuestionDialog() {
         QuestionDialogFragment dialog = new QuestionDialogFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(ApplicationListActivity.PACKAGE_NAME, packageInfo.packageName);
+
+        dialog.setArguments(bundle);
         dialog.show(this.getFragmentManager(), "QuestionDialogFragment");
     }
 
