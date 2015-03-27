@@ -3,6 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/app_detail_privacy_score"
+        android:gravity="center"/>
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -24,6 +31,12 @@
     <Button
         android:id="@+id/app_detail_update_log"
         android:text="@string/show_update_log"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/app_detail_questions"
+        android:text="Spm"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

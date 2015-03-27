@@ -29,11 +29,22 @@
                 android:text="Overvåk applikasjonens databruk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
+            <!--<TextView-->
+                <!--android:id="@+id/textfield_data_down"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Totalt nedlastet: 15KB \nBakgrunn: 13KB \nForgrunn: 5KB"-->
+                <!--android:textSize="15dp" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/textfield_data_up"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Totalt opplastet: 15KB \nBakgrunn: 13KB \nForgrunn: 5KB"-->
+                <!--android:textSize="15dp" />-->
 
             <TextView
                 android:layout_width="wrap_content"

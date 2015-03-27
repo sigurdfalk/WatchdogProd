@@ -3,7 +3,7 @@
 
     <string name="app_name">Telenor Watchdog</string>
     <string name="action_settings">Settings</string>
-    <string name="action_datausage_settings">Les mer om databruk</string>
+    <string name="action_datausage_settings">Vis oversikt over databruk</string>
     <string name="privacy_analysis">Personvernsanalyse</string>
     <string name="applications">Dine applikasjoner</string>
     <string name="application_icon_description">Application icon</string>
@@ -17,14 +17,24 @@
     <string name="show_permissions">Vis tillatelser</string>
     <string name="warning_settings_datausage">Varsler</string>
     <string name="show_update_log">Vis oppdateringer</string>
-
     <string name="main_settings">Instillinger</string>
-
     <string name="removed_permissions">Følgende tillatelser ble fjernet</string>
     <string name="added_permissions">Følgende tillatelser ble lagt til</string>
+    <string name="title_activity_user_question">UserQuestionActivity</string>
+    <string name="hello_world">Hello world!</string>
     <string name="accept">Aksepter</string>
     <string name="decline">Avslå</string>
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="permission_info">Beskrivelse av risiko</string>
+    <string name="profile_info">Informasjon</string>
+    <string name="profile_tips">Tips</string>
+    <string name="close">Lukk</string>
+    <string name="opinion_information">Hva føler du om denne informasjonen?</string>
+    <string name="show_more">Videre</string>
+    <string name="recently_updated">Nylig oppdatert</string>
+    <string name="installed">Installert</string>
 
+    <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
 
 </resources>

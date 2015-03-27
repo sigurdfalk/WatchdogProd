@@ -44,6 +44,17 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        Button profilBtn = (Button) findViewById(R.id.main_profile_btn);
+        profilBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this, UserQuestionActivity.class);
+                Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(i);
+            }
+        });
+
+
 
         Button mainSettings = (Button)findViewById(R.id.main_settings_btn);
         mainSettings.setOnClickListener(new View.OnClickListener() {
@@ -73,14 +84,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void writeAllApplicationsToUpdateLog() {
-        ArrayList<PackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
 
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 
-        for (PackageInfo app : applications) {
+        for (ExtendedPackageInfo app : applications) {
             try {
-                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.packageName, this));
+                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.getPackageInfo().packageName, this));
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }

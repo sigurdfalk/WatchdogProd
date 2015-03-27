@@ -1,4 +1,9 @@
 Name,Permissions,RiskLevel,Description
-SEND_SMS,android.permission.SEND_SMS:android.permission.WRITE_SMS,3,
-FILE_ACCESS_AND_INTERNET,android.permission.READ_EXTERNAL_STORAGE:android.permission.INTERNET,2,
-TRANSMIT_FINE_LOCATION,android.permission.ACCESS_FINE_LOCATION:android.permission.INTERNET,1,
+SEND_SMS,android.permission.SEND_SMS:android.permission.WRITE_SMS,2,
+FILE_ACCESS_AND_INTERNET,android.permission.READ_EXTERNAL_STORAGE:android.permission.INTERNET,1,
+LOCATION_TRACKER,android.permission.ACCESS_FINE_LOCATION:android.permission.INTERNET:android.permission.RECEIVE_BOOT_COMPLETED,1,
+LOCATION_TRACKER,android.permission.ACCESS_COARSE_LOCATION:android.permission.INTERNET:android.permission.RECEIVE_BOOT_COMPLETED,1,
+EAVESDROP,android.permission.PHONE_STATE:android.permission.RECORD_AUDIO:android.permission.INTERNET:,3,
+EAVESDROP,android.permission.PROCESS_OUTGOING_CALL:android.permission.RECORD_AUDIO:android.permission.INTERNET,3,
+SEND_SMS,android.permission.RECEIVE_SMS:android.permission.WRITE_SMS,2,
+HACK_SHORTCUTS,android.permission.INSTALL_SHORTCUT:android.permission.UNINSTALL_SHORTCUT,3,

@@ -1,39 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0sp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:padding="6sp">
 
     <ImageView
         android:id="@+id/list_applications_icon"
         android:layout_width="@dimen/list_application_icon"
         android:layout_height="@dimen/list_application_icon"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
         android:contentDescription="@string/application_icon_description" />
 
-    <TextView
-        android:id="@+id/list_applications_secondLine"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/list_applications_icon"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/list_applications_firstLine"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/list_applications_secondLine"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/list_applications_icon"
-        android:gravity="center_vertical"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        android:layout_marginStart="10sp"
+        android:layout_marginLeft="10sp"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/list_applications_firstLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/list_applications_secondLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+   <TextView
+       android:id="@+id/list_applications_risk_score"
+       android:layout_width="15sp"
+       android:layout_height="fill_parent" />
+
+</LinearLayout>

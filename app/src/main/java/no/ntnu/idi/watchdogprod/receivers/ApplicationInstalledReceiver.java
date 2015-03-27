@@ -11,10 +11,14 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import no.ntnu.idi.watchdogprod.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.MainActivity;
+import no.ntnu.idi.watchdogprod.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
+import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
 /**
  * Created by fredsten on 09.03.2015.
@@ -39,5 +43,12 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
         dataSource.close();
+
+        /*
+        ProfileDataSource profileDataSource = new ProfileDataSource(context);
+        profileDataSource.open();
+        ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
+        profileDataSource.insert(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+        profileDataSource.close();*/
     }
 }
