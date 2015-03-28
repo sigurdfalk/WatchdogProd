@@ -8,11 +8,13 @@
     android:layout_height="match_parent"
     android:id="@+id/list_applications_cardview">
 
+
+
     <LinearLayout
+        android:id="@+id/list_applications_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="6sp"
-
         android:background="?android:selectableItemBackground"
         android:focusable="true"
         android:clickable="true">
@@ -42,7 +44,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
         </LinearLayout>
 
     </LinearLayout>

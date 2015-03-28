@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -113,6 +114,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView firstLine;
         public TextView secondLine;
         public TextView riskColor;
+        public LinearLayout wrapper;
 
         public ItemViewHolderOnClickListener listener;
 
@@ -123,11 +125,9 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             this.firstLine = (TextView) itemView.findViewById(R.id.list_applications_firstLine);
             this.secondLine = (TextView) itemView.findViewById(R.id.list_applications_secondLine);
             this.riskColor = (TextView) itemView.findViewById(R.id.list_applications_risk_score);
+            this.wrapper = (LinearLayout) itemView.findViewById(R.id.list_applications_wrapper);
 
-            itemIcon.setOnClickListener(this);
-            firstLine.setOnClickListener(this);
-            secondLine.setOnClickListener(this);
-            riskColor.setOnClickListener(this);
+            wrapper.setOnClickListener(this);
         }
 
         @Override

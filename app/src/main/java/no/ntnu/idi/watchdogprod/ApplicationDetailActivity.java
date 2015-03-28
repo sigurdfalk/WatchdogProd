@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -61,7 +62,63 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
-        privacyScore.setText("Privacy Score: " + extendedPackageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        privacyScore.setText("Risikofaktor " + (int) extendedPackageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        setScoreBackgroundColor(privacyScore, extendedPackageInfo.getPrivacyScore());
+        fillPermissionsCard(extendedPackageInfo);
+    }
+
+    private void fillPermissionsCard(ExtendedPackageInfo app) {
+        TextView text = (TextView) findViewById(R.id.app_detail_permissions_text);
+
+        ArrayList<PermissionDescription> permissions = app.getPermissionDescriptions();
+
+        text.setText("Denne applikasjonen krever " + permissions.size() + " tillatelser, hvor " + getPermissionRiskCount(PrivacyScoreCalculator.RISK_HIGH, permissions) + " av disse har høy risikofaktor for ditt personvern.");
+        setPermissionDiagram(permissions);
+    }
+
+    private void setPermissionDiagram(ArrayList<PermissionDescription> permissions) {
+        TextView diagramHigh = (TextView) findViewById(R.id.app_detail_permissions_high);
+        TextView diagramMedium = (TextView) findViewById(R.id.app_detail_permissions_medium);
+        TextView diagramLow = (TextView) findViewById(R.id.app_detail_permissions_low);
+
+        double countHigh = getPermissionRiskCount(PrivacyScoreCalculator.RISK_HIGH, permissions);
+        double countMedium = getPermissionRiskCount(PrivacyScoreCalculator.RISK_MEDIUM, permissions);
+        double countLow = getPermissionRiskCount(PrivacyScoreCalculator.RISK_LOW, permissions);
+        double countAll = permissions.size();
+
+        ViewGroup.LayoutParams params = diagramHigh.getLayoutParams();
+        double width = (countHigh / countAll) * 100.0;
+        params.width = getPixelsFromDp((int) width);
+        diagramHigh.setLayoutParams(params);
+
+        params = diagramMedium.getLayoutParams();
+        width = (countMedium / countAll) * 100.0;
+        params.width = getPixelsFromDp((int) width);
+        diagramMedium.setLayoutParams(params);
+
+        params = diagramLow.getLayoutParams();
+        width = (countLow / countAll) * 100.0;
+        params.width = getPixelsFromDp((int) width);
+        diagramLow.setLayoutParams(params);
+
+    }
+
+    private int getPixelsFromDp(int dps) {
+        System.out.println(dps);
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
+    }
+
+    private int getPermissionRiskCount(int riskLevel, ArrayList<PermissionDescription> permissions) {
+        int count = 0;
+
+        for (PermissionDescription permissionDescription : permissions) {
+            if (permissionDescription.getRisk() == riskLevel) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     @Override
@@ -95,6 +152,16 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
     @Override
     public void onQuestionnaireFinished() {
         // ToDo implement
+    }
+
+    private void setScoreBackgroundColor(TextView textView, double score) {
+        if (score > PrivacyScoreCalculator.HIGH_THRESHOLD) {
+            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_red));
+        } else if (score > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_yellow));
+        } else {
+            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_green));
+        }
     }
 
     private class ButtonListener implements View.OnClickListener {
