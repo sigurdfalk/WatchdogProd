@@ -159,7 +159,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ExtendedPackageInfo packageInfo = allApplications.get(i);
             long diff = now.getTime() - packageInfo.getUpdateLog().get(0).getLastUpdateTime();
 
-            if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 7)) {
+            if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 3)) {
                 recentlyUpdatedApplications.add(packageInfo);
             } else {
                 applications.add(packageInfo);
