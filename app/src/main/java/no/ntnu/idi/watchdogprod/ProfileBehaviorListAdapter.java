@@ -43,15 +43,15 @@ public class ProfileBehaviorListAdapter extends ArrayAdapter<ProfileBehavior> {
         ProfileBehavior profileBehavior = objects.get(position);
 
         if(profileBehavior.getStatus() == 1) {
-            icon.setImageDrawable(getContext().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
+            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_sad));
         } else if(profileBehavior.getStatus() == 2) {
-            icon.setImageDrawable(getContext().getDrawable(R.mipmap.ic_emoticon_neutral_grey600_36dp));
+            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_chackbox_neutral));
         } else {
-
+            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_happy));
         }
 
         title.setText(profileBehavior.getTitle());
-        text.setText(profileBehavior.getText());
+//        text.setText(profileBehavior.getText());
 
         return convertView;
     }

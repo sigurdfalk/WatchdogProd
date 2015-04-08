@@ -65,9 +65,9 @@ public class ProfileActivity extends ActionBarActivity {
 
     public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
         ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",2));
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",1));
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",3));
+        profileBehaviors.add(new ProfileBehavior(null,"Nedgang i farlige apper", "tekst",2));
+        profileBehaviors.add(new ProfileBehavior(null,"Økt trusselbilde", "tekst",1));
+        profileBehaviors.add(new ProfileBehavior(null,"Mindre datatrafikk", "tekst",3));
         profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",2));
         profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",3));
         profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",1));
