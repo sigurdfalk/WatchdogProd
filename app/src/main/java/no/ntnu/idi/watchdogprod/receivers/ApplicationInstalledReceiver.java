@@ -44,10 +44,11 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         }
         dataSource.close();
 
+        /*
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
         profileDataSource.insert(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
-        profileDataSource.close();
+        profileDataSource.close();*/
     }
 }

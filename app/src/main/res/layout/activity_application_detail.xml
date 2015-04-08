@@ -1,42 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_material_light"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/app_detail_privacy_score"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15sp"
         android:textSize="20sp"
-        android:id="@+id/app_detail_privacy_score"
-        android:gravity="center"/>
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_detail_permissions_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:id="@+id/app_detail_permissions_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?android:selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/permissions"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/app_detail_permissions_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginTop="5sp"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="100sp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/switch_thumb_normal_material_light"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/app_detail_permissions_high"
+                        android:layout_width="1sp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/risk_red" />
+
+                    <TextView
+                        android:id="@+id/app_detail_permissions_medium"
+                        android:layout_width="1sp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/risk_yellow" />
+
+                    <TextView
+                        android:id="@+id/app_detail_permissions_low"
+                        android:layout_width="1sp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/risk_green" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5sp"
+                android:text="@string/touch_for_more_information"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_detail_updates_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:id="@+id/app_detail_updates_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?android:selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0sp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10sp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/latest_update"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/app_detail_updates_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5sp"
+                        android:layout_marginTop="5sp"
+                        android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@color/switch_thumb_normal_material_light"
+                    android:padding="10sp">
+
+                    <TextView
+                        android:id="@+id/app_detail_updates_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/app_detail_updates_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5sp"
+                android:text="@string/touch_for_all_updates"
+                android:textSize="10sp" />
+
+            </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <Button
+        android:id="@+id/app_detail_show_rules"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/app_detail_show_rules"
-        android:text="@string/show_rule_violations"/>
+        android:text="@string/show_rule_violations" />
 
     <Button
         android:id="@+id/app_detail_data_usage"
-        android:text="@string/show_data_usage"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/app_detail_permissions"
-        android:text="@string/show_permissions"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/app_detail_update_log"
-        android:text="@string/show_update_log"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/show_data_usage" />
 
     <Button
         android:id="@+id/app_detail_questions"
-        android:text="Spm"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Spm" />
 </LinearLayout>

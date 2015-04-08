@@ -9,11 +9,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by sigurdhf on 24.03.2015.
  */
 public class QuestionDialogFragment extends DialogFragment {
+
+    private String packageName;
+    private ArrayList<PermissionFact> permissionFacts;
+    private int n = 0;
+
+    private TextView header;
+    private TextView fact;
 
     public interface QuestionDialogListener {
         public void onQuestionnaireFinished();
@@ -32,20 +42,34 @@ public class QuestionDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        packageName = getArguments().getString(ApplicationListActivity.PACKAGE_NAME);
+        ExtendedPackageInfo packageInfo = ApplicationHelper.getExtendedPackageInfo(getActivity(), packageName);
+        permissionFacts = packageInfo.getPermissionFacts();
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View dialog = inflater.inflate(R.layout.dialog_feeling_question, null);
 
+        header = (TextView) dialog.findViewById(R.id.permission_fact_header);
+        fact = (TextView) dialog.findViewById(R.id.permission_fact_fact);
 
-
+        setHeaderAndFact(permissionFacts.get(n).getHeader(), permissionFacts.get(n).getFact());
 
         builder.setView(dialog);
         builder.setPositiveButton(R.string.show_more, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                // ToDo implement
+                n++;
+
+                if (n < permissionFacts.size()) {
+                    setHeaderAndFact(permissionFacts.get(n).getHeader(), permissionFacts.get(n).getFact());
+                }
             }
         });
         builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
@@ -57,5 +81,10 @@ public class QuestionDialogFragment extends DialogFragment {
         });
 
          return builder.create();
+    }
+
+    private void setHeaderAndFact(String header, String fact) {
+        this.header.setText(header);
+        this.fact.setText(fact);
     }
 }

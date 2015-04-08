@@ -19,8 +19,8 @@ public class PrivacyScoreCalculator {
 
     public static final int MAX_SCORE = 100;
 
-    public static final int LOW_THRESHOLD = 20;
-    public static final int MEDIUM_THRESHOLD = 50;
+    public static final int LOW_THRESHOLD = 0;
+    public static final int MEDIUM_THRESHOLD = 40;
     public static final int HIGH_THRESHOLD = 70;
 
     public static double calculateScore(ArrayList<PermissionDescription> permissions) {

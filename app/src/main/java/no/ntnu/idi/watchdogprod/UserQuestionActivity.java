@@ -1,5 +1,9 @@
 package no.ntnu.idi.watchdogprod;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -24,10 +28,14 @@ public class UserQuestionActivity extends ActionBarActivity {
     SeekBar seekBarQ2;
     SeekBar seekBarQ3;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_question);
+
+        context = getApplicationContext();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Spørsmål");
@@ -58,6 +66,7 @@ public class UserQuestionActivity extends ActionBarActivity {
 
         agree.setOnClickListener(new QuestionButtonListener());
         decline.setOnClickListener(new QuestionButtonListener());
+        submit.setOnClickListener(new QuestionButtonListener());
     }
 
     private class QuestionButtonListener implements View.OnClickListener {
@@ -67,11 +76,20 @@ public class UserQuestionActivity extends ActionBarActivity {
             if (v.getId() == R.id.question_agree_btn) {
                 showQuestions();
             } else if (v.getId() == R.id.question_cancel_btn) {
-                UserQuestionActivity.this.finish();
+                finish();
             } else if (v.getId() == R.id.questions_submit_btn) {
                 submitAnswers();
+                storeAnsweredState();
+                finish();
             }
         }
+    }
+
+    public void storeAnsweredState() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor edit = settings.edit();
+        edit.putBoolean("answeredQuestions", true);
+        edit.apply();
     }
 
     public void showQuestions() {
