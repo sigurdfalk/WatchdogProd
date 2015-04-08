@@ -38,7 +38,7 @@
     <string name="latest_update">Siste oppdatering</string>
     <string name="touch_for_more_information">Trykk for mer informasjon</string>
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
-
+    <string name="replace">Erstatt</string>
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
 
 </resources>

@@ -210,4 +210,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Spm" />
+
+    <Button
+        android:id="@+id/app_detail_replace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/replace" />
+
 </LinearLayout>

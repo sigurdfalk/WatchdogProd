@@ -54,6 +54,7 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
         Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
         Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
         Button showQuestionDialog = (Button) findViewById(R.id.app_detail_questions);
+        Button replace = (Button) findViewById(R.id.app_detail_replace);
 
         LinearLayout permissionsInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_permissions_wrapper);
         LinearLayout updatesInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_updates_wrapper);
@@ -66,6 +67,7 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
         showRuleViolations.setOnClickListener(buttonListener);
         showDataUsage.setOnClickListener(buttonListener);
         showQuestionDialog.setOnClickListener(buttonListener);
+        replace.setOnClickListener(buttonListener);
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
@@ -261,6 +263,8 @@ public class ApplicationDetailActivity extends ActionBarActivity implements Ques
                 startActivity(i);
             } else if (v.getId() == R.id.app_detail_questions) {
                 showQuestionDialog();
+            } else if (v.getId() == R.id.app_detail_replace){
+                //TODO: do replacement stuffs
             }
         }
     }
