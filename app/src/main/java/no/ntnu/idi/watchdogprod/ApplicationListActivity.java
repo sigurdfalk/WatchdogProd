@@ -1,15 +1,14 @@
 package no.ntnu.idi.watchdogprod;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -27,13 +26,18 @@ public class ApplicationListActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ListView listView = (ListView) findViewById(R.id.applications_list);
+        //ListView listView = (ListView) findViewById(R.id.applications_list);
 
         ArrayList<ExtendedPackageInfo> apps = ApplicationHelper.getThirdPartyApplications(this);
-        final ApplicationListAdapter adapter = new ApplicationListAdapter(this, (ArrayList<ExtendedPackageInfo>) apps.clone());
 
+        RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.applications_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        listView.setAdapter(adapter);
+        ApplicationListAdapter adapter2 = new ApplicationListAdapter(this, apps);
+        mRecyclerView.setAdapter(adapter2);
+
+        /*listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -46,7 +50,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
                 startActivity(i);
             }
-        });
+        });*/
     }
 
     @Override

@@ -36,6 +36,7 @@ public class ApplicationHelper {
                 ArrayList<Rule> violatedRules = RuleHelper.getViolatedRules(packageInfo.requestedPermissions, context);
                 ArrayList<PermissionFact> permissionFacts = PermissionFactHelper.getAppPermissionFacts(context, packageInfo.requestedPermissions);
                 ArrayList<AppInfo> updateLog = dataSource.getApplicationUpdatesByPackageName(packageInfo.packageName);
+                Collections.sort(updateLog);
                 thirdPartyApplications.add(new ExtendedPackageInfo(packageInfo, permissionDescriptions, violatedRules, permissionFacts, updateLog));
             }
         }

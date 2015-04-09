@@ -1,7 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="no.ntnu.idi.watchdogprod.ProfileActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+   <item android:id="@+id/main_settings"
+       android:title="@string/main_settings"
+       android:orderInCategory="100"
+    />
 
     <item android:id="@+id/profile_information"
         android:title="@string/profile_info"
@@ -10,4 +13,5 @@
     <item android:id="@+id/profile_tips"
         android:title="@string/profile_tips"
         android:orderInCategory="100"/>
+
 </menu>
