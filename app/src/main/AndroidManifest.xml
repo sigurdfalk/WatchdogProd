@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="no.ntnu.idi.watchdogprod" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/telenor_logo_blue_scaled"
@@ -52,7 +55,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
-
+        <activity android:name=".recommender.RecMain"
+                  android:label="RecMain">
+                  <meta-data
+                            android:name="android.support.PARENT_ACTIVITY"/>
+        </activity>
         <receiver
             android:name=".receivers.ApplicationInstalledReceiver"
             android:label="NewAppInstalledReceiver" >
