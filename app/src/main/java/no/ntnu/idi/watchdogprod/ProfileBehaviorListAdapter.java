@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
@@ -36,19 +38,19 @@ public class ProfileBehaviorListAdapter extends ArrayAdapter<ProfileBehavior> {
             convertView = inflater.inflate(R.layout.list_item_profile_behavior, parent, false);
         }
 
-        ImageView icon = (ImageView) convertView.findViewById(R.id.behavior_item_image);
+//        ImageView icon = (ImageView) convertView.findViewById(R.id.behavior_item_image);
         TextView title = (TextView) convertView.findViewById(R.id.behavior_item_title);
-        TextView text = (TextView) convertView.findViewById(R.id.behavior_item_text);
+        TextView text = (TextView) convertView.findViewById(R.id.collapsable_behavior_text);
 
         ProfileBehavior profileBehavior = objects.get(position);
 
-        if(profileBehavior.getStatus() == 1) {
-            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_sad));
-        } else if(profileBehavior.getStatus() == 2) {
-            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_chackbox_neutral));
-        } else {
-            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_happy));
-        }
+//        if(profileBehavior.getStatus() == 1) {
+//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_sad));
+//        } else if(profileBehavior.getStatus() == 2) {
+//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_chackbox_neutral));
+//        } else {
+//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_happy));
+//        }
 
         title.setText(profileBehavior.getTitle());
 //        text.setText(profileBehavior.getText());
