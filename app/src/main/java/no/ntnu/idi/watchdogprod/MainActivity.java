@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
         listView.setAdapter(arrayAdapter);
+        listView.setScrollContainer(false);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
                                     long id) {
 
                 TextView textView = (TextView)view.findViewById(R.id.collapsable_behavior_text);
-                ImageView imageView = (ImageView)view.findViewById(R.id.behavior_item_arrow);
+                ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
 
                 if(textView.getVisibility() == View.GONE) {
                     textView.setVisibility(View.VISIBLE);

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primary_material_light">
+
+
+
 
     <Button
         android:layout_width="fill_parent"
@@ -15,27 +19,38 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/primary_material_light">
+        android:background="@color/ripple_material_light"
+        android:weightSum="100">
 
         <ImageView
             android:id="@+id/infor"
             android:src="@mipmap/ic_info_outline_white_48dp"
             android:tint="@color/material_blue_grey_800"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_gravity="center_vertical"/>
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5"/>
         <TextView
             android:text="For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den."
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="90"/>
+        <ImageView
+            android:src="@drawable/ic_close_circle_outline_grey600_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:tint="@color/material_blue_grey_800"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5"/>
+
     </LinearLayout>
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Nåværende status "
+        android:text="Nåværende status"
+        android:textColor="@color/material_blue_grey_900"
         android:textSize="25dp" />
 
     <ImageView
@@ -44,14 +59,18 @@
         android:layout_width="100dp"
         android:layout_height="100dp" />
 
-    <View
+    <TextView
+        android:textColor="@color/material_blue_grey_900"
+        android:text="Total score: 55/100"
+        android:gravity="center"
+        android:textSize="20dp"
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/primary_material_light"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"/>
 
     <ListView
+        android:divider="@null"
         android:id="@+id/profile_behavior_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
-
 </LinearLayout>

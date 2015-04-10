@@ -23,6 +23,11 @@
     <color name="risk_green">#007622</color>
     <color name="risk_orange">#ff6600</color>
 
+
+    <color name="lighter_red">#E65C5C</color>
+    <color name="lighter_yellow">#FAE057</color>
+    <color name="lighter_green">#269E49</color>
+
     <!-- Base colors -->
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

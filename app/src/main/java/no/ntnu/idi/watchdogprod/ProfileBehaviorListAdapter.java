@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -44,13 +45,13 @@ public class ProfileBehaviorListAdapter extends ArrayAdapter<ProfileBehavior> {
 
         ProfileBehavior profileBehavior = objects.get(position);
 
-//        if(profileBehavior.getStatus() == 1) {
-//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_sad));
-//        } else if(profileBehavior.getStatus() == 2) {
-//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_chackbox_neutral));
-//        } else {
-//            icon.setImageDrawable(getContext().getResources().getDrawable(R.drawable.selector_checkbox_happy));
-//        }
+        if(profileBehavior.getStatus() == 1) {
+            convertView.setBackgroundColor(context.getResources().getColor(R.color.lighter_red));
+        } else if(profileBehavior.getStatus() == 2) {
+            convertView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
+        } else {
+            convertView.setBackgroundColor(context.getResources().getColor(R.color.lighter_green));
+        }
 
         title.setText(profileBehavior.getTitle());
 //        text.setText(profileBehavior.getText());
