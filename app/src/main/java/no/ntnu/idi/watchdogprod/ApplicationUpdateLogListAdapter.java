@@ -38,7 +38,9 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
         }
 
         TextView date = (TextView) convertView.findViewById(R.id.item_update_log_date);
+        TextView time = (TextView) convertView.findViewById(R.id.item_update_log_time);
         TextView version = (TextView) convertView.findViewById(R.id.item_update_log_version);
+        TextView riskFactor = (TextView) convertView.findViewById(R.id.item_update_log_risk_factor);
         LinearLayout addedPermissionsView = (LinearLayout) convertView.findViewById(R.id.item_update_log_container_added);
         LinearLayout removedPermissionsView = (LinearLayout) convertView.findViewById(R.id.item_update_log_container_removed);
 
@@ -67,9 +69,16 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
             }
         }
 
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        date.setText(dt.format(new Date(appInfo.getLastUpdateTime())));
-        version.setText("v." + appInfo.getVersionCode());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        date.setText(dateFormat.format(new Date(appInfo.getLastUpdateTime())));
+        time.setText(timeFormat.format(new Date(appInfo.getLastUpdateTime())));
+        version.setText("Versjon " + appInfo.getVersionCode());
+
+        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(appInfo.getPermissions(), context);
+        int riskScore = (int) PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+
+        riskFactor.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
 
         return convertView;
     }
