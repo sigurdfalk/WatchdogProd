@@ -96,6 +96,10 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void setPermissionFact(PermissionFact permissionFact) {
         infoHeader.setText(permissionFact.getHeader());
         infoFact.setText(permissionFact.getFact());
+
+        ((RadioButton) findViewById(R.id.permission_fact_radio_happy)).setChecked(false);
+        ((RadioButton) findViewById(R.id.permission_fact_radio_neutral)).setChecked(false);
+        ((RadioButton) findViewById(R.id.permission_fact_radio_sad)).setChecked(false);
     }
 
     private void fillPermissionsCard(ExtendedPackageInfo app) {
