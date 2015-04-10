@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -20,9 +21,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,7 +47,6 @@ public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private ListView listView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,25 @@ public class MainActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                TextView textView = (TextView)view.findViewById(R.id.collapsable_behavior_text);
+                ImageView imageView = (ImageView)view.findViewById(R.id.behavior_item_arrow);
+
+                if(textView.getVisibility() == View.GONE) {
+                    textView.setVisibility(View.VISIBLE);
+                    imageView.setImageResource(R.drawable.arrow_up_bold);
+                } else {
+                    textView.setVisibility(View.GONE);
+                    imageView.setImageResource(R.drawable.ic_arrow_down_bold);
+                }
+
+            }
+        });
 
 //        TextView dbTest = (TextView) findViewById(R.id.database_test_profile);
 
@@ -64,11 +88,10 @@ public class MainActivity extends ActionBarActivity {
 
 
 //        boolean answeredQuestions = checkAnsweredQuestionsState();
-        boolean answeredQuestions = false;
-        if(!answeredQuestions) {
-            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
-            startActivity(intent);
-        }
+//        if(!answeredQuestions) {
+//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
+//            startActivity(intent);
+//        }
                    //=====================================///
 //        setDataUsageSendingAlarm();
 //        setDatabaseLoggingAlarm();
@@ -154,9 +177,7 @@ public class MainActivity extends ActionBarActivity {
         profileBehaviors.add(new ProfileBehavior(null,"Nedgang i farlige apper", "tekst",2));
         profileBehaviors.add(new ProfileBehavior(null,"Økt trusselbilde", "tekst",1));
         profileBehaviors.add(new ProfileBehavior(null,"Mindre datatrafikk", "tekst",3));
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",2));
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",3));
-        profileBehaviors.add(new ProfileBehavior(null,"tittel", "tekst",1));
+        profileBehaviors.add(new ProfileBehavior(null,"Forståelse for tillatelser", "tekst",2));
         return profileBehaviors;
     }
 
@@ -247,9 +268,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_information) {
             return true;
-        } else if(id == R.id.profile_tips) {
-            showTipsDialog();
-        } else if(id == R.id.main_settings) {
+        }  else if(id == R.id.main_settings) {
             //
         }
 

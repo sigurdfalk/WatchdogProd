@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
     <ImageView
-        android:id="@+id/behavior_item_image"
-        android:src="@mipmap/ic_emoticon_neutral_grey600_36dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_gravity="center_vertical"/>
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:id="@+id/behavior_item_arrow"
+    android:src="@mipmap/ic_arrow_down_bold"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:tint="@color/material_blue_grey_800"/>
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/behavior_item_image"-->
+        <!--android:src="@mipmap/ic_emoticon_neutral_grey600_36dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_gravity="center_vertical"/>-->
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,12 +34,14 @@
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:id="@+id/behavior_item_text"
+            android:visibility="gone"
+            android:id="@+id/collapsable_behavior_text"
             android:text="@string/lorum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"/>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
         </LinearLayout>
 
+    
 </LinearLayout>

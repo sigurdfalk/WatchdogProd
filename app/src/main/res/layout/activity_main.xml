@@ -3,48 +3,55 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/privacy_analysis"
         android:id="@+id/main_privacy_analysis_btn"/>
 
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/primary_material_light">
+
+        <ImageView
+            android:id="@+id/infor"
+            android:src="@mipmap/ic_info_outline_white_48dp"
+            android:tint="@color/material_blue_grey_800"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:text="For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den."
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Din Profil"
+        android:text="Nåværende status "
         android:textSize="25dp" />
 
     <ImageView
-        android:src="@mipmap/telenor_logo_blue_scaled"
+        android:src="@drawable/selector_checkbox_happy"
         android:layout_gravity="center"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
-    <TextView
-        android:text="Grafisk fremstilling av profil"
-        android:layout_width="fill_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content" />
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 
     <View
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Adferd"
-        android:textSize="20dp" />
+        android:background="@color/primary_material_light"/>
 
     <ListView
-        android:divider="@null"
         android:id="@+id/profile_behavior_list"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="fill_parent"/>
 
 </LinearLayout>
