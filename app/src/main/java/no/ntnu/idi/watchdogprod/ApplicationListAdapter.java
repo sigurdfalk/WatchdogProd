@@ -174,7 +174,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
-        itemViewHolder.secondLine.setText(extendedPackageInfo.getPackageInfo().versionName);
+        itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
     }
 
     private void fillListHeader(String title, int count, HeaderViewHolder headerViewHolder) {
