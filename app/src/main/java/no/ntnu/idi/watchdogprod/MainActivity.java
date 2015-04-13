@@ -107,6 +107,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         if (isInitialLaunch()) {
+            // ToDo bugfix at dette garanteres å gjøre før man kan gå inn i app list
             writeAllApplicationsToUpdateLog();
         }
     }
