@@ -51,12 +51,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
+        //Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
         Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
         Button showQuestionDialog = (Button) findViewById(R.id.app_detail_questions);
 
         LinearLayout permissionsInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_permissions_wrapper);
         LinearLayout updatesInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_updates_wrapper);
+        LinearLayout indicatorsWrapper = (LinearLayout) findViewById(R.id.app_detail_indicators_wrapper);
 
         infoHeader = (TextView) findViewById(R.id.permission_fact_header);
         infoFact = (TextView) findViewById(R.id.permission_fact_fact);
@@ -65,8 +66,9 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         permissionsInfoWrapper.setOnClickListener(buttonListener);
         updatesInfoWrapper.setOnClickListener(buttonListener);
+        indicatorsWrapper.setOnClickListener(buttonListener);
 
-        showRuleViolations.setOnClickListener(buttonListener);
+        //showRuleViolations.setOnClickListener(buttonListener);
         showDataUsage.setOnClickListener(buttonListener);
         showQuestionDialog.setOnClickListener(buttonListener);
 
@@ -75,6 +77,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         setScoreBackgroundColor(privacyScore, packageInfo.getPrivacyScore());
         fillPermissionsCard(packageInfo);
         fillUpdatesCard(packageInfo);
+        fillIndicatorsCard(packageInfo);
         initQuestions();
     }
 
@@ -100,6 +103,25 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         ((RadioButton) findViewById(R.id.permission_fact_radio_happy)).setChecked(false);
         ((RadioButton) findViewById(R.id.permission_fact_radio_neutral)).setChecked(false);
         ((RadioButton) findViewById(R.id.permission_fact_radio_sad)).setChecked(false);
+    }
+
+    private void fillIndicatorsCard(ExtendedPackageInfo packageInfo) {
+        TextView text = (TextView) findViewById(R.id.app_detail_indicators_text);
+        TextView count = (TextView) findViewById(R.id.app_detail_indicators_count);
+        ArrayList<Rule> indicators = packageInfo.getViolatedRules();
+
+        String stringCount = null;
+
+        if (indicators.size() == 0) {
+            stringCount = "ingen";
+            count.setBackgroundColor(getResources().getColor(R.color.risk_green));
+        } else {
+            stringCount = Integer.toString(indicators.size());
+            count.setBackgroundColor(getResources().getColor(R.color.risk_red));
+        }
+
+        count.setText(Integer.toString(indicators.size()));
+        text.setText("Denne applikasjonen har " + stringCount + " indikatorer på farlig adferd");
     }
 
     private void fillPermissionsCard(ExtendedPackageInfo app) {
@@ -300,7 +322,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.app_detail_show_rules) {
+            if(v.getId() == R.id.app_detail_indicators_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
 
                 Bundle bundle = new Bundle();
