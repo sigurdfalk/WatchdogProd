@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +26,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -51,6 +55,15 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//
+//        LinearLayout root = (LinearLayout) findViewById(R.id.main_layout);
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View v = inflater.inflate(R.layout.list_item_profile_behavior,null);
+//        TextView lol = (TextView)v.findViewById(R.id.behavior_item_title);
+//        lol.setText("HEI");
+//        root.addView(v);
+//
+
 
         listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
@@ -62,10 +75,10 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                TextView textView = (TextView)view.findViewById(R.id.collapsable_behavior_text);
+                TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
                 ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
 
-                if(textView.getVisibility() == View.GONE) {
+                if (textView.getVisibility() == View.GONE) {
                     textView.setVisibility(View.VISIBLE);
                     imageView.setImageResource(R.drawable.arrow_up_bold);
                 } else {
@@ -93,7 +106,7 @@ public class MainActivity extends ActionBarActivity {
 //            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
 //            startActivity(intent);
 //        }
-                   //=====================================///
+        //=====================================///
 //        setDataUsageSendingAlarm();
 //        setDatabaseLoggingAlarm();
 
@@ -148,21 +161,21 @@ public class MainActivity extends ActionBarActivity {
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), DataUsageService.class);
         intent.putExtra("dataUsageSendingAlarm", true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 1234, intent,0);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 1234, intent, 0);
         try {
             alarmManager.cancel(pendingIntent);
         } catch (Exception e) {
 
         }
-        int timeForAlarm=5000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+timeForAlarm, timeForAlarm,pendingIntent);
+        int timeForAlarm = 5000;
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
     }
 
     private void setDatabaseLoggingAlarm() {
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), DataUsagePosterService.class);
         intent.putExtra("databaseLoggingAlarm", true);
-        PendingIntent   pendingIntent = PendingIntent.getService(this, 8888, intent,0);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 8888, intent, 0);
         try {
             alarmManager.cancel(pendingIntent);
         } catch (Exception e) {
@@ -170,15 +183,15 @@ public class MainActivity extends ActionBarActivity {
         }
 //        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
         long timeForAlarm = 20000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+ timeForAlarm, timeForAlarm,pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
     }
 
     public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
         ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
-        profileBehaviors.add(new ProfileBehavior(null,"Nedgang i farlige apper", "tekst",2));
-        profileBehaviors.add(new ProfileBehavior(null,"Økt trusselbilde", "tekst",1));
-        profileBehaviors.add(new ProfileBehavior(null,"Mindre datatrafikk", "tekst",3));
-        profileBehaviors.add(new ProfileBehavior(null,"Forståelse for tillatelser", "tekst",2));
+        profileBehaviors.add(new ProfileBehavior(null, "Nedgang i farlige apper", "tekst", 2));
+        profileBehaviors.add(new ProfileBehavior(null, "Økt trusselbilde", "tekst", 1));
+        profileBehaviors.add(new ProfileBehavior(null, "Mindre datatrafikk", "tekst", 3));
+        profileBehaviors.add(new ProfileBehavior(null, "Forståelse for tillatelser", "tekst", 2));
         return profileBehaviors;
     }
 
@@ -230,11 +243,11 @@ public class MainActivity extends ActionBarActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
 
-        View v = inflater.inflate(R.layout.dialog_profile_tips,null);
+        View v = inflater.inflate(R.layout.dialog_profile_tips, null);
 
-        TextView textView = (TextView)v.findViewById(R.id.profile_dialog_tips_text);
+        TextView textView = (TextView) v.findViewById(R.id.profile_dialog_tips_text);
         boolean screenLock = isDeviceSecured();
-        if(screenLock) {
+        if (screenLock) {
             textView.setText("For å ytterligere øke sikkerheten på telefonen kan du: \n - Aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du for eksempel skulle miste den.");
         } else {
             textView.setText("Ingen tips tilgjengelig for øyeblikket");
@@ -269,7 +282,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_information) {
             return true;
-        }  else if(id == R.id.main_settings) {
+        } else if (id == R.id.main_settings) {
             //
         }
 
