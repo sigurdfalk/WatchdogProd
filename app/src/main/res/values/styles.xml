@@ -3,6 +3,8 @@
 
     <style name="Watchdog" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/actionbar_background</item>
+        <item name="colorPrimaryDark">@color/actionbar_background_dark</item>
+        <item name="colorAccent">@color/actionbar_background</item>
     </style>
 
 </resources>

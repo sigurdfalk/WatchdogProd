@@ -4,7 +4,8 @@
     <!-- ActionBar -->
     <color name="actionbar_title_color">#FFF</color>
     <color name="actionbar_subtitle_color">#f2f2f2</color>
-    <color name="actionbar_background">#0091d2</color>
+    <color name="actionbar_background">#00a9e0</color>
+    <color name="actionbar_background_dark">#0091d2</color>
     <color name="actionbar_button_pressed_dark_red">#B00</color>
     <color name="actionbar_button_pressed_medium_red">#CF0404</color>
 
@@ -18,9 +19,14 @@
     <color name="list_element_opened">#EBEBEB</color>
 
     <!-- Risk level -->
-    <color name="risk_red">#e50000</color>
+    <!--<color name="risk_red">#e50000</color>
     <color name="risk_yellow">#ffd911</color>
-    <color name="risk_green">#007622</color>
+    <color name="risk_green">#007622</color>-->
+
+    <color name="risk_red">#E65C5C</color>
+    <color name="risk_yellow">#FAE057</color>
+    <color name="risk_green">#269E49</color>
+
     <color name="risk_orange">#ff6600</color>
 
 
