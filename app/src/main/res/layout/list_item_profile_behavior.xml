@@ -28,6 +28,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
+        <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Klikk for informasjon"/>
+
         <TextView
             android:visibility="gone"
             android:id="@+id/collapsable_behavior_text"

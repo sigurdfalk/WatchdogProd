@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -89,8 +91,34 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-//        TextView dbTest = (TextView) findViewById(R.id.database_test_profile);
+        final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
+        final ImageView cancelTips = (ImageView)findViewById(R.id.main_cancel_tips);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_slide_out_up);
+        cancelTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        root.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                root.startAnimation(animation);
+
+            }
+        });
         ArrayList<ProfileEvent> events = getUninstalledAppsHistory();
         Profile profile = getProfileValues();
 
