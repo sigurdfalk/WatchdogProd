@@ -38,7 +38,7 @@ public class RuleListAdapter extends ArrayAdapter<Rule> {
         Rule rule = objects.get(position);
 
         firstLine.setText(rule.getKey());
-        secondLine.setText(rule.getRule());
+        secondLine.setText(rule.getRuleString());
 
         return convertView;
     }

@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,13 +17,13 @@ public class Rule {
 
     private String key;
     private String name;
-    private String rule;
+    private String ruleString;
     private String description;
 
-    public Rule(String key, String name, String rule, String description) {
+    public Rule(String key, String name, String ruleString, String description) {
         this.key = key;
         this.name = name;
-        this.rule = rule;
+        this.ruleString = ruleString;
         this.description = description;
     }
 
@@ -34,8 +35,8 @@ public class Rule {
         return name;
     }
 
-    public String getRule() {
-        return rule;
+    public String getRuleString() {
+        return ruleString;
     }
 
     public String getDescription() {
@@ -43,7 +44,41 @@ public class Rule {
     }
 
     public boolean isViolated(String[] reqPermissions) {
-        // ToDo implement
+        String[] rules = ruleString.split(":");
+
+        for (String rule : rules) {
+            if (rule.startsWith("_or")) {
+                rule = rule.substring(4, rule.length() - 1);
+                String[] select = rule.split("&");
+
+                boolean containsPerm = false;
+
+                for (String or : select) {
+                    if (containsPermission(or, reqPermissions)) {
+                        containsPerm = true;
+                    }
+                }
+
+                if (!containsPerm) {
+                    return false;
+                }
+            } else {
+                if (!containsPermission(rule, reqPermissions)) {
+                    return false;
+                }
+            }
+        }
+
         return true;
+    }
+
+    private boolean containsPermission(String permission, String[] reqPermissions) {
+        for (String reqPermission : reqPermissions) {
+            if (reqPermission.trim().contains(permission.trim())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

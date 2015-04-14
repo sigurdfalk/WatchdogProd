@@ -30,7 +30,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationListActivity" />
         </activity>
-        <activity android:name=".RuleViolationsActivity" >
+        <activity android:name=".RuleViolationsActivity" android:label="@string/risk_indicators" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
@@ -42,12 +42,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".PermissionListActivity" >
+        <activity android:name=".PermissionListActivity" android:label="@string/permissions">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".ApplicationUpdateLogActivity" >
+        <activity android:name=".ApplicationUpdateLogActivity" android:label="@string/updates">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ApplicationDetailActivity" />
