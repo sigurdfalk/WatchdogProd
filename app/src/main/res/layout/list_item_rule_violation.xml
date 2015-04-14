@@ -23,10 +23,5 @@
             android:textSize="12sp"/>
         
     </LinearLayout>
-    
-    <ImageView
-        android:id="@+id/item_rule_image"
-        android:layout_width="50sp"
-        android:layout_height="fill_parent" />
 
 </LinearLayout>

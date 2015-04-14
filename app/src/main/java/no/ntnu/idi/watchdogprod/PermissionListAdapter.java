@@ -48,13 +48,13 @@ public class PermissionListAdapter extends ArrayAdapter<PermissionDescription> {
     private void setImageColorFromRiskLevel(ImageView imageView, PermissionDescription permissionDescription) {
 
         switch (permissionDescription.getRisk()) {
-            case Rule.RISK_LEVEL_LOW:
+            case PrivacyScoreCalculator.RISK_LOW:
                 imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_green));
                 break;
-            case Rule.RISK_LEVEL_MEDIUM:
+            case PrivacyScoreCalculator.RISK_MEDIUM:
                 imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
                 break;
-            case Rule.RISK_LEVEL_HIGH:
+            case PrivacyScoreCalculator.RISK_HIGH:
                 imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_red));
                 break;
         }
