@@ -40,5 +40,6 @@
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
 
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
+    <string name="risk_indicators">Risikoindikatorer</string>
 
 </resources>
