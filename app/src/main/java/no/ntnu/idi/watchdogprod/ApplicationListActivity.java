@@ -18,6 +18,8 @@ import java.util.ArrayList;
 public class ApplicationListActivity extends ActionBarActivity {
     public static final String PACKAGE_NAME = "packageName";
 
+    private ApplicationListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,31 +28,14 @@ public class ApplicationListActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //ListView listView = (ListView) findViewById(R.id.applications_list);
-
         ArrayList<ExtendedPackageInfo> apps = ApplicationHelper.getThirdPartyApplications(this);
 
         RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.applications_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        ApplicationListAdapter adapter2 = new ApplicationListAdapter(this, apps);
-        mRecyclerView.setAdapter(adapter2);
-
-        /*listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ExtendedPackageInfo extendedPackageInfo = adapter.getItem(position);
-                Intent i = new Intent(ApplicationListActivity.this, ApplicationDetailActivity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(PACKAGE_NAME, extendedPackageInfo.getPackageInfo().packageName);
-                i.putExtras(bundle);
-
-                startActivity(i);
-            }
-        });*/
+        adapter = new ApplicationListAdapter(this, apps);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -66,12 +51,12 @@ public class ApplicationListActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_applications_info:
-                // ToDo show dialog
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

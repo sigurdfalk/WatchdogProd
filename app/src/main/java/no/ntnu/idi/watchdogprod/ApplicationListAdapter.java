@@ -113,6 +113,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public TextView firstLine;
         public TextView secondLine;
         public TextView riskColor;
+        public ImageView errorSign;
+        public ImageView infoSign;
         public LinearLayout wrapper;
 
         public ItemViewHolderOnClickListener listener;
@@ -124,6 +126,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             this.firstLine = (TextView) itemView.findViewById(R.id.list_applications_firstLine);
             this.secondLine = (TextView) itemView.findViewById(R.id.list_applications_secondLine);
             this.riskColor = (TextView) itemView.findViewById(R.id.list_applications_risk_score);
+            this.errorSign = (ImageView) itemView.findViewById(R.id.list_applications_warning);
+            this.infoSign = (ImageView) itemView.findViewById(R.id.list_applications_info);
             this.wrapper = (LinearLayout) itemView.findViewById(R.id.list_applications_wrapper);
 
             wrapper.setOnClickListener(this);
@@ -175,6 +179,18 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
         itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
+
+        if (SharedPreferencesHelper.doShowAppWarningSign(context, extendedPackageInfo.getPackageInfo().packageName)) {
+            itemViewHolder.errorSign.setVisibility(View.VISIBLE);
+        } else {
+            itemViewHolder.errorSign.setVisibility(View.GONE);
+        }
+
+        if (SharedPreferencesHelper.doShowAppInfoSign(context, extendedPackageInfo.getPackageInfo().packageName) && extendedPackageInfo.getPermissionFacts().size() != 0) {
+            itemViewHolder.infoSign.setVisibility(View.VISIBLE);
+        } else {
+            itemViewHolder.infoSign.setVisibility(View.GONE);
+        }
     }
 
     private void fillListHeader(String title, int count, HeaderViewHolder headerViewHolder) {

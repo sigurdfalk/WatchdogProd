@@ -7,9 +7,4 @@
         android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
-
-    <item android:id="@+id/menu_applications_info"
-        android:icon="@mipmap/ic_info_outline_white_48dp"
-        android:title="applikasjoner"
-        app:showAsAction="always"/>
 </menu>
