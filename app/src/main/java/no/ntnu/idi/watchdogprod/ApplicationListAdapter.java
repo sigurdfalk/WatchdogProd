@@ -44,7 +44,6 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return new ItemViewHolder(view, new ItemViewHolder.ItemViewHolderOnClickListener() {
                 @Override
                 public void onItemClick(View caller, int position) {
-                    System.out.println("jHKLJHLKJHKJLH");
 
                     ExtendedPackageInfo extendedPackageInfo = getItem(position);
                     Intent i = new Intent(context, ApplicationDetailActivity.class);
@@ -174,7 +173,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         itemViewHolder.firstLine.setText(ApplicationHelper.getApplicationName(extendedPackageInfo.getPackageInfo(), context));
 
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
+        //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
+        itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
     }
 
     private void fillListHeader(String title, int count, HeaderViewHolder headerViewHolder) {

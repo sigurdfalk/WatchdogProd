@@ -17,7 +17,7 @@
         android:id="@+id/question_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vi ønsker å spørre deg om noen få spørsmål angående personvern. Dette er for å kunne tilpasse informasjon i appliklasjonen til deg, samt gi deg tilbakemeldinger og tips på hvordan du kan ytterligere kan oppretteholde personvernet ditt."/>
+        android:text="Vi ønsker å spørre deg om noen få spørsmål angående personvern. Dette er for å kunne tilpasse informasjon i appliklasjonen til deg, samt gi deg tilbakemeldinger og tips på hvordan du kan ytterligere kan oppretteholde personvernet ditt. \n\n Ønsker du ikke svare på disse spørsmålene nå, er de tilgjengelig fra menyen på et senere tidspunkt."/>
 
     <ScrollView
         android:id="@+id/question_scrollview"

@@ -15,7 +15,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * Created by sigurdhf on 09.03.2015.
  */
 public class RuleHelper {
-    public static final String FILE_NAME = "ruleset.txt";
+    public static final String FILE_NAME = "ruleset.csv";
 
     private static ArrayList<Rule> rules;
 
@@ -76,11 +76,11 @@ public class RuleHelper {
     }
 
     private static Rule getRuleFromCSVLine(String[] line) {
+        String key = line[Rule.KEY];
         String name = line[Rule.NAME];
-        String[] permissions = line[Rule.PERMISSIONS].split(":");
-        int riskLevel = Integer.parseInt(line[Rule.RISK_LEVEL]);
+        String rule = line[Rule.RULE];
         String description = line[Rule.DESCRIPTION];
 
-        return new Rule(name, permissions, riskLevel, description);
+        return new Rule(key, name, rule, description);
     }
 }
