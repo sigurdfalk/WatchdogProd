@@ -34,28 +34,12 @@ public class RuleListAdapter extends ArrayAdapter<Rule> {
 
         TextView firstLine = (TextView) convertView.findViewById(R.id.item_rule_firstLine);
         TextView secondLine = (TextView) convertView.findViewById(R.id.item_rule_secondLine);
-        ImageView image = (ImageView) convertView.findViewById(R.id.item_rule_image);
 
         Rule rule = objects.get(position);
 
         firstLine.setText(rule.getName());
-        secondLine.setText(Arrays.toString(rule.getPermissions()));
-        setImageColorFromRiskLevel(image, rule);
+        secondLine.setText(rule.getDescription());
 
         return convertView;
-    }
-
-    private void setImageColorFromRiskLevel(ImageView imageView, Rule rule) {
-        switch (rule.getRiskLevel()) {
-            case Rule.RISK_LEVEL_LOW:
-                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
-                break;
-            case Rule.RISK_LEVEL_MEDIUM:
-                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_orange));
-                break;
-            case Rule.RISK_LEVEL_HIGH:
-                imageView.setBackgroundColor(context.getResources().getColor(R.color.risk_red));
-                break;
-        }
     }
 }

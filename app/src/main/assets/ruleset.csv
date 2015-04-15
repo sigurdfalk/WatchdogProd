@@ -1,0 +1,10 @@
+Key,Name,Permissions,Description
+RELAY_CONTACT_DATA,Stjele dine kontaktdata,READ_CONTACTS:INTERNET,"Denne applikasjonen har tilgang til informasjon lagret om dine kontakter (fullt navn, telefonnummere, email-adresser, bosted osv.) og kan sende denne informasjonen til andre på internett uten ditt samtykke."
+RELAY_SMS_MESSAGES,Stjele dine SMS-meldinger,READ_SMS:INTERNET,Denne applikasjonen har tilgang til å lese alle dine SMS-meldinger og kan sende disse til andre på internett uten ditt samtykke.
+COVERT_LISTENING_DEVICE,Skjult avlytting,RECEIVE_BOOT_COMPLETED:RECORD_AUDIO:INTERNET,Denne applikasjonen kan overvåke deg ved å spille inn lyd med mikrofonen til din mobil og sende det til mottakere på internett.
+COVERT_CAMERA_DEVICE,Skjult kameraovervåkning,RECEIVE_BOOT_COMPLETED:CAMERA:INTERNET,Denne applikasjonen kan overvåke deg ved å ta bilder eller ta opp video med kameraet på din mobil og sende det til mottakere på internett.
+MOVEMENT_PROFILE,Overvåke din posisjon,RECEIVE_BOOT_COMPLETED:INTERNET:_or[ACCESS_FINE_LOCATION&ACCESS_COARSE_LOCATION],Denne applikasjonen kan overvåke deg ved å periodisk sjekke din posisjon og sende den til mottakere på internett.
+EAVESDROP_ON_PHONE_CALLS,Lytte til dine telefonsamtaler,RECORD_AUDIO:INTERNET:_or[READ_PHONE_STATE&PROCESS_OUTGOING_CALLS],Denne applikasjonen kan ta opp din stemme når du snakker i telefonen og sende dette til mottakere på internett.
+RELAY_AND_FALSIFY_SMS_MESSAGES,Stjele og forfalske dine SMS-meldinger,RECEIVE_SMS:WRITE_SMS:_or[INTERNET&SEND_SMS],Denne applikasjonen kan vite når du får SMS-meldinger og endre eller slette de før du får lest innholdet. Den har også tilgang til å lese alle dine SMS-meldinger og kan sende disse til ukjente via SMS eller internett.
+FALSIFY_SMS_MESSAGES,Forfalske dine SMS-meldinger,RECEIVE_SMS:WRITE_SMS,Denne applikasjonen kan vite når du mottar SMS-meldinger og endre eller slette de før du har lest innholdet.
+FAKE_SHORTCUTS,Forfalske snarveier på din telefon,INSTALL_SHORTCUT:UNINSTALL_SHORTCUT,Denne applikasjonen kan forfalske snarveier på din hjemskjerm. Dette betyr at en snarvei du stoler på i virkeligheten kan føre deg til skadelig programvare.

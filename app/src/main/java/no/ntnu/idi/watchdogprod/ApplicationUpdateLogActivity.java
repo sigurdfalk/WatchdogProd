@@ -38,7 +38,6 @@ public class ApplicationUpdateLogActivity extends ActionBarActivity {
         }
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo, this));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.application_update_log_list);

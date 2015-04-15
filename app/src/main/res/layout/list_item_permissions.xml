@@ -20,8 +20,7 @@
         <TextView
             android:id="@+id/item_permissions_secondLine"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

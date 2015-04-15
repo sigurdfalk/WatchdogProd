@@ -2,43 +2,41 @@ package no.ntnu.idi.watchdogprod;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by sigurdhf on 09.03.2015.
  */
 public class Rule {
-    public static final int RISK_LEVEL_LOW = 1;
-    public static final int RISK_LEVEL_MEDIUM = 2;
-    public static final int RISK_LEVEL_HIGH = 3;
 
-    public static final int NAME = 0;
-    public static final int PERMISSIONS = 1;
-    public static final int RISK_LEVEL = 2;
+    public static final int KEY = 0;
+    public static final int NAME = 1;
+    public static final int RULE = 2;
     public static final int DESCRIPTION = 3;
 
+    private String key;
     private String name;
-    private String[] permissions;
-    private int riskLevel;
+    private String ruleString;
     private String description;
 
-    public Rule(String name, String[] permissions, int riskLevel, String description) {
+    public Rule(String key, String name, String ruleString, String description) {
+        this.key = key;
         this.name = name;
-        this.permissions = permissions;
-        this.riskLevel = riskLevel;
+        this.ruleString = ruleString;
         this.description = description;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getName() {
         return name;
     }
 
-    public String[] getPermissions() {
-        return permissions;
-    }
-
-    public int getRiskLevel() {
-        return riskLevel;
+    public String getRuleString() {
+        return ruleString;
     }
 
     public String getDescription() {
@@ -46,14 +44,41 @@ public class Rule {
     }
 
     public boolean isViolated(String[] reqPermissions) {
-        List<String> reqPermList = Arrays.asList(reqPermissions);
+        String[] rules = ruleString.split(":");
 
-        for (String permission : permissions) {
-            if (!reqPermList.contains(permission)) {
-                return false;
+        for (String rule : rules) {
+            if (rule.startsWith("_or")) {
+                rule = rule.substring(4, rule.length() - 1);
+                String[] select = rule.split("&");
+
+                boolean containsPerm = false;
+
+                for (String or : select) {
+                    if (containsPermission(or, reqPermissions)) {
+                        containsPerm = true;
+                    }
+                }
+
+                if (!containsPerm) {
+                    return false;
+                }
+            } else {
+                if (!containsPermission(rule, reqPermissions)) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    private boolean containsPermission(String permission, String[] reqPermissions) {
+        for (String reqPermission : reqPermissions) {
+            if (reqPermission.trim().contains(permission.trim())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

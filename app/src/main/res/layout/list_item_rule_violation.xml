@@ -14,19 +14,14 @@
             android:id="@+id/item_rule_firstLine"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
             android:textSize="16sp"/>
         
         <TextView
             android:id="@+id/item_rule_secondLine"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"/>
+            android:layout_height="wrap_content"/>
         
     </LinearLayout>
-    
-    <ImageView
-        android:id="@+id/item_rule_image"
-        android:layout_width="50sp"
-        android:layout_height="fill_parent" />
 
 </LinearLayout>

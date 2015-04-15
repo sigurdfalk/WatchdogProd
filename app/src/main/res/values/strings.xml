@@ -41,5 +41,6 @@
 
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
     <string name="risk_indicators">Risikoindikatorer</string>
+    <string name="updates">Oppdateringer</string>
 
 </resources>
