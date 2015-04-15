@@ -25,6 +25,9 @@ public class AppInfo implements Comparable<AppInfo> {
         this(-1, packageName, permissions, versionCode, lastUpdateTime);
     }
 
+
+
+
     public long getId() {
         return id;
     }

@@ -53,4 +53,19 @@ public class PrivacyScoreCalculator {
 
         return (score > MAX_SCORE) ? MAX_SCORE : score;
     }
+    public static double permissionScore(PermissionDescription permission){
+        int score = 0;
+        switch (permission.getRisk()) {
+            case RISK_LOW:
+                score += LOW_MULTIPLIER;
+                break;
+            case RISK_MEDIUM:
+                score += MEDIUM_MULTIPLIER;
+                break;
+            case RISK_HIGH:
+                score += HIGH_MULTIPLIER;
+                break;
+        }
+        return score;
+    }
 }

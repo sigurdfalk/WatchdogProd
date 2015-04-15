@@ -1,20 +1,13 @@
 package no.ntnu.idi.watchdogprod;
 
-import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,30 +21,21 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import no.ntnu.idi.watchdogprod.recommender.App;
 import no.ntnu.idi.watchdogprod.recommender.RecMain;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 
@@ -413,14 +397,16 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-
-        JsonArrayRequest json = new JsonArrayRequest("url", new Response.Listener<JSONArray>() {
+        String url = "";
+        JsonArrayRequest json = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray jsonArray) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RecMain.class);
                 i.putExtra("appName", ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext()));
                 i.putExtra("response", parseJsonArray(jsonArray));
+                i.putExtra("packageName",applicationPackageName);
+
                 startActivity(i);
             }
         }, new Response.ErrorListener() {
@@ -439,11 +425,11 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
 
     }
-    private ArrayList<App> parseJsonArray(JSONArray array){
+    private ArrayList<AppInfo> parseJsonArray(JSONArray array){
         Gson gson = new Gson();
         String jsonString = array.toString();
-        Type collectionType = new TypeToken<ArrayList<App>>(){}.getType();
-        ArrayList<App> posts = gson.fromJson(jsonString, collectionType);
+        Type collectionType = new TypeToken<ArrayList<AppInfo>>(){}.getType();
+        ArrayList<AppInfo> posts = gson.fromJson(jsonString, collectionType);
         return posts;
     }
 }

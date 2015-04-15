@@ -23,12 +23,14 @@ public class Profile {
     private double interestInPrivacy;
     private double utilityOverPrivacy;
     private double concernedForLeaks;
+    private int[] profileVector;
 
     public Profile() {
         this.understandingOfPermissions = 3.0;
         this.interestInPrivacy = 5.0;
         this.concernedForLeaks = 5.0;
         this.utilityOverPrivacy = 3.0;
+        this.profileVector = new int[]{5,5,5,5,5,5,5,5};//TODO: check for actual number of permissions
     }
 
     public Profile(double understandingOfPermissions, double interestInPrivacy, double utilityOverPrivacy, double concernedForLeaks) {

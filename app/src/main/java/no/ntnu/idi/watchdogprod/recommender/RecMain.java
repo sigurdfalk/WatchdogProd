@@ -1,28 +1,37 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
-import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
-import org.apache.mahout.cf.taste.impl.similarity.GenericItemSimilarity;
-import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
-import org.apache.mahout.cf.taste.model.DataModel;
-import org.apache.mahout.cf.taste.recommender.Recommender;
-import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
+import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 
 /**
  * Created by Wschive on 08/04/15.
  */
 public class RecMain extends ActionBarActivity{
+    Context context;
+    String packageName;
+    String appName;
+    ArrayList<AppInfo> appInfos;
 
-    RecommenderBuilder recommenderBuilder = new RecommenderBuilder() {
-        @Override
-        public Recommender buildRecommender(DataModel model) throws TasteException {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_data_usage);
 
-            ItemSimilarity similarity = new PearsonCorrelationSimilarity(model);
-            return new GenericItemBasedRecommender(model, similarity);
-        }
-    };
+        context = getApplicationContext();
+
+        packageName = getIntent().getExtras().getString("packageName");
+        appName = getIntent().getExtras().getString("appName");
+        appInfos = (ArrayList<AppInfo>) getIntent().getExtras().getSerializable("response");
+
+    }
+//        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(appInfo.getPermissions(), context);
+//        int riskScore = (int) PrivacyScoreCalculator.calculateScore(permissionDescriptions);
 
 }
