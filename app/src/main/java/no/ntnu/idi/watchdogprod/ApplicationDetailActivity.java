@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -85,7 +86,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         ArrayList<PermissionFact> permissionFacts = packageInfo.getPermissionFacts();
         permissionFactWrapper = findViewById(R.id.permission_fact_wrapper);
 
-        if (permissionFacts.size() == 0) {
+        if (permissionFacts.size() == 0 || !SharedPreferencesHelper.doShowAppInfoSign(this, packageInfo.getPackageInfo().packageName)) {
             permissionFactWrapper.setVisibility(View.GONE);
             return;
         }
@@ -160,6 +161,14 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             } else if (removedPermissions.size() > 0) {
                 updatesText.setText("Det ble i denne oppdateringen fjernet " + removedPermissions.size() + " tillatelser.");
             }
+        }
+
+        ImageView warningSign = (ImageView) findViewById(R.id.app_detail_updates_warning);
+
+        if (SharedPreferencesHelper.doShowAppWarningSign(this, packageInfo.getPackageInfo().packageName)) {
+            warningSign.setVisibility(View.VISIBLE);
+        } else {
+            warningSign.setVisibility(View.GONE);
         }
 
         setUpdateDateTime(latestUpdate);
@@ -287,6 +296,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         if (currentPermissionFact >= permissionFacts.size()) {
             permissionFactWrapper.setVisibility(View.GONE);
+            SharedPreferencesHelper.setDoShowAppInfoSign(this, packageInfo.getPackageInfo().packageName, false);
             return;
         }
 

@@ -290,12 +290,27 @@
                                 android:orientation="vertical"
                                 android:padding="10sp">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/latest_update"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0sp"
+                                        android:layout_weight="1"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/latest_update"
+                                        android:textColor="#000000"
+                                        android:textSize="18sp" />
+
+                                    <ImageView
+                                        android:id="@+id/app_detail_updates_warning"
+                                        android:layout_width="20sp"
+                                        android:layout_height="20sp"
+                                        android:src="@mipmap/ic_warning_black_48dp"/>
+                                </LinearLayout>
+
 
                                 <TextView
                                     android:id="@+id/app_detail_updates_text"
