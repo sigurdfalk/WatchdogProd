@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 
 /**

@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;

@@ -4,7 +4,7 @@ import android.content.pm.PackageInfo;
 
 import java.util.ArrayList;
 
-import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 
 /**
  * Created by sigurdhf on 20.03.2015.

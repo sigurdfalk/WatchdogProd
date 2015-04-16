@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod.helpers;
+package no.ntnu.idi.watchdogprod.privacyProfile;
 
 import android.content.Context;
 
@@ -78,9 +78,32 @@ public class PrivacyScoreCalculator {
 
         ArrayList<Answer> relevantAnswers = getRelevantAnswers(allAnswers, facts);
 
+        double totalScore = 0.0;
+
+        totalScore += getPermissionsScore(permissions);
+        totalScore += getRuleViolationsScore(ruleViolations);
+        totalScore += getAnswersScore(relevantAnswers);
+
+        return (totalScore > MAX_SCORE) ? MAX_SCORE : totalScore;
+    }
+
+    private static double getPermissionsScore(ArrayList<PermissionDescription> permissions) {
         double score = 0.0;
 
-        // ToDo IMPLEMENT SCORE FFS!
+
+        return score;
+    }
+
+    private static double getRuleViolationsScore(ArrayList<Rule> ruleViolations) {
+        double score = 0.0;
+
+
+        return score;
+    }
+
+    private static double getAnswersScore(ArrayList<Answer> relevantAnswers) {
+        double score = 0.0;
+
 
         return score;
     }

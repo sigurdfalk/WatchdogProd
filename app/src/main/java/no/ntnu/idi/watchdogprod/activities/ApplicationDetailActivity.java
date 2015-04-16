@@ -27,7 +27,7 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
 import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
-import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Rule;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;

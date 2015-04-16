@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
