@@ -17,10 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.idi.watchdogprod.sqlite.answers.Answer;
+import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 
 /**
@@ -39,10 +42,14 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private TextView infoFact;
     private int currentPermissionFact;
 
+    private AnswersDataSource answersDataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_detail);
+
+        answersDataSource = new AnswersDataSource(this);
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
         packageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
@@ -325,7 +332,18 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private void writePermissionFactInteraction(int answer) {
-        // ToDo implement
+        PermissionFact fact = packageInfo.getPermissionFacts().get(currentPermissionFact);
+
+        try {
+            answersDataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // ToDo error handling
+        }
+
+        answersDataSource.insertAnswer(fact.getId(), new Date().getTime(), packageInfo.getPackageInfo().packageName, answer);
+
+        answersDataSource.close();
     }
 
     private class ButtonListener implements View.OnClickListener {

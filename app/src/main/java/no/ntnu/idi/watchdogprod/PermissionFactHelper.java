@@ -75,10 +75,11 @@ public class PermissionFactHelper {
     }
 
     private static PermissionFact getPermissionFactsFromCSVLine(String[] line) {
-        String[] permissions = line[0].split(",");
-        String header = line[1];
-        String fact = line[2];
+        int id = Integer.parseInt(line[0]);
+        String[] permissions = line[1].split(",");
+        String header = line[2];
+        String fact = line[3];
 
-        return new PermissionFact(permissions, header.trim(), fact.trim());
+        return new PermissionFact(id, permissions, header.trim(), fact.trim());
     }
 }
