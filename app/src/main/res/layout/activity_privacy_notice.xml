@@ -11,7 +11,7 @@
         android:gravity="center"
         android:padding="10sp"/>
 
-    <no.ntnu.idi.watchdogprod.InteractiveScrollView
+    <no.ntnu.idi.watchdogprod.views.InteractiveScrollView
         android:layout_width="fill_parent"
         android:layout_height="0sp"
         android:layout_weight="1"
@@ -26,7 +26,7 @@
             android:textColor="@color/black"
             android:padding="5sp"
             android:id="@+id/privacy_notice_text"/>
-    </no.ntnu.idi.watchdogprod.InteractiveScrollView>
+    </no.ntnu.idi.watchdogprod.views.InteractiveScrollView>
 
     <LinearLayout
         android:layout_width="fill_parent"

@@ -13,10 +13,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
 
-import no.ntnu.idi.watchdogprod.domain.DataUsage;
+import no.ntnu.idi.watchdogprod.domain.DataLog;
 
 /**
  * Created by fredsten on 09.03.2015.

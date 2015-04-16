@@ -1,29 +1,19 @@
 package no.ntnu.idi.watchdogprod.receivers;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import no.ntnu.idi.watchdogprod.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.MainActivity;
-import no.ntnu.idi.watchdogprod.PermissionHelper;
-import no.ntnu.idi.watchdogprod.PrivacyScoreCalculator;
-import no.ntnu.idi.watchdogprod.R;
-import no.ntnu.idi.watchdogprod.SharedPreferencesHelper;
-import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
 /**
  * Created by fredsten on 09.03.2015.

@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesSQLiteHelper;
+import no.ntnu.idi.watchdogprod.domain.Answer;
 
 /**
  * Created by sigurdhf on 16.04.2015.
@@ -49,8 +50,28 @@ public class AnswersDataSource {
         return newAnswer;
     }
 
+    public ArrayList<Answer> getAnswersByPackageName(String packageName) {
+        Cursor cursor = db.query(AnswersSQLiteHelper.TABLE_ANSWERS,
+                allColumns, null, null, null, null, null);
+
+        return cursorToAppInfoList(cursor);
+    }
+
     private Answer cursorToAnswer(Cursor cursor) {
         return new Answer(cursor.getLong(0), cursor.getInt(1), cursor.getLong(2), cursor.getString(3), cursor.getInt(4));
     }
 
+    private ArrayList<Answer> cursorToAppInfoList(Cursor cursor) {
+        ArrayList<Answer> applicationUpdates = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Answer answer = cursorToAnswer(cursor);
+            applicationUpdates.add(answer);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return applicationUpdates;
+    }
 }

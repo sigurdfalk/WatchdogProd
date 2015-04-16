@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.adapters.PermissionListAdapter;
+import no.ntnu.idi.watchdogprod.R;
 
 /**
  * Created by sigurdhf on 09.03.2015.

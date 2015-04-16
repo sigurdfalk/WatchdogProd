@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.helpers;
 
 /**
  * Created by fredsten on 03.03.2015.

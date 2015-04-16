@@ -1,9 +1,11 @@
-package no.ntnu.idi.watchdogprod.sqlite.answers;
+package no.ntnu.idi.watchdogprod.domain;
+
+import java.util.Date;
 
 /**
  * Created by sigurdhf on 16.04.2015.
  */
-public class Answer {
+public class Answer implements Comparable<Answer> {
     private long id;
     private int answerId;
     private long date;
@@ -36,5 +38,19 @@ public class Answer {
 
     public int getAnswer() {
         return answer;
+    }
+
+    @Override
+    public int compareTo(Answer another) {
+        Date thisDate = new Date(this.getDate());
+        Date anotherDate = new Date(another.getDate());
+
+        if (thisDate.before(anotherDate)) {
+            return 1;
+        } else if (thisDate.after(anotherDate)) {
+            return -1;
+        }
+
+        return 0;
     }
 }

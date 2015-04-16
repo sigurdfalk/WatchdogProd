@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -20,17 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.androidplot.Plot;
-import com.androidplot.ui.AnchorPosition;
 import com.androidplot.ui.SizeLayoutType;
 import com.androidplot.ui.SizeMetrics;
-import com.androidplot.ui.YLayoutStyle;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PointLabelFormatter;
@@ -42,12 +38,13 @@ import com.androidplot.xy.XYStepMode;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
-import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import no.ntnu.idi.watchdogprod.sqlite.datausage.DataLog;
+import no.ntnu.idi.watchdogprod.helpers.DataUtils;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.DataLog;
 import no.ntnu.idi.watchdogprod.sqlite.datausage.DataUsageSource;
 
 

@@ -1,16 +1,18 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.helpers;
 
         import android.content.Context;
-        import android.content.pm.ApplicationInfo;
         import android.content.pm.PackageInfo;
         import android.content.pm.PackageManager;
 
-        import java.lang.reflect.Array;
         import java.util.ArrayList;
         import java.util.Collections;
         import java.util.List;
 
-        import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+        import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+        import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+        import no.ntnu.idi.watchdogprod.domain.PermissionFact;
+        import no.ntnu.idi.watchdogprod.domain.Rule;
+        import no.ntnu.idi.watchdogprod.domain.AppInfo;
         import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 
 /**

@@ -1,7 +1,5 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,6 +11,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.Rule;
+import no.ntnu.idi.watchdogprod.helpers.RuleHelper;
+import no.ntnu.idi.watchdogprod.adapters.RuleListAdapter;
 
 /**
  * Created by sigurdhf on 09.03.2015.

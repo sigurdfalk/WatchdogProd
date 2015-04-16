@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.helpers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import au.com.bytecode.opencsv.CSVReader;
+import no.ntnu.idi.watchdogprod.domain.Rule;
 
 /**
  * Created by sigurdhf on 09.03.2015.

@@ -1,11 +1,10 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.domain;
 
 import android.content.pm.PackageInfo;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
 
 /**
  * Created by sigurdhf on 20.03.2015.

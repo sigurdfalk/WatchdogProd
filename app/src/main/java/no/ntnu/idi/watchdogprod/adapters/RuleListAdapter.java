@@ -1,16 +1,16 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.Rule;
 
 /**
  * Created by sigurdhf on 09.03.2015.

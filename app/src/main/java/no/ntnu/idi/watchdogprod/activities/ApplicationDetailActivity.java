@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,9 +22,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import no.ntnu.idi.watchdogprod.sqlite.answers.Answer;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.domain.PermissionFact;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.Rule;
+import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 
 /**
  * Created by sigurdhf on 06.03.2015.

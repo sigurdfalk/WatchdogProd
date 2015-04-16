@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

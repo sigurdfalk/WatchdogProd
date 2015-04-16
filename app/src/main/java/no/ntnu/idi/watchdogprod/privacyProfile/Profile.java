@@ -1,10 +1,5 @@
 package no.ntnu.idi.watchdogprod.privacyProfile;
 
-import java.util.ArrayList;
-
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileEvent;
-
 /**
  * Created by sigurdhf on 20.03.2015.
  */

@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
+import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
 
 /**
  * Created by fredsten on 20.03.2015.

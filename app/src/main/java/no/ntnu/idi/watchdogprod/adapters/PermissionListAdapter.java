@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.R;
 
 /**
  * Created by sigurdhf on 09.03.2015.

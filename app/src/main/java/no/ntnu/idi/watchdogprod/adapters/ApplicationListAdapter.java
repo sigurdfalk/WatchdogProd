@@ -1,9 +1,8 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
+import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
 
 /**
  * Created by Sigurd on 27/03/15.

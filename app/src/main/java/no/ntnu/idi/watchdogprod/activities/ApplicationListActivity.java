@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,6 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.R;
 
 /**
  * Created by sigurdhf on 05.03.2015.

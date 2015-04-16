@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

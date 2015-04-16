@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.helpers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import au.com.bytecode.opencsv.CSVReader;
+import no.ntnu.idi.watchdogprod.domain.PermissionFact;
 
 /**
  * Created by sigurdhf on 25.03.2015.

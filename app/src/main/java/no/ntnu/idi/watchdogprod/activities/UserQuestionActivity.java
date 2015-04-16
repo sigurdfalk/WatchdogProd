@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import no.ntnu.idi.watchdogprod.R;
 
 
 public class UserQuestionActivity extends ActionBarActivity {

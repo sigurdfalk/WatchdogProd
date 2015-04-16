@@ -1,22 +1,21 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import no.ntnu.idi.watchdogprod.views.InteractiveScrollView;
+import no.ntnu.idi.watchdogprod.MainActivity;
+import no.ntnu.idi.watchdogprod.R;
 
 /**
  * Created by sigurdhf on 16.03.2015.

@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 
 /**

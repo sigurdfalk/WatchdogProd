@@ -1,12 +1,10 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 
 /**
  * Created by sigurdhf on 10.03.2015.

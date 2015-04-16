@@ -8,14 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,24 +19,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
+import no.ntnu.idi.watchdogprod.adapters.ProfileBehaviorListAdapter;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
 import no.ntnu.idi.watchdogprod.services.DataUsageService;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileEvent;
+import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
 
 
 public class MainActivity extends ActionBarActivity {

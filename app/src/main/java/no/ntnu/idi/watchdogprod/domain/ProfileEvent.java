@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod.sqlite.profile;
+package no.ntnu.idi.watchdogprod.domain;
 
 /**
  * Created by fredsten on 20.03.2015.

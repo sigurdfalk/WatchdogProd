@@ -1,4 +1,4 @@
-package no.ntnu.idi.watchdogprod;
+package no.ntnu.idi.watchdogprod.domain;
 
 /**
  * Created by sigurdhf on 09.03.2015.
