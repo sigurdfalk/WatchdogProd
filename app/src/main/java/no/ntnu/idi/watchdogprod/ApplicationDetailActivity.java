@@ -200,19 +200,19 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         ViewGroup.LayoutParams params = diagramHigh.getLayoutParams();
         double width = (countHigh / countAll) * 100.0;
         int pix = getPixelsFromDp((int) width);
-        params.width = (pix != 0) ? pix : 2;
+        params.height = (pix != 0) ? pix : 2;
         diagramHigh.setLayoutParams(params);
 
         params = diagramMedium.getLayoutParams();
         width = (countMedium / countAll) * 100.0;
         pix = getPixelsFromDp((int) width);
-        params.width = (pix != 0) ? pix : 2;
+        params.height = (pix != 0) ? pix : 2;
         diagramMedium.setLayoutParams(params);
 
         params = diagramLow.getLayoutParams();
         width = (countLow / countAll) * 100.0;
         pix = getPixelsFromDp((int) width);
-        params.width = (pix != 0) ? pix : 2;
+        params.height = (pix != 0) ? pix : 2;
         diagramLow.setLayoutParams(params);
 
     }
