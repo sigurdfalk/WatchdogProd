@@ -50,6 +50,18 @@ public class PermissionHelper {
         return appPermDesc;
     }
 
+    public static PermissionDescription getPermissionDescription(Context context, String permission) {
+        ArrayList<PermissionDescription> allPermissionDescriptions = getAllPermissionDescriptions(context);
+
+        for (PermissionDescription permissionDescription : allPermissionDescriptions) {
+            if (permission.contains(permissionDescription.getName())) {
+                return permissionDescription;
+            }
+        }
+
+        throw new IllegalArgumentException("Permissiondescription of permission " + permission + " do not exist!");
+    }
+
     private static boolean isPermissionDescriptionsPopulated() {
         return permissionDescriptions != null && !permissionDescriptions.isEmpty();
     }
@@ -93,42 +105,62 @@ public class PermissionHelper {
         return new PermissionDescription(name.trim(), designation.trim(), group.trim(), level.trim(), risk, description.trim());
     }
 
-    public static ArrayList<String> newRequestedPermissions(String[] oldPermissions, String[] newPermissions) {
-        ArrayList<String> newReqPerm = new ArrayList<>();
+    public static ArrayList<PermissionDescription> newRequestedPermissions(Context context, String[] oldPermissions, String[] newPermissions) {
+        ArrayList<PermissionDescription> newReqPerm = new ArrayList<>();
 
         for (String newPermission : newPermissions) {
+            PermissionDescription newPermissionDescription = null;
+
+            try {
+                newPermissionDescription = getPermissionDescription(context, newPermission);
+            } catch (Exception e) {
+                System.out.println("PermissionDescription not found!");
+                continue;
+            }
+
+            System.out.println("PermissionDescription found: " + newPermissionDescription.getName());
+
             boolean exists = false;
 
             for (String oldPermission : oldPermissions) {
-                if (newPermission.equals(oldPermission)) {
+                if (oldPermission.contains(newPermissionDescription.getName())) {
                     exists = true;
                     break;
                 }
             }
 
             if (!exists) {
-                newReqPerm.add(newPermission);
+                newReqPerm.add(newPermissionDescription);
             }
         }
 
         return newReqPerm;
     }
 
-    public static ArrayList<String> removedPermissions(String[] oldPermissions, String[] newPermissions) {
-        ArrayList<String> removedPerm = new ArrayList<>();
+    public static ArrayList<PermissionDescription> removedPermissions(Context context, String[] oldPermissions, String[] newPermissions) {
+        ArrayList<PermissionDescription> removedPerm = new ArrayList<>();
 
         for (String oldPermission : oldPermissions) {
+            PermissionDescription removedPermissionDescription = null;
+
+            try {
+                removedPermissionDescription = getPermissionDescription(context, oldPermission);
+            } catch (Exception e) {
+                System.out.println("PermissionDescription not found!");
+                continue;
+            }
+
             boolean exist = false;
 
             for (String newPermission : newPermissions) {
-                if (oldPermission.equals(newPermission)) {
+                if (newPermission.contains(removedPermissionDescription.getName())) {
                     exist = true;
                     break;
                 }
             }
 
             if (!exist) {
-                removedPerm.add(oldPermission);
+                removedPerm.add(removedPermissionDescription);
             }
         }
 

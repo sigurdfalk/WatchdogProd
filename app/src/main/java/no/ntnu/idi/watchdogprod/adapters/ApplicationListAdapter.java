@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -185,7 +186,13 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
-        itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
+        try {
+            double score = PrivacyScoreCalculator.calculateScore(context, extendedPackageInfo);
+            itemViewHolder.secondLine.setText("Score: " + score);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
 
         if (SharedPreferencesHelper.doShowAppWarningSign(context, extendedPackageInfo.getPackageInfo().packageName)) {
             itemViewHolder.errorSign.setVisibility(View.VISIBLE);

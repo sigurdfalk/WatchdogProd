@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
@@ -38,10 +39,6 @@ import no.ntnu.idi.watchdogprod.domain.AppInfo;
  * Created by sigurdhf on 06.03.2015.
  */
 public class ApplicationDetailActivity extends ActionBarActivity {
-    public static final int ANSWER_HAPPY = 0;
-    public static final int ANSWER_NEUTRAL = 1;
-    public static final int ANSWER_SAD = 2;
-
     private String applicationPackageName;
     private ExtendedPackageInfo packageInfo;
 
@@ -95,6 +92,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         fillUpdatesCard(packageInfo);
         fillIndicatorsCard(packageInfo);
         initQuestions();
+
+        try {
+            double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
+            System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initQuestions() {
@@ -158,8 +162,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             updatesText.setText("Denne oppdateringen hadde ingen innvirkning på applikasjonens risikofaktor.");
         } else {
             AppInfo previousUpdate = app.getUpdateLog().get(1);
-            ArrayList<String> addedPermissions = PermissionHelper.newRequestedPermissions(previousUpdate.getPermissions(), latestUpdate.getPermissions());
-            ArrayList<String> removedPermissions = PermissionHelper.removedPermissions(previousUpdate.getPermissions(), latestUpdate.getPermissions());
+            ArrayList<PermissionDescription> addedPermissions = PermissionHelper.newRequestedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
+            ArrayList<PermissionDescription> removedPermissions = PermissionHelper.removedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
 
             if (addedPermissions.size() == 0 && removedPermissions.size() == 0) {
                 updatesText.setText("Denne oppdateringen hadde ingen innvirkning på applikasjonens risikofaktor.");
@@ -284,19 +288,19 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         switch(view.getId()) {
             case R.id.permission_fact_radio_happy:
                 if (checked) {
-                    writePermissionFactInteraction(ANSWER_HAPPY);
+                    writePermissionFactInteraction(Answer.ANSWER_HAPPY);
                 }
 
                 break;
             case R.id.permission_fact_radio_neutral:
                 if (checked) {
-                    writePermissionFactInteraction(ANSWER_NEUTRAL);
+                    writePermissionFactInteraction(Answer.ANSWER_NEUTRAL);
                 }
 
                 break;
             case R.id.permission_fact_radio_sad:
                 if (checked) {
-                    writePermissionFactInteraction(ANSWER_SAD);
+                    writePermissionFactInteraction(Answer.ANSWER_SAD);
                 }
 
                 break;
@@ -352,6 +356,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         answersDataSource.insertAnswer(fact.getId(), new Date().getTime(), packageInfo.getPackageInfo().packageName, answer);
 
         answersDataSource.close();
+
+        try {
+            double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
+            System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private class ButtonListener implements View.OnClickListener {

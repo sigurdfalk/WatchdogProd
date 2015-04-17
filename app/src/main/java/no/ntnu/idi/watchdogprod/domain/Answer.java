@@ -6,6 +6,10 @@ import java.util.Date;
  * Created by sigurdhf on 16.04.2015.
  */
 public class Answer implements Comparable<Answer> {
+    public static final int ANSWER_HAPPY = 0;
+    public static final int ANSWER_NEUTRAL = 1;
+    public static final int ANSWER_SAD = 2;
+
     private long id;
     private int answerId;
     private long date;
