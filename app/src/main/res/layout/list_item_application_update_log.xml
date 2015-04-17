@@ -65,12 +65,13 @@
             android:layout_height="wrap_content"
             android:text="@string/added_permissions"
             android:textColor="@color/risk_red"
-            android:textSize="12sp"/>
+            android:textStyle="bold"/>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/item_update_log_container_added_inner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/item_update_log_added_permissions"/>
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -83,12 +84,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/risk_green"
-            android:text="@string/removed_permissions"
-            android:textSize="12sp"/>
+            android:textStyle="bold"
+            android:text="@string/removed_permissions"/>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/item_update_log_container_removed_inner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/item_update_log_removed_permissions"/>
+            android:orientation="vertical"/>
     </LinearLayout>
 </LinearLayout>

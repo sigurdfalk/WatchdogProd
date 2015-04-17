@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import no.ntnu.idi.watchdogprod.domain.DataLog;
 import no.ntnu.idi.watchdogprod.domain.DataUsage;
 
 /**
@@ -23,11 +24,11 @@ import no.ntnu.idi.watchdogprod.domain.DataUsage;
  */
 public class DataUsageSource {
     private SQLiteDatabase db;
-    private SQLiteOpenHelperDataUsage dbHelper;
-    private String[] allColumns = {SQLiteOpenHelperDataUsage.COLUMN_ID_DATA, SQLiteOpenHelperDataUsage.COLUMN_TIMESTAMP_DATA, SQLiteOpenHelperDataUsage.COLUMN_INFO_DATA,
-            SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNFOREGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNBACKGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPFOREGROUND, SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPBACKGROUND};
+    private DataUsageSQLiteOpenHelper dbHelper;
+    private String[] allColumns = {DataUsageSQLiteOpenHelper.COLUMN_ID_DATA, DataUsageSQLiteOpenHelper.COLUMN_TIMESTAMP_DATA, DataUsageSQLiteOpenHelper.COLUMN_INFO_DATA,
+            DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_DOWNFOREGROUND, DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_DOWNBACKGROUND, DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_UPFOREGROUND, DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_UPBACKGROUND};
     public DataUsageSource(Context context) {
-        this.dbHelper = new SQLiteOpenHelperDataUsage(context);
+        this.dbHelper = new DataUsageSQLiteOpenHelper(context);
     }
 
     public void open() throws SQLException {
@@ -36,16 +37,16 @@ public class DataUsageSource {
 
     public DataLog insert(DataLog datalog) {
         ContentValues values = new ContentValues();
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_TIMESTAMP_DATA, new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date()));
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_INFO_DATA, datalog.getDataInfo());
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNFOREGROUND, datalog.getAmountDownForeground());
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_DOWNBACKGROUND, datalog.getAmountDownBackground());
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPFOREGROUND, datalog.getAmountUpForeground());
-        values.put(SQLiteOpenHelperDataUsage.COLUMN_AMOUNT_UPBACKGROUND, datalog.getAmountUpBackground());
-        long insertId = db.insert(SQLiteOpenHelperDataUsage.TABLE_DATA, null,
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_TIMESTAMP_DATA, new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date()));
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_INFO_DATA, datalog.getDataInfo());
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_DOWNFOREGROUND, datalog.getAmountDownForeground());
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_DOWNBACKGROUND, datalog.getAmountDownBackground());
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_UPFOREGROUND, datalog.getAmountUpForeground());
+        values.put(DataUsageSQLiteOpenHelper.COLUMN_AMOUNT_UPBACKGROUND, datalog.getAmountUpBackground());
+        long insertId = db.insert(DataUsageSQLiteOpenHelper.TABLE_DATA, null,
                 values);
-        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA,
-                allColumns, SQLiteOpenHelperDataUsage.COLUMN_ID_DATA + " = " + insertId, null,
+        Cursor cursor = db.query(DataUsageSQLiteOpenHelper.TABLE_DATA,
+                allColumns, DataUsageSQLiteOpenHelper.COLUMN_ID_DATA + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         DataLog newDataLog = cursorToDataLog(cursor);
@@ -60,7 +61,7 @@ public class DataUsageSource {
     }
 
     public void PrintDatabase() {
-        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
+        Cursor cursor = db.query(DataUsageSQLiteOpenHelper.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
             System.out.println("DATE " + cursor.getString(1) + " DATATEST " + cursor.getLong(3));
@@ -69,7 +70,7 @@ public class DataUsageSource {
 
     public ArrayList<DataLog> getDataLogsForApp(String packageName) {
         ArrayList<DataLog> datalogs = new ArrayList<>();
-        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
+        Cursor cursor = db.query(DataUsageSQLiteOpenHelper.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
             if (cursor.getString(2).equals(packageName)) {
@@ -81,7 +82,7 @@ public class DataUsageSource {
 
     public DataLog getDataTotals(String packageName) {
         ArrayList<DataLog> dataLogs = new ArrayList<>();
-        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
+        Cursor cursor = db.query(DataUsageSQLiteOpenHelper.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.moveToNext()) {
             if (cursor.getString(2).equals(packageName)) {
@@ -121,7 +122,7 @@ public class DataUsageSource {
 
         final SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 
-        Cursor cursor = db.query(SQLiteOpenHelperDataUsage.TABLE_DATA, allColumns, null, null, null, null, null);
+        Cursor cursor = db.query(DataUsageSQLiteOpenHelper.TABLE_DATA, allColumns, null, null, null, null, null);
         cursor.moveToFirst();
 
         while (cursor.moveToNext()) {

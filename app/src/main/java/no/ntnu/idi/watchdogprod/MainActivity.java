@@ -39,33 +39,31 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
-import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
 import no.ntnu.idi.watchdogprod.services.DataUsageService;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileEvent;
+import no.ntnu.idi.watchdogprod.adapters.ProfileBehaviorListAdapter;
+import no.ntnu.idi.watchdogprod.activities.*;
 
 
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private ListView listView;
+    private Profile profile;
+    private int installTrend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//
-//        LinearLayout root = (LinearLayout) findViewById(R.id.main_layout);
-//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.list_item_profile_behavior,null);
-//        TextView lol = (TextView)v.findViewById(R.id.behavior_item_title);
-//        lol.setText("HEI");
-//        root.addView(v);
-//
 
+        initProfile();
 
         listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
@@ -79,12 +77,15 @@ public class MainActivity extends ActionBarActivity {
 
                 TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
                 ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
+                TextView clickText = (TextView)view.findViewById(R.id.collapsable_click_text);
 
                 if (textView.getVisibility() == View.GONE) {
                     textView.setVisibility(View.VISIBLE);
+                    clickText.setVisibility(View.GONE);
                     imageView.setImageResource(R.drawable.arrow_up_bold);
                 } else {
                     textView.setVisibility(View.GONE);
+                    clickText.setVisibility(View.VISIBLE);
                     imageView.setImageResource(R.drawable.ic_arrow_down_bold);
                 }
 
@@ -98,7 +99,6 @@ public class MainActivity extends ActionBarActivity {
         cancelTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
@@ -116,27 +116,8 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
                 root.startAnimation(animation);
-
             }
         });
-        ArrayList<ProfileEvent> events = getUninstalledAppsHistory();
-        Profile profile = getProfileValues();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ProfileEvent event : events) {
-            stringBuilder.append(event.getPackageName() + " " + event.getEvent() + " " + event.getValue() + "\n");
-        }
-//        dbTest.setText("uninstalled apps: " + stringBuilder.toString() + "\nScreenLOCK: " + isDeviceSecured());
-
-
-//        boolean answeredQuestions = checkAnsweredQuestionsState();
-//        if(!answeredQuestions) {
-//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
-//            startActivity(intent);
-//        }
-        //=====================================///
-//        setDataUsageSendingAlarm();
-//        setDatabaseLoggingAlarm();
 
         Button privacyAnalysisBtn = (Button) findViewById(R.id.main_privacy_analysis_btn);
         privacyAnalysisBtn.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +132,24 @@ public class MainActivity extends ActionBarActivity {
             // ToDo bugfix at dette garanteres å gjøre før man kan gå inn i app list
             writeAllApplicationsToUpdateLog();
         }
+
+        boolean answeredQuestions = checkAnsweredQuestionsState();
+        if(!answeredQuestions) {
+//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
+//            startActivity(intent);
+        }
+
+
+    }
+
+    private void initProfile(){
+        //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
+
+        profile = new Profile();
+        profile.createProfile(this);
+
+        installTrend = profile.getInstallTrendRiskIncreasing();
+        System.out.println("TREND " + installTrend);
     }
 
     private boolean isInitialLaunch() {
@@ -180,9 +179,47 @@ public class MainActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
         }
-
         dataSource.close();
+    }
 
+    public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
+        ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
+        if(installTrend > 0) {
+            System.out.println("HEISADASDASDASAS");
+            profileBehaviors.add(new ProfileBehavior(null, "Økning i installering av risikofylte apper", "tekst", 1));
+        } else if(installTrend < 0) {
+            profileBehaviors.add(new ProfileBehavior(null, "Nedgang i installering av risikifylte apper", "tekst", 3));
+        } else {
+            profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
+        }
+//        profileBehaviors.add(new ProfileBehavior(null, "Økt trusselbilde", "tekst", 1));
+//        profileBehaviors.add(new ProfileBehavior(null, "Mindre datatrafikk", "tekst", 3));
+//        profileBehaviors.add(new ProfileBehavior(null, "Forståelse for tillatelser", "tekst", 2));
+        return profileBehaviors;
+    }
+
+    public boolean checkAnsweredQuestionsState() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        return settings.getBoolean("answeredQuestions", false);
+    }
+
+    private boolean isScreenLockActivated() {
+        String LOCKSCREEN_UTILS = "com.android.internal.widget.LockPatternUtils";
+        try {
+            Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
+            Object lockUtils = lockUtilsClass.getConstructor(Context.class).newInstance(this);
+
+            Method method = lockUtilsClass.getMethod("getActivePasswordQuality");
+
+            int lockProtectionLevel = Integer.valueOf(String.valueOf(method.invoke(lockUtils)));
+
+            if (lockProtectionLevel >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
+                return true;
+            }
+        } catch (Exception e) {
+            Log.e("reflectInternalUtils", "ex:" + e);
+        }
+        return false;
     }
 
     private void setDataUsageSendingAlarm() {
@@ -213,85 +250,6 @@ public class MainActivity extends ActionBarActivity {
 //        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
         long timeForAlarm = 20000;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
-    }
-
-    public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
-        ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
-        profileBehaviors.add(new ProfileBehavior(null, "Nedgang i farlige apper", "tekst", 2));
-        profileBehaviors.add(new ProfileBehavior(null, "Økt trusselbilde", "tekst", 1));
-        profileBehaviors.add(new ProfileBehavior(null, "Mindre datatrafikk", "tekst", 3));
-        profileBehaviors.add(new ProfileBehavior(null, "Forståelse for tillatelser", "tekst", 2));
-        return profileBehaviors;
-    }
-
-    public boolean checkAnsweredQuestionsState() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        return settings.getBoolean("answeredQuestions", false);
-    }
-
-
-    public ArrayList<ProfileEvent> getUninstalledAppsHistory() {
-        ProfileDataSource profileDataSource = new ProfileDataSource(this);
-        profileDataSource.open();
-        ArrayList<ProfileEvent> events = profileDataSource.getSpecificEvents(Profile.UNINSTALLED_DANGEROUS_APP);
-        profileDataSource.close();
-        return events;
-    }
-
-    public Profile getProfileValues() {
-        ProfileDataSource profileDataSource = new ProfileDataSource(this);
-        profileDataSource.open();
-        Profile profile = new Profile(profileDataSource.getLatestProfileValue(Profile.UNDERSTANDING_OF_PERMISSIONS),
-                profileDataSource.getLatestProfileValue(Profile.INTEREST_IN_PRIVACY),
-                profileDataSource.getLatestProfileValue(Profile.UTILITY_OVER_PRIVACY),
-                profileDataSource.getLatestProfileValue(Profile.CONCERNED_FOR_LEAKS));
-        profileDataSource.close();
-        return profile;
-    }
-
-    private boolean isDeviceSecured() {
-        String LOCKSCREEN_UTILS = "com.android.internal.widget.LockPatternUtils";
-        try {
-            Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
-            Object lockUtils = lockUtilsClass.getConstructor(Context.class).newInstance(this);
-
-            Method method = lockUtilsClass.getMethod("getActivePasswordQuality");
-
-            int lockProtectionLevel = Integer.valueOf(String.valueOf(method.invoke(lockUtils)));
-
-            if (lockProtectionLevel >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("reflectInternalUtils", "ex:" + e);
-        }
-        return false;
-    }
-
-    private void showTipsDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-
-        View v = inflater.inflate(R.layout.dialog_profile_tips, null);
-
-        TextView textView = (TextView) v.findViewById(R.id.profile_dialog_tips_text);
-        boolean screenLock = isDeviceSecured();
-        if (screenLock) {
-            textView.setText("For å ytterligere øke sikkerheten på telefonen kan du: \n - Aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du for eksempel skulle miste den.");
-        } else {
-            textView.setText("Ingen tips tilgjengelig for øyeblikket");
-        }
-
-        builder.setView(v);
-        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.create();
-        builder.show();
     }
 
     @Override

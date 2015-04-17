@@ -207,7 +207,7 @@
                             </LinearLayout>
 
 
-                            <LinearLayout
+                            <!--<LinearLayout
                                 android:id="@+id/app_detail_percentage_permissions_wrapper"
                                 android:layout_width="100sp"
                                 android:layout_height="fill_parent"
@@ -236,6 +236,72 @@
                                     android:layout_height="0sp"
                                     android:layout_weight="0.33"
                                     android:background="@color/risk_green" />
+
+
+                            </LinearLayout>-->
+
+                            <LinearLayout
+                                android:id="@+id/app_detail_percentage_permissions_wrapper"
+                                android:layout_width="100sp"
+                                android:layout_height="fill_parent"
+                                android:background="@color/switch_thumb_normal_material_light"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0sp"
+                                    android:layout_weight="0.33"
+                                    android:layout_height="fill_parent"
+                                    android:layout_marginLeft="5sp"
+                                    android:layout_marginRight="5sp"
+                                    android:gravity="bottom"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/app_detail_permissions_high"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1sp"
+                                        android:background="@color/risk_red" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0sp"
+                                    android:layout_weight="0.33"
+                                    android:layout_height="fill_parent"
+                                    android:gravity="bottom"
+                                    android:layout_marginLeft="5sp"
+                                    android:layout_marginRight="5sp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/app_detail_permissions_medium"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1sp"
+                                        android:background="@color/risk_yellow" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0sp"
+                                    android:layout_weight="0.33"
+                                    android:layout_height="fill_parent"
+                                    android:gravity="bottom"
+                                    android:layout_marginLeft="5sp"
+                                    android:layout_marginRight="5sp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/app_detail_permissions_low"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="1sp"
+                                        android:background="@color/risk_green" />
+
+                                </LinearLayout>
+
+
+
+
+
 
 
                             </LinearLayout>

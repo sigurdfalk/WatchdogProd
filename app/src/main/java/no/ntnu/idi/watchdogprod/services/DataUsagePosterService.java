@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 import java.util.HashMap;
 
-import no.ntnu.idi.watchdogprod.sqlite.datausage.DataLog;
+import no.ntnu.idi.watchdogprod.domain.DataLog;
 import no.ntnu.idi.watchdogprod.sqlite.datausage.DataUsageSource;
 
 /**

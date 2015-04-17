@@ -15,27 +15,45 @@
         android:layout_height="25dp"
         android:tint="@color/material_blue_grey_800" />
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:text="Tittel"
-            android:id="@+id/behavior_item_title"
-            android:textSize="20dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-        <TextView
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Klikk for informasjon"/>
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:layout_weight="0.80"
+                android:text="Tittel"
+                android:id="@+id/behavior_item_title"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:tint="@color/material_blue_grey_800"
+                android:layout_weight="0.20"
+                android:src="@drawable/ic_trending_up_black_48dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_gravity="right"
+                android:paddingRight="15dp"
+                android:id="@+id/behavior_item_image"/>
+
+        </LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/collapsable_click_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Klikk for informasjon" />
 
         <TextView
             android:visibility="gone"
