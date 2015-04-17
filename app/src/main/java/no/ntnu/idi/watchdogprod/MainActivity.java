@@ -54,9 +54,10 @@ import no.ntnu.idi.watchdogprod.activities.*;
 
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
-    private ListView listView;
+//    private ListView listView;
     private Profile profile;
     private int installTrend;
+    private int uninstallTrend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,32 +66,32 @@ public class MainActivity extends ActionBarActivity {
 
         initProfile();
 
-        listView = (ListView) findViewById(R.id.profile_behavior_list);
+//        listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
-        listView.setAdapter(arrayAdapter);
-        listView.setScrollContainer(false);
+//        listView.setAdapter(arrayAdapter);
+//        listView.setScrollContainer(false);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-
-                TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
-                ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
-                TextView clickText = (TextView)view.findViewById(R.id.collapsable_click_text);
-
-                if (textView.getVisibility() == View.GONE) {
-                    textView.setVisibility(View.VISIBLE);
-                    clickText.setVisibility(View.GONE);
-                    imageView.setImageResource(R.drawable.arrow_up_bold);
-                } else {
-                    textView.setVisibility(View.GONE);
-                    clickText.setVisibility(View.VISIBLE);
-                    imageView.setImageResource(R.drawable.ic_arrow_down_bold);
-                }
-
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                    long id) {
+//
+//                TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
+//                ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
+//                TextView clickText = (TextView)view.findViewById(R.id.collapsable_click_text);
+//
+//                if (textView.getVisibility() == View.GONE) {
+//                    textView.setVisibility(View.VISIBLE);
+//                    clickText.setVisibility(View.GONE);
+//                    imageView.setImageResource(R.drawable.arrow_up_bold);
+//                } else {
+//                    textView.setVisibility(View.GONE);
+//                    clickText.setVisibility(View.VISIBLE);
+//                    imageView.setImageResource(R.drawable.ic_arrow_down_bold);
+//                }
+//
+//            }
+//        });
 
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
@@ -149,7 +150,9 @@ public class MainActivity extends ActionBarActivity {
         profile.createProfile(this);
 
         installTrend = profile.getInstallTrendRiskIncreasing();
-        System.out.println("TREND " + installTrend);
+        System.out.println("IN TREND " + installTrend);
+        uninstallTrend = profile.getUninstallTrendRiskIncreasing();
+        System.out.println("UN TREND " + uninstallTrend);
     }
 
     private boolean isInitialLaunch() {
@@ -188,6 +191,13 @@ public class MainActivity extends ActionBarActivity {
             profileBehaviors.add(new ProfileBehavior(null, "Økning i installering av risikofylte apper", "tekst", 1));
         } else if(installTrend < 0) {
             profileBehaviors.add(new ProfileBehavior(null, "Nedgang i installering av risikifylte apper", "tekst", 3));
+        } else {
+            profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
+        }
+        if(uninstallTrend > 0) {
+            profileBehaviors.add(new ProfileBehavior(null, "Økning i avinstallering av risikofylte apper", "tekst", 1));
+        } else if(uninstallTrend < 0) {
+            profileBehaviors.add(new ProfileBehavior(null, "Nedgang i avinstallering av risikifylte apper", "tekst", 3));
         } else {
             profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
         }

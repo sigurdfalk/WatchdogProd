@@ -3,8 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_material_light"
+    android:background="@color/ripple_material_light"
     android:id="@+id/main_layout">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,49 +57,128 @@
         </LinearLayout>
 
         <TextView
+            android:text="Total Score: 55/100"
+            android:textSize="25dp"
+            android:textColor="@color/black"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Nåværende status"
-            android:textColor="@color/material_blue_grey_900"
-            android:textSize="20dp" />
+            android:gravity="center"/>
 
-        <ImageView
-            android:src="@drawable/siggen"
-            android:layout_gravity="center"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
-
-        <TextView
-            android:textColor="@color/material_blue_grey_900"
-            android:text="Du har oppnådd: Siggen"
-            android:gravity="center"
-            android:textSize="18dp"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp" />
+            android:orientation="horizontal"
+            android:weightSum="100"
+           >
 
-        <TextView
-            android:textSize="16dp"
-            android:paddingLeft="10dp"
-            android:text="Siste aktivitet"
-            android:background="@color/ripple_material_light"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="50">
 
-        <TextView
-            android:id="@+id/latest_activity"
-            android:padding="5dp"
+                <ImageView
+                    android:src="@mipmap/ic_apps_grey600_48dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:tint="@color/material_blue_grey_800"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:text="Apper"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="50">
+
+                <ImageView
+                    android:src="@drawable/ic_trending_up_black_48dp"
+                    android:tint="@color/material_blue_grey_800"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:text="Trender"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Du installerte Facebook, som kan være en potensiell trussel mot din personlige informasjon" />
+            android:orientation="horizontal"
+            android:weightSum="100"
+            >
 
-        <ListView
-        android:divider="@null"
-        android:id="@+id/profile_behavior_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="50">
 
+                <ImageView
+                    android:src="@mipmap/ic_format_list_bulleted_grey600_48dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:tint="@color/material_blue_grey_800"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:text="Alle tillatelser"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="50">
+
+                <ImageView
+                    android:src="@mipmap/ic_information_outline_grey600_48dp"
+                    android:tint="@color/material_blue_grey_800"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:text="Om"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <!--<ListView-->
+            <!--android:divider="@null"-->
+            <!--android:id="@+id/profile_behavior_list"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" />-->
+        </LinearLayout>
+    </ScrollView>
     </LinearLayout>
-</LinearLayout>

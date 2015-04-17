@@ -46,7 +46,9 @@ public class Profile {
 
     public void createProfile(Context context) {
 //        double[] answers = getUserQuestions(context);
+        System.out.println("INSTALL TREND:" );
         installTrendRiskIncreasing = isTrendIncreasing(getInstalledAppsValues(context), context, Profile.AVG_INSTALLS_VALUE);
+        System.out.println("UNINSTALL TREND");
         uninstallTrendRiskIncreasing = isTrendIncreasing(getUninstalledAppsValues(context), context, Profile.AVG_UNINSTALL_VALUE);
     }
 
@@ -104,7 +106,7 @@ public class Profile {
 
     private int isTrendIncreasing(double[] history, Context context, String type) {
 
-        double oldAvg = getOldAverage(context);
+        double oldAvg = getOldAverage(context,type);
 
         double avg = getAverage(history);
 
@@ -151,10 +153,10 @@ public class Profile {
         return id;
     }
 
-    public double getOldAverage(Context context) {
+    public double getOldAverage(Context context, String type) {
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
-        ProfileEvent profileEvent = profileDataSource.getSpecificEvent(Profile.AVG_INSTALLS_VALUE);
+        ProfileEvent profileEvent = profileDataSource.getSpecificEvent(type);
         if(profileEvent != null) {
             return Double.parseDouble(profileEvent.getValue());
         } else
