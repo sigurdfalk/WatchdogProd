@@ -22,8 +22,8 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
 
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
-        String value = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP,packageName).getValue();
-        profileDataSource.insert(packageName, Profile.UNINSTALLED_DANGEROUS_APP, value);
+        String riskScore = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP,packageName).getValue();
+        profileDataSource.insertEvent(packageName, Profile.UNINSTALLED_DANGEROUS_APP, riskScore);
         profileDataSource.close();
     }
 }

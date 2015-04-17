@@ -19,12 +19,16 @@ import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationUpdateLogActivity;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
+import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
 /**
  * Created by fredsten on 09.03.2015.
@@ -77,12 +81,11 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
 
         dataSource.close();
 
-        /*
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
-        profileDataSource.insert(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
-        profileDataSource.close();*/
+        profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+        profileDataSource.close();
     }
 
     private void showNotification(Context context, String text, String packageName) {

@@ -9,8 +9,7 @@ import android.util.Log;
  * Created by sigurdhf on 10.03.2015.
  */
 public class ApplicationUpdatesSQLiteHelper extends SQLiteOpenHelper {
-    public static final String TABLE_APPLICATION_UPDATES = "applicationUpdates";
-
+    static final String TABLE_APPLICATION_UPDATES = "applicationUpdates";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PACKAGE_NAME = "packageName";
     public static final String COLUMN_PERMISSIONS = "permissions";

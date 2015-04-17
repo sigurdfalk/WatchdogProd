@@ -8,46 +8,62 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.Image;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
-import no.ntnu.idi.watchdogprod.adapters.ProfileBehaviorListAdapter;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
-import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
 import no.ntnu.idi.watchdogprod.services.DataUsageService;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
-import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
+import no.ntnu.idi.watchdogprod.adapters.ProfileBehaviorListAdapter;
+import no.ntnu.idi.watchdogprod.activities.*;
 
 
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private ListView listView;
+    private Profile profile;
+    private int installTrend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initProfile();
 
         listView = (ListView) findViewById(R.id.profile_behavior_list);
         ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
@@ -59,40 +75,49 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                TextView textView = (TextView)view.findViewById(R.id.collapsable_behavior_text);
+                TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
                 ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
+                TextView clickText = (TextView)view.findViewById(R.id.collapsable_click_text);
 
-                if(textView.getVisibility() == View.GONE) {
+                if (textView.getVisibility() == View.GONE) {
                     textView.setVisibility(View.VISIBLE);
+                    clickText.setVisibility(View.GONE);
                     imageView.setImageResource(R.drawable.arrow_up_bold);
                 } else {
                     textView.setVisibility(View.GONE);
+                    clickText.setVisibility(View.VISIBLE);
                     imageView.setImageResource(R.drawable.ic_arrow_down_bold);
                 }
 
             }
         });
 
-//        TextView dbTest = (TextView) findViewById(R.id.database_test_profile);
+        final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
-        ArrayList<ProfileEvent> events = getUninstalledAppsHistory();
-        Profile profile = getProfileValues();
+        final ImageView cancelTips = (ImageView)findViewById(R.id.main_cancel_tips);
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_slide_out_up);
+        cancelTips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ProfileEvent event : events) {
-            stringBuilder.append(event.getPackageName() + " " + event.getEvent() + " " + event.getValue() + "\n");
-        }
-//        dbTest.setText("uninstalled apps: " + stringBuilder.toString() + "\nScreenLOCK: " + isDeviceSecured());
+                    }
 
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        root.setVisibility(View.GONE);
+                    }
 
-//        boolean answeredQuestions = checkAnsweredQuestionsState();
-//        if(!answeredQuestions) {
-//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
-//            startActivity(intent);
-//        }
-                   //=====================================///
-//        setDataUsageSendingAlarm();
-//        setDatabaseLoggingAlarm();
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                root.startAnimation(animation);
+            }
+        });
 
         Button privacyAnalysisBtn = (Button) findViewById(R.id.main_privacy_analysis_btn);
         privacyAnalysisBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +132,24 @@ public class MainActivity extends ActionBarActivity {
             // ToDo bugfix at dette garanteres å gjøre før man kan gå inn i app list
             writeAllApplicationsToUpdateLog();
         }
+
+        boolean answeredQuestions = checkAnsweredQuestionsState();
+        if(!answeredQuestions) {
+//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
+//            startActivity(intent);
+        }
+
+
+    }
+
+    private void initProfile(){
+        //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
+
+        profile = new Profile();
+        profile.createProfile(this);
+
+        installTrend = profile.getInstallTrendRiskIncreasing();
+        System.out.println("TREND " + installTrend);
     }
 
     private boolean isInitialLaunch() {
@@ -136,47 +179,21 @@ public class MainActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
         }
-
         dataSource.close();
-
-    }
-
-    private void setDataUsageSendingAlarm() {
-
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), DataUsageService.class);
-        intent.putExtra("dataUsageSendingAlarm", true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 1234, intent,0);
-        try {
-            alarmManager.cancel(pendingIntent);
-        } catch (Exception e) {
-
-        }
-        int timeForAlarm=5000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+timeForAlarm, timeForAlarm,pendingIntent);
-    }
-
-    private void setDatabaseLoggingAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), DataUsagePosterService.class);
-        intent.putExtra("databaseLoggingAlarm", true);
-        PendingIntent   pendingIntent = PendingIntent.getService(this, 8888, intent,0);
-        try {
-            alarmManager.cancel(pendingIntent);
-        } catch (Exception e) {
-
-        }
-//        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
-        long timeForAlarm = 20000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+ timeForAlarm, timeForAlarm,pendingIntent);
     }
 
     public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
         ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
-        profileBehaviors.add(new ProfileBehavior(null,"Nedgang i farlige apper", "tekst",2));
-        profileBehaviors.add(new ProfileBehavior(null,"Økt trusselbilde", "tekst",1));
-        profileBehaviors.add(new ProfileBehavior(null,"Mindre datatrafikk", "tekst",3));
-        profileBehaviors.add(new ProfileBehavior(null,"Forståelse for tillatelser", "tekst",2));
+        if(installTrend > 0) {
+            profileBehaviors.add(new ProfileBehavior(null, "Økning i installering av risikofylte apper", "tekst", 1));
+        } else if(installTrend < 0) {
+            profileBehaviors.add(new ProfileBehavior(null, "Nedgang i installering av risikifylte apper", "tekst", 3));
+        } else {
+            profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
+        }
+//        profileBehaviors.add(new ProfileBehavior(null, "Økt trusselbilde", "tekst", 1));
+//        profileBehaviors.add(new ProfileBehavior(null, "Mindre datatrafikk", "tekst", 3));
+//        profileBehaviors.add(new ProfileBehavior(null, "Forståelse for tillatelser", "tekst", 2));
         return profileBehaviors;
     }
 
@@ -185,27 +202,7 @@ public class MainActivity extends ActionBarActivity {
         return settings.getBoolean("answeredQuestions", false);
     }
 
-
-    public ArrayList<ProfileEvent> getUninstalledAppsHistory() {
-        ProfileDataSource profileDataSource = new ProfileDataSource(this);
-        profileDataSource.open();
-        ArrayList<ProfileEvent> events = profileDataSource.getSpecificEvents(Profile.UNINSTALLED_DANGEROUS_APP);
-        profileDataSource.close();
-        return events;
-    }
-
-    public Profile getProfileValues() {
-        ProfileDataSource profileDataSource = new ProfileDataSource(this);
-        profileDataSource.open();
-        Profile profile = new Profile(profileDataSource.getLatestProfileValue(Profile.UNDERSTANDING_OF_PERMISSIONS),
-                profileDataSource.getLatestProfileValue(Profile.INTEREST_IN_PRIVACY),
-                profileDataSource.getLatestProfileValue(Profile.UTILITY_OVER_PRIVACY),
-                profileDataSource.getLatestProfileValue(Profile.CONCERNED_FOR_LEAKS));
-        profileDataSource.close();
-        return profile;
-    }
-
-    private boolean isDeviceSecured() {
+    private boolean isScreenLockActivated() {
         String LOCKSCREEN_UTILS = "com.android.internal.widget.LockPatternUtils";
         try {
             Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
@@ -224,30 +221,34 @@ public class MainActivity extends ActionBarActivity {
         return false;
     }
 
-    private void showTipsDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
+    private void setDataUsageSendingAlarm() {
 
-        View v = inflater.inflate(R.layout.dialog_profile_tips,null);
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), DataUsageService.class);
+        intent.putExtra("dataUsageSendingAlarm", true);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 1234, intent, 0);
+        try {
+            alarmManager.cancel(pendingIntent);
+        } catch (Exception e) {
 
-        TextView textView = (TextView)v.findViewById(R.id.profile_dialog_tips_text);
-        boolean screenLock = isDeviceSecured();
-        if(screenLock) {
-            textView.setText("For å ytterligere øke sikkerheten på telefonen kan du: \n - Aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du for eksempel skulle miste den.");
-        } else {
-            textView.setText("Ingen tips tilgjengelig for øyeblikket");
         }
+        int timeForAlarm = 5000;
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
+    }
 
-        builder.setView(v);
-        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
+    private void setDatabaseLoggingAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), DataUsagePosterService.class);
+        intent.putExtra("databaseLoggingAlarm", true);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 8888, intent, 0);
+        try {
+            alarmManager.cancel(pendingIntent);
+        } catch (Exception e) {
 
-        builder.create();
-        builder.show();
+        }
+//        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
+        long timeForAlarm = 20000;
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
     }
 
     @Override
@@ -267,7 +268,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_information) {
             return true;
-        }  else if(id == R.id.main_settings) {
+        } else if (id == R.id.main_settings) {
             //
         }
 

@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by fredsten on 09.03.2015.
  */
-public class SQLiteOpenHelperDataUsage extends SQLiteOpenHelper {
+public class DataUsageSQLiteOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_DATA = "data";
     public static final String COLUMN_ID_DATA = "_id";
     public static final String COLUMN_TIMESTAMP_DATA = "timestamp";
@@ -26,7 +26,7 @@ public class SQLiteOpenHelperDataUsage extends SQLiteOpenHelper {
             + " integer primary key autoincrement, " + COLUMN_TIMESTAMP_DATA
             + " text not null, " + COLUMN_INFO_DATA + " text not null, " + COLUMN_AMOUNT_DOWNFOREGROUND + " text not null," + COLUMN_AMOUNT_DOWNBACKGROUND + " text not null, " + COLUMN_AMOUNT_UPFOREGROUND + " text not null, " + COLUMN_AMOUNT_UPBACKGROUND + " text not null);";
 
-    public SQLiteOpenHelperDataUsage(Context context) {
+    public DataUsageSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME_DATA, null, DATABASE_VERSION_DATA);
     }
 
@@ -37,7 +37,7 @@ public class SQLiteOpenHelperDataUsage extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(SQLiteOpenHelperDataUsage.class.getName(),
+        Log.w(DataUsageSQLiteOpenHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DATA);

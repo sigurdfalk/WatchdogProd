@@ -40,7 +40,7 @@ public class ProfileBehaviorListAdapter extends ArrayAdapter<ProfileBehavior> {
             convertView = inflater.inflate(R.layout.list_item_profile_behavior, parent, false);
         }
 
-//        ImageView icon = (ImageView) convertView.findViewById(R.id.behavior_item_image);
+        ImageView icon = (ImageView) convertView.findViewById(R.id.behavior_item_image);
         TextView title = (TextView) convertView.findViewById(R.id.behavior_item_title);
         TextView text = (TextView) convertView.findViewById(R.id.collapsable_behavior_text);
 
@@ -48,10 +48,12 @@ public class ProfileBehaviorListAdapter extends ArrayAdapter<ProfileBehavior> {
 
         if(profileBehavior.getStatus() == 1) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.lighter_red));
+            icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_trending_up_black_48dp));
         } else if(profileBehavior.getStatus() == 2) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.risk_yellow));
         } else {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.lighter_green));
+            icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
         }
 
         title.setText(profileBehavior.getTitle());

@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
 import no.ntnu.idi.watchdogprod.R;
 
@@ -42,7 +45,6 @@ public class UserQuestionActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Spørsmål");
 
-        questionInfoTitle = (TextView) findViewById(R.id.question_info_title);
         questionInfoText = (TextView) findViewById(R.id.question_info_text);
 
         seekBarQ1 = (SeekBar) findViewById(R.id.seekbar_q1);
@@ -95,17 +97,22 @@ public class UserQuestionActivity extends ActionBarActivity {
     }
 
     public void showQuestions() {
-        questionInfoTitle.setVisibility(View.GONE);
         questionInfoText.setVisibility(View.GONE);
         decline.setVisibility(View.GONE);
         scrollView.setVisibility(View.VISIBLE);
     }
 
-    public int[] submitAnswers() {
+    public void submitAnswers() {
+        ProfileDataSource profileDataSource = new ProfileDataSource(this);
         int q1 = seekBarQ1.getProgress();
         int q2 = seekBarQ2.getProgress();
         int q3 = seekBarQ3.getProgress();
-        //DB here
-        return new int[]{q1, q2, q3};
+        profileDataSource.open();
+        long insert =  profileDataSource.insertUserQuestions(q1,q2,q3);
+        profileDataSource.close();
+        if(insert == -1) {
+            Toast.makeText(this, "DB-FEIL", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
