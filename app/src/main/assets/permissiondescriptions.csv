@@ -1,5 +1,6 @@
- ACCESS_COARSE_LOCATION ,Nettverksbasert posisjon, Location , da ,2,Gir tilgang en tilnærmet posisjon ved hjelp av Wi-Fi eller triangulering av mobilsignaler
- ACCESS_FINE_LOCATION ,Nøyaktig posisjon, Location , da ,2,"Gir tilgang til nøyaktig posisjon ved hjep av GPS, Wi-Fi eller triangulering av mobilsignaler."
+,,,,,
+ ACCESS_COARSE_LOCATION ,Nettverksbasert posisjon, Location , da ,3,Gir tilgang en tilnærmet posisjon ved hjelp av Wi-Fi eller triangulering av mobilsignaler
+ ACCESS_FINE_LOCATION ,Nøyaktig posisjon, Location , da ,3,"Gir tilgang til nøyaktig posisjon ved hjep av GPS, Wi-Fi eller triangulering av mobilsignaler."
  ACCESS_LOCATION_EXTRA_COMMANDS ,, Location , no ,2,
  ACCESS_MOCK_LOCATION ,Falsk posisjon, Location , da ,2,Gir mulighet for å utgi seg på en annen posisjon enn der telefonen faktisk befinner seg.
  ACCESS_NETWORK_STATE ,Se nettverkstilkoblinger, Network , no ,2,"Gir tilgang til informasjon om nettverk, inkludert hvilke nettverk telefonen er koblet til og hvilke nettverk som er tilgjengelige i området der telefonen befinner seg."
@@ -11,7 +12,7 @@
  BLUETOOTH_ADMIN ,Bluetooth innstillinger, Bluetooth , da ,2,Gir tilgang til å søke etter og pare med andre bluetooth-enheter.
  BODY_SENSORS ,Kroppssensorer, Personal Information , no ,1,Gir applikasjonen tilgang til å benytte tilgjengelige kroppssensorer som f.eks. pulsmåler.
  CALL_PHONE ,Ring et telefonnummer, Phone Calls , da ,3,Gir tilgang til å ringe et telefonnummer (utenom nødnummerene) uten ditt samtykke. Kan f.eks. brukes til å ringe betaltjenester.
- CAMERA ,Ta bilder og videoer , Camera , da ,1,Gir tilgang til å ta bilder og ta opp video med alle telefonens kameraer. Dette kan gjøres uten at du får vite det.
+ CAMERA ,Ta bilder og videoer , Camera , da ,2,Gir tilgang til å ta bilder og ta opp video med alle telefonens kameraer. Dette kan gjøres uten at du får vite det.
  CHANGE_CONFIGURATION ,, Development Tools , dv ,2,
  CHANGE_NETWORK_STATE ,Endre nettverkstilkobling, Network , da ,2,Gir tilgang til å slå av og på bruk av nettverk. Kan også koble seg til eller fra et nettverk.
  CHANGE_WIFI_MULTICAST_STATE ,, Effects on Battery Life , da ,1,
@@ -31,9 +32,9 @@
  MODIFY_AUDIO_SETTINGS ,Endre lydinnstillinger, Hardware Controls , da ,2,"Gir tilgang til å endre telefonens lydinnstillinger, f.eks sette på lydløs eller justere volumet."
  NFC ,Kontrollere Near Field Communication (NFC), Network , da ,2,Gir tilgang til å sende eller motta data over NFC. For at NFC skal kunne fungere må enhetene som kommuniserer være kun få centimeter fra hverandre.
  PROCESS_OUTGOING_CALLS ,Redirigere utgående samtaler, Phone Calls , da ,3,"Gir tilgang til å se informasjon om en utgående samtale, bl.a. telefonnummer. Gir også muligheten til å redirigere utgående samtaler til et annet nummer enn det du tastet inn eller fullstendig avslutte samtalen."
- READ_CALENDAR ,Se kalenderhendelser, Personal Information , da ,2,Gir tilgang til å se detaljer om hendelser i din kalender.
- READ_CALL_LOG ,Se samtalelogg, Personal Information , da ,2,Gir tilgang til å se telefonens samtalelogg.
- READ_CONTACTS ,Se kontaktliste, Personal Information , da ,2,"Gir tilgang til informasjon om alle kontakter lagret på telefonen. Denne informasjonen kan bl.a. inkludere navn, telefonnummer, husadresse, emailadresse."
+ READ_CALENDAR ,Se kalenderhendelser, Personal Information , da ,3,Gir tilgang til å se detaljer om hendelser i din kalender.
+ READ_CALL_LOG ,Se samtalelogg, Personal Information , da ,3,Gir tilgang til å se telefonens samtalelogg.
+ READ_CONTACTS ,Se kontaktliste, Personal Information , da ,3,"Gir tilgang til informasjon om alle kontakter lagret på telefonen. Denne informasjonen kan bl.a. inkludere navn, telefonnummer, husadresse, emailadresse."
  READ_EXTERNAL_STORAGE ,Se data på en ekstern lagringsenhet, Storage , no ,1,"Gir tilgang til å se data lagret på en ekstern lagringsenhet, f.eks. ekstern harddisk koblet til med USB."
  READ_HISTORY_BOOKMARKS ,Se din nettleserhistorie og dine bookmarks, Personal Information , da ,2,"Gir tilgang til å se din hvilke nettsteder du har besøkt i din nettleserhistorie, samt hvilke sider du har lagret som bookmarks."
  READ_PHONE_STATE ,Se telefonens status og identitet, Phone Calls , da ,1,"Gir tilgang til å se unike identitetsnummer forbundet med din telefon. Kan også se telefonens status, f.eks. at en telefonsamtale er gående."
@@ -58,16 +59,16 @@
  SYSTEM_ALERT_WINDOW ,Kjøre over andre applikasjoner, Display , da ,3,"Gir tilgang til å kjøre ""popup""-vinduer over andre applikasjoner. Reklameapplikasjoner kan typisk bruke denne tillatelsen til å vise reklame. I utgangspunktet ikke ment for vanlige applikasjoner."
  TRANSMIT_IR ,Bruke infrarød (IR) sender, Effects on Battery Life , no ,1,Gir tilgang til å bruke telefonens infrarøde sender dersom en slik er tilgjengelig.
  UNINSTALL_SHORTCUT ,Fjerne snarveier, , no ,1,Gir tilgang til å fjerne snarveier på telefonens hjemskjerm.
- USE_CREDENTIALS ,, Accounts , da ,2,
- USE_SIP ,Tillate telefoni over internett, Phone Calls , da ,2,Gir tilgang til å utføre internettsamtaler.
+ USE_CREDENTIALS ,, Accounts , da ,2,Gir tilgang til å bruke autentiseringsnøkler fra kontoer på telefonen.
+ USE_SIP ,Tillate telefoni over internett, Phone Calls , da ,3,Gir tilgang til å utføre internettsamtaler.
  VIBRATE ,Kontroll over vibrator, Effects on Battery Life , no ,1,Gir tilgang til å kontrollere telefonens vibrator.
  WAKE_LOCK ,Forhindre skjermen i å skru seg av, Effects on Battery Life , no ,1,Gir tilgang til å forhindre at skjermen skrur seg av etter inaktivitet. Kan i stor grad påvirke telefonens strømforbruk.
- WRITE_CALENDAR ,Legge til hendelser i kalenderen, Personal Information , da ,2,Gir tilgang til å legge til hendelser i din kalender.
- WRITE_CALL_LOG ,Endre eller slette innhold i samtaleloggen, Personal Information , da ,2,"Gir tilgang til å endre telefonens samtalelogg, inkludert data om inkommende og utgående samtaler. Farlige applikasjoner kan bruke dette til å skjule uønsket adferd ved å f.eks. slette logg om en spesifik samtale."
- WRITE_CONTACTS ,Endre kontaktlisten, Personal Information , da ,2,"Gir tilgang til å endre din kontaktliste, herunder legge til nye kontakter."
+ WRITE_CALENDAR ,Legge til hendelser i kalenderen, Personal Information , da ,3,Gir tilgang til å legge til hendelser i din kalender.
+ WRITE_CALL_LOG ,Endre eller slette innhold i samtaleloggen, Personal Information , da ,3,"Gir tilgang til å endre telefonens samtalelogg, inkludert data om inkommende og utgående samtaler. Farlige applikasjoner kan bruke dette til å skjule uønsket adferd ved å f.eks. slette logg om en spesifik samtale."
+ WRITE_CONTACTS ,Endre kontaktlisten, Personal Information , da ,3,"Gir tilgang til å endre din kontaktliste, herunder legge til nye kontakter."
  WRITE_EXTERNAL_STORAGE ,Endre eller slette innhold på SD-kortet, Storage , da ,2,Gir tilgang til å endre eller slette eksisterende filer eller opprette nye filer på telefonens SD-kort.
  WRITE_HISTORY_BOOKMARKS ,Legge til nettleserhistorie eller bookmarks, Personal Information , da ,2,Gir tilgang til å legge til sider i din nettleserhistorie. Gir også tilgang til å opprette nye bookmarks i din nettleser.
- WRITE_PROFILE ,Endre ditt kontaktkort, Personal Information , da ,2,Gir tilgang til å endre personlig informasjon lagret i ditt kontaktkort.
+ WRITE_PROFILE ,Endre ditt kontaktkort, Personal Information , da ,3,Gir tilgang til å endre personlig informasjon lagret i ditt kontaktkort.
  WRITE_SMS ,Skrive SMS eller MMS, Messages , da ,3,"Gir tilgang til å skrive, men ikke sende SMS eller MMS."
  WRITE_SOCIAL_STREAM ,Skrive innlegg til din nyhetsstrøm på sosiale medier, Social Information , da ,3,"Gir tilgang til å poste innlegg sosiale medier registrert på telefonen, f.eks. Facebook, Google+, Twitter."
  WRITE_SYNC_SETTINGS ,Skru synkronisering av applikasjoner av eller på, Sync settings , da ,2,Gir tilgang til å skru av eller på synkronisering av applikasjoner.

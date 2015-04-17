@@ -77,7 +77,7 @@ public class PermissionHelper {
             String[] line;
 
             // throw away the header
-            //csvReader.readNext();
+            csvReader.readNext();
 
             while ((line = csvReader.readNext()) != null) {
                 permDescList.add(getPermissionDescriptionFromCSVLine(line));
@@ -114,11 +114,8 @@ public class PermissionHelper {
             try {
                 newPermissionDescription = getPermissionDescription(context, newPermission);
             } catch (Exception e) {
-                System.out.println("PermissionDescription not found!");
                 continue;
             }
-
-            System.out.println("PermissionDescription found: " + newPermissionDescription.getName());
 
             boolean exists = false;
 
@@ -146,7 +143,6 @@ public class PermissionHelper {
             try {
                 removedPermissionDescription = getPermissionDescription(context, oldPermission);
             } catch (Exception e) {
-                System.out.println("PermissionDescription not found!");
                 continue;
             }
 

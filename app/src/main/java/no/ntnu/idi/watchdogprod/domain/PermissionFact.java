@@ -36,10 +36,18 @@ public class PermissionFact {
     }
 
     public boolean matchesApp(String[] reqPermissions) {
-        List<String> reqPermList = Arrays.asList(reqPermissions);
 
         for (String permission : permissions) {
-            if (!reqPermList.contains(permission)) {
+            boolean exist = false;
+
+            for (String reqPerm : reqPermissions) {
+                if (reqPerm.contains(permission)) {
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (!exist) {
                 return false;
             }
         }

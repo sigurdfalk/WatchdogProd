@@ -237,7 +237,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private int getPixelsFromDp(int dps) {
-        System.out.println(dps);
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
     }
@@ -283,26 +282,17 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
+        System.out.println("onRadioButtonClicked");
 
         switch(view.getId()) {
             case R.id.permission_fact_radio_happy:
-                if (checked) {
-                    writePermissionFactInteraction(Answer.ANSWER_HAPPY);
-                }
-
+                writePermissionFactInteraction(Answer.ANSWER_HAPPY);
                 break;
             case R.id.permission_fact_radio_neutral:
-                if (checked) {
-                    writePermissionFactInteraction(Answer.ANSWER_NEUTRAL);
-                }
-
+                writePermissionFactInteraction(Answer.ANSWER_NEUTRAL);
                 break;
             case R.id.permission_fact_radio_sad:
-                if (checked) {
-                    writePermissionFactInteraction(Answer.ANSWER_SAD);
-                }
-
+                writePermissionFactInteraction(Answer.ANSWER_SAD);
                 break;
         }
 
@@ -344,6 +334,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private void writePermissionFactInteraction(int answer) {
+        System.out.println("writePermissionFactInteraction");
         PermissionFact fact = packageInfo.getPermissionFacts().get(currentPermissionFact);
 
         try {
@@ -361,6 +352,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
             System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
         } catch (SQLException e) {
+            System.out.println("FEIL FOR FETTE FAEN");
             e.printStackTrace();
         }
     }

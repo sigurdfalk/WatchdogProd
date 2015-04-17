@@ -63,7 +63,8 @@ public class PrivacyScoreCalculator {
             score += HAS_MEDIUM_BONUS;
         }
 
-        return (score > MAX_SCORE) ? MAX_SCORE : score;
+        return score;
+        //return (score > MAX_SCORE) ? MAX_SCORE : score;
     }
 
     public static double calculateScore(Context context, ExtendedPackageInfo packageInfo) throws SQLException {
@@ -89,57 +90,51 @@ public class PrivacyScoreCalculator {
 
             switch (permission.getRisk()) {
                 case RISK_LOW:
-                    totalScore += LOW_MULTIPLIER * weight;
+                    totalScore += 1 * weight;
                     break;
                 case RISK_MEDIUM:
-                    totalScore += MEDIUM_MULTIPLIER * weight;
+                    totalScore += 2 * weight;
                     break;
                 case RISK_HIGH:
-                    totalScore += HIGH_MULTIPLIER * weight;
+                    totalScore += 4 * weight;
                     break;
             }
         }
 
-        totalScore = totalScore / totalWeight;
+        //totalScore = totalScore / totalWeight;
 
-        return (totalScore > MAX_SCORE) ? MAX_SCORE : totalScore;
+        //return (totalScore > MAX_SCORE) ? MAX_SCORE : totalScore;
+        return totalScore;
     }
 
     private static double getPermissionWeight(String permission, ArrayList<Answer> answers, ArrayList<PermissionFact> facts) {
         PermissionFact matchingFact = null;
 
-        System.out.println("Permission1: " + permission);
-
         for (PermissionFact fact : facts) {
-            System.out.println("Permission2: " + fact.getPermissions()[0]);
             if (fact.getPermissions().length == 1 && fact.getPermissions()[0].contains(permission)) {
                 matchingFact = fact;
-                System.out.println("Found matching fact!");
                 break;
             }
         }
 
         if (matchingFact == null) {
-            System.out.println("No matching fact");
-            return 5.0;
+            return 2.0;
         }
 
         for (Answer answer : answers) {
             if (answer.getAnswerId() == matchingFact.getId()) {
-                System.out.println("Found matching answer!");
                 switch (answer.getAnswer()) {
                     case Answer.ANSWER_HAPPY:
-                        return 3.0;
+                        return 1.0;
                     case Answer.ANSWER_NEUTRAL:
-                        return 5.0;
+                        return 2.0;
                     case Answer.ANSWER_SAD:
-                        return 7.0;
+                        return 3.0;
                 }
             }
         }
 
-        System.out.println("Reached end of getPermissionWeight()");
-        return 5.0;
+        return 2.0;
     }
 
     private static double getPermissionsScore(ArrayList<PermissionDescription> permissions) {
