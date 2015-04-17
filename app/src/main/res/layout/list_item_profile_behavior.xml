@@ -42,7 +42,6 @@
                 android:layout_gravity="right"
                 android:paddingRight="15dp"
                 android:id="@+id/behavior_item_image"/>
-
         </LinearLayout>
         <View
             android:layout_width="fill_parent"

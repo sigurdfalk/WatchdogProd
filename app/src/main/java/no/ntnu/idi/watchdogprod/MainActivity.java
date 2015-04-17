@@ -185,7 +185,6 @@ public class MainActivity extends ActionBarActivity {
     public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
         ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
         if(installTrend > 0) {
-            System.out.println("HEISADASDASDASAS");
             profileBehaviors.add(new ProfileBehavior(null, "Økning i installering av risikofylte apper", "tekst", 1));
         } else if(installTrend < 0) {
             profileBehaviors.add(new ProfileBehavior(null, "Nedgang i installering av risikifylte apper", "tekst", 3));

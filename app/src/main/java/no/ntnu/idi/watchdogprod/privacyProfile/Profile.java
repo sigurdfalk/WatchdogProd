@@ -21,6 +21,7 @@ public class Profile {
     public static final String UTILITY_OVER_PRIVACY = "utilityOverPrivacy";
     public static final String CONCERNED_FOR_LEAKS = "concernedForLeaks";
     public static final String AVG_INSTALLS_VALUE = "averageInstallValue";
+    public static final String AVG_UNINSTALL_VALUE = "averageUninstallValue";
 
     private double understandingOfPermissions;
     private double interestInPrivacy;
@@ -46,6 +47,7 @@ public class Profile {
     public void createProfile(Context context) {
 //        double[] answers = getUserQuestions(context);
         installTrendRiskIncreasing = isTrendIncreasing(getInstalledAppsValues(context), context, Profile.AVG_INSTALLS_VALUE);
+        uninstallTrendRiskIncreasing = isTrendIncreasing(getUninstalledAppsValues(context), context, Profile.AVG_UNINSTALL_VALUE);
     }
 
     private double[] getUserQuestions(Context context) {
