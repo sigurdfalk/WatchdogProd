@@ -1,40 +1,24 @@
 package no.ntnu.idi.watchdogprod;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.Image;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -47,51 +31,32 @@ import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
 import no.ntnu.idi.watchdogprod.services.DataUsageService;
-import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
-import no.ntnu.idi.watchdogprod.adapters.ProfileBehaviorListAdapter;
 import no.ntnu.idi.watchdogprod.activities.*;
 
 
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
-//    private ListView listView;
     private Profile profile;
     private int installTrend;
     private int uninstallTrend;
+    private ImageView appsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        appsBtn = (ImageView)findViewById(R.id.main_apps_btn);
+
+        appsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            }
+        });
+
         initProfile();
-
-//        listView = (ListView) findViewById(R.id.profile_behavior_list);
-        ProfileBehaviorListAdapter arrayAdapter = new ProfileBehaviorListAdapter(this, populateProfileBehaviorList());
-//        listView.setAdapter(arrayAdapter);
-//        listView.setScrollContainer(false);
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position,
-//                                    long id) {
-//
-//                TextView textView = (TextView) view.findViewById(R.id.collapsable_behavior_text);
-//                ImageView imageView = (ImageView) view.findViewById(R.id.behavior_item_arrow);
-//                TextView clickText = (TextView)view.findViewById(R.id.collapsable_click_text);
-//
-//                if (textView.getVisibility() == View.GONE) {
-//                    textView.setVisibility(View.VISIBLE);
-//                    clickText.setVisibility(View.GONE);
-//                    imageView.setImageResource(R.drawable.arrow_up_bold);
-//                } else {
-//                    textView.setVisibility(View.GONE);
-//                    clickText.setVisibility(View.VISIBLE);
-//                    imageView.setImageResource(R.drawable.ic_arrow_down_bold);
-//                }
-//
-//            }
-//        });
 
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
@@ -117,15 +82,6 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
                 root.startAnimation(animation);
-            }
-        });
-
-        Button privacyAnalysisBtn = (Button) findViewById(R.id.main_privacy_analysis_btn);
-        privacyAnalysisBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                startActivity(i);
             }
         });
 
