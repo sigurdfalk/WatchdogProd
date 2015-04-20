@@ -1,5 +1,8 @@
 package no.ntnu.idi.watchdogprod.privacyProfile;
 
+import org.apache.mahout.math.DenseVector;
+import org.apache.mahout.math.Vector;
+
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
@@ -23,14 +26,14 @@ public class Profile {
     private double interestInPrivacy;
     private double utilityOverPrivacy;
     private double concernedForLeaks;
-    private int[] profileVector;
+    private DenseVector profileVector;
 
     public Profile() {
         this.understandingOfPermissions = 3.0;
         this.interestInPrivacy = 5.0;
         this.concernedForLeaks = 5.0;
         this.utilityOverPrivacy = 3.0;
-        this.profileVector = new int[]{5,5,5,5,5,5,5,5};//TODO: check for actual number of permissions
+        createVector();
     }
 
     public Profile(double understandingOfPermissions, double interestInPrivacy, double utilityOverPrivacy, double concernedForLeaks) {
@@ -40,6 +43,7 @@ public class Profile {
         this.utilityOverPrivacy = utilityOverPrivacy;
     }
 
+    public Vector getVector(){return profileVector;}
     public double getUnderstandingOfPermissions() {
         return understandingOfPermissions;
     }
@@ -90,4 +94,8 @@ public class Profile {
         else
             return true;
     }
+    private void createVector(){
+        this.profileVector = new DenseVector();
+    }
+
 }

@@ -1,7 +1,11 @@
 package no.ntnu.idi.watchdogprod.sqlite.applicationupdates;
 
+import org.apache.mahout.math.RandomAccessSparseVector;
+
 import java.util.Arrays;
 import java.util.Date;
+
+import no.ntnu.idi.watchdogprod.recommender.AppVector;
 
 /**
  * Created by sigurdhf on 10.03.2015.
@@ -12,6 +16,7 @@ public class AppInfo implements Comparable<AppInfo> {
     private String[] permissions;
     private int versionCode;
     private long lastUpdateTime;
+    private AppVector vector;
 
     public AppInfo(long id, String packageName, String[] permissions, int versionCode, long lastUpdateTime) {
         this.id = id;
@@ -19,6 +24,7 @@ public class AppInfo implements Comparable<AppInfo> {
         this.permissions = permissions;
         this.versionCode = versionCode;
         this.lastUpdateTime = lastUpdateTime;
+        makeVector();
     }
 
     public AppInfo(String packageName, String[] permissions, int versionCode, long lastUpdateTime) {
@@ -71,5 +77,8 @@ public class AppInfo implements Comparable<AppInfo> {
         }
 
         return 0;
+    }
+    private void makeVector(){
+
     }
 }

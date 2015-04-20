@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import org.apache.mahout.clustering.kmeans.KMeansDriver;
+import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
+
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.PrivacyScoreCalculator;
@@ -31,6 +34,8 @@ public class RecMain extends ActionBarActivity{
         appInfos = (ArrayList<AppInfo>) getIntent().getExtras().getSerializable("response");
 
     }
+
+
 //        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(appInfo.getPermissions(), context);
 //        int riskScore = (int) PrivacyScoreCalculator.calculateScore(permissionDescriptions);
 
