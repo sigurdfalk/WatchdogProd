@@ -78,10 +78,7 @@
             android:name=".activities.UserQuestionActivity"
             android:label="@string/title_activity_user_question" >
         </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
+
     </application>
 
 </manifest>

@@ -93,10 +93,12 @@ public class ProfileDataSource {
     public ProfileEvent getSpecificEventForApp(String eventType, String packageName) {
         ProfileEvent profileEvent = null;
         Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, null, null, null, null, null);
-        cursor.moveToFirst();
-        while (cursor.moveToNext()) {
-            if (cursor.getString(2).equals(eventType) && cursor.getString(4).equals(packageName)) {
-                profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        if(cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            while (cursor.moveToNext()) {
+                if (cursor.getString(2).equals(eventType) && cursor.getString(4).equals(packageName)) {
+                    profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                }
             }
         }
         return profileEvent;
