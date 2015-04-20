@@ -46,9 +46,7 @@ public class Profile {
 
     public void createProfile(Context context) {
 //        double[] answers = getUserQuestions(context);
-        System.out.println("INSTALL TREND:" );
         installTrendRiskIncreasing = isTrendIncreasing(getInstalledAppsValues(context), context, Profile.AVG_INSTALLS_VALUE);
-        System.out.println("UNINSTALL TREND");
         uninstallTrendRiskIncreasing = isTrendIncreasing(getUninstalledAppsValues(context), context, Profile.AVG_UNINSTALL_VALUE);
     }
 
@@ -78,35 +76,36 @@ public class Profile {
         return appValues;
     }
 
-    private boolean isTrendIncreasing(double[] history, int start, int limit, int oldTrendValue) {
-        final int DELTA_T = 1;
-        double sum1 = 0;
-        double sum2 = 0;
-        for (int i = start; i <= limit; i++) {
-            sum1 = history[i];
-            if (i == 0) {
-                sum2 = history[i] * 1;
-            } else {
-                sum2 = history[i] * (i + 1);
-            }
-        }
-
-        double b0 = (2 * (2 * history.length) * sum1 - (6 * sum2))
-                / (history.length * (history.length - 1));
-
-        double b1 = ((12 * sum2) - ((6 * (history.length + 1)) * sum1))
-                / (DELTA_T * history.length * ((history.length - 1) * (history.length + 1)));
-
-        System.out.println("i = " + limit + " B0 + B1 = " + (b0 + b1) + "\t  B1 = " + b1 + "\t B0 = " + b0);
-
-        if (b1 > 0)
-            return true;
-        return false;
-    }
+//    private boolean isTrendIncreasing(double[] history, int start, int limit, int oldTrendValue) {
+//        final int DELTA_T = 1;
+//        double sum1 = 0;
+//        double sum2 = 0;
+//        for (int i = start; i <= limit; i++) {
+//            sum1 = history[i];
+//            if (i == 0) {
+//                sum2 = history[i] * 1;
+//            } else {
+//                sum2 = history[i] * (i + 1);
+//            }
+//        }
+//
+//        double b0 = (2 * (2 * history.length) * sum1 - (6 * sum2))
+//                / (history.length * (history.length - 1));
+//
+//        double b1 = ((12 * sum2) - ((6 * (history.length + 1)) * sum1))
+//                / (DELTA_T * history.length * ((history.length - 1) * (history.length + 1)));
+//
+//        System.out.println("i = " + limit + " B0 + B1 = " + (b0 + b1) + "\t  B1 = " + b1 + "\t B0 = " + b0);
+//
+//        if (b1 > 0)
+//            return true;
+//        return false;
+//    }
 
     private int isTrendIncreasing(double[] history, Context context, String type) {
 
         double oldAvg = getOldAverage(context,type);
+//        double minAVGIncrease = 10;
 
         double avg = getAverage(history);
 
@@ -120,14 +119,11 @@ public class Profile {
         if (oldAvg == -1) {
             return 0;
         }
-        return avg >= oldAvg ? 1 : -1 ;
+        return avg >= oldAvg  ? 1 : -1 ;
     }
 
     public double  getAverage(double [] history) {
-        double avg = 0;
         double temp = 0;
-        double MIN_STEP = 10;
-
         int startingpoint = 0;
         int total = 10;
 
@@ -136,7 +132,6 @@ public class Profile {
         } else {
             total = history.length;
         }
-
 
         for (int i = startingpoint; i < history.length; i++) {
             temp += history[i];

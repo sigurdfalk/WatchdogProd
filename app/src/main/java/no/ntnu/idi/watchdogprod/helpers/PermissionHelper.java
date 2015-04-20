@@ -16,6 +16,7 @@ import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
  */
 public class PermissionHelper {
     public static final String FILE_NAME = "permissiondescriptions.csv";
+    public static final String ALL_PERMISSIONS_KEY = "allPermissionsList";
 
     private static ArrayList<PermissionDescription> permissionDescriptions;
 
