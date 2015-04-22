@@ -10,7 +10,7 @@
         android:icon="@mipmap/telenor_logo_blue_scaled"
         android:label="@string/app_name"
         android:theme="@style/Watchdog" >
-        <activity android:name=".PrivacyNoticeActivity" >
+        <activity android:name=".activities.PrivacyNoticeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,38 +22,38 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ApplicationListActivity"
+            android:name=".activities.ApplicationListActivity"
             android:label="@string/applications" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".ApplicationDetailActivity" android:launchMode="singleTop">
+        <activity android:name=".activities.ApplicationDetailActivity" android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ApplicationListActivity" />
+                android:value=".activities.ApplicationListActivity" />
         </activity>
-        <activity android:name=".RuleViolationsActivity" android:label="@string/risk_indicators" >
+        <activity android:name=".activities.RuleViolationsActivity" android:label="@string/risk_indicators" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ApplicationDetailActivity" />
+                android:value=".activities.ApplicationDetailActivity" />
         </activity>
         <activity
-            android:name=".DataUsageActivity"
+            android:name=".activities.DataUsageActivity"
             android:label="@string/title_activity_data_usage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ApplicationDetailActivity" />
+                android:value=".activities.ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".PermissionListActivity" android:label="@string/permissions">
+        <activity android:name=".activities.PermissionListActivity" android:label="@string/permissions">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ApplicationDetailActivity" />
+                android:value=".activities.ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".ApplicationUpdateLogActivity" android:label="@string/updates">
+        <activity android:name=".activities.ApplicationUpdateLogActivity" android:label="@string/updates">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ApplicationDetailActivity" />
+                android:value=".activities.ApplicationDetailActivity" />
         </activity>
         <activity android:name=".recommender.RecMain"
                   android:label="RecMain">
@@ -82,13 +82,10 @@
         <service android:name=".services.DataUsagePosterService" />
 
         <activity
-            android:name=".UserQuestionActivity"
+            android:name=".activities.UserQuestionActivity"
             android:label="@string/title_activity_user_question" >
         </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile" >
-        </activity>
+
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
+
 /**
  * Created by sigurdhf on 10.03.2015.
  */

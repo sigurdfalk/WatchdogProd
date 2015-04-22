@@ -10,7 +10,6 @@ import android.util.Log;
  */
 public class ApplicationUpdatesSQLiteHelper extends SQLiteOpenHelper {
     static final String TABLE_APPLICATION_UPDATES = "applicationUpdates";
-
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PACKAGE_NAME = "packageName";
     public static final String COLUMN_PERMISSIONS = "permissions";

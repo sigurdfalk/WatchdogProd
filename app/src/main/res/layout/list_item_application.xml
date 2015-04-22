@@ -10,51 +10,80 @@
     android:layout_height="match_parent"
     android:id="@+id/list_applications_cardview">
 
-
-
-    <LinearLayout
-        android:id="@+id/list_applications_wrapper"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="6sp"
-        android:background="?android:selectableItemBackground"
-        android:focusable="true"
-        android:clickable="true">
-
-    <ImageView
-        android:id="@+id/list_applications_icon"
-        android:layout_width="@dimen/list_application_icon"
-        android:layout_height="@dimen/list_application_icon"
-        android:contentDescription="@string/application_icon_description" />
-
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10sp"
-        android:layout_marginLeft="10sp"
-        android:orientation="vertical">
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/list_applications_firstLine"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:id="@+id/list_applications_wrapper"
+            android:layout_width="0sp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="16sp"/>
+            android:padding="6sp"
+            android:background="?android:selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true">
 
-        <TextView
-            android:id="@+id/list_applications_secondLine"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="12sp"/>
+            <ImageView
+                android:id="@+id/list_applications_icon"
+                android:layout_width="@dimen/list_application_icon"
+                android:layout_height="@dimen/list_application_icon"
+                android:contentDescription="@string/application_icon_description" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginStart="10sp"
+                android:layout_marginLeft="10sp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/list_applications_firstLine"
+                        android:layout_width="0sp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:id="@+id/list_applications_info"
+                        android:src="@mipmap/ic_info_black_48dp"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"/>
+
+                    <ImageView
+                        android:id="@+id/list_applications_warning"
+                        android:src="@mipmap/ic_warning_black_48dp"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/list_applications_secondLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/list_applications_risk_score"
+            android:layout_width="15sp"
+            android:layout_height="fill_parent" />
 
     </LinearLayout>
 
-   <TextView
-       android:id="@+id/list_applications_risk_score"
-       android:layout_gravity="end"
-       android:layout_width="15sp"
-       android:layout_height="fill_parent" />
+
+
 
     </android.support.v7.widget.CardView>

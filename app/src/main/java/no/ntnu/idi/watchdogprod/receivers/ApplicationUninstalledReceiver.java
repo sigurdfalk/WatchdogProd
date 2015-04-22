@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
@@ -22,8 +23,11 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
 
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
-        String value = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP,packageName).getValue();
-        profileDataSource.insert(packageName, Profile.UNINSTALLED_DANGEROUS_APP, value);
-        profileDataSource.close();
+        ProfileEvent profileEvent = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP,packageName);
+        if(profileEvent != null) {
+            String riskScore = profileEvent.getValue();
+            profileDataSource.insertEvent(packageName, Profile.UNINSTALLED_DANGEROUS_APP, riskScore);
+            profileDataSource.close();
+        }
     }
 }

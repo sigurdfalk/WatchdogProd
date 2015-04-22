@@ -1,3 +1,12 @@
-permissions,header,fact
-android.permission.ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
-android.permission.ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
+id,permissions,header,fact
+0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
+1,ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
+2,SEND_SMS,SEND_SMS,SEND_SMS
+3,CALL_PHONE,CALL_PHONE,CALL_PHONE
+4,INTERNET,INTERNET,INTERNET
+5,READ_CONTACTS,READ_CONTACTS,READ_CONTACTS
+6,RECORD_AUDIO,RECORD_AUDIO,RECORD_AUDIO
+7,DISABLE_KEYGUARD,DISABLE_KEYGUARD,DISABLE_KEYGUARD
+8,READ_CALL_LOG,READ_CALL_LOG,READ_CALL_LOG
+9,READ_PHONE_STATE,READ_PHONE_STATE,READ_PHONE_STATE
+10,WRITE_CONTACTS,WRITE_CONTACTS,WRITE_CONTACTS
