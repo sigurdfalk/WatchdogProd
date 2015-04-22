@@ -1,30 +1,40 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
+import android.util.Log;
+
 import org.apache.mahout.math.DenseVector;
 import org.apache.mahout.math.RandomAccessSparseVector;
+
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.recommender.Permissions;
 import org.apache.mahout.math.SequentialAccessSparseVector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import no.ntnu.idi.watchdogprod.InteractiveScrollView;
 
 /**
  * Created by Wschive on 16/04/15.
  */
 public class AppVector extends RandomAccessSparseVector{
-    private RandomAccessSparseVector appVector;
+    //private RandomAccessSparseVector appVector;
+    private static final String TAG = "recommender.AppVector";
 
-
-
-    public AppVector() {
-        this.appVector = new RandomAccessSparseVector();
+    public AppVector(){
+        super();
     }
-    public AppVector(String[] permission){
-        this.appVector = new RandomAccessSparseVector();
-        for (String string : permission) {
-            putPermission(string);
+
+    public AppVector(ArrayList<PermissionDescription> permissionDescriptions){
+        super();
+        for (PermissionDescription permissionDescription : permissionDescriptions) {
+            putPermission(permissionDescription.getName());
+        }
+    }
+    public AppVector(String[] permissions){
+        super();
+        for (String permission : permissions) {
+            putPermission(permission);
         }
     }
 
@@ -33,243 +43,241 @@ public class AppVector extends RandomAccessSparseVector{
      * alphabetical list of permissions.'
      * @param permission - string with the name of the permission. I.e. "ACCESS_COARSE_LOCATION"
      */
-    private void putPermission(String permission){
-        switch (permission){
+    private void putPermission(String permission) {
+        switch (permission) {
             case "ACCESS_COARSE_LOCATION":
-                super.set(0,2);
+                super.set(0, 2);
                 break;
             case "ACCESS_FINE_LOCATION":
-                super.set(1,2);
+                super.set(1, 2);
                 break;
             case "ACCESS_LOCATION_EXTRA_COMMANDS":
-                super.set(2,2);
+                super.set(2, 2);
                 break;
             case "ACCESS_MOCK_LOCATION":
-                super.set(3,2);
+                super.set(3, 2);
                 break;
             case "ACCESS_NETWORK_STATE":
-                super.set(4,2);
+                super.set(4, 2);
                 break;
             case "ACCESS_WIFI_STATE":
-                super.set(5,2);
+                super.set(5, 2);
                 break;
             case "ACCESS_WIMAX_STATE":
-                super.set(6,1);
+                super.set(6, 1);
                 break;
             case "ADD_VOICEMAIL":
-                super.set(7,2);
+                super.set(7, 2);
                 break;
             case "AUTHENTICATE_ACCOUNTS":
-                super.set(8,4);
+                super.set(8, 4);
                 break;
             case "BLUETOOTH":
-                super.set(9,2);
+                super.set(9, 2);
                 break;
             case "BLUETOOTH_ADMIN":
-                super.set(10,2);
+                super.set(10, 2);
                 break;
             case "BODY_SENSORS":
-                super.set(11,1);
+                super.set(11, 1);
                 break;
             case "CALL_PHONE":
-                super.set(12,4);
+                super.set(12, 4);
                 break;
             case "CAMERA":
-                super.set(13,1);
+                super.set(13, 1);
                 break;
             case "CHANGE_CONFIGURATION":
-                super.set(14,2);
+                super.set(14, 2);
                 break;
             case "CHANGE_NETWORK_STATE":
-                super.set(15,2);
+                super.set(15, 2);
                 break;
             case "CHANGE_WIFI_MULTICAST_STATE":
-                super.set(16,1);
+                super.set(16, 1);
                 break;
             case "CHANGE_WIFI_STATE":
-                super.set(17,2);
+                super.set(17, 2);
                 break;
             case "CHANGE_WIMAX_STATE":
-                super.set(18,1);
+                super.set(18, 1);
                 break;
             case "CLEAR_APP_CACHE":
-                super.set(19,4);
+                super.set(19, 4);
                 break;
             case "DISABLE_KEYGUARD":
-                super.set(20,2);
+                super.set(20, 2);
                 break;
             case "EXPAND_STATUS_BAR":
-                super.set(21,1);
+                super.set(21, 1);
                 break;
             case "FLASHLIGHT":
-                super.set(22,1);
+                super.set(22, 1);
                 break;
             case "GET_ACCOUNTS":
-                super.set(23,2);
+                super.set(23, 2);
                 break;
             case "GET_PACKAGE_SIZE":
-                super.set(24,1);
+                super.set(24, 1);
                 break;
             case "GET_TASKS":
-                super.set(25,2);
+                super.set(25, 2);
                 break;
             case "INSTALL_SHORTCUT":
-                super.set(26,1);
+                super.set(26, 1);
                 break;
             case "INTERNET":
-                super.set(27,1);
+                super.set(27, 1);
                 break;
             case "KILL_BACKGROUND_PROCESSES":
-                super.set(28,4);
+                super.set(28, 4);
                 break;
             case "MANAGE_ACCOUNTS":
-                super.set(29,2);
+                super.set(29, 2);
                 break;
             case "MODIFY_AUDIO_SETTINGS":
-                super.set(30,2);
+                super.set(30, 2);
                 break;
             case "NFC":
-                super.set(31,2);
+                super.set(31, 2);
                 break;
             case "PROCESS_OUTGOING_CALLS":
-                super.set(32,4);
+                super.set(32, 4);
                 break;
             case "READ_CALENDAR":
-                super.set(33,2);
+                super.set(33, 2);
                 break;
             case "READ_CALL_LOG":
-                super.set(34,2);
+                super.set(34, 2);
                 break;
             case "READ_CONTACTS":
-                super.set(35,2);
+                super.set(35, 2);
                 break;
             case "READ_EXTERNAL_STORAGE":
-                super.set(36,1);
+                super.set(36, 1);
                 break;
             case "READ_HISTORY_BOOKMARKS":
-                super.set(37,2);
+                super.set(37, 2);
                 break;
             case "READ_PHONE_STATE":
-                super.set(38,1);
+                super.set(38, 1);
                 break;
             case "READ_PROFILE":
-                super.set(39,1);
+                super.set(39, 1);
                 break;
             case "READ_SMS":
-                super.set(40,4);
+                super.set(40, 4);
                 break;
             case "READ_SOCIAL_STREAM":
-                super.set(41,4);
+                super.set(41, 4);
                 break;
             case "READ_SYNC_SETTINGS":
-                super.set(42,1);
+                super.set(42, 1);
                 break;
             case "READ_SYNC_STATS":
-                super.set(43,2);
+                super.set(43, 2);
                 break;
             case "READ_USER_DICTIONARY":
-                super.set(44,1);
+                super.set(44, 1);
                 break;
             case "RECEIVE_BOOT_COMPLETED":
-                super.set(45,1);
+                super.set(45, 1);
                 break;
             case "RECEIVE_MMS":
-                super.set(46,4);
+                super.set(46, 4);
                 break;
             case "RECEIVE_SMS":
-                super.set(47,4);
+                super.set(47, 4);
                 break;
             case "RECEIVE_WAP_PUSH":
-                super.set(48,1);
+                super.set(48, 1);
                 break;
             case "RECORD_AUDIO":
-                super.set(49,4);
+                super.set(49, 4);
                 break;
             case "REORDER_TASKS":
-                super.set(50,2);
+                super.set(50, 2);
                 break;
             case "SEND_SMS":
-                super.set(51,2);
+                super.set(51, 2);
                 break;
             case "SET_ALARM":
-                super.set(52,1);
+                super.set(52, 1);
                 break;
             case "SET_TIME_ZONE":
-                super.set(53,1);
+                super.set(53, 1);
                 break;
             case "SET_WALLPAPER":
-                super.set(54,1);
+                super.set(54, 1);
                 break;
             case "SUBSCRIBED_FEEDS_READ":
-                super.set(55,2);
+                super.set(55, 2);
                 break;
             case "SUBSCRIBED_FEEDS_WRITE":
-                super.set(56,2);
+                super.set(56, 2);
                 break;
             case "SYSTEM_ALERT_WINDOW":
-                super.set(57,4);
+                super.set(57, 4);
                 break;
             case "TRANSMIT_IR":
-                super.set(58,1);
+                super.set(58, 1);
                 break;
             case "UNINSTALL_SHORTCUT":
-                super.set(59,1);
+                super.set(59, 1);
                 break;
             case "USE_CREDENTIALS":
-                super.set(60,2);
+                super.set(60, 2);
                 break;
             case "USE_SIP":
-                super.set(61,2);
+                super.set(61, 2);
                 break;
             case "VIBRATE":
-                super.set(62,1);
+                super.set(62, 1);
                 break;
             case "WAKE_LOCK":
-                super.set(63,1);
+                super.set(63, 1);
                 break;
             case "WRITE_CALENDAR":
-                super.set(64,2);
+                super.set(64, 2);
                 break;
             case "WRITE_CALL_LOG":
-                super.set(65,2);
+                super.set(65, 2);
                 break;
             case "WRITE_CONTACTS":
-                super.set(66,2);
+                super.set(66, 2);
                 break;
             case "WRITE_EXTERNAL_STORAGE":
-                super.set(67,2);
+                super.set(67, 2);
                 break;
             case "WRITE_HISTORY_BOOKMARKS":
-                super.set(68,2);
+                super.set(68, 2);
                 break;
             case "WRITE_PROFILE":
-                super.set(69,2);
+                super.set(69, 2);
                 break;
             case "WRITE_SMS":
-                super.set(70,4);
+                super.set(70, 4);
                 break;
             case "WRITE_SOCIAL_STREAM":
-                super.set(71,4);
+                super.set(71, 4);
                 break;
             case "WRITE_SYNC_SETTINGS":
-                super.set(72,2);
+                super.set(72, 2);
                 break;
             case "WRITE_USER_DICTIONARY":
-                super.set(73,1);
+                super.set(73, 1);
                 break;
             case "WRITE_VOICEMAIL":
-                super.set(74,1);
+                super.set(74, 1);
                 break;
             default:
-                Log.e("permission does not exist")
+                Log.e(TAG, "permission does not exist");
                 break;
 
         }
-    public String getPermission(int index){
-        return super.get(index);
-    }
-    public int getIndex(String permission){
+
 
     }
+
 }
-}
+

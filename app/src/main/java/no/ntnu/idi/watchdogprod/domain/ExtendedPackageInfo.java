@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import java.util.ArrayList;
 
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.recommender.AppVector;
 
 /**
  * Created by sigurdhf on 20.03.2015.
@@ -16,6 +17,8 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     private ArrayList<PermissionFact> permissionFacts;
     private ArrayList<AppInfo> updateLog;
     private double privacyScore;
+    private AppVector vector;
+
 
     public ExtendedPackageInfo(PackageInfo packageInfo, ArrayList<PermissionDescription> permissionDescriptions, ArrayList<Rule> violatedRules, ArrayList<PermissionFact> permissionFacts, ArrayList<AppInfo> updateLog) {
         this.packageInfo = packageInfo;
@@ -24,6 +27,15 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
         this.permissionFacts = permissionFacts;
         this.updateLog = updateLog;
         this.privacyScore = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+        this.vector = new AppVector(permissionDescriptions);
+    }
+
+    public AppVector getVector() {
+        return vector;
+    }
+
+    public void setVector(AppVector vector) {
+        this.vector = vector;
     }
 
     public PackageInfo getPackageInfo() {
@@ -54,4 +66,6 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     public int compareTo(ExtendedPackageInfo another) {
         return Double.compare(another.getPrivacyScore(), this.getPrivacyScore());
     }
+
+
 }

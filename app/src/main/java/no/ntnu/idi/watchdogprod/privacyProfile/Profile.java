@@ -33,12 +33,27 @@ public class Profile {
     private int installTrendRiskIncreasing;
     private int uninstallTrendRiskIncreasing;
 
-    public Profile() {
+
+    private static Profile instance = new Profile();
+
+    public static Profile getInstance(){
+        return instance;
+    }
+
+    public DenseVector getProfileVector() {
+        return profileVector;
+    }
+
+    protected void setProfileVector(DenseVector profileVector) {
+        this.profileVector = profileVector;
+    }
+
+    protected Profile() {
         this.understandingOfPermissions = 3.0;
         this.interestInPrivacy = 5.0;
         this.concernedForLeaks = 5.0;
         this.utilityOverPrivacy = 3.0;
-        createVector();
+        this.profileVector = new DenseVector();
     }
 
     public Profile(double understandingOfPermissions, double interestInPrivacy, double utilityOverPrivacy, double concernedForLeaks) {
@@ -186,8 +201,6 @@ public class Profile {
     public int getInstallTrendRiskIncreasing() {
         return installTrendRiskIncreasing;
     }
-    private void createVector(){
-        this.profileVector = new DenseVector();
-    }
+
 
 }

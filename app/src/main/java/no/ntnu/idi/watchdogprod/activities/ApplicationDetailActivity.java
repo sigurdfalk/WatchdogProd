@@ -49,6 +49,7 @@ import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Rule;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
+import no.ntnu.idi.watchdogprod.recommender.ResponseApp;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 
@@ -464,11 +465,11 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
 
     }
-    private ArrayList<AppInfo> parseJsonArray(JSONArray array){
+    private ArrayList<ResponseApp> parseJsonArray(JSONArray array){
         Gson gson = new Gson();
         String jsonString = array.toString();
-        Type collectionType = new TypeToken<ArrayList<AppInfo>>(){}.getType();
-        ArrayList<AppInfo> posts = gson.fromJson(jsonString, collectionType);
+        Type collectionType = new TypeToken<ArrayList<ResponseApp>>(){}.getType();
+        ArrayList<ResponseApp> posts = gson.fromJson(jsonString, collectionType);
         return posts;
     }
 }

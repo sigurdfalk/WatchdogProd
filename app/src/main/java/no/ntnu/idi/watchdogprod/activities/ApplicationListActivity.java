@@ -16,6 +16,7 @@ import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.privacyProfile.UpdateProfileThread;
 
 /**
  * Created by sigurdhf on 05.03.2015.
@@ -24,6 +25,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     public static final String PACKAGE_NAME = "packageName";
 
     private ApplicationListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class ApplicationListActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ArrayList<ExtendedPackageInfo> apps = ApplicationHelper.getThirdPartyApplications(this);
+        UpdateProfileThread updateProfileThread = new UpdateProfileThread(apps);
+        updateProfileThread.run();
 
         RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.applications_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

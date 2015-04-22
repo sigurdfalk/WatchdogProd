@@ -170,7 +170,6 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         for (int i = 0; i < allApplications.size(); i++) {
             ExtendedPackageInfo packageInfo = allApplications.get(i);
-            //TODO: add vector to extendedPackageInfo. Add all vectors, then take average
             long diff = now.getTime() - packageInfo.getUpdateLog().get(0).getLastUpdateTime();
 
             if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 3)) {
