@@ -15,96 +15,261 @@ import no.ntnu.idi.watchdogprod.InteractiveScrollView;
  */
 public class AppVector extends RandomAccessSparseVector{
     private RandomAccessSparseVector appVector;
-    private DenseVector profileVector;
 
 
 
     public AppVector() {
         this.appVector = new RandomAccessSparseVector();
-        this.profileVector = new DenseVector();
-        profileVector.set(Permissions.ACCESS_COARSE_LOCATION.index(),1);
     }
-    private void putOnPermission(String permission){
+    public AppVector(String[] permission){
+        this.appVector = new RandomAccessSparseVector();
+        for (String string : permission) {
+            putPermission(string);
+        }
+    }
+
+    /**
+     * Puts the risk value of a permission in a set place based on the
+     * alphabetical list of permissions.'
+     * @param permission - string with the name of the permission. I.e. "ACCESS_COARSE_LOCATION"
+     */
+    private void putPermission(String permission){
         switch (permission){
             case "ACCESS_COARSE_LOCATION":
-                super.set(0,1);
+                super.set(0,2);
                 break;
+            case "ACCESS_FINE_LOCATION":
+                super.set(1,2);
+                break;
+            case "ACCESS_LOCATION_EXTRA_COMMANDS":
+                super.set(2,2);
+                break;
+            case "ACCESS_MOCK_LOCATION":
+                super.set(3,2);
+                break;
+            case "ACCESS_NETWORK_STATE":
+                super.set(4,2);
+                break;
+            case "ACCESS_WIFI_STATE":
+                super.set(5,2);
+                break;
+            case "ACCESS_WIMAX_STATE":
+                super.set(6,1);
+                break;
+            case "ADD_VOICEMAIL":
+                super.set(7,2);
+                break;
+            case "AUTHENTICATE_ACCOUNTS":
+                super.set(8,4);
+                break;
+            case "BLUETOOTH":
+                super.set(9,2);
+                break;
+            case "BLUETOOTH_ADMIN":
+                super.set(10,2);
+                break;
+            case "BODY_SENSORS":
+                super.set(11,1);
+                break;
+            case "CALL_PHONE":
+                super.set(12,4);
+                break;
+            case "CAMERA":
+                super.set(13,1);
+                break;
+            case "CHANGE_CONFIGURATION":
+                super.set(14,2);
+                break;
+            case "CHANGE_NETWORK_STATE":
+                super.set(15,2);
+                break;
+            case "CHANGE_WIFI_MULTICAST_STATE":
+                super.set(16,1);
+                break;
+            case "CHANGE_WIFI_STATE":
+                super.set(17,2);
+                break;
+            case "CHANGE_WIMAX_STATE":
+                super.set(18,1);
+                break;
+            case "CLEAR_APP_CACHE":
+                super.set(19,4);
+                break;
+            case "DISABLE_KEYGUARD":
+                super.set(20,2);
+                break;
+            case "EXPAND_STATUS_BAR":
+                super.set(21,1);
+                break;
+            case "FLASHLIGHT":
+                super.set(22,1);
+                break;
+            case "GET_ACCOUNTS":
+                super.set(23,2);
+                break;
+            case "GET_PACKAGE_SIZE":
+                super.set(24,1);
+                break;
+            case "GET_TASKS":
+                super.set(25,2);
+                break;
+            case "INSTALL_SHORTCUT":
+                super.set(26,1);
+                break;
+            case "INTERNET":
+                super.set(27,1);
+                break;
+            case "KILL_BACKGROUND_PROCESSES":
+                super.set(28,4);
+                break;
+            case "MANAGE_ACCOUNTS":
+                super.set(29,2);
+                break;
+            case "MODIFY_AUDIO_SETTINGS":
+                super.set(30,2);
+                break;
+            case "NFC":
+                super.set(31,2);
+                break;
+            case "PROCESS_OUTGOING_CALLS":
+                super.set(32,4);
+                break;
+            case "READ_CALENDAR":
+                super.set(33,2);
+                break;
+            case "READ_CALL_LOG":
+                super.set(34,2);
+                break;
+            case "READ_CONTACTS":
+                super.set(35,2);
+                break;
+            case "READ_EXTERNAL_STORAGE":
+                super.set(36,1);
+                break;
+            case "READ_HISTORY_BOOKMARKS":
+                super.set(37,2);
+                break;
+            case "READ_PHONE_STATE":
+                super.set(38,1);
+                break;
+            case "READ_PROFILE":
+                super.set(39,1);
+                break;
+            case "READ_SMS":
+                super.set(40,4);
+                break;
+            case "READ_SOCIAL_STREAM":
+                super.set(41,4);
+                break;
+            case "READ_SYNC_SETTINGS":
+                super.set(42,1);
+                break;
+            case "READ_SYNC_STATS":
+                super.set(43,2);
+                break;
+            case "READ_USER_DICTIONARY":
+                super.set(44,1);
+                break;
+            case "RECEIVE_BOOT_COMPLETED":
+                super.set(45,1);
+                break;
+            case "RECEIVE_MMS":
+                super.set(46,4);
+                break;
+            case "RECEIVE_SMS":
+                super.set(47,4);
+                break;
+            case "RECEIVE_WAP_PUSH":
+                super.set(48,1);
+                break;
+            case "RECORD_AUDIO":
+                super.set(49,4);
+                break;
+            case "REORDER_TASKS":
+                super.set(50,2);
+                break;
+            case "SEND_SMS":
+                super.set(51,2);
+                break;
+            case "SET_ALARM":
+                super.set(52,1);
+                break;
+            case "SET_TIME_ZONE":
+                super.set(53,1);
+                break;
+            case "SET_WALLPAPER":
+                super.set(54,1);
+                break;
+            case "SUBSCRIBED_FEEDS_READ":
+                super.set(55,2);
+                break;
+            case "SUBSCRIBED_FEEDS_WRITE":
+                super.set(56,2);
+                break;
+            case "SYSTEM_ALERT_WINDOW":
+                super.set(57,4);
+                break;
+            case "TRANSMIT_IR":
+                super.set(58,1);
+                break;
+            case "UNINSTALL_SHORTCUT":
+                super.set(59,1);
+                break;
+            case "USE_CREDENTIALS":
+                super.set(60,2);
+                break;
+            case "USE_SIP":
+                super.set(61,2);
+                break;
+            case "VIBRATE":
+                super.set(62,1);
+                break;
+            case "WAKE_LOCK":
+                super.set(63,1);
+                break;
+            case "WRITE_CALENDAR":
+                super.set(64,2);
+                break;
+            case "WRITE_CALL_LOG":
+                super.set(65,2);
+                break;
+            case "WRITE_CONTACTS":
+                super.set(66,2);
+                break;
+            case "WRITE_EXTERNAL_STORAGE":
+                super.set(67,2);
+                break;
+            case "WRITE_HISTORY_BOOKMARKS":
+                super.set(68,2);
+                break;
+            case "WRITE_PROFILE":
+                super.set(69,2);
+                break;
+            case "WRITE_SMS":
+                super.set(70,4);
+                break;
+            case "WRITE_SOCIAL_STREAM":
+                super.set(71,4);
+                break;
+            case "WRITE_SYNC_SETTINGS":
+                super.set(72,2);
+                break;
+            case "WRITE_USER_DICTIONARY":
+                super.set(73,1);
+                break;
+            case "WRITE_VOICEMAIL":
+                super.set(74,1);
+                break;
+            default:
+                Log.e("permission does not exist")
+                break;
+
         }
-        this.permissions.put("ACCESS_COARSE_LOCATION",0);
-        this.permissions.put("ACCESS_FINE_LOCATION",0);
-        this.permissions.put("ACCESS_LOCATION_EXTRA_COMMANDS",0);
-        this.permissions.put("ACCESS_MOCK_LOCATION",0);
-        this.permissions.put("ACCESS_NETWORK_STATE",0);
-        this.permissions.put("ACCESS_WIFI_STATE",0);
-        this.permissions.put("ACCESS_WIMAX_STATE",0);
-        this.permissions.put("ADD_VOICEMAIL",0);
-        this.permissions.put("AUTHENTICATE_ACCOUNTS",0);
-        this.permissions.put("BLUETOOTH",0);
-        this.permissions.put("BLUETOOTH_ADMIN",0);
-        this.permissions.put("BODY_SENSORS",0);
-        this.permissions.put("CALL_PHONE",0);
-        this.permissions.put("CAMERA",0);
-        this.permissions.put("CHANGE_CONFIGURATION",0);
-        this.permissions.put("CHANGE_NETWORK_STATE",0);
-        this.permissions.put("CHANGE_WIFI_MULTICAST_STATE",0);
-        this.permissions.put("CHANGE_WIFI_STATE",0);
-        this.permissions.put("CHANGE_WIMAX_STATE",0);
-        this.permissions.put("CLEAR_APP_CACHE",0);
-        this.permissions.put("DISABLE_KEYGUARD",0);
-        this.permissions.put("EXPAND_STATUS_BAR",0);
-        this.permissions.put("FLASHLIGHT",0);
-        this.permissions.put("GET_ACCOUNTS",0);
-        this.permissions.put("GET_PACKAGE_SIZE",0);
-        this.permissions.put("GET_TASKS",0);
-        this.permissions.put("INSTALL_SHORTCUT",0);
-        this.permissions.put("INTERNET",0);
-        this.permissions.put("KILL_BACKGROUND_PROCESSES",0);
-        this.permissions.put("MANAGE_ACCOUNTS",0);
-        this.permissions.put("MODIFY_AUDIO_SETTINGS",0);
-        this.permissions.put("NFC",0);
-        this.permissions.put("PROCESS_OUTGOING_CALLS",0);
-        this.permissions.put("READ_CALENDAR",0);
-        this.permissions.put("READ_CALL_LOG",0);
-        this.permissions.put("READ_CONTACTS",0);
-        this.permissions.put("READ_EXTERNAL_STORAGE",0);
-        this.permissions.put("READ_HISTORY_BOOKMARKS",0);
-        this.permissions.put("READ_PHONE_STATE",0);
-        this.permissions.put("READ_PROFILE",0);
-        this.permissions.put("READ_SMS",0);
-        this.permissions.put("READ_SOCIAL_STREAM",0);
-        this.permissions.put("READ_SYNC_SETTINGS",0);
-        this.permissions.put("READ_SYNC_STATS",0);
-        this.permissions.put("READ_USER_DICTIONARY",0);
-        this.permissions.put("RECEIVE_BOOT_COMPLETED",0);
-        this.permissions.put("RECEIVE_MMS",0);
-        this.permissions.put("RECEIVE_SMS",0);
-        this.permissions.put("RECEIVE_WAP_PUSH",0);
-        this.permissions.put("RECORD_AUDIO",0);
-        this.permissions.put("REORDER_TASKS",0);
-        this.permissions.put("SEND_SMS",0);
-        this.permissions.put("SET_ALARM",0);
-        this.permissions.put("SET_TIME_ZONE",0);
-        this.permissions.put("SET_WALLPAPER",0);
-        this.permissions.put("SUBSCRIBED_FEEDS_READ",0);
-        this.permissions.put("SUBSCRIBED_FEEDS_WRITE",0);
-        this.permissions.put("SYSTEM_ALERT_WINDOW",0);
-        this.permissions.put("TRANSMIT_IR",0);
-        this.permissions.put("UNINSTALL_SHORTCUT",0);
-        this.permissions.put("USE_CREDENTIALS",0);
-        this.permissions.put("USE_SIP",0);
-        this.permissions.put("VIBRATE",0);
-        this.permissions.put("WAKE_LOCK",0);
-        this.permissions.put("WRITE_CALENDAR",0);
-        this.permissions.put("WRITE_CALL_LOG",0);
-        this.permissions.put("WRITE_CONTACTS",0);
-        this.permissions.put("WRITE_EXTERNAL_STORAGE",0);
-        this.permissions.put("WRITE_HISTORY_BOOKMARKS",0);
-        this.permissions.put("WRITE_PROFILE",0);
-        this.permissions.put("WRITE_SMS",0);
-        this.permissions.put("WRITE_SOCIAL_STREAM",0);
-        this.permissions.put("WRITE_SYNC_SETTINGS",0);
-        this.permissions.put("WRITE_USER_DICTIONARY",0);
-        this.permissions.put("WRITE_VOICEMAIL",0);
+    public String getPermission(int index){
+        return super.get(index);
+    }
+    public int getIndex(String permission){
 
     }
+}
 }
