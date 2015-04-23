@@ -51,8 +51,8 @@
     <!-- User behavior feedback -->
     <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt risikofaktor. Klikk her for å se hvilke applikasjoner.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
-    <string name="card_install_trend_neutral_high">Det er for tiden høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk her for å se hvilke applikasjoner.</string>
-    <string name="card_install_trend_neutral_low">Det er for tiden lav riskofaktor på de siste installerte applikasjoenne på telefonen</string>
+    <string name="card_install_trend_fixed_high">Det er for tiden høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk her for å se hvilke applikasjoner.</string>
+    <string name="card_install_trend_fixed_low">Det er for tiden lav riskofaktor på de siste installerte applikasjoenne på telefonen</string>
     <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert.</string>
 
     <string name="card_disharmony_positive">Du har vist misnøye til en flere applikasjoners tillatelser, men du fortsetter likevel å bruke dem. Klikk her for å se hvilke applikasjoner.</string>

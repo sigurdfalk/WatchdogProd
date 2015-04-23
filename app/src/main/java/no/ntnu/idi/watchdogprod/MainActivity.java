@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
@@ -47,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
     private int uninstallTrend;
     private ImageView appsBtn;
     private ImageView permissionListBtn;
+    private TextView totalRiskScoreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +116,10 @@ public class MainActivity extends ActionBarActivity {
 //            startActivity(intent);
         }
 
+        totalRiskScoreTextView = (TextView)findViewById(R.id.main_total_risk_score);
+        totalRiskScoreTextView.setText("Total risikofaktor: " + calculateTotalRiskScore() + "/100");
 
+        createThreatLevelCard();
     }
 
     private void initProfile(Context context) {
@@ -122,8 +128,7 @@ public class MainActivity extends ActionBarActivity {
         profile = new Profile();
         profile.createProfile(this);
 
-//        installTrend = profile.getInstallTrendRiskIncreasing();
-        installTrend = -1;
+        installTrend = profile.getInstallTrendRiskIncreasing();
         System.out.println("IN TREND " + installTrend);
         uninstallTrend = profile.getUninstallTrendRiskIncreasing();
         System.out.println("UN TREND " + uninstallTrend);
@@ -160,35 +165,81 @@ public class MainActivity extends ActionBarActivity {
         dataSource.close();
     }
 
+    private int calculateTotalRiskScore() {
+        ApplicationHelper.clearApplicationList();
+        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+
+        int sum = 0;
+
+        for (ExtendedPackageInfo application : applications) {
+            sum += application.getPrivacyScore();
+        }
+
+        return sum / applications.size();
+    }
+
     public void populateBehaviorCards(Context context) {
         TextView cardText;
         ImageView cardImage;
         LinearLayout backgroundColor;
 
-        if (installTrend > 0) {
-            backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
+        backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
+        cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
+        cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
+
+        if (installTrend == Profile.APP_TREND_INCREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
-
-            cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
             cardText.setText(getResources().getString(R.string.card_install_trend_positive));
-
-            cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_up_black_48dp));
-        } else if (installTrend < 0) {
-            backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
+        } else if (installTrend < Profile.APP_TREND_DECREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-
-            cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
             cardText.setText(getResources().getString(R.string.card_install_trend_negative));
-
-            cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
-        } else {
+        } else if(installTrend == Profile.APP_TREND_FIXED_HIGH) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
+            cardText.setText(getResources().getString(R.string.card_install_trend_fixed_high));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
+        } else if(installTrend == Profile.APP_TREND_FIXED_LOW) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardText.setText(getResources().getString(R.string.card_install_trend_fixed_low));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
         }
 
-        if (uninstallTrend > 0) {
-        } else if (uninstallTrend < 0) {
+    }
+
+    public void createThreatLevelCard() {
+        TextView cardText = (TextView)findViewById(R.id.main_card_overallthreat_text);
+        ImageView cardImage = (ImageView)findViewById(R.id.main_card_overallthreat_image);
+        LinearLayout backgroundColor = (LinearLayout)findViewById(R.id.card_background_overallthreat);
+
+        ApplicationHelper.clearApplicationList();
+        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+
+        int redAppsCount = 0;
+        int yellowAppsCount = 0;
+        int greenAppsCount = 0;
+
+        for (ExtendedPackageInfo application : applications) {
+            if(application.getPrivacyScore() > PrivacyScoreCalculator.HIGH_THRESHOLD) {
+                redAppsCount++;
+            } else if(application.getPrivacyScore() > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                yellowAppsCount++;
+            } else {
+                greenAppsCount++;
+            }
+        }
+
+        cardText.setText("Det er for øyeblikket installert " + redAppsCount + " applikasjoner med høy risikofaktor, " + yellowAppsCount + " med middels riskofaktor, og " + greenAppsCount + " med lav riskofaktor");
+
+        if(redAppsCount > 3) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
+        } else  if(yellowAppsCount > 4) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_neutral_grey600_36dp));
         } else {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_grey600_36dp));
         }
     }
 

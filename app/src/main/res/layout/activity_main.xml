@@ -52,7 +52,8 @@
             </LinearLayout>
 
             <TextView
-                android:text="Total risikofaktor: 55/100"
+                android:id="@+id/main_total_risk_score"
+                android:text="Total risikofaktor: N/A"
                 android:textSize="20dp"
                 android:padding="15dp"
                 android:textStyle="bold"

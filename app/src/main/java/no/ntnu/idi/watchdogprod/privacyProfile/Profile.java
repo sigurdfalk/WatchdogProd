@@ -23,6 +23,12 @@ public class Profile {
     public static final String AVG_INSTALLS_VALUE = "averageInstallValue";
     public static final String AVG_UNINSTALL_VALUE = "averageUninstallValue";
 
+    public static final int APP_TREND_FIXED_HIGH = 4;
+    public static final int APP_TREND_FIXED_LOW = 3;
+    public static final int APP_TREND_DECREASING = 2;
+    public static final int APP_TREND_INCREASING = 1;
+
+
     private double understandingOfPermissions;
     private double interestInPrivacy;
     private double utilityOverPrivacy;
@@ -117,9 +123,14 @@ public class Profile {
         System.out.println("New avg " + avg);
 
         if (oldAvg == -1) {
-            return 0;
+            if(avg > 50) {
+                return APP_TREND_FIXED_HIGH;
+            }
+            else if(avg <= 50) {
+                return APP_TREND_FIXED_LOW;
+            }
         }
-        return avg >= oldAvg  ? 1 : -1 ;
+        return avg >= oldAvg  ? APP_TREND_INCREASING : APP_TREND_DECREASING ;
     }
 
     public double  getAverage(double [] history) {
