@@ -46,5 +46,9 @@
     <string name="for_more_permission_info_touch">For mer informasjon om tillatelser, trykk på</string>
     <string name="no_app_risk_indikators">Denne applikasjonen har ingen indikatorer på farlig adferd.</string>
     <string name="for_more_risk_indicator_info_touch">For mer informasjon om risikoindikatorer, trykk på</string>
+    <string name="risk_score_description">Risikofaktoren regnes ut hovedsaklig basert på hvilke tillatelser applikasjonen krever. En tillatelse som utgjør en høy risiko for ditt personvern vil veie høyere enn en tillatelse med lav risiko. Hvis en eller flere risikoindikatorer blir funnet vil dette øke den totale risikofaktoren.</string>
+    <string name="questions_risk_score_description">På enkelte applikasjoner ønsker vi din tilbakemelding på hva du føler om funksjonalitet som kan forekomme i applikasjonen. Din tilbakemelding her vil påvirke risikofaktoren med en redusering hvis tilbakemeldingen er et smilefjes, eller en økning ved et surt fjes.</string>
+    <string name="risk_score">Risikofaktor</string>
+    <string name="your_feedback_counts">Din tilbakemelding teller!</string>
 
 </resources>
