@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class PermissionListActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.list_permissions);
+        View emptyView = findViewById(R.id.list_item_permissions_empty);
+        listView.setEmptyView(emptyView);
         ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(packageInfo.requestedPermissions, this);
         PermissionListAdapter adapter = new PermissionListAdapter(this, permissionDescriptions);
         listView.setAdapter(adapter);

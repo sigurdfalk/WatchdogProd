@@ -42,5 +42,9 @@
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
     <string name="risk_indicators">Risikoindikatorer</string>
     <string name="updates">Oppdateringer</string>
+    <string name="no_required_app_permissions">Denne applikasjonen krever ingen tillatelser.</string>
+    <string name="for_more_permission_info_touch">For mer informasjon om tillatelser, trykk på</string>
+    <string name="no_app_risk_indikators">Denne applikasjonen har ingen indikatorer på farlig adferd.</string>
+    <string name="for_more_risk_indicator_info_touch">For mer informasjon om risikoindikatorer, trykk på</string>
 
 </resources>
