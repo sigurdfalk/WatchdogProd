@@ -1,6 +1,7 @@
 package no.ntnu.idi.watchdogprod.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -46,6 +47,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private TextView infoHeader;
     private TextView infoFact;
     private int currentPermissionFact;
+    private Button uninstalbutton;
 
     private AnswersDataSource answersDataSource;
 
@@ -59,6 +61,17 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
         packageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
         currentPermissionFact = 0;
+
+        uninstalbutton = (Button)findViewById(R.id.uninstall_btn);
+
+        uninstalbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri packageURI = Uri.parse("package:"+applicationPackageName);
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this));

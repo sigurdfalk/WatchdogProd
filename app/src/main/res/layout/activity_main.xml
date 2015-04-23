@@ -52,7 +52,7 @@
             </LinearLayout>
 
             <TextView
-                android:text="Total Score: 55/100"
+                android:text="Total risikofaktor: 55/100"
                 android:textSize="20dp"
                 android:padding="15dp"
                 android:textStyle="bold"
@@ -139,16 +139,15 @@
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
             <View
-            android:layout_width="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_height="2dp"
-            android:background="@android:color/darker_gray"/>
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray" />
 
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -186,6 +185,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/main_card_overallthreat_title"
                                     android:layout_width="0sp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
@@ -195,28 +195,31 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/main_card_overallthreat_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
                                 android:textSize="12sp"
-                                android:text="Det er for tiden installert 14 applikasjoner som utgjør en trussel, 9 applikasjoner som ligger i gråsonen og 17 applikasjoner som ikke utgjør noen trussel." />
+                                android:text="Ingen informasjon tilgjengelig for øyeblikket." />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/card_background_overallthreat"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_red"
+                            android:background="@color/risk_yellow"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
 
                             <ImageView
+                                android:id="@+id/main_card_overallthreat_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_sad_white_36dp" />
+                                android:src="@mipmap/ic_emoticon_neutral_white_36dp" />
 
                         </LinearLayout>
 
@@ -264,6 +267,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/main_card_installtrend_title"
                                     android:layout_width="0sp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
@@ -272,30 +276,32 @@
                                     android:textSize="18sp" />
                             </LinearLayout>
 
-
                             <TextView
-                                android:id="@+id/app_detail_updates_text"
+                                android:id="@+id/main_card_installtrend_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
                                 android:textSize="12sp"
-                                android:text="Den siste tiden har du installert flere risikofylte applikasjoner." />
+                                android:text="@string/card_install_trend_neutral" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/card_background_install_trend"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_red"
+                            android:background="@color/risk_yellow"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
 
                             <ImageView
+                                android:id="@+id/main_card_installtrend_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@drawable/ic_trending_up_black_48dp" />
+                                android:src="@mipmap/ic_trending_neutral_black_36dp"
+                                android:tint="@color/black" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -337,6 +343,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/main_card_uninstalltrend_title"
                                     android:layout_width="0sp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
@@ -347,28 +354,31 @@
 
 
                             <TextView
+                                android:id="@+id/main_card_uninstalltrend_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
                                 android:textSize="12sp"
-                                android:text="Den siste tiden har du avinstallert flere risikofylte applikasjoner." />
+                                android:text="Ingen avinstallerte applikasjoner registrert." />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/card_background_uninstall_trend"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_green"
+                            android:background="@color/risk_yellow"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
 
                             <ImageView
+                                android:id="@+id/main_card_uninstalltrend_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@drawable/ic_trending_down_grey600_24dp" />
+                                android:src="@mipmap/ic_trending_neutral_black_36dp" />
 
                         </LinearLayout>
 
@@ -413,6 +423,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/main_card_updates_title"
                                     android:layout_width="0sp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
@@ -422,24 +433,27 @@
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/main_card_updates_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
                                 android:textSize="12sp"
-                                android:text="En eller flere applikasjoner har fått en oppdatering som har forandret applikasjonsens risikofaktor." />
+                                android:text="@string/card_updates_no" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/card_background_updates"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_red"
+                            android:background="@color/risk_green"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
 
                             <ImageView
+                                android:id="@+id/main_card_updates_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
@@ -488,6 +502,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
+                                    android:id="@+id/main_card_disharmony_title"
                                     android:layout_width="0sp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
@@ -496,18 +511,19 @@
                                     android:textSize="18sp" />
                             </LinearLayout>
 
-
                             <TextView
+                                android:id="@+id/main_card_disharmony_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
                                 android:textSize="12sp"
-                                android:text="Du er negativ til flere appers tillatelser, men du fortsetter likevel å bruke dem. " />
+                                android:text="@string/card_disharmony_neutral" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/card_background_disharmony"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
                             android:background="@color/risk_yellow"
@@ -516,6 +532,7 @@
                             android:padding="10sp">
 
                             <ImageView
+                                android:id="@+id/main_card_disharmony_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
