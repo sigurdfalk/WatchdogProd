@@ -122,11 +122,12 @@ public class MainActivity extends ActionBarActivity {
         profile = new Profile();
         profile.createProfile(this);
 
-        installTrend = profile.getInstallTrendRiskIncreasing();
+//        installTrend = profile.getInstallTrendRiskIncreasing();
+        installTrend = -1;
         System.out.println("IN TREND " + installTrend);
         uninstallTrend = profile.getUninstallTrendRiskIncreasing();
         System.out.println("UN TREND " + uninstallTrend);
-        populateProfileBehaviorList(context);
+        populateBehaviorCards(context);
     }
 
     private boolean isInitialLaunch() {
@@ -159,18 +160,29 @@ public class MainActivity extends ActionBarActivity {
         dataSource.close();
     }
 
-    public void populateProfileBehaviorList(Context context) {
-
-//        final LinearLayout myLayout = (LinearLayout)findViewById(R.id.main_layout_cards);
-//        View card = View.inflate(getApplicationContext(), R.layout.profile_behavior_card, null);
-//        TextView cardTitle = (TextView) card.findViewById(R.id.behavior_card_title);
-//        cardTitle.setText("Nedgang");
-//        TextView cardDecription = (TextView) card.findViewById(R.id.behavior_card_text);
-//        cardDecription.setText("Nedgang");
-//        myLayout.addView(card);
+    public void populateBehaviorCards(Context context) {
+        TextView cardText;
+        ImageView cardImage;
+        LinearLayout backgroundColor;
 
         if (installTrend > 0) {
+            backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
+
+            cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
+            cardText.setText(getResources().getString(R.string.card_install_trend_positive));
+
+            cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
+            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_up_black_48dp));
         } else if (installTrend < 0) {
+            backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+
+            cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
+            cardText.setText(getResources().getString(R.string.card_install_trend_negative));
+
+            cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
+            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
         } else {
         }
 
@@ -258,3 +270,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+//        final LinearLayout myLayout = (LinearLayout)findViewById(R.id.main_layout_cards);
+//        View card = View.inflate(getApplicationContext(), R.layout.profile_behavior_card, null);
+//        TextView cardTitle = (TextView) card.findViewById(R.id.behavior_card_title);
+//        cardTitle.setText("Nedgang");
+//        TextView cardDecription = (TextView) card.findViewById(R.id.behavior_card_text);
+//        cardDecription.setText("Nedgang");
+//        myLayout.addView(card);

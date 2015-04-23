@@ -524,6 +524,13 @@
                 android:visibility="gone" />
 
 
+            <Button
+                android:id="@+id/uninstall_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="uninstal" />
+
+
         </LinearLayout>
 
     </ScrollView>
