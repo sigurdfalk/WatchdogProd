@@ -58,7 +58,8 @@
         <activity android:name=".recommender.RecMain"
                   android:label="RecMain">
                   <meta-data
-                            android:name="android.support.PARENT_ACTIVITY"/>
+                            android:name="android.support.PARENT_ACTIVITY"
+                            android:value=".activities.ApplicationDetailActivity"/>
         </activity>
         <receiver
             android:name=".receivers.ApplicationInstalledReceiver"

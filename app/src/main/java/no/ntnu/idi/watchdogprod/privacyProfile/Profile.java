@@ -40,6 +40,7 @@ public class Profile {
         return instance;
     }
 
+
     public DenseVector getProfileVector() {
         return profileVector;
     }

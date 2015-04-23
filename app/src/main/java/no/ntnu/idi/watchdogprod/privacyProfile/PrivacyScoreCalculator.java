@@ -67,6 +67,7 @@ public class PrivacyScoreCalculator {
         //return (score > MAX_SCORE) ? MAX_SCORE : score;
     }
 
+
     public static double calculateScore(Context context, ExtendedPackageInfo packageInfo) throws SQLException {
         ArrayList<PermissionDescription> permissions = packageInfo.getPermissionDescriptions();
         ArrayList<PermissionFact> facts = packageInfo.getPermissionFacts();

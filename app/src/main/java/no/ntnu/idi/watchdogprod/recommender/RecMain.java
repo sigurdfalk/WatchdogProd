@@ -22,6 +22,7 @@ import java.util.Comparator;
 
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
+import no.ntnu.idi.watchdogprod.adapters.ResponseListAdapter;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
@@ -34,7 +35,7 @@ public class RecMain extends ActionBarActivity{
     String appName;
     ArrayList<ResponseApp> apps;
     Profile profile;
-    private ApplicationListAdapter adapter;
+    private ResponseListAdapter adapter;
 
 
     @Override
@@ -54,9 +55,9 @@ public class RecMain extends ActionBarActivity{
         appName = getIntent().getExtras().getString("appName");
         apps = (ArrayList<ResponseApp>) getIntent().getExtras().getSerializable("response");
         profile = Profile.getInstance();
-
         Collections.sort(apps);
-
+        adapter = new ResponseListAdapter(this,apps);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override

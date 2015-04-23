@@ -1,7 +1,14 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
+import android.content.Context;
+
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 
+import java.util.ArrayList;
+
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
@@ -12,11 +19,22 @@ public class ResponseApp implements Comparable<ResponseApp>{
     private String[] permissions;
     private String logo;
     private String storeUrl;
+    private String infoLine;
     private AppVector vector;
+    private double privacyScore;
     private double distanceFromProfile;
 
-    public ResponseApp(String packageName, String[] permissions, String logo, String storeUrl) {
+    public String getInfoLine() {
+        return infoLine;
+    }
+
+    public void setInfoLine(String infoLine) {
+        this.infoLine = infoLine;
+    }
+
+    public ResponseApp(String packageName, String[] permissions, String logo, String storeUrl, String infoLine) {
         this.packageName = packageName;
+        this.infoLine = infoLine;
         this.permissions = permissions;
         this.logo = logo;
         this.storeUrl = storeUrl;
@@ -72,4 +90,5 @@ public class ResponseApp implements Comparable<ResponseApp>{
 
         return 0;
     }
+
 }

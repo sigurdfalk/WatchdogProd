@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
     private void initProfile(Context context) {
         //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
 
-        profile = new Profile();
+        profile = Profile.getInstance();
         profile.createProfile(this);
 
         installTrend = profile.getInstallTrendRiskIncreasing();
