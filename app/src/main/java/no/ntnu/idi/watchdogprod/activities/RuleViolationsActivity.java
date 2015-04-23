@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class RuleViolationsActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView listView = (ListView) findViewById(R.id.rule_violations_list);
+        View emptyView = findViewById(R.id.rule_violations_empty);
+        listView.setEmptyView(emptyView);
 
         PackageInfo packageInfo = null;
 
