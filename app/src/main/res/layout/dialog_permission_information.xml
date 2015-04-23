@@ -31,7 +31,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="@string/lorum"/>
+            android:text="@string/permission_risk_high_description"/>
 
     </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="@string/lorum"/>
+            android:text="@string/permission_risk_medium_description"/>
 
     </LinearLayout>
 
@@ -79,7 +79,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:padding="5sp"
-            android:text="@string/lorum"/>
+            android:text="@string/permission_risk_low_description"/>
 
     </LinearLayout>
 
