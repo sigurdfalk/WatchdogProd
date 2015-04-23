@@ -10,7 +10,9 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -27,6 +32,7 @@ import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
@@ -40,13 +46,15 @@ public class MainActivity extends ActionBarActivity {
     private int installTrend;
     private int uninstallTrend;
     private ImageView appsBtn;
+    private ImageView permissionListBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        appsBtn = (ImageView)findViewById(R.id.main_apps_btn);
+        appsBtn = (ImageView) findViewById(R.id.main_apps_btn);
+        permissionListBtn = (ImageView) findViewById(R.id.main_permissions_btn);
 
         appsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,11 +64,20 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        initProfile();
+        permissionListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
+                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
+                startActivity(i);
+            }
+        });
+
+        initProfile(this);
 
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
-        final ImageView cancelTips = (ImageView)findViewById(R.id.main_cancel_tips);
+        final ImageView cancelTips = (ImageView) findViewById(R.id.main_cancel_tips);
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_slide_out_up);
         cancelTips.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         boolean answeredQuestions = checkAnsweredQuestionsState();
-        if(!answeredQuestions) {
+        if (!answeredQuestions) {
 //            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
 //            startActivity(intent);
         }
@@ -99,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void initProfile(){
+    private void initProfile(Context context) {
         //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
 
         profile = new Profile();
@@ -109,6 +126,7 @@ public class MainActivity extends ActionBarActivity {
         System.out.println("IN TREND " + installTrend);
         uninstallTrend = profile.getUninstallTrendRiskIncreasing();
         System.out.println("UN TREND " + uninstallTrend);
+        populateProfileBehaviorList(context);
     }
 
     private boolean isInitialLaunch() {
@@ -141,26 +159,25 @@ public class MainActivity extends ActionBarActivity {
         dataSource.close();
     }
 
-    public ArrayList<ProfileBehavior> populateProfileBehaviorList() {
-        ArrayList<ProfileBehavior> profileBehaviors = new ArrayList<>();
-        if(installTrend > 0) {
-            profileBehaviors.add(new ProfileBehavior(null, "Økning i installering av risikofylte apper", "tekst", 1));
-        } else if(installTrend < 0) {
-            profileBehaviors.add(new ProfileBehavior(null, "Nedgang i installering av risikifylte apper", "tekst", 3));
+    public void populateProfileBehaviorList(Context context) {
+
+//        final LinearLayout myLayout = (LinearLayout)findViewById(R.id.main_layout_cards);
+//        View card = View.inflate(getApplicationContext(), R.layout.profile_behavior_card, null);
+//        TextView cardTitle = (TextView) card.findViewById(R.id.behavior_card_title);
+//        cardTitle.setText("Nedgang");
+//        TextView cardDecription = (TextView) card.findViewById(R.id.behavior_card_text);
+//        cardDecription.setText("Nedgang");
+//        myLayout.addView(card);
+
+        if (installTrend > 0) {
+        } else if (installTrend < 0) {
         } else {
-            profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
         }
-        if(uninstallTrend > 0) {
-            profileBehaviors.add(new ProfileBehavior(null, "Økning i avinstallering av risikofylte apper", "tekst", 1));
-        } else if(uninstallTrend < 0) {
-            profileBehaviors.add(new ProfileBehavior(null, "Nedgang i avinstallering av risikifylte apper", "tekst", 3));
+
+        if (uninstallTrend > 0) {
+        } else if (uninstallTrend < 0) {
         } else {
-            profileBehaviors.add(new ProfileBehavior(null, "Nøytral i farlige apper", "tekst", 2));
         }
-//        profileBehaviors.add(new ProfileBehavior(null, "Økt trusselbilde", "tekst", 1));
-//        profileBehaviors.add(new ProfileBehavior(null, "Mindre datatrafikk", "tekst", 3));
-//        profileBehaviors.add(new ProfileBehavior(null, "Forståelse for tillatelser", "tekst", 2));
-        return profileBehaviors;
     }
 
     public boolean checkAnsweredQuestionsState() {
