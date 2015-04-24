@@ -36,7 +36,6 @@ public class AppVector extends RandomAccessSparseVector{
         for (String permission : permissions) {
             putPermission(permission);
         }
-        int i = 0;
     }
 
     /**
