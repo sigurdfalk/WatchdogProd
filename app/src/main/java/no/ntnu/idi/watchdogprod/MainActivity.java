@@ -1,9 +1,11 @@
 package no.ntnu.idi.watchdogprod;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -239,11 +241,12 @@ public class MainActivity extends ActionBarActivity {
         cardText = (TextView)findViewById(R.id.main_card_updates_text);
         cardImage = (ImageView)findViewById(R.id.main_card_updates_image);
 
-        String informationEnding = "har nylig blitt oppdatert. Dette kan ha påvirket risikofaktoren til applikasjonene.";
+        String informationEnding = "har nylig blitt oppdatert. Dette kan ha påvirket risikofaktoren til "+ (updatedAppsCount == 1? "applikasjonen.":"applikasjonene.") +
+                " Du finner " + (updatedAppsCount == 1? "den":"dem") + " i listen over nylig oppdaterte applikasjoner.";
 
         if(updatedAppsCount > 0 ) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
-            cardText.setText(updatedAppsCount == 1 ? updatedAppsCount + " app " + informationEnding : updatedAppsCount + " apper " + informationEnding);
+            cardText.setText(updatedAppsCount == 1 ? "Én" + " app " + informationEnding : updatedAppsCount + " apper " + informationEnding);
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_updates_no));
@@ -263,7 +266,7 @@ public class MainActivity extends ActionBarActivity {
         if (uninstallTrend == Profile.APP_TREND_INCREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_positive));
-            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_up_black_48dp));
+            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
         } else if (uninstallTrend < Profile.APP_TREND_DECREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_negative));
@@ -280,8 +283,8 @@ public class MainActivity extends ActionBarActivity {
 
         if(disharmonyApps.size() > 0) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
-            cardText.setText("Du har vist misnøye til " + (disharmonyApps.size() == 1? disharmonyApps.get(0) +"s" :  disharmonyApps.size() + " applikasjoners") +
-                    " tillatelser, men du fortsetter likevel å bruke "+ (disharmonyApps.size() == 1? "den.":"dem.") + " Klikk her for mer informasjon.");
+            cardText.setText("Du har vist misnøye til flere " + (disharmonyApps.size() == 1 ? "av " + disharmonyApps.get(0) + "s" : "" + " applikasjoners") +
+                    " tillatelser, men du fortsetter likevel å bruke " + (disharmonyApps.size() == 1 ? "den." : "dem.") + " Klikk her for mer informasjon.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
@@ -307,8 +310,9 @@ public class MainActivity extends ActionBarActivity {
         Date now = new Date();
         final int hoursInDay = 24;
 
-
         for (ExtendedPackageInfo application : applications) {
+            //IF-TESTEN ER FIX MENS DET ER BUG I LISTA
+
             if(application.getUpdateLog() != null && application.getUpdateLog().size() > 0 ) {
                 long diff = now.getTime() - application.getUpdateLog().get(0).getLastUpdateTime();
                 if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 3)) {
@@ -325,7 +329,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        cardText.setText("Det er for øyeblikket installert " + redAppsCount + " applikasjoner med høy risikofaktor, " + yellowAppsCount + " med middels riskofaktor, og " + greenAppsCount + " med lav riskofaktor");
+        cardText.setText("Det er for øyeblikket installert " + redAppsCount + (redAppsCount == 1? " applikasjon":" applikasjoner") + " med høy risikofaktor, " + yellowAppsCount + " med middels riskofaktor, og " + greenAppsCount + " med lav riskofaktor.");
 
         if(redAppsCount > 3) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
@@ -402,18 +406,28 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.profile_information) {
-            return true;
-        } else if (id == R.id.main_settings) {
-            //
+        switch (item.getItemId()) {
+            case R.id.menu_main_info:
+                showInformationDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void showInformationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_main_info, null));
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // not implemented
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 }

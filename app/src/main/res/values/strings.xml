@@ -27,6 +27,7 @@
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="permission_info">Beskrivelse av risiko</string>
+    <string name="main_info">Informasjon</string>
     <string name="profile_info">Informasjon</string>
     <string name="profile_tips">Tips</string>
     <string name="close">Lukk</string>
@@ -71,4 +72,9 @@
 
     <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
 
+    <!-- Dialog main-->
+    <string name="dialog_main_score_header">Risikofaktor</string>
+    <string name="dialog_main_score_explanation">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som totalt bilde på trusselnivået på telefonen. </string>
+    <string name="dialog_main_cards_header">Informasjonskort</string>
+    <string name="dialog_main_cards_explanation">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser og tilbakemeldinger på ditt bruksmønster.  </string>
 </resources>

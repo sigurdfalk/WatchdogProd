@@ -35,10 +35,6 @@ public class Profile {
     public static final int APP_TREND_DECREASING = 2;
     public static final int APP_TREND_INCREASING = 1;
 
-    public static final int APP_DISHARMONY = 1;
-    public static final int APP_HARMONY = 2;
-
-
     private double understandingOfPermissions;
     private double interestInPrivacy;
     private double utilityOverPrivacy;
@@ -93,7 +89,7 @@ public class Profile {
         ArrayList<String> disharmonyApps = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : answerCount.entrySet()) {
-            if(entry.getValue() > 3) {
+            if(entry.getValue() >= 2) {
                 disharmonyApps.add(entry.getKey());
             }
         }
@@ -140,7 +136,7 @@ public class Profile {
         return avg >= oldAvg  ? APP_TREND_INCREASING : APP_TREND_DECREASING ;
     }
 
-    public double  getAverage(double [] history) {
+    public double getAverage(double [] history) {
         double temp = 0;
         int startingpoint = 0;
         int total = 10;
