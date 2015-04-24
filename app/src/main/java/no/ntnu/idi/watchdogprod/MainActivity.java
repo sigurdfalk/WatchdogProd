@@ -27,6 +27,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -47,9 +48,6 @@ import no.ntnu.idi.watchdogprod.activities.*;
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private Profile profile;
-    private int installTrend;
-    private int uninstallTrend;
-    private int disharmony;
     private ImageView appsBtn;
     private ImageView permissionListBtn;
     private TextView totalRiskScoreTextView;
@@ -85,7 +83,11 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        initProfile(this);
+        try {
+            initProfile(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
@@ -126,20 +128,30 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private void initProfile(Context context) {
+    private void initProfile(Context context) throws SQLException {
         //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
 
-        totalRiskScoreTextView = (TextView)findViewById(R.id.main_total_risk_score);
-        totalRiskScoreTextView.setText("Total risikofaktor: " + calculateTotalRiskScore() + "/100");
+        setTotalRiskScore();
 
         profile = new Profile();
         profile.createProfile(this);
 
-        installTrend = profile.getInstallTrendRiskIncreasing();
-        System.out.println("IN TREND " + installTrend);
-        uninstallTrend = profile.getUninstallTrendRiskIncreasing();
-        System.out.println("UN TREND " + uninstallTrend);
-        populateBehaviorCards(context);
+        populateBehaviorCards();
+    }
+
+    private void setTotalRiskScore() {
+        int totalRiskScore = calculateTotalRiskScore();
+
+        totalRiskScoreTextView = (TextView)findViewById(R.id.main_total_risk_score);
+        totalRiskScoreTextView.setText("Total risikofaktor: " + totalRiskScore + "/100");
+
+        if(totalRiskScore > PrivacyScoreCalculator.HIGH_THRESHOLD) {
+            totalRiskScoreTextView.setBackgroundColor(getResources().getColor(R.color.risk_red));
+        } else if(totalRiskScore > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            totalRiskScoreTextView.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
+        } else {
+            totalRiskScoreTextView.setBackgroundColor(getResources().getColor(R.color.risk_green));
+        }
     }
 
     private boolean isInitialLaunch() {
@@ -185,7 +197,7 @@ public class MainActivity extends ActionBarActivity {
         return sum / applications.size();
     }
 
-    private void populateBehaviorCards(Context context) {
+    private void populateBehaviorCards() {
         createThreatLevelCard();
         createInstallTrendCard();
         createUninstallTrendCard();
@@ -194,6 +206,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createInstallTrendCard() {
+
+        int installTrend = profile.getInstallTrendRiskIncreasing();
+        System.out.println("IN TREND " + installTrend);
+
+
         backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
         cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
         cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
@@ -234,6 +251,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createUninstallTrendCard() {
+
+        int uninstallTrend = profile.getUninstallTrendRiskIncreasing();
+        System.out.println("UN TREND " + uninstallTrend);
+
+
         backgroundColor = (LinearLayout)findViewById(R.id.card_background_uninstall_trend);
         cardText = (TextView)findViewById(R.id.main_card_uninstalltrend_text);
         cardImage = (ImageView)findViewById(R.id.main_card_uninstalltrend_image);
@@ -250,18 +272,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createHarmonyCard() {
+        ArrayList<String> disharmonyApps = profile.getDisharmonyApps();
+
         backgroundColor = (LinearLayout)findViewById(R.id.card_background_harmony);
         cardText = (TextView)findViewById(R.id.main_card_harmony_text);
         cardImage = (ImageView)findViewById(R.id.main_card_harmony_image);
 
-        if(disharmony == Profile.APP_DISHARMONY) {
+        if(disharmonyApps.size() > 0) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
-            cardText.setText(getResources().getString(R.string.card_disharmony_positive));
+            cardText.setText("Du har vist misnøye til " + (disharmonyApps.size() == 1? disharmonyApps.get(0) +"s" :  disharmonyApps.size() + " applikasjoners") +
+                    " tillatelser, men du fortsetter likevel å bruke "+ (disharmonyApps.size() == 1? "den.":"dem.") + " Klikk her for mer informasjon.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
-        } else if(disharmony == Profile.APP_HARMONY) {
-            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-            cardText.setText(getResources().getString(R.string.card_disharmony_negative));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_grey600_36dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
             cardText.setText(getResources().getString(R.string.card_disharmony_neutral));

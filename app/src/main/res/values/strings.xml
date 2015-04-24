@@ -67,8 +67,6 @@
     <string name="card_uninstall_trend_negative">Ingen nyttig informasjon tilgjengelig.</string>
     <string name="card_uninstall_trend_neutral">Ingen avinstallerte applikasjoner registrert.</string>
 
-    <string name="card_disharmony_positive">Du har vist misnøye til en flere applikasjoners tillatelser, men du fortsetter likevel å bruke dem. Klikk her for å se hvilke applikasjoner.</string>
-    <string name="card_disharmony_negative">Du er positiv til applikasjoner tillatelser. </string>
     <string name="card_disharmony_neutral">Ingen informasjon tilgjengelig. </string>
 
     <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
