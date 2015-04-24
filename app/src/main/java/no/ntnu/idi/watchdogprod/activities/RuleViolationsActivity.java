@@ -1,10 +1,13 @@
 package no.ntnu.idi.watchdogprod.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -64,11 +67,26 @@ public class RuleViolationsActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_information_info:
-                // ToDo show dialog
+                showInformationDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void showInformationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_risk_indikators_info, null));
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // not implemented
+            }
+        });
+
+        builder.create();
+        builder.show();
+    }
 }
