@@ -1,6 +1,8 @@
 package no.ntnu.idi.watchdogprod.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -115,9 +117,28 @@ public class ApplicationListActivity extends ActionBarActivity {
             case R.id.action_search:
                 showSearchPopupWindow(getWindow().getDecorView().findViewById(android.R.id.content));
                 return true;
+            case R.id.menu_applications_info:
+                showInformationDialog();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showInformationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_appliaction_list_info, null));
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // sign in the user ...
+            }
+        });
+
+        builder.create();
+        builder.show();
     }
 
     @Override
