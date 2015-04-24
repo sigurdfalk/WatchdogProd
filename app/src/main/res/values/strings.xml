@@ -72,5 +72,10 @@
     <string name="card_disharmony_neutral">Ingen informasjon tilgjengelig. </string>
 
     <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
+    <string name="show_filtered_applications">Vis filtrerte applikasjoner</string>
+    <string name="search_guidance">Filtrer dine innstallerte applikasjoner etter risikofaktor og/eller tillatelser</string>
+    <string name="risk_factor_high">Høy risikofaktor</string>
+    <string name="risk_factor_medium">Medium risikofaktor</string>
+    <string name="risk_factor_low">Lav risikofaktor</string>
 
 </resources>
