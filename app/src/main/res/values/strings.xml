@@ -82,4 +82,10 @@
     <string name="dialog_main_score_explanation">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som totalt bilde på trusselnivået på telefonen. </string>
     <string name="dialog_main_cards_header">Informasjonskort</string>
     <string name="dialog_main_cards_explanation">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser og tilbakemeldinger på ditt bruksmønster.  </string>
+    <string name="application_guidance">Listen over dine applikasjoner består av de applikasjoner du selv har lastet ned. Applikasjoner som fulgte med din applikasjon, såkalte systemapplikasjoner, vil ikke vises i denne listen.</string>
+    <string name="filer_applications">Du kan filtere applikasjonene</string>
+    <string name="application_filtering_guidance">Du kan filtere listen over dine applikasjoner etter risikofaktor og/eller tillatelser ved å trykke på forstørrelsesglasset.</string>
+    <string name="indicators">Indikatorer</string>
+    <string name="indicator_new_risk_score">Indikerer at risikofaktoren til applikasjonen har endret seg etter siste oppdatering.</string>
+    <string name="indicator_questions">Indikerer at denne applikasjonen venter på din gjennomgang og besvarelse på spørsmål knyttet til dens funksjonalitet.</string>
 </resources>

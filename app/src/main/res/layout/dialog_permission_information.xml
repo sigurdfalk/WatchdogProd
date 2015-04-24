@@ -9,8 +9,7 @@
         android:textSize="@dimen/dialog_header"
         android:text="@string/permission_info"
         android:padding="10sp"
-        android:textColor="@color/text_primary"
-        android:gravity="center"/>
+        android:textColor="@color/text_primary"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
