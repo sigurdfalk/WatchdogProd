@@ -28,6 +28,9 @@ public class Profile {
     public static final int APP_TREND_DECREASING = 2;
     public static final int APP_TREND_INCREASING = 1;
 
+    public static final int APP_DISHARMONY = 1;
+    public static final int APP_HARMONY = 2;
+
 
     private double understandingOfPermissions;
     private double interestInPrivacy;
@@ -52,8 +55,8 @@ public class Profile {
 
     public void createProfile(Context context) {
 //        double[] answers = getUserQuestions(context);
-        installTrendRiskIncreasing = isTrendIncreasing(getInstalledAppsValues(context), context, Profile.AVG_INSTALLS_VALUE);
-        uninstallTrendRiskIncreasing = isTrendIncreasing(getUninstalledAppsValues(context), context, Profile.AVG_UNINSTALL_VALUE);
+        installTrendRiskIncreasing = isTrendIncreasing(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
+        uninstallTrendRiskIncreasing = isTrendIncreasing(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
     }
 
     private double[] getUserQuestions(Context context) {
@@ -64,55 +67,18 @@ public class Profile {
         return answers;
     }
 
-    private double[] getUninstalledAppsValues(Context context) {
+    private double[] getInstalledDataValues(Context context, String type) {
         double[] appValues;
         ProfileDataSource dataSource = new ProfileDataSource(context);
         dataSource.open();
-        appValues = dataSource.getUninstalledApps();
+        appValues = dataSource.getInstallData(type);
         dataSource.close();
         return appValues;
     }
-
-    private double[] getInstalledAppsValues(Context context) {
-        double[] appValues;
-        ProfileDataSource dataSource = new ProfileDataSource(context);
-        dataSource.open();
-        appValues = dataSource.getInstalledApps();
-        dataSource.close();
-        return appValues;
-    }
-
-//    private boolean isTrendIncreasing(double[] history, int start, int limit, int oldTrendValue) {
-//        final int DELTA_T = 1;
-//        double sum1 = 0;
-//        double sum2 = 0;
-//        for (int i = start; i <= limit; i++) {
-//            sum1 = history[i];
-//            if (i == 0) {
-//                sum2 = history[i] * 1;
-//            } else {
-//                sum2 = history[i] * (i + 1);
-//            }
-//        }
-//
-//        double b0 = (2 * (2 * history.length) * sum1 - (6 * sum2))
-//                / (history.length * (history.length - 1));
-//
-//        double b1 = ((12 * sum2) - ((6 * (history.length + 1)) * sum1))
-//                / (DELTA_T * history.length * ((history.length - 1) * (history.length + 1)));
-//
-//        System.out.println("i = " + limit + " B0 + B1 = " + (b0 + b1) + "\t  B1 = " + b1 + "\t B0 = " + b0);
-//
-//        if (b1 > 0)
-//            return true;
-//        return false;
-//    }
 
     private int isTrendIncreasing(double[] history, Context context, String type) {
 
         double oldAvg = getOldAverage(context,type);
-//        double minAVGIncrease = 10;
-
         double avg = getAverage(history);
 
         if(oldAvg != avg) {
