@@ -1,11 +1,18 @@
 package no.ntnu.idi.watchdogprod.privacyProfile;
 
 import android.content.Context;
+import android.inputmethodservice.AbstractInputMethodService;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
+import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
+import no.ntnu.idi.watchdogprod.views.InteractiveScrollView;
 
 /**
  * Created by sigurdhf on 20.03.2015.
@@ -28,16 +35,13 @@ public class Profile {
     public static final int APP_TREND_DECREASING = 2;
     public static final int APP_TREND_INCREASING = 1;
 
-    public static final int APP_DISHARMONY = 1;
-    public static final int APP_HARMONY = 2;
-
-
     private double understandingOfPermissions;
     private double interestInPrivacy;
     private double utilityOverPrivacy;
     private double concernedForLeaks;
     private int installTrendRiskIncreasing;
     private int uninstallTrendRiskIncreasing;
+    private ArrayList<String> disharmonyApps;
 
     public Profile() {
         this.understandingOfPermissions = 3.0;
@@ -53,10 +57,43 @@ public class Profile {
         this.utilityOverPrivacy = utilityOverPrivacy;
     }
 
-    public void createProfile(Context context) {
+    public void createProfile(Context context) throws SQLException {
 //        double[] answers = getUserQuestions(context);
         installTrendRiskIncreasing = isTrendIncreasing(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
         uninstallTrendRiskIncreasing = isTrendIncreasing(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
+        disharmonyApps = getHarmony(context);
+    }
+
+    private ArrayList<String> getHarmony(Context context) throws SQLException {
+        AnswersDataSource answersDataSource = new AnswersDataSource(context);
+        answersDataSource.open();
+        ArrayList<Answer> answers = answersDataSource.getAllAnswers();
+        answersDataSource.close();
+
+        Map<String,Integer> answerCount = new HashMap<>();
+
+        int sadCount = 0;
+
+        for(Answer answer : answers) {
+            if(answer.getAnswer() == Answer.ANSWER_SAD) {
+                if(!answerCount.containsKey(answer.getPackageName())){
+                    answerCount.put(answer.getPackageName(),1);
+                } else {
+                    sadCount = answerCount.get(answer.getPackageName());
+                    sadCount = sadCount + 1;
+                    answerCount.put(answer.getPackageName(),sadCount);
+                }
+            }
+        }
+
+        ArrayList<String> disharmonyApps = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : answerCount.entrySet()) {
+            if(entry.getValue() >= 2) {
+                disharmonyApps.add(entry.getKey());
+            }
+        }
+        return disharmonyApps;
     }
 
     private double[] getUserQuestions(Context context) {
@@ -99,7 +136,7 @@ public class Profile {
         return avg >= oldAvg  ? APP_TREND_INCREASING : APP_TREND_DECREASING ;
     }
 
-    public double  getAverage(double [] history) {
+    public double getAverage(double [] history) {
         double temp = 0;
         int startingpoint = 0;
         int total = 10;
@@ -159,4 +196,7 @@ public class Profile {
         return installTrendRiskIncreasing;
     }
 
+    public ArrayList<String> getDisharmonyApps() {
+        return disharmonyApps;
+    }
 }

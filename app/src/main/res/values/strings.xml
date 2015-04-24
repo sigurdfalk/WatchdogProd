@@ -27,6 +27,7 @@
     <string name="app_terms_of_use">Applikasjonsvilkår</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="permission_info">Beskrivelse av risiko</string>
+    <string name="main_info">Informasjon</string>
     <string name="profile_info">Informasjon</string>
     <string name="profile_tips">Tips</string>
     <string name="close">Lukk</string>
@@ -67,8 +68,6 @@
     <string name="card_uninstall_trend_negative">Ingen nyttig informasjon tilgjengelig.</string>
     <string name="card_uninstall_trend_neutral">Ingen avinstallerte applikasjoner registrert.</string>
 
-    <string name="card_disharmony_positive">Du har vist misnøye til en flere applikasjoners tillatelser, men du fortsetter likevel å bruke dem. Klikk her for å se hvilke applikasjoner.</string>
-    <string name="card_disharmony_negative">Du er positiv til applikasjoner tillatelser. </string>
     <string name="card_disharmony_neutral">Ingen informasjon tilgjengelig. </string>
 
     <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
@@ -78,4 +77,9 @@
     <string name="risk_factor_medium">Medium risikofaktor</string>
     <string name="risk_factor_low">Lav risikofaktor</string>
 
+    <!-- Dialog main-->
+    <string name="dialog_main_score_header">Risikofaktor</string>
+    <string name="dialog_main_score_explanation">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som totalt bilde på trusselnivået på telefonen. </string>
+    <string name="dialog_main_cards_header">Informasjonskort</string>
+    <string name="dialog_main_cards_explanation">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser og tilbakemeldinger på ditt bruksmønster.  </string>
 </resources>
