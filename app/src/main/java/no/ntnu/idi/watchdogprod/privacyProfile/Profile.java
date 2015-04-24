@@ -54,7 +54,7 @@ public class Profile {
         this.interestInPrivacy = 5.0;
         this.concernedForLeaks = 5.0;
         this.utilityOverPrivacy = 3.0;
-        this.profileVector = new DenseVector();
+        this.profileVector = new DenseVector(74);
     }
 
     public Profile(double understandingOfPermissions, double interestInPrivacy, double utilityOverPrivacy, double concernedForLeaks) {
@@ -64,7 +64,6 @@ public class Profile {
         this.utilityOverPrivacy = utilityOverPrivacy;
     }
 
-    public Vector getVector(){return profileVector;}
     public void createProfile(Context context) {
 //        double[] answers = getUserQuestions(context);
         installTrendRiskIncreasing = isTrendIncreasing(getInstalledAppsValues(context), context, Profile.AVG_INSTALLS_VALUE);

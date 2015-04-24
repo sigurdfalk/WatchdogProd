@@ -176,13 +176,22 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private void fillUpdatesCard(ExtendedPackageInfo app) {
-        AppInfo latestUpdate = app.getUpdateLog().get(0);
+        AppInfo latestUpdate = null;
+        try {
+            latestUpdate = app.getUpdateLog().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         TextView updatesText = (TextView) findViewById(R.id.app_detail_updates_text);
 
         if (app.getUpdateLog().size() == 1) {
             updatesText.setText("Denne oppdateringen hadde ingen innvirkning på applikasjonens risikofaktor.");
-        } else {
+        }else if (app.getUpdateLog().isEmpty()){
+                updatesText.setText("Ingen oppdateringer.");
+
+        }
+        else {
             AppInfo previousUpdate = app.getUpdateLog().get(1);
             ArrayList<PermissionDescription> addedPermissions = PermissionHelper.newRequestedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
             ArrayList<PermissionDescription> removedPermissions = PermissionHelper.removedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
@@ -222,7 +231,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        Date updateDate = new Date(latestUpdate.getLastUpdateTime());
+
+        Date updateDate = null;
+        try {
+            updateDate = new Date(latestUpdate.getLastUpdateTime());
+        } catch (Exception e) {
+            updateDate = new Date();
+        }
 
         date.setText(dateFormat.format(updateDate));
         time.setText(timeFormat.format(updateDate));

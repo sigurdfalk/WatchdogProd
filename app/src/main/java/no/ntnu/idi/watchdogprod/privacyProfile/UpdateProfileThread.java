@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod.privacyProfile;
 
 import android.content.res.Configuration;
 import android.graphics.Path;
+import android.util.Log;
 
 import org.apache.mahout.math.DenseVector;
 import org.apache.mahout.math.Vector;
@@ -20,6 +21,7 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
  * Created by Wschive on 22/04/15.
  */
 public class UpdateProfileThread implements Runnable {
+    private final String TAG = "UpdateProfileThread";
     ArrayList<ExtendedPackageInfo> apps;
     Profile profile;
     public UpdateProfileThread(ArrayList<ExtendedPackageInfo> apps){
@@ -28,7 +30,9 @@ public class UpdateProfileThread implements Runnable {
     }
     @Override
     public void run() {
-        DenseVector v = new DenseVector();
+        Log.e(TAG, "new UpdateProfileThread running");
+
+        DenseVector v = new DenseVector(74);
         for (ExtendedPackageInfo app : apps) {
             v.addAll(app.getVector());
         }
@@ -41,6 +45,8 @@ public class UpdateProfileThread implements Runnable {
         };
         v.assign(function);
         profile.setProfileVector(v);
+        Log.d(TAG, "profilevector = " + v.toString());
+
 
     }
 

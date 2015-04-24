@@ -26,13 +26,13 @@ public class AppVector extends RandomAccessSparseVector{
     }
 
     public AppVector(ArrayList<PermissionDescription> permissionDescriptions){
-        super();
+        super(74);
         for (PermissionDescription permissionDescription : permissionDescriptions) {
             putPermission(permissionDescription.getName());
         }
     }
     public AppVector(String[] permissions){
-        super();
+        super(74);
         for (String permission : permissions) {
             putPermission(permission);
         }
