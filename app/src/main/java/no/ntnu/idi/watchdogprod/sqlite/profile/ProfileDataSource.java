@@ -45,10 +45,10 @@ public class ProfileDataSource {
                 values);
     }
 
-    public double [] getUninstalledApps() {
+    public double [] getInstallData(String type) {
         double [] appValues;
         int counter = 0;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.UNINSTALLED_DANGEROUS_APP},null,null,null);
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {type},null,null,null);
         cursor.moveToFirst();
         appValues = new double [cursor.getCount()];
         while (cursor.moveToNext()) {
@@ -57,17 +57,17 @@ public class ProfileDataSource {
         return appValues;
     }
 
-    public double [] getInstalledApps() {
-        double [] appValues;
-        int counter = 0;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.INSTALLED_DANGEROUS_APP},null,null,null);
-        cursor.moveToFirst();
-        appValues = new double [cursor.getCount()];
-        while (cursor.moveToNext()) {
-            appValues[counter++] = Double.parseDouble(cursor.getString(3));
-        }
-        return appValues;
-    }
+//    public double [] getInstalledApps() {
+//        double [] appValues;
+//        int counter = 0;
+//        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.INSTALLED_DANGEROUS_APP},null,null,null);
+//        cursor.moveToFirst();
+//        appValues = new double [cursor.getCount()];
+//        while (cursor.moveToNext()) {
+//            appValues[counter++] = Double.parseDouble(cursor.getString(3));
+//        }
+//        return appValues;
+//    }
 
     public ArrayList getSpecificEvents(String eventType) {
         ArrayList<ProfileEvent> events = new ArrayList<>();
