@@ -14,4 +14,8 @@
     <dimen name="range_tick_label_font_size">15dp</dimen>
     <dimen name="domain_tick_label_font_size">15dp</dimen>
     <dimen name="legend_text_font_size">20dp</dimen>
+
+    <!-- Dialogs -->
+    <dimen name="dialog_header">20sp</dimen>
+    <dimen name="dialog_text">14sp</dimen>
 </resources>
