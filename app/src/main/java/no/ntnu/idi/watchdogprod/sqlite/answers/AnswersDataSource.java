@@ -52,6 +52,14 @@ public class AnswersDataSource {
 
     public ArrayList<Answer> getAnswersByPackageName(String packageName) {
         Cursor cursor = db.query(AnswersSQLiteHelper.TABLE_ANSWERS,
+                allColumns, AnswersSQLiteHelper.COLUMN_PACKAGE_NAME + "=?",
+                new String[]{packageName}, null, null, null);
+
+        return cursorToAppInfoList(cursor);
+    }
+
+    public ArrayList<Answer> getAllAnswers() {
+        Cursor cursor = db.query(AnswersSQLiteHelper.TABLE_ANSWERS,
                 allColumns, null, null, null, null, null);
 
         return cursorToAppInfoList(cursor);
