@@ -26,9 +26,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 
 import org.json.JSONArray;
 
@@ -452,14 +452,15 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "";
-        JsonArrayRequest json = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        final String appname = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext());
+        String url = "http://78.91.80.120:8888/replace?"+applicationPackageName;
+        StringRequest json = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
-            public void onResponse(JSONArray jsonArray) {
+            public void onResponse(String response) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RecMain.class);
-                i.putExtra("appName", ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext()));
-                i.putExtra("response", parseJsonArray(jsonArray));
+                i.putExtra("appName", appname);
+                i.putExtra("response", response);
                 i.putExtra("packageName",applicationPackageName);
 
                 startActivity(i);
@@ -480,11 +481,5 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
 
     }
-    private ArrayList<ResponseApp> parseJsonArray(JSONArray array){
-        Gson gson = new Gson();
-        String jsonString = array.toString();
-        Type collectionType = new TypeToken<ArrayList<ResponseApp>>(){}.getType();
-        ArrayList<ResponseApp> posts = gson.fromJson(jsonString, collectionType);
-        return posts;
-    }
+
 }

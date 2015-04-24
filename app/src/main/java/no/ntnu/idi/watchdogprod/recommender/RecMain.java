@@ -11,14 +11,12 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
-import org.apache.mahout.clustering.kmeans.KMeansDriver;
-import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
-import org.apache.mahout.math.RandomAccessSparseVector;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
@@ -53,7 +51,8 @@ public class RecMain extends ActionBarActivity{
 
         packageName = getIntent().getExtras().getString("packageName");
         appName = getIntent().getExtras().getString("appName");
-        apps = (ArrayList<ResponseApp>) getIntent().getExtras().getSerializable("response");
+
+        apps = stringToArrayList((String) getIntent().getExtras().getSerializable("response"));
         profile = Profile.getInstance();
         Collections.sort(apps);
         adapter = new ResponseListAdapter(this,apps);
@@ -80,9 +79,14 @@ public class RecMain extends ActionBarActivity{
         super.onResume();
         adapter.notifyDataSetChanged();
     }
-
-
-//        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(appInfo.getPermissions(), context);
-//        int riskScore = (int) PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+    private ArrayList<ResponseApp> stringToArrayList(String jsonString){
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<ResponseApp>>(){}.getType();
+        ArrayList<ResponseApp> posts = gson.fromJson(jsonString, collectionType);
+        for (ResponseApp app : posts) {
+            app.calculate();
+        }
+        return posts;
+    }
 
 }

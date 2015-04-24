@@ -1,24 +1,19 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
-import android.content.Context;
-
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
  * Created by Wschive on 22/04/15.
  */
 public class ResponseApp implements Comparable<ResponseApp>{
+    private String name;
     private String packageName;
     private String[] permissions;
     private String logo;
-    private String storeUrl;
     private String infoLine;
     private AppVector vector;
     private double privacyScore;
@@ -32,22 +27,22 @@ public class ResponseApp implements Comparable<ResponseApp>{
         this.infoLine = infoLine;
     }
 
-    public ResponseApp(String packageName, String[] permissions, String logo, String storeUrl, String infoLine) {
-        this.packageName = packageName;
+    public ResponseApp(String name, String[] permissions, String logo, String infoLine, String packageName) {
+        this.name = name;
         this.infoLine = infoLine;
         this.permissions = permissions;
         this.logo = logo;
-        this.storeUrl = storeUrl;
         this.vector = new AppVector(permissions);
         this.distanceFromProfile = calculateDistance();
+        this.packageName = packageName;
     }
     public ResponseApp(){    }
-    public String getPackageName() {
-        return packageName;
+    public String getName() {
+        return name;
     }
 
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String[] getPermissions() {
@@ -66,16 +61,10 @@ public class ResponseApp implements Comparable<ResponseApp>{
         this.logo = logo;
     }
 
-    public String getStoreUrl() {
-        return storeUrl;
-    }
-
-    public void setStoreUrl(String storeUrl) {
-        this.storeUrl = storeUrl;
-    }
     private double calculateDistance(){
         EuclideanDistanceMeasure measure = new EuclideanDistanceMeasure();
-        return measure.distance(Profile.getInstance().getProfileVector(),this.vector);
+        double distance = measure.distance(Profile.getInstance().getProfileVector(),this.vector);
+        return distance;
     }
 
     @Override
@@ -89,6 +78,19 @@ public class ResponseApp implements Comparable<ResponseApp>{
 
 
         return 0;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+    public void calculate(){
+        this.vector = new AppVector(this.permissions);
+        this.distanceFromProfile = calculateDistance();
+
     }
 
 }

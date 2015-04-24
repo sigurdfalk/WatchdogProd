@@ -48,7 +48,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     ResponseApp responseApp = getItem(position);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + responseApp.getPackageName()));
+                    intent.setData(Uri.parse("market://details?id=" + responseApp.getName()));
 
                     context.startActivity(intent);
                 }
@@ -123,6 +123,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private ResponseApp getItem(int position) {
             return applications.get(position);
         }
+
     public ArrayList<PermissionDescription> parseArray(String[] array){
         ArrayList<PermissionDescription> list = new ArrayList<>();
         for (String s : array) {
