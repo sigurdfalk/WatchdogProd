@@ -50,7 +50,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private TextView infoHeader;
     private TextView infoFact;
     private int currentPermissionFact;
-    private Button uninstalbutton;
+    private LinearLayout uninstall;
 
     private AnswersDataSource answersDataSource;
 
@@ -65,9 +65,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         packageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
         currentPermissionFact = 0;
 
-        uninstalbutton = (Button)findViewById(R.id.uninstall_btn);
+        String appName = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this);
 
-        uninstalbutton.setOnClickListener(new View.OnClickListener() {
+        uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
+        TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
+        uninstallText.setText(String.format(getResources().getString(R.string.touch_to_uninstall), appName));
+
+        uninstall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Uri packageURI = Uri.parse("package:"+applicationPackageName);
@@ -77,7 +81,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         });
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this));
+        actionBar.setTitle(appName);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         //Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);

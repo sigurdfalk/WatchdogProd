@@ -506,6 +506,28 @@
 
                 </android.support.v7.widget.CardView>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10sp"
+                    android:id="@+id/app_detail_uninstall_wrapper"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40sp"
+                        android:layout_height="40sp"
+                        android:src="@mipmap/ic_highlight_remove_black_48dp"/>
+
+                    <TextView
+                        android:id="@+id/app_detail_uninstall_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5sp"
+                        android:textSize="@dimen/dialog_text"/>
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -522,15 +544,6 @@
                 android:layout_height="wrap_content"
                 android:text="Spm"
                 android:visibility="gone" />
-
-
-            <Button
-                android:id="@+id/uninstall_btn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="uninstal" />
-
-
         </LinearLayout>
 
     </ScrollView>

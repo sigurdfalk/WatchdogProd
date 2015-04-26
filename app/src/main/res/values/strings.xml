@@ -92,4 +92,5 @@
     <string name="indicator_questions">Indikerer at denne applikasjonen venter på din gjennomgang og besvarelse på spørsmål knyttet til dens funksjonalitet.</string>
     <string name="remove_all">Fjern alle</string>
     <string name="no_matches">Ingen treff</string>
+    <string name="touch_to_uninstall">Trykk her for å avinstallere %s</string>
 </resources>
