@@ -84,10 +84,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         actionBar.setTitle(appName);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
-        Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
-        Button showQuestionDialog = (Button) findViewById(R.id.app_detail_questions);
-
         LinearLayout permissionsInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_permissions_wrapper);
         LinearLayout updatesInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_updates_wrapper);
         LinearLayout indicatorsWrapper = (LinearLayout) findViewById(R.id.app_detail_indicators_wrapper);
@@ -100,10 +96,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         permissionsInfoWrapper.setOnClickListener(buttonListener);
         updatesInfoWrapper.setOnClickListener(buttonListener);
         indicatorsWrapper.setOnClickListener(buttonListener);
-
-        //showRuleViolations.setOnClickListener(buttonListener);
-        showDataUsage.setOnClickListener(buttonListener);
-        showQuestionDialog.setOnClickListener(buttonListener);
 
         TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
         privacyScore.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
@@ -414,7 +406,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 i.putExtras(bundle);
 
                 startActivity(i);
-            } else if (v.getId() == R.id.app_detail_data_usage) {
+            }/* else if (v.getId() == R.id.app_detail_data_usage) {
                 Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
 //                Intent i = new Intent(ApplicationDetailActivity.this, UserQuestionActivity.class);
 
@@ -428,7 +420,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 //                        "com.android.settings.Settings$DataUsageSummaryActivity"));
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                startActivity(intent);
-            } else if (v.getId() == R.id.app_detail_updates_wrapper) {
+            }*/ else if (v.getId() == R.id.app_detail_updates_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, ApplicationUpdateLogActivity.class);
 
                 Bundle bundle = new Bundle();

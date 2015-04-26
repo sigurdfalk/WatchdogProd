@@ -29,4 +29,8 @@ public class ProfileEvent {
     public String getPackageName() {
         return packageName;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
 }

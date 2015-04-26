@@ -50,7 +50,6 @@
                 android:src="@mipmap/ic_info_outline_white_48dp"
                 android:layout_marginLeft="5sp"
                 android:tint="#000000"/>
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

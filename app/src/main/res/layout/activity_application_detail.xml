@@ -28,8 +28,6 @@
             android:orientation="vertical">
 
 
-
-
             <LinearLayout
                 android:id="@+id/app_detail_content_wrapper"
                 android:layout_width="fill_parent"
@@ -299,11 +297,6 @@
                                 </LinearLayout>
 
 
-
-
-
-
-
                             </LinearLayout>
 
                         </LinearLayout>
@@ -374,7 +367,7 @@
                                         android:id="@+id/app_detail_updates_warning"
                                         android:layout_width="20sp"
                                         android:layout_height="20sp"
-                                        android:src="@mipmap/ic_warning_black_48dp"/>
+                                        android:src="@mipmap/ic_warning_black_48dp" />
                                 </LinearLayout>
 
 
@@ -476,15 +469,15 @@
                             </LinearLayout>
 
 
-                                <TextView
-                                    android:id="@+id/app_detail_indicators_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:gravity="center"
-                                    android:padding="10sp"
-                                    android:textColor="#000000"
-                                    android:textSize="35sp"
-                                    android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/app_detail_indicators_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:gravity="center"
+                                android:padding="10sp"
+                                android:textColor="#000000"
+                                android:textSize="35sp"
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
@@ -531,20 +524,7 @@
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/app_detail_data_usage"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/show_data_usage"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/app_detail_questions"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Spm"
-                android:visibility="gone" />
-        </LinearLayout>
+            </LinearLayout>
 
     </ScrollView>
 </LinearLayout>

@@ -39,6 +39,10 @@
     <string name="latest_update">Siste oppdatering</string>
     <string name="touch_for_more_information">Trykk for mer informasjon</string>
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
+    <string name="uninstall_btn_text">Avinstaller applikasjon</string>
+
+    <!--Tips -->
+    <string name="tips_screen_lock">For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den.</string>
 
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
     <string name="risk_indicators">Risikoindikatorer</string>
@@ -60,18 +64,18 @@
     <!-- User behavior feedback -->
     <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor. Klikk her for å se hvilke applikasjoner.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
-    <string name="card_install_trend_fixed_high">Det er for tiden høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk her for å se hvilke applikasjoner.</string>
-    <string name="card_install_trend_fixed_low">Det er for tiden lav riskofaktor på de siste installerte applikasjoenne på telefonen</string>
-    <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert.</string>
+    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk her for å se hvilke applikasjoner.</string>
+    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de siste installerte applikasjonene på telefonen</string>
+    <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert. Her vil det komme informasjon ditt trender i ditt installeringssmønster.</string>
 
     <!-- User behavior feedback -->
     <string name="card_uninstall_trend_positive">Det har vært en økning i avinstalleringer av risikofylte applikasjoner på telefonen. Dette har medført en lavere total risikofaktor.</string>
-    <string name="card_uninstall_trend_negative">Ingen nyttig informasjon tilgjengelig.</string>
-    <string name="card_uninstall_trend_neutral">Ingen avinstallerte applikasjoner registrert.</string>
+    <string name="card_uninstall_trend_negative">Ingen nylige avinstallerte applikasjoner av betydning registrert.</string>
+    <string name="card_uninstall_trend_neutral">Ingen avinstalleringer registert. Her vil det komme informasjon ditt trender i ditt avinstalleringsmønster.</string>
 
-    <string name="card_disharmony_neutral">Ingen informasjon tilgjengelig. </string>
+    <string name="card_disharmony_neutral">Ingen disharmoni for øyeblikket. Her vil det komme informasjon om applikasjoner som ikke passer dine preferanser.  </string>
 
-    <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
+    <string name="card_updates_no">Ingen nylig oppdaterte applikasjoner. Her vil det komme informasjon om noen av dine applikasjoner har blitt oppdatert.</string>
     <string name="show_filtered_applications">Vis filtrerte applikasjoner</string>
     <string name="show_filteres_applications_count">Vis %d applikasjoner</string>
     <string name="search_guidance">Filtrer dine innstallerte applikasjoner etter risikofaktor og/eller tillatelser</string>
@@ -81,9 +85,13 @@
 
     <!-- Dialog main-->
     <string name="dialog_main_score_header">Risikofaktor</string>
-    <string name="dialog_main_score_explanation">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som totalt bilde på trusselnivået på telefonen. </string>
+    <string name="dialog_main_score_text">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
     <string name="dialog_main_cards_header">Informasjonskort</string>
-    <string name="dialog_main_cards_explanation">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser og tilbakemeldinger på ditt bruksmønster.  </string>
+    <string name="dialog_main_cards_text">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser på telefonen, samt tilbakemeldinger på ditt bruksmønster. De vil kontinuerlig oppdatere seg etter som du bruker telefonen. </string>
+    <string name="dialog_main_color_codes_header">Fargekoder</string>
+    <string name="dialog_main_color_codes_text">De forskjellige fargekodene i dette skjermbilde indikerer hendelsens alvorlighetsgrad.   </string>
+
+
     <string name="application_guidance">Listen over dine applikasjoner består av de applikasjoner du selv har lastet ned. Applikasjoner som fulgte med din applikasjon, såkalte systemapplikasjoner, vil ikke vises i denne listen.</string>
     <string name="filer_applications">Du kan filtere applikasjonene</string>
     <string name="application_filtering_guidance">Du kan filtere listen over dine applikasjoner etter risikofaktor og/eller tillatelser ved å trykke på forstørrelsesglasset.</string>
