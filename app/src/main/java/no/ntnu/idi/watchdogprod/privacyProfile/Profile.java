@@ -121,7 +121,6 @@ public class Profile {
         double oldAvg = 0;
         ProfileEvent event = getOldAverage(context, type);
         if (event == null) {
-            System.out.println("EVENT ER NULL");
             oldAvg = -1;
         } else {
             oldAvg = Double.parseDouble(event.getValue());
@@ -176,7 +175,7 @@ public class Profile {
         Date formattedDate = null;
 
         try{
-            formattedDate = dateFormat.parse(dateFormat.format(date));
+            formattedDate = dateFormat.parse(timestamp);
             System.out.println(formattedDate.toString());
         }catch(ParseException parseEx){
             parseEx.printStackTrace();
@@ -189,7 +188,6 @@ public class Profile {
 
         ProfileEvent event = getOldAverage(context, type);
         if(event == null) {
-            System.out.println("Event er null");
             oldAvg = -1;
         } else {
             oldAvg = Double.parseDouble(event.getValue());
@@ -235,7 +233,6 @@ public class Profile {
         int startingpoint = 0;
         int total = 10;
 
-        System.out.println("HISTORY LENGTH " + history.length);
         if (history.length > 10) {
             startingpoint = history.length - 10;
         } else {
@@ -246,8 +243,6 @@ public class Profile {
             temp += history[i];
         }
 
-        System.out.println("AVG ER " + (temp/total));
-        System.out.println("TEMP " + temp  + " " + total);
         return temp / total;
     }
 
@@ -265,7 +260,6 @@ public class Profile {
         ProfileEvent profileEvent = profileDataSource.getSpecificEvent(type);
         profileDataSource.close();
         return profileEvent;
-
     }
 
     public double getUnderstandingOfPermissions() {
