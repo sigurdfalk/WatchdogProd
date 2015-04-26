@@ -82,8 +82,26 @@ public class ApplicationListActivity extends ActionBarActivity {
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = layoutInflater.inflate(R.layout.activity_application_list_search_popup, null, false);
         filterRiskHigh = (CheckBox) popupView.findViewById(R.id.search_popup_checkbox_risk_high);
+        filterRiskHigh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filterApps();
+            }
+        });
         filterRiskMedium = (CheckBox) popupView.findViewById(R.id.search_popup_checkbox_risk_medium);
+        filterRiskMedium.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filterApps();
+            }
+        });
         filterRiskLow = (CheckBox) popupView.findViewById(R.id.search_popup_checkbox_risk_low);
+        filterRiskLow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filterApps();
+            }
+        });
         showFilteredApplications = (Button) popupView.findViewById(R.id.search_popup_show_filtered_apps);
         showFilteredApplications.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +126,10 @@ public class ApplicationListActivity extends ActionBarActivity {
         for (CheckBox checkBox : permissionsCheckBoxes) {
             checkBox.setChecked(false);
         }
+
+        filterRiskHigh.setChecked(false);
+        filterRiskMedium.setChecked(false);
+        filterRiskLow.setChecked(false);
     }
 
     private void showSearchPopupWindow(View v) {
@@ -221,20 +243,6 @@ public class ApplicationListActivity extends ActionBarActivity {
         } else {
             showFilteredApplications.setEnabled(false);
             showFilteredApplications.setText(getResources().getString(R.string.no_matches));
-        }
-    }
-
-    public void onCheckboxClicked(View view) {
-        switch(view.getId()) {
-            case R.id.search_popup_checkbox_risk_high:
-                filterApps();
-                break;
-            case R.id.search_popup_checkbox_risk_medium:
-                filterApps();
-                break;
-            case R.id.search_popup_checkbox_risk_low:
-                filterApps();
-                break;
         }
     }
 

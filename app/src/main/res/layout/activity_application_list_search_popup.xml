@@ -67,24 +67,21 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_high"
-                    android:onClick="onCheckboxClicked"/>
+                    android:text="@string/risk_factor_high"/>
 
                 <CheckBox
                     android:id="@+id/search_popup_checkbox_risk_medium"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_medium"
-                    android:onClick="onCheckboxClicked"/>
+                    android:text="@string/risk_factor_medium"/>
 
                 <CheckBox
                     android:id="@+id/search_popup_checkbox_risk_low"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_low"
-                    android:onClick="onCheckboxClicked"/>
+                    android:text="@string/risk_factor_low"/>
             </LinearLayout>
 
 
