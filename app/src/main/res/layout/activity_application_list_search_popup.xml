@@ -6,6 +6,7 @@
     android:background="@drawable/shape_search_popup">
 
     <LinearLayout
+        android:id="@+id/search_popup_header_wrapper"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -57,7 +58,7 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10sp">
