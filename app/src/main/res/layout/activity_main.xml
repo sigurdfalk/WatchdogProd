@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@color/ripple_material_light"
-                android:weightSum="100">
+                android:weightSum="100"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/main_info_tips"
@@ -36,7 +37,8 @@
                     android:layout_weight="5" />
 
                 <TextView
-                    android:text="For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den."
+                    android:id="@+id/main_tips_text"
+                    android:text="@string/tips_screen_lock"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="90" />
@@ -292,7 +294,7 @@
                             android:id="@+id/card_background_install_trend"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_yellow"
+                            android:background="@color/risk_green"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
@@ -301,8 +303,8 @@
                                 android:id="@+id/main_card_installtrend_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:src="@mipmap/ic_trending_neutral_black_36dp"
-                                android:tint="@color/black" />
+                                android:tint="@color/black"
+                                android:src="@mipmap/ic_emoticon_happy_grey600_36dp"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -369,7 +371,7 @@
                             android:id="@+id/card_background_uninstall_trend"
                             android:layout_width="wrap_content"
                             android:layout_height="fill_parent"
-                            android:background="@color/risk_yellow"
+                            android:background="@color/risk_green"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:padding="10sp">
@@ -379,7 +381,8 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_trending_neutral_black_36dp" />
+                                android:src="@mipmap/ic_emoticon_happy_grey600_36dp"
+                                 />
 
                         </LinearLayout>
 
@@ -458,7 +461,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_warning_black_48dp" />
+                                android:src="@mipmap/ic_emoticon_happy_grey600_36dp" />
 
                         </LinearLayout>
 
@@ -537,8 +540,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_neutral_grey600_36dp" />
-
+                                android:src="@mipmap/ic_emoticon_happy_grey600_36dp"/>
                         </LinearLayout>
 
                     </LinearLayout>

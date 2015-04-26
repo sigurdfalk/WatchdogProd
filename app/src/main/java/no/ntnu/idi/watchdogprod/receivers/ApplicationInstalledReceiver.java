@@ -78,13 +78,15 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, false);
             }
         }
-
         dataSource.close();
 
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
-        profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+        long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+        if(id != -1) {
+            System.out.println("INSTALL APP DB ER GOOD" + packageName  + " SCORE: " + PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()));
+        }
         profileDataSource.close();
     }
 

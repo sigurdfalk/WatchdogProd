@@ -68,22 +68,8 @@ public class MainActivity extends ActionBarActivity {
         appsBtn = (ImageView) findViewById(R.id.main_apps_btn);
         permissionListBtn = (ImageView) findViewById(R.id.main_permissions_btn);
 
-        appsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                startActivity(i);
-            }
-        });
-
-        permissionListBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
-                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
-                startActivity(i);
-            }
-        });
+        appsBtn.setOnClickListener(new MainButtonListener());
+        permissionListBtn.setOnClickListener(new MainButtonListener());
 
         try {
             initProfile(this);
@@ -127,6 +113,11 @@ public class MainActivity extends ActionBarActivity {
         if (!answeredQuestions) {
 //            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
 //            startActivity(intent);
+        }
+
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.main_tips);
+        if(!isScreenLockActivated()){
+            linearLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -212,16 +203,19 @@ public class MainActivity extends ActionBarActivity {
         int installTrend = profile.getInstallTrendRiskIncreasing();
         System.out.println("IN TREND " + installTrend);
 
-
         backgroundColor = (LinearLayout)findViewById(R.id.card_background_install_trend);
         cardText = (TextView)findViewById(R.id.main_card_installtrend_text);
         cardImage = (ImageView)findViewById(R.id.main_card_installtrend_image);
 
-        if (installTrend == Profile.APP_TREND_INCREASING) {
+        if(installTrend == Profile.APP_TREND_NEUTRAL) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardText.setText(getResources().getString(R.string.card_install_trend_neutral));
+//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
+        } else if (installTrend == Profile.APP_TREND_INCREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
             cardText.setText(getResources().getString(R.string.card_install_trend_positive));
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_up_black_48dp));
-        } else if (installTrend < Profile.APP_TREND_DECREASING) {
+        } else if (installTrend == Profile.APP_TREND_DECREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_install_trend_negative));
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
@@ -236,6 +230,26 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private void createUninstallTrendCard() {
+
+        int uninstallTrend = profile.getUninstallTrendRiskIncreasing();
+        System.out.println("UN TREND " + uninstallTrend);
+
+        backgroundColor = (LinearLayout)findViewById(R.id.card_background_uninstall_trend);
+        cardText = (TextView)findViewById(R.id.main_card_uninstalltrend_text);
+        cardImage = (ImageView)findViewById(R.id.main_card_uninstalltrend_image);
+
+        if (uninstallTrend == Profile.APP_TREND_INCREASING) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardText.setText(getResources().getString(R.string.card_uninstall_trend_positive));
+            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
+        } else if (uninstallTrend == Profile.APP_TREND_NEUTRAL) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardText.setText(getResources().getString(R.string.card_uninstall_trend_negative));
+//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
+        }
+    }
+
     private void createUpdatedAppsCard() {
         backgroundColor = (LinearLayout)findViewById(R.id.card_background_updates);
         cardText = (TextView)findViewById(R.id.main_card_updates_text);
@@ -247,30 +261,10 @@ public class MainActivity extends ActionBarActivity {
         if(updatedAppsCount > 0 ) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
             cardText.setText(updatedAppsCount == 1 ? "Én" + " app " + informationEnding : updatedAppsCount + " apper " + informationEnding);
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_warning_black_48dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_updates_no));
-        }
-    }
-
-    private void createUninstallTrendCard() {
-
-        int uninstallTrend = profile.getUninstallTrendRiskIncreasing();
-        System.out.println("UN TREND " + uninstallTrend);
-
-
-        backgroundColor = (LinearLayout)findViewById(R.id.card_background_uninstall_trend);
-        cardText = (TextView)findViewById(R.id.main_card_uninstalltrend_text);
-        cardImage = (ImageView)findViewById(R.id.main_card_uninstalltrend_image);
-
-        if (uninstallTrend == Profile.APP_TREND_INCREASING) {
-            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-            cardText.setText(getResources().getString(R.string.card_uninstall_trend_positive));
-            cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
-        } else if (uninstallTrend < Profile.APP_TREND_DECREASING) {
-            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-            cardText.setText(getResources().getString(R.string.card_uninstall_trend_negative));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
         }
     }
 
@@ -287,9 +281,9 @@ public class MainActivity extends ActionBarActivity {
                     " tillatelser, men du fortsetter likevel å bruke " + (disharmonyApps.size() == 1 ? "den." : "dem.") + " Klikk her for mer informasjon.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
         } else {
-            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_disharmony_neutral));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_neutral_grey600_36dp));
+//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_grey600_36dp));
         }
     }
 
@@ -334,7 +328,7 @@ public class MainActivity extends ActionBarActivity {
         if(redAppsCount > 3) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
-        } else  if(yellowAppsCount > 4) {
+        } else  if(redAppsCount > 0 || yellowAppsCount > 4) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_neutral_grey600_36dp));
         } else {
@@ -395,6 +389,21 @@ public class MainActivity extends ActionBarActivity {
 //        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
         long timeForAlarm = 20000;
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
+    }
+
+    private class MainButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.main_apps_btn) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if(v.getId() == R.id.main_permissions_btn) {
+                Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
+                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
+                startActivity(i);
+            }
+        }
     }
 
     @Override

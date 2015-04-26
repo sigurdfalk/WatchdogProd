@@ -50,24 +50,13 @@ public class ProfileDataSource {
         int counter = 0;
         Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {type},null,null,null);
         cursor.moveToFirst();
+        System.out.println("cursorcount " + cursor.getCount());
         appValues = new double [cursor.getCount()];
         while (cursor.moveToNext()) {
             appValues[counter++] = Double.parseDouble(cursor.getString(3));
         }
         return appValues;
     }
-
-//    public double [] getInstalledApps() {
-//        double [] appValues;
-//        int counter = 0;
-//        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.INSTALLED_DANGEROUS_APP},null,null,null);
-//        cursor.moveToFirst();
-//        appValues = new double [cursor.getCount()];
-//        while (cursor.moveToNext()) {
-//            appValues[counter++] = Double.parseDouble(cursor.getString(3));
-//        }
-//        return appValues;
-//    }
 
     public ArrayList getSpecificEvents(String eventType) {
         ArrayList<ProfileEvent> events = new ArrayList<>();
