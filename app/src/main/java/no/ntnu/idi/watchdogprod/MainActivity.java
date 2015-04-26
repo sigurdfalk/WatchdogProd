@@ -202,6 +202,7 @@ public class MainActivity extends ActionBarActivity {
         {
             try {
                 AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.getPackageInfo().packageName, this));
+                System.out.println(appInfo.getPackageName() + " written to db");
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }

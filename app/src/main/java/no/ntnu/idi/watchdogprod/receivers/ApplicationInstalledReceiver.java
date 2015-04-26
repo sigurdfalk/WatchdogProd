@@ -5,7 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.widget.Toast;
@@ -45,8 +47,6 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
 
         SharedPreferencesHelper.setDoShowAppInfoSign(context, packageName, true);
 
-        Toast toast = Toast.makeText(context, packageName + " is installed!", Toast.LENGTH_LONG);
-        toast.show();
 
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(context);
         dataSource.open();
@@ -63,18 +63,22 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         }
 
         if (newVersion != null && allPreviousVersions.size() > 0) {
-            System.out.println("newVersion != null && allPreviousVersions.size() > 0");
             AppInfo mostRecentPreviousVersion = allPreviousVersions.get(0);
 
             ArrayList<PermissionDescription> newPermissions = PermissionHelper.newRequestedPermissions(context, mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
             ArrayList<PermissionDescription> oldPermissions = PermissionHelper.removedPermissions(context, mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
 
             if (newPermissions.size() > 0 || oldPermissions.size() > 0) {
-                System.out.println("Found new or removed permissions!");
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, true);
-                showNotification(context, packageName + ", new: " + newPermissions.size() + ", removed: " + oldPermissions.size(), packageName);
+
+                try {
+                    PackageInfo packageInfo = ApplicationHelper.getPackageInfo(packageName, context);
+                    String appName = context.getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
+                    showNotification(context, appName + " oppdatert", "Risikofaktor endret ved siste oppdatering", packageName);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
             } else {
-                System.out.println("no new or removed permissions.");
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, false);
             }
         }
@@ -90,15 +94,16 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         profileDataSource.close();
     }
 
-    private void showNotification(Context context, String text, String packageName) {
+    private void showNotification(Context context, String title, String text, String packageName) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.telenor_white)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(title)
                 .setContentText(text)
                 .setAutoCancel(true);
 
         Intent resultIntent = new Intent(context, ApplicationUpdateLogActivity.class);
         resultIntent.putExtra(ApplicationListActivity.PACKAGE_NAME, packageName);
+        resultIntent.putExtra(ApplicationUpdateLogActivity.FROM_NOTIFICATION, true);
         Intent firstBackIntent = new Intent(context, ApplicationDetailActivity.class);
         firstBackIntent.putExtra(ApplicationListActivity.PACKAGE_NAME, packageName);
         Intent secondBackIntent = new Intent(context, ApplicationListActivity.class);
