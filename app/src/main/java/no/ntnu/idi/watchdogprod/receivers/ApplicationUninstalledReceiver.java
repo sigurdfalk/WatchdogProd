@@ -36,21 +36,6 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
             profileDataSource.close();
         } else {
             System.out.println("APP UNINSTALL ER NULL I DB" + packageName);
-
-            profileDataSource = new ProfileDataSource(context);
-            profileDataSource.open();
-            ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context, packageName);
-            if(extendedPackageInfo == null) {
-                System.out.println("extendedPackageInfo er null");
-            }
-            if(extendedPackageInfo.getPermissionDescriptions() == null){
-                System.out.println("extendedPackageInfo.getPermissionDescriptions() er null");
-            }
-            long id = profileDataSource.insertEvent(packageName, Profile.UNINSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
-            profileDataSource.close();
-            if(id != -1) {
-                System.out.println("MEN LA INN NY I DB " + packageName);
-            }
         }
     }
 }

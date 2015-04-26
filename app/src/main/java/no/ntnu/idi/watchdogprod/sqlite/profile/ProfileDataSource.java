@@ -58,6 +58,18 @@ public class ProfileDataSource {
         return appValues;
     }
 
+    public ArrayList<ProfileEvent> getInstalledApps() {
+        ArrayList<ProfileEvent> profileEvents = new ArrayList<>();
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null, null);
+
+        if(cursor.moveToFirst()){
+            while (cursor.moveToNext()) {
+                profileEvents.add(new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+            }
+        }
+        return profileEvents;
+    }
+
     public ArrayList getSpecificEvents(String eventType) {
         ArrayList<ProfileEvent> events = new ArrayList<>();
         Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, null, null, null, null, null);
