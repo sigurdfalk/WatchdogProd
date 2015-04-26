@@ -73,6 +73,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        ApplicationHelper.clearApplicationList();
         apps = ApplicationHelper.getThirdPartyApplications(this);
         permissionsCheckBoxes = new ArrayList<>();
         filteredApps = new ArrayList<>();
