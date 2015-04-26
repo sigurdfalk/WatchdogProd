@@ -58,6 +58,7 @@
     <string name="permission_risk_high_description">Høy risiko for ditt personvern. En tillatelse i denne kategorien gir tilgang til å få ta i personlig informasjon om deg og dine kontakter, overvåke deg med telefonens sensorer eller sende data fra din telefon under ditt navn.</string>
     <string name="permission_risk_medium_description">Medium risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til tilgang til personlig informasjon, men kan typisk få vite hvordan du bruker din telefon (f.eks. hvilke nettverk du er koblet til og se din nettleserhistore)</string>
     <string name="permission_risk_low_description">Lav risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til data som kan bryte ditt personvern alene.</string>
+    <string name="risk_indicators_description">En tillatelse er ikke nødvendigvis farlig for ditt personvern alene, men om den kombineres den med andre tillatelser kan de sammen utgjøre en betydelig risiko. Risikoindikatorer forebygger dette ved å analysere alle applikasjonens tillatelser og lete etter mønster som indikerer farlig adferd.</string>
 
 
     <!-- User behavior feedback -->
