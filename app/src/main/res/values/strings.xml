@@ -72,6 +72,7 @@
 
     <string name="card_updates_no">Det er for tiden ingen nylig oppdaterte applikasjoner.</string>
     <string name="show_filtered_applications">Vis filtrerte applikasjoner</string>
+    <string name="show_filteres_applications_count">Vis %d applikasjoner</string>
     <string name="search_guidance">Filtrer dine innstallerte applikasjoner etter risikofaktor og/eller tillatelser</string>
     <string name="risk_factor_high">Høy risikofaktor</string>
     <string name="risk_factor_medium">Medium risikofaktor</string>
@@ -88,4 +89,6 @@
     <string name="indicators">Indikatorer</string>
     <string name="indicator_new_risk_score">Indikerer at risikofaktoren til applikasjonen har endret seg etter siste oppdatering.</string>
     <string name="indicator_questions">Indikerer at denne applikasjonen venter på din gjennomgang og besvarelse på spørsmål knyttet til dens funksjonalitet.</string>
+    <string name="remove_all">Fjern alle</string>
+    <string name="no_matches">Ingen treff</string>
 </resources>

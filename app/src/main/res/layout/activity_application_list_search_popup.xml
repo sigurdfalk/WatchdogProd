@@ -63,22 +63,28 @@
                 android:padding="10sp">
 
                 <CheckBox
+                    android:id="@+id/search_popup_checkbox_risk_high"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_high" />
+                    android:text="@string/risk_factor_high"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
+                    android:id="@+id/search_popup_checkbox_risk_medium"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_medium" />
+                    android:text="@string/risk_factor_medium"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
+                    android:id="@+id/search_popup_checkbox_risk_low"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_secondary"
-                    android:text="@string/risk_factor_low" />
+                    android:text="@string/risk_factor_low"
+                    android:onClick="onCheckboxClicked"/>
             </LinearLayout>
 
 
@@ -103,10 +109,26 @@
 
     </ScrollView>
 
-    <Button
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5sp"
-        android:text="@string/show_filtered_applications" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/search_popup_clear_checkboxes"
+            android:layout_width="0sp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="@string/remove_all"/>
+
+        <Button
+            android:id="@+id/search_popup_show_filtered_apps"
+            android:layout_width="0sp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:text="@string/show_filteres_applications_count" />
+    </LinearLayout>
 
 </LinearLayout>

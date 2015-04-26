@@ -54,4 +54,9 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     public int compareTo(ExtendedPackageInfo another) {
         return Double.compare(another.getPrivacyScore(), this.getPrivacyScore());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return ((ExtendedPackageInfo) o).packageInfo.packageName.equals(this.getPackageInfo().packageName);
+    }
 }
