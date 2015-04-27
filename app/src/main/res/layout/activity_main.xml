@@ -81,8 +81,8 @@
                     <ImageView
                         android:id="@+id/main_apps_btn"
                         android:src="@mipmap/ic_apps_grey600_48dp"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:tint="@color/material_blue_grey_800"
                         android:layout_gravity="center" />
 
@@ -105,8 +105,8 @@
                     <ImageView
                         android:id="@+id/main_permissions_btn"
                         android:src="@mipmap/ic_format_list_bulleted_grey600_48dp"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:tint="@color/material_blue_grey_800"
                         android:layout_gravity="center" />
 
@@ -129,8 +129,8 @@
                     <ImageView
                         android:src="@mipmap/ic_information_outline_grey600_48dp"
                         android:tint="@color/material_blue_grey_800"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center" />
 
                     <TextView
@@ -162,6 +162,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_threatlevel_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
@@ -401,6 +402,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_update_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
@@ -480,6 +482,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_harmony_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
