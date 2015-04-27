@@ -134,8 +134,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-
     private void initProfile(Context context) throws SQLException {
         //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
         //TODO INIT PROFILE PÅ ONRESUME OGSÅ
