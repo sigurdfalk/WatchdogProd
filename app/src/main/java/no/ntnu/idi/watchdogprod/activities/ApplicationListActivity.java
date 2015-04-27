@@ -76,7 +76,7 @@ public class ApplicationListActivity extends ActionBarActivity {
         ApplicationHelper.clearApplicationList();
         apps = ApplicationHelper.getThirdPartyApplications(this);
         permissionsCheckBoxes = new ArrayList<>();
-        filteredApps = new ArrayList<>();
+        filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
 
         list = (RecyclerView)findViewById(R.id.applications_list);
         list.setLayoutManager(new LinearLayoutManager(this));

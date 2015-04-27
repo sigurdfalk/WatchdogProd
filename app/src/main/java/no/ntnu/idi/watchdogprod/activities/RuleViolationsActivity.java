@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.R;
@@ -52,6 +53,7 @@ public class RuleViolationsActivity extends ActionBarActivity {
         }
 
         ArrayList<Rule> violatedRules = RuleHelper.getViolatedRules(packageInfo.requestedPermissions, this);
+        Collections.sort(violatedRules);
         RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
         listView.setAdapter(adapter);
     }
