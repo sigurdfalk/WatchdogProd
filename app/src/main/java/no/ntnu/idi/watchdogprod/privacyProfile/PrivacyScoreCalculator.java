@@ -22,9 +22,11 @@ public class PrivacyScoreCalculator {
     public static final int RISK_MEDIUM = 2;
     public static final int RISK_LOW = 1;
 
-    public static final int HIGH_MULTIPLIER = 4;
-    public static final int MEDIUM_MULTIPLIER = 2;
-    public static final int LOW_MULTIPLIER = 1;
+    public static final int HIGH_PENALTY = 4;
+    public static final int MEDIUM_PENALTY = 2;
+    public static final int LOW_PENALTY = 1;
+
+    public static final int RULE_VIOLATION_PENALTY = 5;
 
     public static final int HAS_HIGH_BONUS = 40;
     public static final int HAS_MEDIUM_BONUS = 20;
@@ -44,14 +46,14 @@ public class PrivacyScoreCalculator {
         for (PermissionDescription permission : permissions) {
             switch (permission.getRisk()) {
                 case RISK_LOW:
-                    score += LOW_MULTIPLIER;
+                    score += LOW_PENALTY;
                     break;
                 case RISK_MEDIUM:
-                    score += MEDIUM_MULTIPLIER;
+                    score += MEDIUM_PENALTY;
                     hasMediumPermission = true;
                     break;
                 case RISK_HIGH:
-                    score += HIGH_MULTIPLIER;
+                    score += HIGH_PENALTY;
                     hasHighPermission = true;
                     break;
             }
@@ -84,21 +86,38 @@ public class PrivacyScoreCalculator {
         double totalScore = 0.0;
         double totalWeight = 0.0;
 
+        boolean hasHighRiskPermission = false;
+        boolean hasMediumRiskPermission = false;
+        boolean hasRuleViolation = false;
+
         for (PermissionDescription permission : permissions) {
             double weight = getPermissionWeight(permission.getName(), relevantAnswers, facts);
             totalWeight += weight;
 
             switch (permission.getRisk()) {
                 case RISK_LOW:
-                    totalScore += 1 * weight;
+                    totalScore += LOW_PENALTY * weight;
                     break;
                 case RISK_MEDIUM:
-                    totalScore += 2 * weight;
+                    hasMediumRiskPermission = true;
+                    totalScore += MEDIUM_PENALTY * weight;
                     break;
                 case RISK_HIGH:
-                    totalScore += 4 * weight;
+                    hasHighRiskPermission = true;
+                    totalScore += HIGH_PENALTY * weight;
                     break;
             }
+        }
+
+        if (ruleViolations.size() > 0) {
+            hasRuleViolation = true;
+            totalScore += ruleViolations.size() * RULE_VIOLATION_PENALTY;
+        }
+
+        if (hasHighRiskPermission || hasRuleViolation) {
+            totalScore += HAS_HIGH_BONUS;
+        } else if (hasMediumRiskPermission) {
+            totalScore += HAS_MEDIUM_BONUS;
         }
 
         //totalScore = totalScore / totalWeight;
