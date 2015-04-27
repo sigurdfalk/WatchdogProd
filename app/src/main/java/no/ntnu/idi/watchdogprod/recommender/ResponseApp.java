@@ -70,10 +70,10 @@ public class ResponseApp implements Comparable<ResponseApp>{
     @Override
     public int compareTo(ResponseApp another) {
         if (this.distanceFromProfile > another.distanceFromProfile){
-            return -1;
+            return 1;
         }
         else if (this.distanceFromProfile < another.distanceFromProfile){
-            return 1;
+            return -1;
         }
 
 

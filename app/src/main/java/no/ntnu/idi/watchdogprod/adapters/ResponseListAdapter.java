@@ -26,6 +26,7 @@ import no.ntnu.idi.watchdogprod.recommender.ResponseApp;
  * Created by Wschive on 23/04/15.
  */
 public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private static final String TAG = "ResponseListAdapter";
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
@@ -40,6 +41,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e(TAG, "viewType = " + viewType);
         if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_application, parent, false);
             return new ItemViewHolder(view, new ItemViewHolder.ItemViewHolderOnClickListener() {
@@ -48,7 +50,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                     ResponseApp responseApp = getItem(position);
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + responseApp.getName()));
+                    intent.setData(Uri.parse("market://details?id=" + responseApp.getPackageName()));
 
                     context.startActivity(intent);
                 }
@@ -60,6 +62,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         throw new RuntimeException("there is no type that matches the type " + viewType + " + make sure your using types correctly");
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -74,6 +77,14 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             fillListHeader(title, count, headerViewHolder);
         }
+    }
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEADER;
+        }
+
+        return TYPE_ITEM;
     }
 
     @Override
@@ -127,7 +138,12 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public ArrayList<PermissionDescription> parseArray(String[] array){
         ArrayList<PermissionDescription> list = new ArrayList<>();
         for (String s : array) {
-            list.add(PermissionHelper.getPermissionDescription(context, s));
+
+            try {
+                list.add(PermissionHelper.getPermissionDescription(context, s));
+            } catch (Exception e) {
+                Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
+            }
         }
         return list;
     }
