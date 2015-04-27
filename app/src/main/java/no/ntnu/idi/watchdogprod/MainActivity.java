@@ -52,8 +52,8 @@ import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private Profile profile;
-    private ImageView appsBtn;
-    private ImageView permissionListBtn;
+    private LinearLayout appsBtn;
+    private LinearLayout permissionListBtn;
     private TextView totalRiskScoreTextView;
 
     private int updatedAppsCount;
@@ -70,12 +70,18 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         applications = ApplicationHelper.getThirdPartyApplications(this);
-
-        appsBtn = (ImageView) findViewById(R.id.main_apps_btn);
-        permissionListBtn = (ImageView) findViewById(R.id.main_permissions_btn);
+        
+        appsBtn = (LinearLayout) findViewById(R.id.main_apps_btn);
+        permissionListBtn = (LinearLayout) findViewById(R.id.main_permissions_btn);
 
         appsBtn.setOnClickListener(new MainButtonListener());
         permissionListBtn.setOnClickListener(new MainButtonListener());
+
+        try {
+            initProfile(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
@@ -198,7 +204,9 @@ public class MainActivity extends ActionBarActivity {
             found = false;
         }
 
+
         profileDataSource.close();
+
 
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
@@ -223,7 +231,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private int calculateTotalRiskScore() {
-        ApplicationHelper.clearApplicationList();
+        //ApplicationHelper.clearApplicationList();
 //        applications = ApplicationHelper.getThirdPartyApplications(this);
 
         int sum = 0;
@@ -291,6 +299,7 @@ public class MainActivity extends ActionBarActivity {
         } else if (uninstallTrend == Profile.APP_TREND_NEUTRAL) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_negative));
+//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
         }
     }
 
@@ -485,6 +494,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             }
         }
+
     }
 
     @Override

@@ -54,6 +54,12 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
     private AnswersDataSource answersDataSource;
 
+    private int riskScore;
+
+    private LinearLayout riskScoreBackground;
+    private TextView riskScoreText;
+    private ImageView riskScoreIndicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,20 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         currentPermissionFact = 0;
 
         String appName = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this);
+
+        try {
+            riskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        riskScoreBackground = (LinearLayout) findViewById(R.id.app_detail_privacy_score_background);
+        riskScoreText = (TextView) findViewById(R.id.app_detail_privacy_score);
+        riskScoreIndicator = (ImageView) findViewById(R.id.app_detail_privacy_score_indicator);
+
+        //riskScoreText.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        setScoreBackgroundColor(riskScoreBackground, riskScore);
 
         uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
         TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
@@ -97,20 +117,10 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         updatesInfoWrapper.setOnClickListener(buttonListener);
         indicatorsWrapper.setOnClickListener(buttonListener);
 
-        TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
-        privacyScore.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
-        setScoreBackgroundColor(privacyScore, packageInfo.getPrivacyScore());
         fillPermissionsCard(packageInfo);
         fillUpdatesCard(packageInfo);
         fillIndicatorsCard(packageInfo);
         initQuestions();
-
-        try {
-            double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
-            System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initQuestions() {
@@ -300,13 +310,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
 
-    private void setScoreBackgroundColor(TextView textView, double score) {
+    private void setScoreBackgroundColor(LinearLayout background, double score) {
         if (score > PrivacyScoreCalculator.HIGH_THRESHOLD) {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_red));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_red));
         } else if (score > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_yellow));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_yellow));
         } else {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_green));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_green));
         }
     }
 
@@ -331,6 +341,27 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
     private void showNewPermissionFact() {
         final ArrayList<PermissionFact> permissionFacts = packageInfo.getPermissionFacts();
+
+        try {
+             int newRiskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
+            if (newRiskScore > riskScore) {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
+            } else if (newRiskScore < riskScore) {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
+            } else {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
+            }
+
+            riskScore = newRiskScore;
+            riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+            setScoreBackgroundColor(riskScoreBackground, riskScore);
+
+            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
+            riskScoreIndicator.startAnimation(pulse);
+            riskScoreText.startAnimation(pulse);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (currentPermissionFact >= permissionFacts.size()) {
             permissionFactWrapper.setVisibility(View.GONE);
