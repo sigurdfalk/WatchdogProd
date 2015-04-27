@@ -22,9 +22,11 @@ public class PrivacyScoreCalculator {
     public static final int RISK_MEDIUM = 2;
     public static final int RISK_LOW = 1;
 
-    public static final int HIGH_MULTIPLIER = 4;
-    public static final int MEDIUM_MULTIPLIER = 2;
-    public static final int LOW_MULTIPLIER = 1;
+    public static final int HIGH_PENALTY = 10;
+    public static final int MEDIUM_PENALTY = 5;
+    public static final int LOW_PENALTY = 1;
+
+    public static final int RULE_VIOLATION_PENALTY = 5;
 
     public static final int HAS_HIGH_BONUS = 40;
     public static final int HAS_MEDIUM_BONUS = 20;
@@ -44,14 +46,14 @@ public class PrivacyScoreCalculator {
         for (PermissionDescription permission : permissions) {
             switch (permission.getRisk()) {
                 case RISK_LOW:
-                    score += LOW_MULTIPLIER;
+                    score += LOW_PENALTY;
                     break;
                 case RISK_MEDIUM:
-                    score += MEDIUM_MULTIPLIER;
+                    score += MEDIUM_PENALTY;
                     hasMediumPermission = true;
                     break;
                 case RISK_HIGH:
-                    score += HIGH_MULTIPLIER;
+                    score += HIGH_PENALTY;
                     hasHighPermission = true;
                     break;
             }
@@ -84,28 +86,133 @@ public class PrivacyScoreCalculator {
         double totalScore = 0.0;
         double totalWeight = 0.0;
 
+        boolean hasHighRiskPermission = false;
+        boolean hasMediumRiskPermission = false;
+        boolean hasRuleViolation = false;
+
         for (PermissionDescription permission : permissions) {
-            double weight = getPermissionWeight(permission.getName(), relevantAnswers, facts);
-            totalWeight += weight;
+            //double weight = getPermissionWeight(permission.getName(), relevantAnswers, facts);
+            //totalWeight += weight;
+
+            totalScore += getPermissionScore(permission, relevantAnswers, facts);
 
             switch (permission.getRisk()) {
                 case RISK_LOW:
-                    totalScore += 1 * weight;
+                    //totalScore += LOW_PENALTY * weight;
                     break;
                 case RISK_MEDIUM:
-                    totalScore += 2 * weight;
+                    hasMediumRiskPermission = true;
+                    //totalScore += MEDIUM_PENALTY * weight;
                     break;
                 case RISK_HIGH:
-                    totalScore += 4 * weight;
+                    hasHighRiskPermission = true;
+                    //totalScore += HIGH_PENALTY * weight;
                     break;
             }
         }
+
+        if (ruleViolations.size() > 0) {
+            hasRuleViolation = true;
+            totalScore += ruleViolations.size() * RULE_VIOLATION_PENALTY;
+        }
+
+        /*if (hasHighRiskPermission || hasRuleViolation) {
+            totalScore += HAS_HIGH_BONUS;
+        } else if (hasMediumRiskPermission) {
+            totalScore += HAS_MEDIUM_BONUS;
+        }*/
 
         //totalScore = totalScore / totalWeight;
 
         //return (totalScore > MAX_SCORE) ? MAX_SCORE : totalScore;
         return totalScore;
     }
+
+    private static double getPermissionScore(PermissionDescription permission, ArrayList<Answer> answers, ArrayList<PermissionFact> facts) {
+        PermissionFact matchingFact = getPermissionFactMatchingPermission(permission, facts);
+
+        if (matchingFact == null) {
+            return getPermissionScoreNoAnswer(permission);
+        }
+
+        ArrayList<Answer> matchingAnswers = getAnswersMatchingPermissionFact(matchingFact, answers);
+
+        if (matchingAnswers.size() == 0) {
+            return getPermissionScoreNoAnswer(permission);
+        }
+
+        return getPermissionScoreByLatestAnswer(permission, answers);
+    }
+
+    private static double getPermissionScoreNoAnswer(PermissionDescription permission) {
+        double score = 0.0;
+
+        if (permission.getRisk() == RISK_HIGH) {
+            score = HIGH_PENALTY;
+        } else if (permission.getRisk() == RISK_MEDIUM) {
+            score = MEDIUM_PENALTY;
+        } else if (permission.getRisk() == RISK_LOW) {
+            score = LOW_PENALTY;
+        }
+
+        return score;
+    }
+
+    private static double getPermissionScoreByLatestAnswer(PermissionDescription permission, ArrayList<Answer> answers) {
+        double score = 0.0;
+
+        Answer latestAnswer = answers.get(0);
+
+        if (permission.getRisk() == RISK_HIGH) {
+            if (latestAnswer.getAnswer() == Answer.ANSWER_HAPPY) {
+                score = LOW_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_NEUTRAL) {
+                score = HIGH_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_SAD) {
+                score = HIGH_PENALTY;
+            }
+        } else if (permission.getRisk() == RISK_MEDIUM) {
+            if (latestAnswer.getAnswer() == Answer.ANSWER_HAPPY) {
+                score = LOW_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_NEUTRAL) {
+                score = MEDIUM_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_SAD) {
+                score = HIGH_PENALTY;
+            }
+        } else if (permission.getRisk() == RISK_LOW) {
+            if (latestAnswer.getAnswer() == Answer.ANSWER_HAPPY) {
+                score = LOW_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_NEUTRAL) {
+                score = LOW_PENALTY;
+            } else if (latestAnswer.getAnswer() == Answer.ANSWER_SAD) {
+                score = HIGH_PENALTY;
+            }
+        }
+
+        return score;
+    }
+
+    private static PermissionFact getPermissionFactMatchingPermission(PermissionDescription permission, ArrayList<PermissionFact> facts) {
+        for (PermissionFact fact : facts) {
+            if (fact.getPermissions().length == 1 && fact.getPermissions()[0].contains(permission.getName())) {
+                return fact;
+            }
+        }
+
+        return null;
+    }
+
+    private static ArrayList<Answer> getAnswersMatchingPermissionFact(PermissionFact fact, ArrayList<Answer> answers) {
+        ArrayList<Answer> matchingAnswers = new ArrayList<>();
+
+        for (Answer answer : answers) {
+            if (answer.getAnswerId() == fact.getId()) {
+                matchingAnswers.add(answer);
+            }
+        }
+
+        return matchingAnswers;
+     }
 
     private static double getPermissionWeight(String permission, ArrayList<Answer> answers, ArrayList<PermissionFact> facts) {
         PermissionFact matchingFact = null;
