@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by sigurdhf on 09.03.2015.
  */
-public class Rule {
+public class Rule implements Comparable<Rule> {
 
     public static final int KEY = 0;
     public static final int NAME = 1;
@@ -80,5 +80,10 @@ public class Rule {
         }
 
         return false;
+    }
+
+    @Override
+    public int compareTo(Rule another) {
+        return this.getName().compareTo(another.getName());
     }
 }

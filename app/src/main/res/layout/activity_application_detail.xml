@@ -5,16 +5,27 @@
     android:background="@color/primary_material_light"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/app_detail_privacy_score"
+    <LinearLayout
+        android:id="@+id/app_detail_privacy_score_background"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        android:gravity="center"
-        android:padding="15sp"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/app_detail_privacy_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/app_detail_privacy_score_indicator"
+            android:layout_width="25sp"
+            android:layout_height="25sp"/>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -26,8 +37,6 @@
             android:paddingTop="10sp"
             android:paddingBottom="10sp"
             android:orientation="vertical">
-
-
 
 
             <LinearLayout
@@ -299,11 +308,6 @@
                                 </LinearLayout>
 
 
-
-
-
-
-
                             </LinearLayout>
 
                         </LinearLayout>
@@ -374,7 +378,7 @@
                                         android:id="@+id/app_detail_updates_warning"
                                         android:layout_width="20sp"
                                         android:layout_height="20sp"
-                                        android:src="@mipmap/ic_warning_black_48dp"/>
+                                        android:src="@mipmap/ic_warning_black_48dp" />
                                 </LinearLayout>
 
 
@@ -476,15 +480,15 @@
                             </LinearLayout>
 
 
-                                <TextView
-                                    android:id="@+id/app_detail_indicators_count"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="fill_parent"
-                                    android:gravity="center"
-                                    android:padding="10sp"
-                                    android:textColor="#000000"
-                                    android:textSize="35sp"
-                                    android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/app_detail_indicators_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:gravity="center"
+                                android:padding="10sp"
+                                android:textColor="#000000"
+                                android:textSize="35sp"
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
@@ -511,25 +515,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/replace" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10sp"
+                    android:id="@+id/app_detail_uninstall_wrapper"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40sp"
+                        android:layout_height="40sp"
+                        android:src="@mipmap/ic_highlight_remove_black_48dp"/>
+
+                    <TextView
+                        android:id="@+id/app_detail_uninstall_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5sp"
+                        android:textSize="@dimen/dialog_text"/>
+                </LinearLayout>
+
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/app_detail_data_usage"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/show_data_usage"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/app_detail_questions"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Spm"
-                android:visibility="gone" />
-
-
-        </LinearLayout>
+            </LinearLayout>
 
 
 

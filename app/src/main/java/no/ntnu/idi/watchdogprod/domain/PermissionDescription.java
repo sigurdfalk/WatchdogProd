@@ -3,7 +3,7 @@ package no.ntnu.idi.watchdogprod.domain;
 /**
  * Created by sigurdhf on 09.03.2015.
  */
-public class PermissionDescription {
+public class PermissionDescription implements Comparable<PermissionDescription> {
     public static final int NAME = 0;
     public static final int DESIGNATION = 1;
     public static final int GROUP = 2;
@@ -49,5 +49,16 @@ public class PermissionDescription {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public int compareTo(PermissionDescription another) {
+        if (this.getRisk() > another.getRisk()) {
+            return -1;
+        } else if (this.getRisk() < another.getRisk()) {
+            return 1;
+        } else {
+            return this.getDesignation().compareTo(another.getDesignation());
+        }
     }
 }

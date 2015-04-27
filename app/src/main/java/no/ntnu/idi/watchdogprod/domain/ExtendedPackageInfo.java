@@ -68,4 +68,8 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        return ((ExtendedPackageInfo) o).packageInfo.packageName.equals(this.getPackageInfo().packageName);
+    }
 }

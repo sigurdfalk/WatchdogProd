@@ -62,7 +62,8 @@
                         android:id="@+id/list_applications_warning"
                         android:src="@mipmap/ic_warning_black_48dp"
                         android:layout_width="20sp"
-                        android:layout_height="20sp" />
+                        android:layout_height="20sp"
+                        android:layout_marginRight="5sp"/>
 
                 </LinearLayout>
 

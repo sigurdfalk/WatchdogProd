@@ -50,6 +50,10 @@ public class ApplicationHelper {
         return thirdPartyApplications;
     }
 
+    public static void clearApplicationList() {
+        thirdPartyApplications = null;
+    }
+
     public static ExtendedPackageInfo getExtendedPackageInfo(Context context, String packageName) {
         if (!isThirdPartyApplicationsPopulated()) {
             getThirdPartyApplications(context);

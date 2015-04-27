@@ -38,4 +38,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
+    <!-- Text -->
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#5a595b</color>
+
 </resources>

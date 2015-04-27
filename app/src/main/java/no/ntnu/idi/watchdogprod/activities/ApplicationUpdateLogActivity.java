@@ -20,6 +20,8 @@ import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesData
  * Created by sigurdhf on 10.03.2015.
  */
 public class ApplicationUpdateLogActivity extends ActionBarActivity {
+    public static final String FROM_NOTIFICATION = "fromNotification";
+
     private String applicationPackageName;
     private PackageInfo packageInfo;
     private ApplicationUpdatesDataSource dataSource;
@@ -30,6 +32,11 @@ public class ApplicationUpdateLogActivity extends ActionBarActivity {
         setContentView(R.layout.activity_application_update_log);
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
+
+        if (getIntent().getExtras().getBoolean(FROM_NOTIFICATION, false)) {
+            ApplicationHelper.clearApplicationList();
+        }
+
         dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 

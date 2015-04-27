@@ -81,7 +81,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             String title = null;
             int count = 0;
 
-            if (position == 0) {
+            if (position == 0 && recentlyUpdatedApplications.size() > 0) {
                 title = context.getString(R.string.recently_updated);
                 count = recentlyUpdatedApplications.size();
             } else {
@@ -96,12 +96,28 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        return applications.size() + recentlyUpdatedApplications.size();
+        int count = 0;
+
+        if (applications.size() > 0) {
+            count += 1;
+        }
+
+        if (recentlyUpdatedApplications.size() > 0) {
+            count += 1;
+        }
+
+        return count + applications.size() + recentlyUpdatedApplications.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 || position == recentlyUpdatedApplications.size() + 1) {
+        if (recentlyUpdatedApplications.size() > 0) {
+            if (position == recentlyUpdatedApplications.size() + 1) {
+                return TYPE_HEADER;
+            }
+        }
+
+        if (position == 0) {
             return TYPE_HEADER;
         }
 
@@ -109,11 +125,15 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private ExtendedPackageInfo getItem(int position) {
-        if (position < recentlyUpdatedApplications.size() + 1) {
-            return recentlyUpdatedApplications.get(position - 1);
-        } else {
-            return applications.get(position - (recentlyUpdatedApplications.size() + 2));
+        if (recentlyUpdatedApplications.size() > 0) {
+            if (position < recentlyUpdatedApplications.size() + 1) {
+                return recentlyUpdatedApplications.get(position - 1);
+            } else {
+                return applications.get(position - (recentlyUpdatedApplications.size() + 2));
+            }
         }
+
+        return applications.get(position - 1);
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

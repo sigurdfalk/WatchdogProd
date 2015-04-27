@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10sp">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/applications"
+        android:textSize="@dimen/dialog_header"
+        android:padding="5sp"
+        android:textColor="@color/text_primary"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dialog_text"
+        android:textColor="@color/text_secondary"
+        android:padding="5sp"
+        android:text="@string/application_guidance"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filer_applications"
+        android:textSize="@dimen/dialog_header"
+        android:padding="5sp"
+        android:textColor="@color/text_primary"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5sp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_margin="5sp"
+            android:src="@drawable/abc_ic_search_api_mtrl_alpha"
+            android:tint="@color/text_secondary"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialog_text"
+            android:textColor="@color/text_secondary"
+            android:layout_marginLeft="5sp"
+            android:text="@string/application_filtering_guidance"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/indicators"
+        android:padding="5sp"
+        android:textSize="@dimen/dialog_header"
+        android:textColor="@color/text_primary"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5sp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:src="@mipmap/ic_warning_black_48dp"
+            android:layout_margin="5sp"
+            android:tint="@color/text_secondary"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialog_text"
+            android:textColor="@color/text_secondary"
+            android:layout_marginLeft="5sp"
+            android:text="@string/indicator_new_risk_score"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5sp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_margin="5sp"
+            android:src="@mipmap/ic_info_outline_white_48dp"
+            android:tint="@color/text_secondary"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialog_text"
+            android:textColor="@color/text_secondary"
+            android:layout_marginLeft="5sp"
+            android:text="@string/indicator_questions"/>
+    </LinearLayout>
+
+</LinearLayout>

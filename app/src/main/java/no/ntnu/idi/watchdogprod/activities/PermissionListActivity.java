@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
@@ -36,11 +38,13 @@ public class PermissionListActivity extends ActionBarActivity {
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
 
         ListView listView = (ListView) findViewById(R.id.list_permissions);
-
+        View emptyView = findViewById(R.id.list_item_permissions_empty);
+        listView.setEmptyView(emptyView);
 
         if(applicationPackageName.equals(PermissionHelper.ALL_PERMISSIONS_KEY)) {
 
             ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getAllPermissionDescriptions(this);
+            Collections.sort(permissionDescriptions);
             PermissionListAdapter adapter = new PermissionListAdapter(this,permissionDescriptions);
             listView.setAdapter(adapter);
 
@@ -58,6 +62,7 @@ public class PermissionListActivity extends ActionBarActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
 
             ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(packageInfo.requestedPermissions, this);
+            Collections.sort(permissionDescriptions);
             PermissionListAdapter adapter = new PermissionListAdapter(this, permissionDescriptions);
             listView.setAdapter(adapter);
         }

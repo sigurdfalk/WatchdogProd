@@ -45,11 +45,12 @@ public class ProfileDataSource {
                 values);
     }
 
-    public double [] getUninstalledApps() {
+    public double [] getInstallData(String type) {
         double [] appValues;
         int counter = 0;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.UNINSTALLED_DANGEROUS_APP},null,null,null);
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {type},null,null,null);
         cursor.moveToFirst();
+        System.out.println("cursorcount " + cursor.getCount());
         appValues = new double [cursor.getCount()];
         while (cursor.moveToNext()) {
             appValues[counter++] = Double.parseDouble(cursor.getString(3));
@@ -57,16 +58,16 @@ public class ProfileDataSource {
         return appValues;
     }
 
-    public double [] getInstalledApps() {
-        double [] appValues;
-        int counter = 0;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {Profile.INSTALLED_DANGEROUS_APP},null,null,null);
-        cursor.moveToFirst();
-        appValues = new double [cursor.getCount()];
-        while (cursor.moveToNext()) {
-            appValues[counter++] = Double.parseDouble(cursor.getString(3));
+    public ArrayList<ProfileEvent> getInstalledApps() {
+        ArrayList<ProfileEvent> profileEvents = new ArrayList<>();
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null, null);
+
+        if(cursor.moveToFirst()){
+            while (cursor.moveToNext()) {
+                profileEvents.add(new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+            }
         }
-        return appValues;
+        return profileEvents;
     }
 
     public ArrayList getSpecificEvents(String eventType) {

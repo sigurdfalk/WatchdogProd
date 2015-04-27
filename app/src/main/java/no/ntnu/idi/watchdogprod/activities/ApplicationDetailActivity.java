@@ -8,6 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,8 +74,15 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private TextView infoHeader;
     private TextView infoFact;
     private int currentPermissionFact;
+    private LinearLayout uninstall;
 
     private AnswersDataSource answersDataSource;
+
+    private int riskScore;
+
+    private LinearLayout riskScoreBackground;
+    private TextView riskScoreText;
+    private ImageView riskScoreIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +95,39 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         packageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
         currentPermissionFact = 0;
 
+        String appName = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this);
+
+        try {
+            riskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        riskScoreBackground = (LinearLayout) findViewById(R.id.app_detail_privacy_score_background);
+        riskScoreText = (TextView) findViewById(R.id.app_detail_privacy_score);
+        riskScoreIndicator = (ImageView) findViewById(R.id.app_detail_privacy_score_indicator);
+
+        //riskScoreText.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        setScoreBackgroundColor(riskScoreBackground, riskScore);
+
+        uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
+        TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
+        uninstallText.setText(String.format(getResources().getString(R.string.touch_to_uninstall), appName));
+
+        uninstall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri packageURI = Uri.parse("package:"+applicationPackageName);
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+            }
+        });
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this));
+        actionBar.setTitle(appName);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //Button showRuleViolations = (Button) findViewById(R.id.app_detail_show_rules);
-        Button showDataUsage = (Button) findViewById(R.id.app_detail_data_usage);
-        Button showQuestionDialog = (Button) findViewById(R.id.app_detail_questions);
-        Button replace = (Button) findViewById(R.id.app_detail_replace);
 
         LinearLayout permissionsInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_permissions_wrapper);
         LinearLayout updatesInfoWrapper = (LinearLayout) findViewById(R.id.app_detail_updates_wrapper);
@@ -102,25 +142,10 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         updatesInfoWrapper.setOnClickListener(buttonListener);
         indicatorsWrapper.setOnClickListener(buttonListener);
 
-        //showRuleViolations.setOnClickListener(buttonListener);
-        showDataUsage.setOnClickListener(buttonListener);
-        showQuestionDialog.setOnClickListener(buttonListener);
-        replace.setOnClickListener(buttonListener);
-
-        TextView privacyScore = (TextView) findViewById(R.id.app_detail_privacy_score);
-        privacyScore.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
-        setScoreBackgroundColor(privacyScore, packageInfo.getPrivacyScore());
         fillPermissionsCard(packageInfo);
         fillUpdatesCard(packageInfo);
         fillIndicatorsCard(packageInfo);
         initQuestions();
-
-        try {
-            double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
-            System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initQuestions() {
@@ -301,20 +326,37 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_information_info:
-                // ToDo show dialog
+                showInformationDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void setScoreBackgroundColor(TextView textView, double score) {
+    private void showInformationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_application_detail_info, null));
+        builder.setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // not implemented
+            }
+        });
+
+        builder.create();
+        builder.show();
+    }
+
+
+    private void setScoreBackgroundColor(LinearLayout background, double score) {
         if (score > PrivacyScoreCalculator.HIGH_THRESHOLD) {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_red));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_red));
         } else if (score > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_yellow));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_yellow));
         } else {
-            textView.setBackgroundColor(this.getResources().getColor(R.color.risk_green));
+            background.setBackgroundColor(this.getResources().getColor(R.color.risk_green));
         }
     }
 
@@ -339,6 +381,27 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
     private void showNewPermissionFact() {
         final ArrayList<PermissionFact> permissionFacts = packageInfo.getPermissionFacts();
+
+        try {
+             int newRiskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
+            if (newRiskScore > riskScore) {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
+            } else if (newRiskScore < riskScore) {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
+            } else {
+                riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
+            }
+
+            riskScore = newRiskScore;
+            riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+            setScoreBackgroundColor(riskScoreBackground, riskScore);
+
+            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
+            riskScoreIndicator.startAnimation(pulse);
+            riskScoreText.startAnimation(pulse);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if (currentPermissionFact >= permissionFacts.size()) {
             permissionFactWrapper.setVisibility(View.GONE);
@@ -414,7 +477,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 i.putExtras(bundle);
 
                 startActivity(i);
-            } else if (v.getId() == R.id.app_detail_data_usage) {
+            }/* else if (v.getId() == R.id.app_detail_data_usage) {
                 Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
 //                Intent i = new Intent(ApplicationDetailActivity.this, UserQuestionActivity.class);
 
@@ -428,7 +491,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 //                        "com.android.settings.Settings$DataUsageSummaryActivity"));
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                startActivity(intent);
-            } else if (v.getId() == R.id.app_detail_updates_wrapper) {
+            }*/ else if (v.getId() == R.id.app_detail_updates_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, ApplicationUpdateLogActivity.class);
 
                 Bundle bundle = new Bundle();
