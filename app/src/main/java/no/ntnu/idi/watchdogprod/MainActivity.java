@@ -252,6 +252,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createInstallTrendCard() {
+        LinearLayout installLayout = (LinearLayout) findViewById(R.id.main_card_installtrend_layout);
+        installLayout.setOnClickListener(new MainButtonListener());
 
         int installTrend = profile.getInstallTrendRiskIncreasing();
         System.out.println("IN TREND " + installTrend);
@@ -477,14 +479,8 @@ public class MainActivity extends ActionBarActivity {
                 i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
                 startActivity(i);
             } else if (v.getId() == R.id.main_card_harmony_layout) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                ArrayList<String> apps = profile.getDisharmonyApps();
-                String[] disharmonyApps = new String[apps.size()];
-                int counter = 0;
-                for (String app : apps) {
-                    disharmonyApps[counter++] = app;
-                }
-                i.putExtra(Profile.DISHAROMY_APPS_KEY, disharmonyApps);
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_HARMONY_APPS);
                 startActivity(i);
             } else if(v.getId() == R.id.main_card_update_layout) {
                 Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
@@ -492,6 +488,9 @@ public class MainActivity extends ActionBarActivity {
             } else if(v.getId() == R.id.main_card_threatlevel_layout) {
                 Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
                 startActivity(i);
+            } else if(v.getId() == R.id.main_card_installtrend_layout) {
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_INSTALLED_APPS);
             }
         }
 

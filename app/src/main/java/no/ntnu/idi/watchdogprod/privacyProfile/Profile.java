@@ -39,7 +39,9 @@ public class Profile {
     public static final int APP_TREND_INCREASING = 1;
     public static final int APP_TREND_NEUTRAL = -1;
 
-    public static final String DISHAROMY_APPS_KEY = "disharmonyAppsList";
+    public static final String BEHAVIOR_APPS_KEY = "behaviorAppsList";
+    public static final String BEHAVIOR_INSTALLED_APPS = "behaviorInstalledApps";
+    public static final String BEHAVIOR_HARMONY_APPS = "behaviorHarmonyApps";
 
     private double understandingOfPermissions;
     private double interestInPrivacy;
@@ -48,6 +50,7 @@ public class Profile {
     private int installTrendRiskIncreasing;
     private int uninstallTrendRiskIncreasing;
     private ArrayList<String> disharmonyApps;
+    private ArrayList<String> installedApps;
 
     public Profile() {
         this.understandingOfPermissions = 3.0;
@@ -95,9 +98,7 @@ public class Profile {
         ArrayList<String> disharmonyApps = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : answerCount.entrySet()) {
-            if (entry.getValue() >= 3) {
-                disharmonyApps.add(entry.getKey());
-            }
+            disharmonyApps.add(entry.getKey());
         }
         return disharmonyApps;
     }
@@ -148,28 +149,27 @@ public class Profile {
             }
         }
 
-        if(oldAvg == avg) {
+        if (oldAvg == avg) {
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_FIXED_HIGH;
             } else {
                 return APP_TREND_FIXED_LOW;
             }
-        }
-        else {
+        } else {
             saveNewAverage(context, avg, type);
             return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_DECREASING;
         }
     }
 
-    private long dateConverter (String timestamp) {
+    private long dateConverter(String timestamp) {
         Date date = new Date();
-        DateFormat dateFormat= new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Date formattedDate = null;
 
-        try{
+        try {
             formattedDate = dateFormat.parse(timestamp);
             System.out.println(formattedDate.toString());
-        }catch(ParseException parseEx){
+        } catch (ParseException parseEx) {
             parseEx.printStackTrace();
         }
         return formattedDate.getTime();
@@ -180,7 +180,7 @@ public class Profile {
         double oldAvg = 0;
 
         ProfileEvent event = getOldAverage(context, type);
-        if(event == null) {
+        if (event == null) {
             oldAvg = -1;
         } else {
             oldAvg = Double.parseDouble(event.getValue());
@@ -200,7 +200,7 @@ public class Profile {
 
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_INCREASING;
-            } else  {
+            } else {
                 return APP_TREND_NEUTRAL;
             }
         }

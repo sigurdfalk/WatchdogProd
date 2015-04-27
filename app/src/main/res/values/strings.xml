@@ -36,10 +36,13 @@
     <string name="recently_updated">Nylig oppdatert</string>
     <string name="installed">Installert</string>
     <string name="permissions">Tillatelser</string>
+    <string name="permissions_harmony">Dine tilbakemeldinger</string>
     <string name="latest_update">Siste oppdatering</string>
     <string name="touch_for_more_information">Trykk for mer informasjon</string>
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
+    <string name="harmony_apps">Disharmoni</string>
+    <string name="similar_apps">Lignende apper</string>
 
     <!--Tips -->
     <string name="tips_screen_lock">For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den.</string>
@@ -83,6 +86,8 @@
     <string name="risk_factor_medium">Medium risikofaktor</string>
     <string name="risk_factor_low">Lav risikofaktor</string>
 
+    <string name="go_to_app">Gå til app</string>
+
     <!-- Dialog main-->
     <string name="dialog_main_score_header">Risikofaktor</string>
     <string name="dialog_main_score_text">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
@@ -101,5 +106,12 @@
     <string name="remove_all">Fjern alle</string>
     <string name="no_matches">Ingen treff</string>
     <string name="touch_to_uninstall">Trykk her for å avinstallere %s</string>
-    <string name="title_activity_disharmony">DisharmonyActivity</string>
+    <string name="title_activity_disharmony">Disharmoniske apper</string>
+    <string name="title_activity_behavior_application_list">Disharmoniske apper</string>
+
+    <!-- Dialog behavior-->
+    <string name="disharmony_sad_text">Misfornøyd med </string>
+    <string name="disharmony_neutral_text">Nøytral til</string>
+    <string name="dialog_behavior_info_header">Disharmoni</string>
+    <string name="dialog_behavior_info_text">Dette skjermbildet viser applikasjoner som du har svar negativt mot på spørsmålene i detaljvinduet til applikasjoner. Dette er applikasjoner som ikke passer dine preferanser.</string>
 </resources>

@@ -76,6 +76,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         ApplicationHelper.clearApplicationList();
         apps = ApplicationHelper.getThirdPartyApplications(this);
 
@@ -86,23 +87,23 @@ public class ApplicationListActivity extends ActionBarActivity {
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setItemAnimator(new DefaultItemAnimator());
 
-        intent = getIntent();
-        if(intent.hasExtra(Profile.DISHAROMY_APPS_KEY)) {
-            ArrayList<ExtendedPackageInfo> newList = new ArrayList<>();
-            String [] disHaromyApps = intent.getStringArrayExtra(Profile.DISHAROMY_APPS_KEY);
-            for(ExtendedPackageInfo extendedPackageInfo : apps) {
-                for (int j = 0; j < disHaromyApps.length; j++) {
-                    if(extendedPackageInfo.getPackageInfo().packageName.equals(disHaromyApps[j])){
-                        newList.add(extendedPackageInfo);
-                    }
-                }
-            }
-            apps = newList;
-            adapter = new ApplicationListAdapter(this,apps);
-        } else {
-            adapter = new ApplicationListAdapter(this, apps);
-        }
-
+//        intent = getIntent();
+//        if(intent.hasExtra(Profile.BEHAVIOR_APPS_KEY)) {
+//            ArrayList<ExtendedPackageInfo> newList = new ArrayList<>();
+//            String [] disHaromyApps = intent.getStringArrayExtra(Profile.BEHAVIOR_APPS_KEY);
+//            for(ExtendedPackageInfo extendedPackageInfo : apps) {
+//                for (int j = 0; j < disHaromyApps.length; j++) {
+//                    if(extendedPackageInfo.getPackageInfo().packageName.equals(disHaromyApps[j])){
+//                        newList.add(extendedPackageInfo);
+//                    }
+//                }
+//            }
+//            apps = newList;
+//            adapter = new ApplicationListAdapter(this,apps);
+//        } else {
+//            adapter = new ApplicationListAdapter(this, apps);
+//        }
+        adapter = new ApplicationListAdapter(this, apps);
         list.setAdapter(adapter);
 
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);

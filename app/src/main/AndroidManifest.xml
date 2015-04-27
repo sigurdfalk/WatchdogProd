@@ -88,8 +88,8 @@
             android:label="@string/title_activity_user_question" >
         </activity>
         <activity
-            android:name=".activities.DisharmonyActivity"
-            android:label="@string/title_activity_disharmony" >
+            android:name=".activities.BehaviorApplicationListActivity"
+            android:label="@string/title_activity_behavior_application_list" >
         </activity>
     </application>
 
