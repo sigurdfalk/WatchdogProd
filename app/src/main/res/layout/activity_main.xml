@@ -76,13 +76,14 @@
                 android:weightSum="100">
 
                 <LinearLayout
+                    android:id="@+id/main_apps_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="33">
 
                     <ImageView
-                        android:id="@+id/main_apps_btn"
+
                         android:src="@mipmap/ic_apps_grey600_48dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -100,13 +101,14 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/main_permissions_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="33">
 
                     <ImageView
-                        android:id="@+id/main_permissions_btn"
+
                         android:src="@mipmap/ic_format_list_bulleted_grey600_48dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"

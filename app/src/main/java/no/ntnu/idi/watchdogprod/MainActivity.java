@@ -52,8 +52,8 @@ import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 public class MainActivity extends ActionBarActivity {
     public static final String KEY_INITIAL_LAUNCH = "initLaunch";
     private Profile profile;
-    private ImageView appsBtn;
-    private ImageView permissionListBtn;
+    private LinearLayout appsBtn;
+    private LinearLayout permissionListBtn;
     private TextView totalRiskScoreTextView;
 
     private int updatedAppsCount;
@@ -67,8 +67,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        appsBtn = (ImageView) findViewById(R.id.main_apps_btn);
-        permissionListBtn = (ImageView) findViewById(R.id.main_permissions_btn);
+        appsBtn = (LinearLayout) findViewById(R.id.main_apps_btn);
+        permissionListBtn = (LinearLayout) findViewById(R.id.main_permissions_btn);
 
         appsBtn.setOnClickListener(new MainButtonListener());
         permissionListBtn.setOnClickListener(new MainButtonListener());
