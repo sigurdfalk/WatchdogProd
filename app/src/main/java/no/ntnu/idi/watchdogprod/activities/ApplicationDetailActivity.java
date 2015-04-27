@@ -138,9 +138,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         ButtonListener buttonListener = new ButtonListener();
 
+        Button replace = (Button) findViewById(R.id.app_detail_replace);
+
         permissionsInfoWrapper.setOnClickListener(buttonListener);
         updatesInfoWrapper.setOnClickListener(buttonListener);
         indicatorsWrapper.setOnClickListener(buttonListener);
+        replace.setOnClickListener(buttonListener);
+
 
         fillPermissionsCard(packageInfo);
         fillUpdatesCard(packageInfo);
@@ -477,21 +481,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 i.putExtras(bundle);
 
                 startActivity(i);
-            }/* else if (v.getId() == R.id.app_detail_data_usage) {
-                Intent i = new Intent(ApplicationDetailActivity.this, DataUsageActivity.class);
-//                Intent i = new Intent(ApplicationDetailActivity.this, UserQuestionActivity.class);
-
-                i.putExtra("packageName",applicationPackageName);
-                i.putExtra("appName", ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext()));
-                startActivity(i);
-
-
-//                Intent intent = new Intent(Intent.ACTION_MAIN);
-//                intent.setComponent(new ComponentName("com.android.settings",
-//                        "com.android.settings.Settings$DataUsageSummaryActivity"));
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-            }*/ else if (v.getId() == R.id.app_detail_updates_wrapper) {
+            }
+             else if (v.getId() == R.id.app_detail_updates_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, ApplicationUpdateLogActivity.class);
 
                 Bundle bundle = new Bundle();
