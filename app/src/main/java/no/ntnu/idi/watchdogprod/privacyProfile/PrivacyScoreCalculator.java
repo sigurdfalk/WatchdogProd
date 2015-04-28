@@ -85,6 +85,7 @@ public class PrivacyScoreCalculator {
         return hyperbolicTan(normalizeScore(score, 0.0, 8.0)) * 100.0;
     }
 
+    // http://math.stackexchange.com/questions/57429/functions-similar-to-log-but-with-results-between-0-and-1
     private double hyperbolicTan(double rawScore) {
         return 1 - (2 / (Math.pow(Math.E, 2 * rawScore) + 1));
     }
