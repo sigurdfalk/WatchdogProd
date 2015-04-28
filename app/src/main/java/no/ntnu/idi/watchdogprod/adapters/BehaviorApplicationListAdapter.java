@@ -1,7 +1,6 @@
 package no.ntnu.idi.watchdogprod.adapters;
 
 import android.content.Context;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.domain.DisharomyApplication;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 
 /**
  * Created by fredsten on 27.04.2015.
@@ -49,7 +48,7 @@ public class BehaviorApplicationListAdapter extends ArrayAdapter<DisharomyApplic
         LinearLayout linearLayoutGreen =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_green);
 
         DisharomyApplication disharomyApplication = objects.get(position);
-        firstLine.setText(ApplicationHelper.getApplicationName(disharomyApplication.getExtendedPackageInfo().getPackageInfo(), context) + "");
+        firstLine.setText(ApplicationHelperSingleton.getApplicationName(context, disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "");
         icon.setImageDrawable(disharomyApplication.getExtendedPackageInfo().getPackageInfo().applicationInfo.loadIcon(context.getPackageManager()));
 
         int sadCount = disharomyApplication.getCount(Answer.ANSWER_SAD);

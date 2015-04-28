@@ -17,13 +17,17 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     private ArrayList<AppInfo> updateLog;
     private double privacyScore;
 
-    public ExtendedPackageInfo(PackageInfo packageInfo, ArrayList<PermissionDescription> permissionDescriptions, ArrayList<Rule> violatedRules, ArrayList<PermissionFact> permissionFacts, ArrayList<AppInfo> updateLog) {
+    public ExtendedPackageInfo(PackageInfo packageInfo, ArrayList<PermissionDescription> permissionDescriptions, ArrayList<Rule> violatedRules, ArrayList<PermissionFact> permissionFacts, ArrayList<AppInfo> updateLog, PrivacyScoreCalculator privacyScoreCalculator) {
         this.packageInfo = packageInfo;
         this.permissionDescriptions = permissionDescriptions;
         this.violatedRules = violatedRules;
         this.permissionFacts = permissionFacts;
         this.updateLog = updateLog;
-        this.privacyScore = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+        this.privacyScore = privacyScoreCalculator.calculatePrivacyScore(this);
+    }
+
+    public void setPrivacyScore(double privacyScore) {
+        this.privacyScore = privacyScore;
     }
 
     public PackageInfo getPackageInfo() {

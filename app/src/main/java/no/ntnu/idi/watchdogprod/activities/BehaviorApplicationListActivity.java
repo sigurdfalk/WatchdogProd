@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,14 +29,14 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
 import no.ntnu.idi.watchdogprod.domain.PermissionAnswerPair;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionFactHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 
 public class BehaviorApplicationListActivity extends ActionBarActivity {
     private DisharomyApplication disharomyApplication;
     private Context context;
+
+    ApplicationHelperSingleton applicationHelperSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +48,12 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
+
         ListView listView = (ListView) findViewById(R.id.list_disharmony);
 
         ArrayList<Answer> answers = getAllAnswers();
-        ArrayList<ExtendedPackageInfo> extendedPackageInfos = ApplicationHelper.getThirdPartyApplications(this);
+        ArrayList<ExtendedPackageInfo> extendedPackageInfos = applicationHelperSingleton.getApplications();
 
         final ArrayList<DisharomyApplication> disharomyApplications = createHarmonyApps(answers, extendedPackageInfos);
 
@@ -90,20 +90,20 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
     private ArrayList<PermissionAnswerPair> createQuestionAnswerPairs (String packageName, ArrayList<Answer> answers) {
         ArrayList<PermissionAnswerPair> questionAnswerPairs = new ArrayList<>();
-        ArrayList<PermissionFact> permissionFacts = PermissionFactHelper.getAllPermissionFacts(this);
+        ArrayList<PermissionFact> permissionFacts = applicationHelperSingleton.getPermissionFactHelper().getPermissionFacts();
 
-        for(Answer answer : answers) {
-                if (packageName.equals(answer.getPackageName())) {
-                    for (PermissionFact permissionFact : permissionFacts) {
-                        if (answer.getAnswerId() == permissionFact.getId()) {
-                            String permission = permissionFact.getPermissions()[0];
-                            PermissionDescription permissionDescription = PermissionHelper.getPermissionDescription(context, permission);
-                            questionAnswerPairs.add(new PermissionAnswerPair(permissionDescription.getDesignation(), answer.getAnswer()));
-                        }
+        for (Answer answer : answers) {
+            if (packageName.equals(answer.getPackageName())) {
+                for (PermissionFact permissionFact : permissionFacts) {
+                    if (answer.getAnswerId() == permissionFact.getId()) {
+                        String permission = permissionFact.getPermissions()[0];
+                        PermissionDescription permissionDescription = applicationHelperSingleton.getPermissionHelper().getPermissionDescription(permission);
+                        questionAnswerPairs.add(new PermissionAnswerPair(permissionDescription.getDesignation(), answer.getAnswer()));
                     }
+                }
             }
         }
-        return questionAnswerPairs;
+            return questionAnswerPairs;
     }
 
     private ArrayList<DisharomyApplication> createHarmonyApps(ArrayList<Answer> answers, ArrayList<ExtendedPackageInfo> extendedPackageInfos) {
@@ -116,6 +116,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         }
         return disharomyApplications;
     }
+
 
     private boolean hasAnsweredQuestions(ExtendedPackageInfo extendedPackageInfo, ArrayList<Answer> answers) {
         for (Answer answer : answers) {
@@ -149,7 +150,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         LinearLayout greenLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_green);
 
         TextView haromy_dialog_feedback_title = (TextView)dialogView.findViewById(R.id.haromy_dialog_feedback);
-        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " mot " + ApplicationHelper.getApplicationName(disharomyApplication.getExtendedPackageInfo().getPackageInfo(), context) + "s tillatelser");
+        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " mot " + applicationHelperSingleton.getApplicationName(context,disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "s tillatelser");
 
         TextView redPermissions =(TextView) dialogView.findViewById(R.id.red_permissions);
         TextView yellowPermissions =(TextView) dialogView.findViewById(R.id.yellow_permissions);

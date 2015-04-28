@@ -7,14 +7,12 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,27 +20,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.R;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
-import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
  * Created by sigurdhf on 05.03.2015.
@@ -58,7 +49,6 @@ public class ApplicationListActivity extends ActionBarActivity {
     private View popupView;
     private PopupWindow popupWindow;
 
-    private ArrayList<ExtendedPackageInfo> apps;
     private ArrayList<ExtendedPackageInfo> filteredApps;
     private ArrayList<CheckBox> permissionsCheckBoxes;
 
@@ -69,6 +59,8 @@ public class ApplicationListActivity extends ActionBarActivity {
     private CheckBox filterRiskMedium;
     private CheckBox filterRiskLow;
 
+    private ApplicationHelperSingleton applicationHelperSingleton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,33 +69,15 @@ public class ApplicationListActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ApplicationHelper.clearApplicationList();
-        apps = ApplicationHelper.getThirdPartyApplications(this);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
 
         permissionsCheckBoxes = new ArrayList<>();
-        filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
+        filteredApps = (ArrayList<ExtendedPackageInfo>) applicationHelperSingleton.getApplications().clone();
 
         list = (RecyclerView)findViewById(R.id.applications_list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setItemAnimator(new DefaultItemAnimator());
-
-//        intent = getIntent();
-//        if(intent.hasExtra(Profile.BEHAVIOR_APPS_KEY)) {
-//            ArrayList<ExtendedPackageInfo> newList = new ArrayList<>();
-//            String [] disHaromyApps = intent.getStringArrayExtra(Profile.BEHAVIOR_APPS_KEY);
-//            for(ExtendedPackageInfo extendedPackageInfo : apps) {
-//                for (int j = 0; j < disHaromyApps.length; j++) {
-//                    if(extendedPackageInfo.getPackageInfo().packageName.equals(disHaromyApps[j])){
-//                        newList.add(extendedPackageInfo);
-//                    }
-//                }
-//            }
-//            apps = newList;
-//            adapter = new ApplicationListAdapter(this,apps);
-//        } else {
-//            adapter = new ApplicationListAdapter(this, apps);
-//        }
-        adapter = new ApplicationListAdapter(this, apps);
+        adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
         list.setAdapter(adapter);
 
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -186,7 +160,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
     private void populateSearchPopupWindowPermissionCheckboxes(View view) {
         LinearLayout wrapper = (LinearLayout) view.findViewById(R.id.search_popup_permission_checkbox_wrapper);
-        ArrayList<PermissionDescription> permissions = PermissionHelper.getAllPermissionDescriptions(this);
+        ArrayList<PermissionDescription> permissions = applicationHelperSingleton.getPermissionHelper().getPermissionDescriptions();
 
         for (PermissionDescription permission : permissions) {
             if (permission.getRisk() == PrivacyScoreCalculator.RISK_HIGH) {
@@ -220,7 +194,7 @@ public class ApplicationListActivity extends ActionBarActivity {
             }
         }
 
-        for (ExtendedPackageInfo app : apps) {
+        for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
             ArrayList<String> reqPermissions = new ArrayList<>();
 
             for (PermissionDescription reqPermission : app.getPermissionDescriptions()) {
@@ -234,7 +208,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     }
 
     private void filterAppsByRiskFactor() {
-        for (ExtendedPackageInfo app : apps) {
+        for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
             boolean remove = true;
 
             if (filterRiskHigh.isChecked() && getAppRiskFactor(app) == PrivacyScoreCalculator.RISK_HIGH) {
@@ -270,7 +244,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     }
 
     private void filterApps() {
-        filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
+        filteredApps = (ArrayList<ExtendedPackageInfo>) applicationHelperSingleton.getApplications().clone();
 
         filterAppsByPermissions();
         filterAppsByRiskFactor();

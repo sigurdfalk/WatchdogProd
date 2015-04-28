@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
