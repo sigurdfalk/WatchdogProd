@@ -66,9 +66,9 @@
 
 
     <!-- User behavior feedback -->
-    <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor. Klikk for se se oversikt over hvilke applikasjoner.</string>
+    <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
-    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk for å se oversikt over hvilke applikasjoner.</string>
+    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de siste installerte applikasjonene på telefonen.</string>
     <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de siste installerte applikasjonene på telefonen.</string>
     <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert. Her vil det komme informasjon ditt trender i ditt installeringssmønster.</string>
 
@@ -114,5 +114,5 @@
     <string name="disharmony_sad_text">misfornøyd med </string>
     <string name="disharmony_neutral_text">nøytral til</string>
     <string name="dialog_behavior_info_header">Disharmoni</string>
-    <string name="dialog_behavior_info_text">Dette skjermbildet viser applikasjoner som du har svar negativt mot på spørsmålene i detaljvinduet til applikasjoner. Dette er applikasjoner som ikke passer dine preferanser.</string>
+    <string name="dialog_behavior_info_text">Disharmoniske applikasjoner har tillatelser du har stilt deg negativt til. Hvis du viser sterkt misnøye mot en applikasjons tillatelser bør du revurdere om du ønsker å ha den installert på telefonen.</string>
 </resources>
