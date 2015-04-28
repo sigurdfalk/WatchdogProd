@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,17 +40,34 @@ public class BehaviorApplicationListAdapter extends ArrayAdapter<DisharomyApplic
         TextView firstLine = (TextView) convertView.findViewById(R.id.item_harmony_firstLine);
         ImageView icon = (ImageView) convertView.findViewById(R.id.item_icon);
 
-        TextView sadCount = (TextView)convertView.findViewById(R.id.item_sad_count);
-        TextView neutralCount = (TextView)convertView.findViewById(R.id.item_neutral_count);
-        TextView happyCount = (TextView)convertView.findViewById(R.id.item_happy_count);
+        TextView sadCountView = (TextView)convertView.findViewById(R.id.item_sad_count);
+        TextView neutralCountView = (TextView)convertView.findViewById(R.id.item_neutral_count);
+        TextView happyCountView = (TextView)convertView.findViewById(R.id.item_happy_count);
+
+        LinearLayout linearLayoutRed =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_red);
+        LinearLayout linearLayoutYellow =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_yellow);
+        LinearLayout linearLayoutGreen =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_green);
 
         DisharomyApplication disharomyApplication = objects.get(position);
         firstLine.setText(ApplicationHelper.getApplicationName(disharomyApplication.getExtendedPackageInfo().getPackageInfo(), context) + "");
         icon.setImageDrawable(disharomyApplication.getExtendedPackageInfo().getPackageInfo().applicationInfo.loadIcon(context.getPackageManager()));
 
-        sadCount.setText("- " + context.getResources().getString(R.string.disharmony_sad_text) + " " + disharomyApplication.getCount(Answer.ANSWER_SAD) + " " +(disharomyApplication.getCount(Answer.ANSWER_SAD) == 1? "tillatelse":"tillatelser"));
-        neutralCount.setText("- " + context.getResources().getString(R.string.disharmony_neutral_text) + " "  + disharomyApplication.getCount(Answer.ANSWER_NEUTRAL) + " " + (disharomyApplication.getCount(Answer.ANSWER_NEUTRAL) == 1? "tillatelse":"tillatelser"));
-        happyCount.setText("- positiv til " + disharomyApplication.getCount(Answer.ANSWER_HAPPY) + " " + (disharomyApplication.getCount(Answer.ANSWER_HAPPY) == 1? "tillatelse":"tillatelser"));
+        int sadCount = disharomyApplication.getCount(Answer.ANSWER_SAD);
+        int neutralCount = disharomyApplication.getCount(Answer.ANSWER_NEUTRAL);
+        int happyCount = disharomyApplication.getCount(Answer.ANSWER_HAPPY);
+
+        if(sadCount > 0) {
+            linearLayoutRed.setVisibility(View.VISIBLE);
+            sadCountView.setText(context.getResources().getString(R.string.disharmony_sad_text) + " " + sadCount + " " +(sadCount == 1? "tillatelse":"tillatelser"));
+        }
+        if(neutralCount > 0) {
+            linearLayoutYellow.setVisibility(View.VISIBLE);
+            neutralCountView.setText(context.getResources().getString(R.string.disharmony_neutral_text) + " " + neutralCount + " " + (neutralCount == 1 ? "tillatelse" : "tillatelser"));
+        }
+        if(happyCount > 0) {
+            linearLayoutGreen.setVisibility(View.VISIBLE);
+            happyCountView.setText("positiv til " + happyCount + " " + (happyCount == 1 ? "tillatelse" : "tillatelser"));
+        }
 
         return convertView;
     }

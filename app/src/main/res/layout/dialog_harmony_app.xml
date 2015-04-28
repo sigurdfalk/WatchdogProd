@@ -11,7 +11,8 @@
         android:padding="10sp"
         android:textColor="@color/text_primary"/>
     <TextView
-        android:text="@string/feedback_text"
+        android:id="@+id/haromy_dialog_feedback"
+        android:text="@string/harmony_dialog_feedback_text"
         android:textSize="15dp"
         android:paddingLeft="10dp"
         android:paddingBottom="5dp"

@@ -43,7 +43,7 @@
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
     <string name="harmony_apps">Disharmoni</string>
     <string name="similar_apps">Lignende apper</string>
-    <string name="feedback_text">Du har gitt følgende tilbakemeldinger:</string>
+    <string name="harmony_dialog_feedback_text">Du har gitt følgende tilbakemeldinger</string>
 
     <!--Tips -->
     <string name="tips_screen_lock">For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den.</string>

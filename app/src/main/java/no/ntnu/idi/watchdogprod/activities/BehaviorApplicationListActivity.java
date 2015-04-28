@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -91,14 +93,14 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         ArrayList<PermissionFact> permissionFacts = PermissionFactHelper.getAllPermissionFacts(this);
 
         for(Answer answer : answers) {
-            if(packageName.equals(answer.getPackageName())) {
-                for(PermissionFact permissionFact : permissionFacts) {
-                    if(answer.getAnswerId() == permissionFact.getId()){
-                        String permission = permissionFact.getPermissions()[0];
-                        PermissionDescription permissionDescription = PermissionHelper.getPermissionDescription(context,permission);
-                        questionAnswerPairs.add(new PermissionAnswerPair(permissionDescription.getDesignation(),answer.getAnswer()));
+                if (packageName.equals(answer.getPackageName())) {
+                    for (PermissionFact permissionFact : permissionFacts) {
+                        if (answer.getAnswerId() == permissionFact.getId()) {
+                            String permission = permissionFact.getPermissions()[0];
+                            PermissionDescription permissionDescription = PermissionHelper.getPermissionDescription(context, permission);
+                            questionAnswerPairs.add(new PermissionAnswerPair(permissionDescription.getDesignation(), answer.getAnswer()));
+                        }
                     }
-                }
             }
         }
         return questionAnswerPairs;
@@ -142,8 +144,13 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         View dialogView = inflater.inflate(R.layout.dialog_harmony_app, null);
+        LinearLayout redLayout = (LinearLayout)dialogView.findViewById(R.id.harmony_dialog_color_red);
         LinearLayout yellowLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_yellow);
         LinearLayout greenLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_green);
+
+        TextView haromy_dialog_feedback_title = (TextView)dialogView.findViewById(R.id.haromy_dialog_feedback);
+        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " mot " + ApplicationHelper.getApplicationName(disharomyApplication.getExtendedPackageInfo().getPackageInfo(), context) + "s tillatelser");
+
         TextView redPermissions =(TextView) dialogView.findViewById(R.id.red_permissions);
         TextView yellowPermissions =(TextView) dialogView.findViewById(R.id.yellow_permissions);
         TextView greenPermissions =(TextView) dialogView.findViewById(R.id.green_permissions);
@@ -156,6 +163,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
         for(PermissionAnswerPair permissionAnswerPair : permissionAnswerPairs) {
             if(permissionAnswerPair.getAnswer() == Answer.ANSWER_SAD) {
+                redLayout.setVisibility(View.VISIBLE);
                 redPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation() +"\n");
             } else if(permissionAnswerPair.getAnswer() == Answer.ANSWER_NEUTRAL) {
                 yellowLayout.setVisibility(View.VISIBLE);
