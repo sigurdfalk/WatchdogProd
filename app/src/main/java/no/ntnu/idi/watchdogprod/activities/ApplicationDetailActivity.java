@@ -507,7 +507,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         final String appname = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext());
-        String url = "http://78.91.82.52:8888/replace?"+applicationPackageName;
+        String url = "http://78.91.83.175:8888/replace?"+applicationPackageName;
         StringRequest json = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
@@ -515,6 +515,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 Intent i = new Intent(ApplicationDetailActivity.this, RecMain.class);
                 i.putExtra("appName", appname);
                 i.putExtra("response", response);
+                i.putExtra("originalScore", riskScore);
                 i.putExtra("packageName",applicationPackageName);
 
                 startActivity(i);

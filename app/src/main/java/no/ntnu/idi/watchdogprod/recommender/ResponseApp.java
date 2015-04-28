@@ -27,6 +27,14 @@ public class ResponseApp implements Comparable<ResponseApp>{
         this.infoLine = infoLine;
     }
 
+    public double getPrivacyScore() {
+        return privacyScore;
+    }
+
+    public void setPrivacyScore(double privacyScore) {
+        this.privacyScore = privacyScore;
+    }
+
     public ResponseApp(String name, String[] permissions, String logo, String infoLine, String packageName) {
         this.name = name;
         this.infoLine = infoLine;

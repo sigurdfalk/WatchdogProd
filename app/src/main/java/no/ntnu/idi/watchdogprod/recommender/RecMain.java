@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,18 +24,23 @@ import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.adapters.ResponseListAdapter;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
  * Created by Wschive on 08/04/15.
  */
 public class RecMain extends ActionBarActivity{
+    private final String TAG = "recmain";
     Context context;
     String packageName;
     String appName;
     ArrayList<ResponseApp> apps;
     Profile profile;
     private ResponseListAdapter adapter;
+    int originalRisk;
 
 
     @Override
@@ -54,9 +61,41 @@ public class RecMain extends ActionBarActivity{
 
         apps = stringToArrayList((String) getIntent().getExtras().getSerializable("response"));
         profile = Profile.getInstance();
+        originalRisk = getIntent().getExtras().getInt("originalScore");
         Collections.sort(apps);
-        adapter = new ResponseListAdapter(this,apps);
-        mRecyclerView.setAdapter(adapter);
+        purgeBadApps();
+        if(apps.isEmpty()){
+            NoReplacementsDialog dialog = new NoReplacementsDialog();
+        }else{
+            adapter = new ResponseListAdapter(this,apps);
+            mRecyclerView.setAdapter(adapter);
+        }
+
+    }
+    public ArrayList<PermissionDescription> parseArray(String[] array){
+        ArrayList<PermissionDescription> list = new ArrayList<>();
+        for (String s : array) {
+
+            try {
+                list.add(PermissionHelper.getPermissionDescription(context, s));
+            } catch (Exception e) {
+                Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
+            }
+        }
+        return list;
+    }
+    private void purgeBadApps() {
+        double score = 99999;
+        for (ResponseApp app : apps) {
+            ArrayList<PermissionDescription> permissionDescriptions = parseArray(app.getPermissions());
+            score = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+            if(originalRisk < score){
+                this.apps.remove(app);
+            }
+            else{
+                app.setPrivacyScore(score);
+            }
+        }
     }
 
     @Override

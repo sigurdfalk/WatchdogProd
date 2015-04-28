@@ -36,12 +36,13 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public ResponseListAdapter(Context context, ArrayList<ResponseApp> allApplications) {
         this.context = context;
-        applications = allApplications;
+        this.applications = allApplications;
     }
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.e(TAG, "viewType = " + viewType);
         if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_application, parent, false);
             return new ItemViewHolder(view, new ItemViewHolder.ItemViewHolderOnClickListener() {
@@ -132,33 +133,20 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
     private ResponseApp getItem(int position) {
-            return applications.get(position);
-        }
-
-    public ArrayList<PermissionDescription> parseArray(String[] array){
-        ArrayList<PermissionDescription> list = new ArrayList<>();
-        for (String s : array) {
-
-            try {
-                list.add(PermissionHelper.getPermissionDescription(context, s));
-            } catch (Exception e) {
-                Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
-            }
-        }
-        return list;
+        return applications.get(position);
     }
+
+
 
     private void fillListItem(ResponseApp app, ItemViewHolder itemViewHolder) {
 
-        ArrayList<PermissionDescription> permissionDescriptions = parseArray(app.getPermissions());
-        double score = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
-        setRiskColor(itemViewHolder, score);
+        setRiskColor(itemViewHolder, app.getPrivacyScore());
 
         new DownloadImageTask(itemViewHolder.itemIcon).execute(app.getLogo());
 
-        itemViewHolder.firstLine.setText(app.getInfoLine());
+        itemViewHolder.firstLine.setText(app.getName());
 
-        itemViewHolder.secondLine.setText("Score: " + score);
+        itemViewHolder.secondLine.setText("Score: " + app.getPrivacyScore());
 
     }
     private void setRiskColor(ItemViewHolder itemViewHolder, double riskScore) {
