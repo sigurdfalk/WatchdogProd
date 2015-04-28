@@ -63,7 +63,7 @@
     <string name="permission_risk_medium_description">Medium risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til tilgang til personlig informasjon, men kan typisk få vite hvordan du bruker din telefon (f.eks. hvilke nettverk du er koblet til og se din nettleserhistore)</string>
     <string name="permission_risk_low_description">Lav risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til data som kan bryte ditt personvern alene.</string>
     <string name="risk_indicators_description">En tillatelse er ikke nødvendigvis farlig for ditt personvern alene, men om den kombineres den med andre tillatelser kan de sammen utgjøre en betydelig risiko. Risikoindikatorer forebygger dette ved å analysere alle applikasjonens tillatelser og lete etter mønster som indikerer farlig adferd.</string>
-
+    <string name="delete_answers_text">Slett besvarelser</string>
 
     <!-- User behavior feedback -->
     <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor.</string>
@@ -111,8 +111,8 @@
     <string name="title_activity_behavior_application_list">Disharmoniske apper</string>
 
     <!-- Dialog behavior-->
-    <string name="disharmony_sad_text">misfornøyd med </string>
-    <string name="disharmony_neutral_text">nøytral til</string>
+    <string name="disharmony_sad_text">Misfornøyd med </string>
+    <string name="disharmony_neutral_text">Nøytral til</string>
     <string name="dialog_behavior_info_header">Disharmoni</string>
     <string name="dialog_behavior_info_text">Disharmoniske applikasjoner har tillatelser du har stilt deg negativt til. Hvis du viser sterkt misnøye mot en applikasjons tillatelser bør du revurdere om du ønsker å ha den installert på telefonen.</string>
 </resources>

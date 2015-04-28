@@ -309,8 +309,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createHarmonyCard() {
-        //TODO NAVN I STEDET FOR PAKKENAVN PÅ KORT
-        //TODO VIEW FOR DE APPENE SOM HAR DISHARMONI?
         //TODO sjekke om appen er sletta
 
         ArrayList<String> disharmonyApps = profile.getDisharmonyApps();

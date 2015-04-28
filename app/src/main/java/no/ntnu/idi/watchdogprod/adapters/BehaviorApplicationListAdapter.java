@@ -65,7 +65,7 @@ public class BehaviorApplicationListAdapter extends ArrayAdapter<DisharomyApplic
         }
         if(happyCount > 0) {
             linearLayoutGreen.setVisibility(View.VISIBLE);
-            happyCountView.setText("positiv til " + happyCount + " " + (happyCount == 1 ? "tillatelse" : "tillatelser"));
+            happyCountView.setText("Positiv til " + happyCount + " " + (happyCount == 1 ? "tillatelse" : "tillatelser"));
         }
 
         return convertView;

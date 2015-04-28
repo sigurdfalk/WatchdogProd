@@ -150,7 +150,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         LinearLayout greenLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_green);
 
         TextView haromy_dialog_feedback_title = (TextView)dialogView.findViewById(R.id.haromy_dialog_feedback);
-        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " mot " + applicationHelperSingleton.getApplicationName(context,disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "s tillatelser");
+        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " til " + applicationHelperSingleton.getApplicationName(context,disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "s tillatelser:");
 
         TextView redPermissions =(TextView) dialogView.findViewById(R.id.red_permissions);
         TextView yellowPermissions =(TextView) dialogView.findViewById(R.id.yellow_permissions);
