@@ -11,6 +11,7 @@
                 android:top="5sp"/>
         </shape>
     </item>
-    <item android:drawable="@mipmap/ic_emoticon_neutral_white_36dp" />
+    <item android:drawable="@mipmap/ic_emoticon_neutral_white_36dp" >
+    </item>
 
 </layer-list>

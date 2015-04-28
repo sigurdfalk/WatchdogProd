@@ -313,7 +313,7 @@ public class MainActivity extends ActionBarActivity {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
             cardText.setText("Du har vist misnøye til flere " + (disharmonyApps.size() == 1 ? "av " + disharmonyApps.get(0) + "s" : "" + " applikasjoners") +
                     " tillatelser, men du fortsetter likevel å bruke " + (disharmonyApps.size() == 1 ? "den." : "dem.") + " Klikk her for mer informasjon.");
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_white_48dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_disharmony_neutral));
@@ -361,13 +361,13 @@ public class MainActivity extends ActionBarActivity {
 
         if (redAppsCount > 3) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_grey600_36dp));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_white_48dp));
         } else if (redAppsCount > 0 || yellowAppsCount > 4) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_neutral_grey600_36dp));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_neutral_white_48dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_grey600_36dp));
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_white_48dp));
         }
     }
 
