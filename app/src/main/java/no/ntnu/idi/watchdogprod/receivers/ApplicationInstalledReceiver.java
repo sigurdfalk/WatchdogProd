@@ -89,7 +89,7 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
         long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
         if(id != -1) {
-            System.out.println("INSTALL APP DB ER GOOD" + packageName  + " SCORE: " + PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()));
+            System.out.println("INSTALL receiver APP DB ER GOOD" + packageName  + " SCORE: " + PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()));
         }
         profileDataSource.close();
     }

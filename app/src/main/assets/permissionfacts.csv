@@ -1,5 +1,5 @@
 id,permissions,header,fact
-0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
+0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, nårr som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
 1,ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
 2,SEND_SMS,Visste du at...,"Denne appen kan, uten din tillatelse, send SMS-meldinger fra din telefon."
 3,CALL_PHONE,Visste du at...,"Denne appen kan, uten din tillatelse, ringe opp et telefonnummer fra din telefon."

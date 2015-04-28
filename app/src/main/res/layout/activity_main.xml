@@ -159,6 +159,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_threatlevel_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
@@ -240,7 +241,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
-                    android:id="@+id/app_detail_updates_wrapper"
+                    android:id="@+id/main_card_installtrend_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
@@ -398,6 +399,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_update_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
@@ -477,6 +479,7 @@
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
+                    android:id="@+id/main_card_harmony_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"

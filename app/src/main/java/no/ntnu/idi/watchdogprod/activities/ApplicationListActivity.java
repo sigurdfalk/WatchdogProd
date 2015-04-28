@@ -42,12 +42,15 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
+import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
  * Created by sigurdhf on 05.03.2015.
  */
 public class ApplicationListActivity extends ActionBarActivity {
     public static final String PACKAGE_NAME = "packageName";
+
+    public Intent intent;
 
     private RecyclerView list;
     private ApplicationListAdapter adapter;
@@ -73,8 +76,10 @@ public class ApplicationListActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         ApplicationHelper.clearApplicationList();
         apps = ApplicationHelper.getThirdPartyApplications(this);
+
         permissionsCheckBoxes = new ArrayList<>();
         filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
 
@@ -82,6 +87,22 @@ public class ApplicationListActivity extends ActionBarActivity {
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setItemAnimator(new DefaultItemAnimator());
 
+//        intent = getIntent();
+//        if(intent.hasExtra(Profile.BEHAVIOR_APPS_KEY)) {
+//            ArrayList<ExtendedPackageInfo> newList = new ArrayList<>();
+//            String [] disHaromyApps = intent.getStringArrayExtra(Profile.BEHAVIOR_APPS_KEY);
+//            for(ExtendedPackageInfo extendedPackageInfo : apps) {
+//                for (int j = 0; j < disHaromyApps.length; j++) {
+//                    if(extendedPackageInfo.getPackageInfo().packageName.equals(disHaromyApps[j])){
+//                        newList.add(extendedPackageInfo);
+//                    }
+//                }
+//            }
+//            apps = newList;
+//            adapter = new ApplicationListAdapter(this,apps);
+//        } else {
+//            adapter = new ApplicationListAdapter(this, apps);
+//        }
         adapter = new ApplicationListAdapter(this, apps);
         list.setAdapter(adapter);
 

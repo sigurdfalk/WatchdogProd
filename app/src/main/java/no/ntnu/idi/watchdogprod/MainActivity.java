@@ -62,11 +62,15 @@ public class MainActivity extends ActionBarActivity {
     private ImageView cardImage;
     private LinearLayout backgroundColor;
 
+    private ArrayList<ExtendedPackageInfo> applications;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        applications = ApplicationHelper.getThirdPartyApplications(this);
+        
         appsBtn = (LinearLayout) findViewById(R.id.main_apps_btn);
         permissionListBtn = (LinearLayout) findViewById(R.id.main_permissions_btn);
 
@@ -119,12 +123,20 @@ public class MainActivity extends ActionBarActivity {
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.main_tips);
         if (!isScreenLockActivated()) {
+            //TODO LAGRE I SHARED OR VISE SJELDENT ?
             linearLayout.setVisibility(View.VISIBLE);
+        }
+
+        try {
+            initProfile(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     private void initProfile(Context context) throws SQLException {
         //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
+        //TODO INIT PROFILE PÅ ONRESUME OGSÅ
 
         setTotalRiskScore();
 
@@ -164,7 +176,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void writeAllApplicationsToUpdateLog() {
-        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+
+        //TODO LAGRE APPER MED PERMISSIONS, IKKE RISIKOFAKTOR
+//        applications = ApplicationHelper.getThirdPartyApplications(this);
 
         ProfileDataSource profileDataSource = new ProfileDataSource(this);
         profileDataSource.open();
@@ -195,11 +209,7 @@ public class MainActivity extends ActionBarActivity {
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 
-        for (
-                ExtendedPackageInfo app
-                : applications)
-
-        {
+        for (ExtendedPackageInfo app : applications) {
             try {
                 AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.getPackageInfo().packageName, this));
                 System.out.println(appInfo.getPackageName() + " written to db");
@@ -211,9 +221,16 @@ public class MainActivity extends ActionBarActivity {
         dataSource.close();
     }
 
-    private int calculateTotalRiskScore() {
+    @Override
+    protected void onResume() {
         ApplicationHelper.clearApplicationList();
-        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+        applications = ApplicationHelper.getThirdPartyApplications(this);
+        super.onResume();
+    }
+
+    private int calculateTotalRiskScore() {
+        //ApplicationHelper.clearApplicationList();
+//        applications = ApplicationHelper.getThirdPartyApplications(this);
 
         int sum = 0;
 
@@ -233,6 +250,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createInstallTrendCard() {
+        LinearLayout installLayout = (LinearLayout) findViewById(R.id.main_card_installtrend_layout);
+        installLayout.setOnClickListener(new MainButtonListener());
 
         int installTrend = profile.getInstallTrendRiskIncreasing();
         System.out.println("IN TREND " + installTrend);
@@ -285,12 +304,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createUpdatedAppsCard() {
+        LinearLayout updateLayout = (LinearLayout) findViewById(R.id.main_card_update_layout);
+        updateLayout.setOnClickListener(new MainButtonListener());
+
         backgroundColor = (LinearLayout) findViewById(R.id.card_background_updates);
         cardText = (TextView) findViewById(R.id.main_card_updates_text);
         cardImage = (ImageView) findViewById(R.id.main_card_updates_image);
 
         String informationEnding = "har nylig blitt oppdatert. Dette kan ha påvirket risikofaktoren til " + (updatedAppsCount == 1 ? "applikasjonen." : "applikasjonene.") +
-                " Du finner " + (updatedAppsCount == 1 ? "den" : "dem") + " i listen over nylig oppdaterte applikasjoner.";
+                " Klikk for mer informasjon.";
 
         if (updatedAppsCount > 0) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_yellow));
@@ -303,31 +325,49 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createHarmonyCard() {
+        //TODO NAVN I STEDET FOR PAKKENAVN PÅ KORT
+        //TODO VIEW FOR DE APPENE SOM HAR DISHARMONI?
+        //TODO sjekke om appen er sletta
+
         ArrayList<String> disharmonyApps = profile.getDisharmonyApps();
+
+        int installedCount = 0;
+
+        for(ExtendedPackageInfo extendedPackageInfo : applications) {
+            if(disharmonyApps.contains(extendedPackageInfo.getPackageInfo().packageName)){
+                installedCount++;
+            }
+        }
+
+        if(installedCount > 0) {
+            LinearLayout harmonyLayout = (LinearLayout) findViewById(R.id.main_card_harmony_layout);
+            harmonyLayout.setOnClickListener(new MainButtonListener());
+        }
 
         backgroundColor = (LinearLayout) findViewById(R.id.card_background_harmony);
         cardText = (TextView) findViewById(R.id.main_card_harmony_text);
         cardImage = (ImageView) findViewById(R.id.main_card_harmony_image);
 
-        if (disharmonyApps.size() > 0) {
+        if (installedCount > 0) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
-            cardText.setText("Du har vist misnøye til flere " + (disharmonyApps.size() == 1 ? "av " + disharmonyApps.get(0) + "s" : "" + " applikasjoners") +
-                    " tillatelser, men du fortsetter likevel å bruke " + (disharmonyApps.size() == 1 ? "den." : "dem.") + " Klikk her for mer informasjon.");
+            cardText.setText("Du har vist misnøye til én eller flere applikasjoners tillatelser. Klikk her for oversikt over hvilke applikasjoner.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_sad_white_48dp));
         } else {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_disharmony_neutral));
-//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_emoticon_happy_grey600_36dp));
         }
     }
 
     private void createThreatLevelCard() {
-        TextView cardText = (TextView) findViewById(R.id.main_card_overallthreat_text);
-        ImageView cardImage = (ImageView) findViewById(R.id.main_card_overallthreat_image);
-        LinearLayout backgroundColor = (LinearLayout) findViewById(R.id.card_background_overallthreat);
+        LinearLayout threatlevelLayout = (LinearLayout) findViewById(R.id.main_card_threatlevel_layout);
+        threatlevelLayout.setOnClickListener(new MainButtonListener());
 
-        ApplicationHelper.clearApplicationList();
-        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
+        cardText = (TextView) findViewById(R.id.main_card_overallthreat_text);
+        cardImage = (ImageView) findViewById(R.id.main_card_overallthreat_image);
+        backgroundColor = (LinearLayout) findViewById(R.id.card_background_overallthreat);
+
+//        ApplicationHelper.clearApplicationList();
+//        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
 
         int redAppsCount = 0;
         int yellowAppsCount = 0;
@@ -436,6 +476,19 @@ public class MainActivity extends ActionBarActivity {
                 Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
                 i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
                 startActivity(i);
+            } else if (v.getId() == R.id.main_card_harmony_layout) {
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_HARMONY_APPS);
+                startActivity(i);
+            } else if(v.getId() == R.id.main_card_update_layout) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if(v.getId() == R.id.main_card_threatlevel_layout) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if(v.getId() == R.id.main_card_installtrend_layout) {
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_INSTALLED_APPS);
             }
         }
 

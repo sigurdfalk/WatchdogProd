@@ -37,5 +37,7 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
         } else {
             System.out.println("APP UNINSTALL ER NULL I DB" + packageName);
         }
+
+
     }
 }
