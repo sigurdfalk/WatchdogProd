@@ -25,7 +25,7 @@ public class PrivacyScoreCalculator {
     public static final int RISK_MEDIUM = 2;
     public static final int RISK_LOW = 1;
 
-    public static final double PENALTY_RISK_HIGH = 5.0;
+    public static final double PENALTY_RISK_HIGH = 10.0;
     public static final double PENALTY_RISK_MEDIUM = 3.0;
     public static final double PENALTY_RISK_LOW = 1.0;
 
@@ -34,8 +34,8 @@ public class PrivacyScoreCalculator {
     public static final int MAX_SCORE = 100;
 
     public static final int LOW_THRESHOLD = 0;
-    public static final int MEDIUM_THRESHOLD = 40;
-    public static final int HIGH_THRESHOLD = 70;
+    public static final int MEDIUM_THRESHOLD = 30;
+    public static final int HIGH_THRESHOLD = 60;
 
     private static PrivacyScoreCalculator instance;
 
@@ -82,7 +82,7 @@ public class PrivacyScoreCalculator {
 
         score += violatedRules.size() * PENALTY_VIOLATED_RULE;
 
-        return hyperbolicTan(normalizeScore(score, 0.0, 5.0)) * 100.0;
+        return hyperbolicTan(normalizeScore(score, 0.0, 8.0)) * 100.0;
     }
 
     private double hyperbolicTan(double rawScore) {
@@ -177,8 +177,7 @@ public class PrivacyScoreCalculator {
         }
 
         double weight = answerSum / matchingAnswers.size();
-
-        System.out.println(weight);
+        System.out.println(matchingFact.getPermissions()[0] + " weight: " + weight);
 
         return weight;
     }
@@ -192,6 +191,7 @@ public class PrivacyScoreCalculator {
             }
         }
 
+        System.out.println(fact.getPermissions()[0] + " answers: " + matchingAnswers.size());
         return matchingAnswers;
     }
 
