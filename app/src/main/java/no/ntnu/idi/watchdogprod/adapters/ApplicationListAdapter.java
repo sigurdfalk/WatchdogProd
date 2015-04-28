@@ -24,6 +24,7 @@ import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator2;
 
 /**
  * Created by Sigurd on 27/03/15.
@@ -206,13 +207,16 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
-        try {
+        /*try {
             double score = PrivacyScoreCalculator.calculateScore(context, extendedPackageInfo);
             itemViewHolder.secondLine.setText("Score: " + score);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         //itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
+
+        double score = PrivacyScoreCalculator2.calculatePrivacyScore(context, extendedPackageInfo);
+        itemViewHolder.secondLine.setText("Score: " + score);
 
         if (SharedPreferencesHelper.doShowAppWarningSign(context, extendedPackageInfo.getPackageInfo().packageName)) {
             itemViewHolder.errorSign.setVisibility(View.VISIBLE);

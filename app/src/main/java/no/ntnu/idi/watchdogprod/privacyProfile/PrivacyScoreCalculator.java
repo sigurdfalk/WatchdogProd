@@ -125,6 +125,13 @@ public class PrivacyScoreCalculator {
         //totalScore = totalScore / totalWeight;
 
         //return (totalScore > MAX_SCORE) ? MAX_SCORE : totalScore;
+        totalScore /= 100;
+        System.out.println("totalScore: " + totalScore);
+        //totalScore = 1 / (1 + Math.pow(Math.E, -totalScore));
+        totalScore = 1;
+        totalScore = 1 - (2 / (Math.pow(Math.E, 2 * totalScore) + 1));
+        System.out.println("sigmoid: " + totalScore);
+
         return totalScore;
     }
 
