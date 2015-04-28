@@ -11,20 +11,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator2;
 
 /**
  * Created by Sigurd on 27/03/15.
@@ -203,7 +201,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         setRiskColor(itemViewHolder, extendedPackageInfo.getPrivacyScore());
 
         itemViewHolder.itemIcon.setImageDrawable(extendedPackageInfo.getPackageInfo().applicationInfo.loadIcon(context.getPackageManager()));
-        itemViewHolder.firstLine.setText(ApplicationHelper.getApplicationName(extendedPackageInfo.getPackageInfo(), context));
+        itemViewHolder.firstLine.setText(ApplicationHelperSingleton.getApplicationName(context, extendedPackageInfo.getPackageInfo()));
 
         SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         //itemViewHolder.secondLine.setText("Sist oppdatert: " + dt.format(new Date(extendedPackageInfo.getUpdateLog().get(0).getLastUpdateTime())));
@@ -215,7 +213,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }*/
         //itemViewHolder.secondLine.setText("Versjon " + extendedPackageInfo.getPackageInfo().versionName);
 
-        double score = PrivacyScoreCalculator2.calculatePrivacyScore(context, extendedPackageInfo);
+        PrivacyScoreCalculator privacyScoreCalculator = PrivacyScoreCalculator.getInstance(context);
+        double score = privacyScoreCalculator.calculatePrivacyScore(extendedPackageInfo);
         itemViewHolder.secondLine.setText("Score: " + score);
 
         if (SharedPreferencesHelper.doShowAppWarningSign(context, extendedPackageInfo.getPackageInfo().packageName)) {

@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod.sqlite.applicationupdates;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,12 +35,12 @@ public class ApplicationUpdatesDataSource {
         dbHelper.close();
     }
 
-    public AppInfo insertApplicationUpdate(AppInfo appInfo) {
+    public AppInfo insertApplicationUpdate(PackageInfo packageInfo) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_PACKAGE_NAME, appInfo.getPackageName());
-        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_PERMISSIONS, getPermissionsString(appInfo.getPermissions()));
-        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_VERSION_CODE, appInfo.getVersionCode());
-        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_LAST_UPDATE_TIME, appInfo.getLastUpdateTime());
+        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_PACKAGE_NAME, packageInfo.packageName);
+        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_PERMISSIONS, getPermissionsString(packageInfo.requestedPermissions != null ? packageInfo.requestedPermissions : new String[]{}));
+        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_VERSION_CODE, packageInfo.versionCode);
+        contentValues.put(ApplicationUpdatesSQLiteHelper.COLUMN_LAST_UPDATE_TIME, packageInfo.lastUpdateTime);
 
         long insertId = db.insert(ApplicationUpdatesSQLiteHelper.TABLE_APPLICATION_UPDATES, null, contentValues);
         Cursor cursor = db.query(ApplicationUpdatesSQLiteHelper.TABLE_APPLICATION_UPDATES,

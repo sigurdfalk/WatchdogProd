@@ -8,12 +8,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.media.Image;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,12 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
 import java.sql.SQLException;
@@ -36,10 +30,9 @@ import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.domain.ProfileBehavior;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
@@ -62,14 +55,14 @@ public class MainActivity extends ActionBarActivity {
     private ImageView cardImage;
     private LinearLayout backgroundColor;
 
-    private ArrayList<ExtendedPackageInfo> applications;
+    private ApplicationHelperSingleton applicationHelperSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        applications = ApplicationHelper.getThirdPartyApplications(this);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
         
         appsBtn = (LinearLayout) findViewById(R.id.main_apps_btn);
         permissionListBtn = (LinearLayout) findViewById(R.id.main_permissions_btn);
@@ -178,7 +171,6 @@ public class MainActivity extends ActionBarActivity {
     private void writeAllApplicationsToUpdateLog() {
 
         //TODO LAGRE APPER MED PERMISSIONS, IKKE RISIKOFAKTOR
-//        applications = ApplicationHelper.getThirdPartyApplications(this);
 
         ProfileDataSource profileDataSource = new ProfileDataSource(this);
         profileDataSource.open();
@@ -186,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
         ArrayList<ProfileEvent> events = profileDataSource.getInstalledApps();
 
         boolean found = false;
-        for (ExtendedPackageInfo extendedPackageInfo : applications) {
+        for (ExtendedPackageInfo extendedPackageInfo : applicationHelperSingleton.getApplications()) {
 
             for (ProfileEvent event : events) {
                 if (event.getPackageName().equals(extendedPackageInfo.getPackageInfo().packageName)) {
@@ -194,9 +186,9 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
             if (!found) {
-                long id = profileDataSource.insertEvent(extendedPackageInfo.getPackageInfo().packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+                long id = profileDataSource.insertEvent(extendedPackageInfo.getPackageInfo().packageName, Profile.INSTALLED_DANGEROUS_APP, Double.toString(extendedPackageInfo.getPrivacyScore()));
                 if (id != -1) {
-                    System.out.println("INSTALL APP DB ER GOOD " + extendedPackageInfo.getPackageInfo().packageName + " SCORE: " + PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()));
+                    System.out.println("INSTALL APP DB ER GOOD " + extendedPackageInfo.getPackageInfo().packageName + " SCORE: " + Double.toString(extendedPackageInfo.getPrivacyScore()));
                 }
             }
             found = false;
@@ -209,13 +201,9 @@ public class MainActivity extends ActionBarActivity {
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 
-        for (ExtendedPackageInfo app : applications) {
-            try {
-                AppInfo appInfo = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(app.getPackageInfo().packageName, this));
+        for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
+                AppInfo appInfo = dataSource.insertApplicationUpdate(app.getPackageInfo());
                 System.out.println(appInfo.getPackageName() + " written to db");
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
         }
 
         dataSource.close();
@@ -223,22 +211,18 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        ApplicationHelper.clearApplicationList();
-        applications = ApplicationHelper.getThirdPartyApplications(this);
         super.onResume();
     }
 
     private int calculateTotalRiskScore() {
-        //ApplicationHelper.clearApplicationList();
-//        applications = ApplicationHelper.getThirdPartyApplications(this);
 
         int sum = 0;
 
-        for (ExtendedPackageInfo application : applications) {
+        for (ExtendedPackageInfo application : applicationHelperSingleton.getApplications()) {
             sum += application.getPrivacyScore();
         }
 
-        return sum / applications.size();
+        return sum / applicationHelperSingleton.getApplications().size();
     }
 
     private void populateBehaviorCards() {
@@ -333,7 +317,7 @@ public class MainActivity extends ActionBarActivity {
 
         int installedCount = 0;
 
-        for(ExtendedPackageInfo extendedPackageInfo : applications) {
+        for(ExtendedPackageInfo extendedPackageInfo : applicationHelperSingleton.getApplications()) {
             if(disharmonyApps.contains(extendedPackageInfo.getPackageInfo().packageName)){
                 installedCount++;
             }
@@ -366,9 +350,6 @@ public class MainActivity extends ActionBarActivity {
         cardImage = (ImageView) findViewById(R.id.main_card_overallthreat_image);
         backgroundColor = (LinearLayout) findViewById(R.id.card_background_overallthreat);
 
-//        ApplicationHelper.clearApplicationList();
-//        ArrayList<ExtendedPackageInfo> applications = ApplicationHelper.getThirdPartyApplications(this);
-
         int redAppsCount = 0;
         int yellowAppsCount = 0;
         int greenAppsCount = 0;
@@ -378,7 +359,7 @@ public class MainActivity extends ActionBarActivity {
         Date now = new Date();
         final int hoursInDay = 24;
 
-        for (ExtendedPackageInfo application : applications) {
+        for (ExtendedPackageInfo application : applicationHelperSingleton.getApplications()) {
             //IF-TESTEN ER FIX MENS DET ER BUG I LISTA
 
             if (application.getUpdateLog() != null && application.getUpdateLog().size() > 0) {
@@ -474,7 +455,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(i);
             } else if (v.getId() == R.id.main_permissions_btn) {
                 Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
-                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelper.ALL_PERMISSIONS_KEY);
+                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelperSingleton.ALL_PERMISSIONS_KEY);
                 startActivity(i);
             } else if (v.getId() == R.id.main_card_harmony_layout) {
                 Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);

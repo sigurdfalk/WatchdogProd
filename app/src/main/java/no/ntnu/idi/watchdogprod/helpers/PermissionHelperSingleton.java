@@ -14,26 +14,33 @@ import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 /**
  * Created by sigurdhf on 09.03.2015.
  */
-public class PermissionHelper {
+public class PermissionHelperSingleton {
     public static final String FILE_NAME = "permissiondescriptions.csv";
     public static final String ALL_PERMISSIONS_KEY = "allPermissionsList";
 
-    private static ArrayList<PermissionDescription> permissionDescriptions;
+    private static PermissionHelperSingleton instance;
 
-    public static ArrayList<PermissionDescription> getAllPermissionDescriptions(Context context) {
-        if (isPermissionDescriptionsPopulated()) {
-            return permissionDescriptions;
+    private ArrayList<PermissionDescription> permissionDescriptions;
+    private Context context;
+
+    private PermissionHelperSingleton(Context context) {
+        this.context = context;
+        this.permissionDescriptions = readPermissionDescriptionsFromCsv();
+    }
+
+    public static PermissionHelperSingleton getInstance(Context context) {
+        if (instance == null) {
+            instance = new PermissionHelperSingleton(context);
         }
 
-        permissionDescriptions = readPermissionDescriptionsFromCsv(context);
+        return instance;
+    }
+
+    public ArrayList<PermissionDescription> getPermissionDescriptions() {
         return permissionDescriptions;
     }
 
-    public static ArrayList<PermissionDescription> getApplicationPermissionDescriptions(String[] reqPermissions, Context context) {
-        if (!isPermissionDescriptionsPopulated()) {
-            permissionDescriptions = readPermissionDescriptionsFromCsv(context);
-        }
-
+    public ArrayList<PermissionDescription> getApplicationPermissionDescriptions(String[] reqPermissions) {
         ArrayList<PermissionDescription> appPermDesc = new ArrayList<>();
 
         if (reqPermissions == null) {
@@ -51,10 +58,8 @@ public class PermissionHelper {
         return appPermDesc;
     }
 
-    public static PermissionDescription getPermissionDescription(Context context, String permission) {
-        ArrayList<PermissionDescription> allPermissionDescriptions = getAllPermissionDescriptions(context);
-
-        for (PermissionDescription permissionDescription : allPermissionDescriptions) {
+    public PermissionDescription getPermissionDescription(String permission) {
+        for (PermissionDescription permissionDescription : permissionDescriptions) {
             if (permission.contains(permissionDescription.getName())) {
                 return permissionDescription;
             }
@@ -63,11 +68,7 @@ public class PermissionHelper {
         throw new IllegalArgumentException("Permissiondescription of permission " + permission + " do not exist!");
     }
 
-    private static boolean isPermissionDescriptionsPopulated() {
-        return permissionDescriptions != null && !permissionDescriptions.isEmpty();
-    }
-
-    private static ArrayList<PermissionDescription> readPermissionDescriptionsFromCsv(Context context) {
+    private ArrayList<PermissionDescription> readPermissionDescriptionsFromCsv() {
         ArrayList<PermissionDescription> permDescList = new ArrayList<>();
         AssetManager assetManager = context.getAssets();
 
@@ -90,7 +91,7 @@ public class PermissionHelper {
         return permDescList;
     }
 
-    private static PermissionDescription getPermissionDescriptionFromCSVLine(String[] line) {
+    private PermissionDescription getPermissionDescriptionFromCSVLine(String[] line) {
         String name = line[PermissionDescription.NAME];
         String designation = line[PermissionDescription.DESIGNATION];
         String group = line[PermissionDescription.GROUP];
@@ -106,14 +107,14 @@ public class PermissionHelper {
         return new PermissionDescription(name.trim(), designation.trim(), group.trim(), level.trim(), risk, description.trim());
     }
 
-    public static ArrayList<PermissionDescription> newRequestedPermissions(Context context, String[] oldPermissions, String[] newPermissions) {
+    public ArrayList<PermissionDescription> newRequestedPermissions(String[] oldPermissions, String[] newPermissions) {
         ArrayList<PermissionDescription> newReqPerm = new ArrayList<>();
 
         for (String newPermission : newPermissions) {
             PermissionDescription newPermissionDescription = null;
 
             try {
-                newPermissionDescription = getPermissionDescription(context, newPermission);
+                newPermissionDescription = getPermissionDescription(newPermission);
             } catch (Exception e) {
                 continue;
             }
@@ -135,14 +136,14 @@ public class PermissionHelper {
         return newReqPerm;
     }
 
-    public static ArrayList<PermissionDescription> removedPermissions(Context context, String[] oldPermissions, String[] newPermissions) {
+    public ArrayList<PermissionDescription> removedPermissions(String[] oldPermissions, String[] newPermissions) {
         ArrayList<PermissionDescription> removedPerm = new ArrayList<>();
 
         for (String oldPermission : oldPermissions) {
             PermissionDescription removedPermissionDescription = null;
 
             try {
-                removedPermissionDescription = getPermissionDescription(context, oldPermission);
+                removedPermissionDescription = getPermissionDescription(oldPermission);
             } catch (Exception e) {
                 continue;
             }

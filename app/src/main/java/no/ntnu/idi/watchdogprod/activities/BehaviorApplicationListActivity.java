@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PermissionGroupInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -29,14 +28,14 @@ import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
 import no.ntnu.idi.watchdogprod.domain.PermissionAnswerPair;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionFactHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 
 public class BehaviorApplicationListActivity extends ActionBarActivity {
     private DisharomyApplication disharomyApplication;
     private Context context;
+
+    ApplicationHelperSingleton applicationHelperSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +47,12 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
+
         ListView listView = (ListView) findViewById(R.id.list_disharmony);
 
         ArrayList<Answer> answers = getAllAnswers();
-        ArrayList<ExtendedPackageInfo> extendedPackageInfos = ApplicationHelper.getThirdPartyApplications(this);
+        ArrayList<ExtendedPackageInfo> extendedPackageInfos = applicationHelperSingleton.getApplications();
 
         final ArrayList<DisharomyApplication> disharomyApplications = createHarmonyApps(answers, extendedPackageInfos);
 
@@ -88,14 +89,14 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
     private ArrayList<PermissionAnswerPair> createQuestionAnswerPairs (String packageName, ArrayList<Answer> answers) {
         ArrayList<PermissionAnswerPair> questionAnswerPairs = new ArrayList<>();
-        ArrayList<PermissionFact> permissionFacts = PermissionFactHelper.getAllPermissionFacts(this);
+        ArrayList<PermissionFact> permissionFacts = applicationHelperSingleton.getPermissionFactHelper().getPermissionFacts();
 
         for(Answer answer : answers) {
             if(packageName.equals(answer.getPackageName())) {
                 for(PermissionFact permissionFact : permissionFacts) {
                     if(answer.getAnswerId() == permissionFact.getId()){
                         String permission = permissionFact.getPermissions()[0];
-                        PermissionDescription permissionDescription = PermissionHelper.getPermissionDescription(context,permission);
+                        PermissionDescription permissionDescription = applicationHelperSingleton.getPermissionHelper().getPermissionDescription(permission);
                         questionAnswerPairs.add(new PermissionAnswerPair(permissionDescription.getDesignation(),answer.getAnswer()));
                     }
                 }
