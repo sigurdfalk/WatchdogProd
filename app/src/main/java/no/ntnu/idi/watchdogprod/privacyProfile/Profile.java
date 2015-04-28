@@ -143,17 +143,17 @@ public class Profile {
             saveNewAverage(context, avg, type);
 
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_FIXED_HIGH;
+                return APP_TREND_INCREASING;
             } else {
-                return APP_TREND_FIXED_LOW;
+                return APP_TREND_DECREASING;
             }
         }
 
         if (oldAvg == avg) {
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_FIXED_HIGH;
+                return APP_TREND_INCREASING;
             } else {
-                return APP_TREND_FIXED_LOW;
+                return APP_TREND_DECREASING;
             }
         } else {
             saveNewAverage(context, avg, type);

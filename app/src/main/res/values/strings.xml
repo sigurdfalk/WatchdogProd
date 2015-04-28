@@ -36,13 +36,14 @@
     <string name="recently_updated">Nylig oppdatert</string>
     <string name="installed">Installert</string>
     <string name="permissions">Tillatelser</string>
-    <string name="permissions_harmony">Dine preferanser</string>
+    <string name="permissions_harmony">Tillatelser</string>
     <string name="latest_update">Siste oppdatering</string>
     <string name="touch_for_more_information">Trykk for mer informasjon</string>
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
     <string name="harmony_apps">Disharmoni</string>
     <string name="similar_apps">Lignende apper</string>
+    <string name="feedback_text">Du har gitt følgende tilbakemeldinger:</string>
 
     <!--Tips -->
     <string name="tips_screen_lock">For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den.</string>
@@ -110,8 +111,8 @@
     <string name="title_activity_behavior_application_list">Disharmoniske apper</string>
 
     <!-- Dialog behavior-->
-    <string name="disharmony_sad_text">Misfornøyd med </string>
-    <string name="disharmony_neutral_text">Nøytral til</string>
+    <string name="disharmony_sad_text">misfornøyd med </string>
+    <string name="disharmony_neutral_text">nøytral til</string>
     <string name="dialog_behavior_info_header">Disharmoni</string>
     <string name="dialog_behavior_info_text">Dette skjermbildet viser applikasjoner som du har svar negativt mot på spørsmålene i detaljvinduet til applikasjoner. Dette er applikasjoner som ikke passer dine preferanser.</string>
 </resources>

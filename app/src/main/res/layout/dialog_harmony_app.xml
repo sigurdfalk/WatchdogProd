@@ -10,6 +10,13 @@
         android:text="@string/permissions_harmony"
         android:padding="10sp"
         android:textColor="@color/text_primary"/>
+    <TextView
+        android:text="@string/feedback_text"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/harmony_dialog_color_red"
