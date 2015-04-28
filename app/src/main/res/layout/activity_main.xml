@@ -191,8 +191,8 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:text="Trusselbilde"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/card_header" />
                             </LinearLayout>
 
                             <TextView
@@ -201,7 +201,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
-                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/card_text_primary"
                                 android:text="Ingen informasjon tilgjengelig for øyeblikket." />
 
                         </LinearLayout>
@@ -273,8 +274,8 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:text="Installerte apper"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/card_header" />
                             </LinearLayout>
 
                             <TextView
@@ -283,7 +284,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
-                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/card_text_primary"
                                 android:text="@string/card_install_trend_neutral" />
 
                         </LinearLayout>
@@ -302,7 +304,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp"/>
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -349,8 +351,8 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:text="Avinstallerte apper"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/card_header" />
                             </LinearLayout>
 
 
@@ -360,7 +362,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
-                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/card_text_primary"
                                 android:text="@string/card_uninstall_trend_neutral" />
 
                         </LinearLayout>
@@ -379,8 +382,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp"
-                                 />
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
 
                         </LinearLayout>
 
@@ -431,8 +433,8 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:text="Oppdaterte apper"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/card_header" />
                             </LinearLayout>
 
                             <TextView
@@ -441,7 +443,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
-                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/card_text_primary"
                                 android:text="@string/card_updates_no" />
 
                         </LinearLayout>
@@ -511,8 +514,8 @@
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:text="Disharmoni"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp" />
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/card_header" />
                             </LinearLayout>
 
                             <TextView
@@ -521,7 +524,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
-                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/card_text_primary"
                                 android:text="@string/card_disharmony_neutral" />
 
                         </LinearLayout>
@@ -540,7 +544,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp"/>
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
                         </LinearLayout>
 
                     </LinearLayout>

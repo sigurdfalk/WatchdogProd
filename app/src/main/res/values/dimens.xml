@@ -25,8 +25,13 @@
     <dimen name="secondary_text">12sp</dimen>
 
     <!-- List Cards -->
-    <dimen name="list_header">18sp</dimen>
-    <dimen name="list_text">14sp</dimen>
+    <dimen name="list_card_header">18sp</dimen>
+    <dimen name="list_card_text">14sp</dimen>
+    <dimen name="list_card_icon_match_header">20sp</dimen>
+
+    <!-- Flat list items -->
+    <dimen name="list_item_header">18sp</dimen>
+    <dimen name="list_item_text">14sp</dimen>
 
     <!-- Cards -->
     <dimen name="card_header">18sp</dimen>

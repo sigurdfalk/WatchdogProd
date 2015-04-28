@@ -41,6 +41,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
@@ -48,21 +49,22 @@
                         android:layout_width="0sp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:textSize="16sp"/>
+                        android:textColor="@color/text_primary"
+                        android:singleLine="true"
+                        android:textSize="@dimen/list_card_header"/>
 
                     <ImageView
                         android:id="@+id/list_applications_info"
                         android:src="@mipmap/ic_info_black_48dp"
-                        android:layout_width="20sp"
-                        android:layout_height="20sp"
+                        android:layout_width="@dimen/list_card_icon_match_header"
+                        android:layout_height="@dimen/list_card_icon_match_header"
                         android:layout_marginRight="5sp"/>
 
                     <ImageView
                         android:id="@+id/list_applications_warning"
                         android:src="@mipmap/ic_warning_black_48dp"
-                        android:layout_width="20sp"
-                        android:layout_height="20sp"
+                        android:layout_width="@dimen/list_card_icon_match_header"
+                        android:layout_height="@dimen/list_card_icon_match_header"
                         android:layout_marginRight="5sp"/>
 
                 </LinearLayout>
@@ -72,7 +74,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:textSize="12sp"/>
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/list_card_text"/>
             </LinearLayout>
 
         </LinearLayout>

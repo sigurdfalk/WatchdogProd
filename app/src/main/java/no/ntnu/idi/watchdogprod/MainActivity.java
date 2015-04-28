@@ -150,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
         int totalRiskScore = calculateTotalRiskScore();
 
         totalRiskScoreTextView = (TextView) findViewById(R.id.main_total_risk_score);
-        totalRiskScoreTextView.setText("Total risikofaktor: " + totalRiskScore + "/100");
+        totalRiskScoreTextView.setText("Total risikofaktor " + totalRiskScore + "/100");
 
         if (totalRiskScore > PrivacyScoreCalculator.HIGH_THRESHOLD) {
             totalRiskScoreTextView.setBackgroundColor(getResources().getColor(R.color.risk_red));
