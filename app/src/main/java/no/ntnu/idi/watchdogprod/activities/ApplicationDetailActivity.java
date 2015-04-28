@@ -89,7 +89,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         riskScoreIndicator = (ImageView) findViewById(R.id.app_detail_privacy_score_indicator);
 
         //riskScoreText.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
-        riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
         setScoreBackgroundColor(riskScoreBackground, riskScore);
 
         uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
@@ -359,7 +359,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             }
 
             riskScore = newRiskScore;
-            riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+            riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
             setScoreBackgroundColor(riskScoreBackground, riskScore);
 
             Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
