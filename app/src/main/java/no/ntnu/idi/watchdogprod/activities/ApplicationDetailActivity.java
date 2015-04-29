@@ -3,6 +3,8 @@ package no.ntnu.idi.watchdogprod.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -25,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
@@ -54,6 +57,10 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private TextView infoFact;
     private int currentPermissionFact;
     private LinearLayout uninstall;
+
+    private String deletedAppPackage;
+    private int APP_DELETE_CODE = 2015;
+    public static String APP_DELETED_INTENT_KEY = "deletedPackage";
 
     private AnswersDataSource answersDataSource;
 
@@ -92,16 +99,17 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
         setScoreBackgroundColor(riskScoreBackground, riskScore);
 
-        uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
+        uninstall = (LinearLayout) findViewById(R.id.app_detail_uninstall_wrapper);
         TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
         uninstallText.setText(String.format(getResources().getString(R.string.touch_to_uninstall), appName));
 
         uninstall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri packageURI = Uri.parse("package:"+applicationPackageName);
+                Uri packageURI = Uri.parse("package:" + applicationPackageName);
                 Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                startActivity(uninstallIntent);
+                deletedAppPackage = applicationPackageName;
+                startActivityForResult(uninstallIntent, APP_DELETE_CODE);
             }
         });
 
@@ -126,6 +134,31 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         fillUpdatesCard(packageInfo);
         fillIndicatorsCard(packageInfo);
         initQuestions();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == APP_DELETE_CODE) {
+
+            PackageInfo packageInfoExists = null;
+
+            try {
+                packageInfoExists = ApplicationHelperSingleton.getApplicationPackageInfo(this, deletedAppPackage);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if (packageInfoExists == null) {
+                Intent intent = new Intent();
+                intent.putExtra(APP_DELETED_INTENT_KEY, deletedAppPackage);
+                setResult(ApplicationListAdapter.APP_DELETED_CODE, intent);
+                ApplicationDetailActivity.this.finish();
+            } else {
+                //user Clicked on cancel
+            }
+        }
     }
 
     private void initQuestions() {
@@ -328,7 +361,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     public void onRadioButtonClicked(View view) {
         System.out.println("onRadioButtonClicked");
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.permission_fact_radio_happy:
                 writePermissionFactInteraction(Answer.ANSWER_HAPPY);
                 break;
@@ -347,24 +380,24 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void showNewPermissionFact() {
         final ArrayList<PermissionFact> permissionFacts = packageInfo.getPermissionFacts();
 
-            applicationHelperSingleton.updateApplicationPrivacyScores();
-            double newRiskScore = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName).getPrivacyScore();
+        applicationHelperSingleton.updateApplicationPrivacyScores();
+        double newRiskScore = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName).getPrivacyScore();
 
-            if (newRiskScore > riskScore) {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
-            } else if (newRiskScore < riskScore) {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
-            } else {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
-            }
+        if (newRiskScore > riskScore) {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
+        } else if (newRiskScore < riskScore) {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
+        } else {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
+        }
 
-            riskScore = newRiskScore;
-            riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
-            setScoreBackgroundColor(riskScoreBackground, riskScore);
+        riskScore = newRiskScore;
+        riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        setScoreBackgroundColor(riskScoreBackground, riskScore);
 
-            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
-            riskScoreIndicator.startAnimation(pulse);
-            riskScoreText.startAnimation(pulse);
+        Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
+        riskScoreIndicator.startAnimation(pulse);
+        riskScoreText.startAnimation(pulse);
 
         if (currentPermissionFact >= permissionFacts.size()) {
             permissionFactWrapper.setVisibility(View.GONE);
@@ -416,7 +449,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.app_detail_indicators_wrapper) {
+            if (v.getId() == R.id.app_detail_indicators_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
 
                 Bundle bundle = new Bundle();

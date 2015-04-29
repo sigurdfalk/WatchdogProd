@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ArrayList<ExtendedPackageInfo> applications;
     private ArrayList<ExtendedPackageInfo> recentlyUpdatedApplications;
 
+    public static int APP_DELETED_CODE = 2016;
+
     private Context context;
 
     public ApplicationListAdapter(Context context, ArrayList<ExtendedPackageInfo> allApplications) {
@@ -59,7 +62,8 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     bundle.putString(ApplicationListActivity.PACKAGE_NAME, extendedPackageInfo.getPackageInfo().packageName);
                     i.putExtras(bundle);
 
-                    context.startActivity(i);
+                    ((Activity) context).startActivityForResult(i,APP_DELETED_CODE);
+//                    context.startActivity(i);
                 }
             });
         } else if (viewType == TYPE_HEADER) {

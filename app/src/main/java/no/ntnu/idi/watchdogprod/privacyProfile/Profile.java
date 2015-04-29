@@ -143,21 +143,32 @@ public class Profile {
             saveNewAverage(context, avg, type);
 
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
+                return APP_TREND_FIXED_HIGH;
             } else {
-                return APP_TREND_DECREASING;
+                return APP_TREND_FIXED_LOW;
             }
         }
 
         if (oldAvg == avg) {
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
+                return APP_TREND_FIXED_HIGH;
             } else {
-                return APP_TREND_DECREASING;
+                return APP_TREND_FIXED_LOW;
             }
+        }
+
+        saveNewAverage(context, avg, type);
+
+        if((oldAvg < PrivacyScoreCalculator.MEDIUM_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) || ( oldAvg < PrivacyScoreCalculator.LOW_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD)) {
+            return APP_TREND_INCREASING;
+        } else if ((oldAvg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD && avg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) || ( oldAvg >= PrivacyScoreCalculator.LOW_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD)) {
+            return APP_TREND_DECREASING;
         } else {
-            saveNewAverage(context, avg, type);
-            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_DECREASING;
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
         }
     }
 
