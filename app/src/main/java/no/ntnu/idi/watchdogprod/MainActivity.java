@@ -62,8 +62,15 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        boolean isInitialLaunch = isInitialLaunch();
         applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
-        
+
+        if (isInitialLaunch) {
+            writeAllApplicationsToUpdateLog();
+            applicationHelperSingleton.updateApplicationUpdateLogs();
+            writeInstalledApplicationsToProfileDb();
+        }
+
         appsBtn = (LinearLayout) findViewById(R.id.main_apps_btn);
         permissionListBtn = (LinearLayout) findViewById(R.id.main_permissions_btn);
 
@@ -102,11 +109,6 @@ public class MainActivity extends ActionBarActivity {
                 root.startAnimation(animation);
             }
         });
-
-        if (isInitialLaunch()) {
-            // ToDo bugfix at dette garanteres å gjøre før man kan gå inn i app list
-            writeAllApplicationsToUpdateLog();
-        }
 
         boolean answeredQuestions = checkAnsweredQuestionsState();
         if (!answeredQuestions) {
@@ -168,8 +170,7 @@ public class MainActivity extends ActionBarActivity {
         return false;
     }
 
-    private void writeAllApplicationsToUpdateLog() {
-
+    private void writeInstalledApplicationsToProfileDb() {
         //TODO LAGRE APPER MED PERMISSIONS, IKKE RISIKOFAKTOR
 
         ProfileDataSource profileDataSource = new ProfileDataSource(this);
@@ -196,14 +197,15 @@ public class MainActivity extends ActionBarActivity {
 
 
         profileDataSource.close();
+    }
 
 
+    private void writeAllApplicationsToUpdateLog() {
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
 
         for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
                 AppInfo appInfo = dataSource.insertApplicationUpdate(app.getPackageInfo());
-                System.out.println(appInfo.getPackageName() + " written to db");
         }
 
         dataSource.close();

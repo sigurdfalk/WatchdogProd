@@ -146,19 +146,19 @@ public class PrivacyScoreCalculator {
 
     private double getPermissionWeight(PermissionDescription permission, ArrayList<Answer> allAnswers, ArrayList<PermissionFact> facts) {
         if (allAnswers == null) {
-            return 0.5;
+            return 1.0;
         }
 
         PermissionFact matchingFact = getPermissionFactMatchingPermission(permission, facts);
 
         if (matchingFact == null) {
-            return 0.5;
+            return 1.0;
         }
 
         ArrayList<Answer> matchingAnswers = getAnswersByPermissionFact(matchingFact, allAnswers);
 
         if (matchingAnswers.size() == 0) {
-            return 0.5;
+            return 1.0;
         }
 
         double answerSum = 0.0;
