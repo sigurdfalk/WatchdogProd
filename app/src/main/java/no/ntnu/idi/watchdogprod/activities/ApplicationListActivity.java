@@ -312,7 +312,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+        adapter.updateList();
     }
 
     public class MyGestureDetector extends GestureDetector.SimpleOnGestureListener

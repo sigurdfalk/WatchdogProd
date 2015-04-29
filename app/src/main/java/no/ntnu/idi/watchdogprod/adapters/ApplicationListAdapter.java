@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -243,5 +244,11 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         } else {
             itemViewHolder.riskColor.setBackgroundColor(context.getResources().getColor(R.color.risk_green));
         }
+    }
+
+    public void updateList() {
+        Collections.sort(applications);
+        Collections.sort(recentlyUpdatedApplications);
+        this.notifyDataSetChanged();
     }
 }
