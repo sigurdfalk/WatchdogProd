@@ -30,6 +30,10 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
         this.privacyScore = privacyScore;
     }
 
+    public void setUpdateLog(ArrayList<AppInfo> updateLog) {
+        this.updateLog = updateLog;
+    }
+
     public PackageInfo getPackageInfo() {
         return packageInfo;
     }

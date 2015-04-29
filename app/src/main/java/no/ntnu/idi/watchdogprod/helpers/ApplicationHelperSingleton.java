@@ -106,6 +106,17 @@ public class ApplicationHelperSingleton {
         }
     }
 
+    public void updateApplicationUpdateLogs() {
+        ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(context);
+        dataSource.open();
+
+        for (ExtendedPackageInfo application : applications) {
+            application.setUpdateLog(dataSource.getApplicationUpdatesByPackageName(application.getPackageInfo().packageName));
+        }
+
+        dataSource.close();
+    }
+
     public void updateInstance() {
         applications.clear();
         initializeInstance();
