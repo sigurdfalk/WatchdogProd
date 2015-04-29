@@ -22,10 +22,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+
 import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
@@ -194,7 +200,6 @@ public class MainActivity extends ActionBarActivity {
             }
             found = false;
         }
-
 
         profileDataSource.close();
     }

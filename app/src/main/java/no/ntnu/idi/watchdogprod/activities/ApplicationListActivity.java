@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -28,8 +26,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.AnalyticsHelper;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
@@ -63,10 +66,14 @@ public class ApplicationListActivity extends ActionBarActivity {
 
     private ApplicationHelperSingleton applicationHelperSingleton;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_list);
+
+        context = this;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -134,6 +141,26 @@ public class ApplicationListActivity extends ActionBarActivity {
             }
         });
         populateSearchPopupWindowPermissionCheckboxes(popupView);
+
+        // Get tracker.
+        Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                AnalyticsHelper.TrackerName.APP_TRACKER);
+        t.setScreenName("APP LIST");
+        t.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(ApplicationListActivity.this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(ApplicationListActivity.this).reportActivityStop(this);
+
     }
 
     private void clearAllPermissionCheckBoxes() {
@@ -193,6 +220,18 @@ public class ApplicationListActivity extends ActionBarActivity {
                 deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
 
                 if (!deletedPackage.equals("")) {
+
+                    // Get tracker.
+                    Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                            AnalyticsHelper.TrackerName.APP_TRACKER);
+                    // Build and send an Event.
+                    t.send(new HitBuilders.EventBuilder()
+                            .setCategory("events")
+                            .setAction("deletedapp")
+                            .setLabel(deletedPackage)
+                            .setValue(1)
+                            .build());
+
                     applicationHelperSingleton.removeApplication(deletedPackage);
                     adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
                     list.setAdapter(adapter);

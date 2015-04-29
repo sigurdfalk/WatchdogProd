@@ -1,6 +1,7 @@
 package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -102,6 +103,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         uninstall = (LinearLayout) findViewById(R.id.app_detail_uninstall_wrapper);
         TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
         uninstallText.setText(String.format(getResources().getString(R.string.touch_to_uninstall), appName));
+
 
         uninstall.setOnClickListener(new View.OnClickListener() {
             @Override

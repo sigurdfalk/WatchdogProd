@@ -73,7 +73,7 @@ public class Profile {
     public void createProfile(Context context) throws SQLException {
 //        double[] answers = getUserQuestions(context);
         applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context);
-        installTrendRiskIncreasing = getInstallTrend(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
+        installTrendRiskIncreasing = getInstallTrend(context, Profile.AVG_INSTALLS_VALUE);
         uninstallTrendRiskIncreasing = getUninstallTrend(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
         disharmonyApps = getHarmonyApps(context);
     }
@@ -134,8 +134,7 @@ public class Profile {
         return sum/extendedPackageInfos.size();
     }
 
-
-    private int getInstallTrend(double[] history, Context context, String type) {
+    private int getInstallTrend(Context context, String type) {
         System.out.println("INSTALL");
 
         double oldAvg = getOldAverage(context,type);
@@ -158,31 +157,20 @@ public class Profile {
             }
         }
 
-        if(avg >= oldAvg && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD && oldAvg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-            return APP_TREND_INCREASING;
-        } 
-
         if (oldAvg == avg) {
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_FIXED_HIGH;
             } else {
                 return APP_TREND_FIXED_LOW;
             }
-        }
-
-        saveNewAverage(context, avg, type);
-
-        if((oldAvg < PrivacyScoreCalculator.MEDIUM_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) || ( oldAvg < PrivacyScoreCalculator.LOW_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD)) {
+        } else if(avg >= oldAvg && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD && oldAvg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
             return APP_TREND_INCREASING;
-        } else if ((oldAvg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD && avg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) || ( oldAvg >= PrivacyScoreCalculator.LOW_THRESHOLD && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD)) {
-            return APP_TREND_DECREASING;
-        } else {
-            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_FIXED_HIGH;
-            } else {
-                return APP_TREND_FIXED_LOW;
-            }
+
+        } else if(avg < oldAvg && avg < PrivacyScoreCalculator.MEDIUM_THRESHOLD && oldAvg > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+
         }
+
+        return APP_TREND_NEUTRAL;
     }
 
     private long dateConverter(String timestamp) {
@@ -201,8 +189,8 @@ public class Profile {
 
     private int getUninstallTrend(double[] history, Context context, String type) {
         System.out.println("UNINSTALL");
-        double oldAvg = getOldAverage(context,type);
 
+        double oldAvg = getOldAverage(context,type);
         double avg = getCurrentInstalledAverage();
 
         System.out.println("Old avg " + oldAvg);
@@ -215,18 +203,55 @@ public class Profile {
 
             saveNewAverage(context, avg, type);
 
-            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
-            } else {
+            if (avg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_NEUTRAL;
+            } else {
+                return APP_TREND_FIXED_LOW;
             }
         }
 
-        if (oldAvg != avg) {
-            saveNewAverage(context, avg, type);
-            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_NEUTRAL;
+        if (oldAvg == avg) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        } else if(avg >= oldAvg && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD && oldAvg < PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_INCREASING;
+
+        } else if(avg < oldAvg && avg < PrivacyScoreCalculator.MEDIUM_THRESHOLD && oldAvg > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+
         }
-        return APP_TREND_FIXED_LOW;
+
+        return APP_TREND_NEUTRAL;
+
+//        System.out.println("UNINSTALL");
+//        double oldAvg = getOldAverage(context,type);
+//
+//        double avg = getCurrentInstalledAverage();
+//
+//        System.out.println("Old avg " + oldAvg);
+//        System.out.println("New avg " + avg);
+//
+//        if (oldAvg == -1) {
+//            if (avg == 0) {
+//                return APP_TREND_NEUTRAL;
+//            }
+//
+//            saveNewAverage(context, avg, type);
+//
+//            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+//                return APP_TREND_INCREASING;
+//            } else {
+//                return APP_TREND_NEUTRAL;
+//            }
+//        }
+//
+//        if (oldAvg != avg) {
+//            saveNewAverage(context, avg, type);
+//            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_NEUTRAL;
+//        }
+//        return APP_TREND_FIXED_LOW;
     }
 
     public double getAverage(double[] history) {
