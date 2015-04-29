@@ -80,6 +80,16 @@ public class ApplicationHelperSingleton {
         return applications;
     }
 
+    public void removeApplication(String packageName) {
+        for(ExtendedPackageInfo extendedPackageInfo : applications) {
+            if(extendedPackageInfo.getPackageInfo().packageName.equals(packageName)) {
+                applications.remove(extendedPackageInfo);
+                return;
+            }
+        }
+        return;
+    }
+
     public PermissionFactHelperSingleton getPermissionFactHelper() {
         return permissionFactHelper;
     }

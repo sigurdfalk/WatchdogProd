@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -74,13 +76,13 @@ public class ApplicationListActivity extends ActionBarActivity {
         permissionsCheckBoxes = new ArrayList<>();
         filteredApps = (ArrayList<ExtendedPackageInfo>) applicationHelperSingleton.getApplications().clone();
 
-        list = (RecyclerView)findViewById(R.id.applications_list);
+        list = (RecyclerView) findViewById(R.id.applications_list);
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setItemAnimator(new DefaultItemAnimator());
         adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
         list.setAdapter(adapter);
 
-        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = layoutInflater.inflate(R.layout.activity_application_list_search_popup, null, false);
 
         LinearLayout headerWrapper = (LinearLayout) popupView.findViewById(R.id.search_popup_header_wrapper);
@@ -151,7 +153,7 @@ public class ApplicationListActivity extends ActionBarActivity {
         Point size = new Point();
         display.getSize(size);
 
-        popupWindow = new PopupWindow(popupView, size.x,size.y - getSupportActionBar().getHeight(), true );
+        popupWindow = new PopupWindow(popupView, size.x, size.y - getSupportActionBar().getHeight(), true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setFocusable(true);
         popupWindow.setAnimationStyle(R.style.AnimationPopup);
@@ -175,6 +177,26 @@ public class ApplicationListActivity extends ActionBarActivity {
                 });
                 permissionsCheckBoxes.add(cb);
                 wrapper.addView(cb);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ApplicationListAdapter.APP_DELETED_CODE) {
+
+            String deletedPackage = "";
+
+            if(data != null) {
+                deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
+
+                if (!deletedPackage.equals("")) {
+                    applicationHelperSingleton.removeApplication(deletedPackage);
+                    adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
+                    list.setAdapter(adapter);
+                }
             }
         }
     }
@@ -263,8 +285,8 @@ public class ApplicationListActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_applications, menu);
 
-       // SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-       // searchView.setQueryHint(this.getString(R.string.search));
+        // SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // searchView.setQueryHint(this.getString(R.string.search));
 
         return true;
     }
@@ -315,8 +337,7 @@ public class ApplicationListActivity extends ActionBarActivity {
         adapter.updateList();
     }
 
-    public class MyGestureDetector extends GestureDetector.SimpleOnGestureListener
-    {
+    public class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 120;
         private static final int SWIPE_MAX_OFF_PATH = 250;
         private static final int SWIPE_THRESHOLD_VELOCITY = 150;

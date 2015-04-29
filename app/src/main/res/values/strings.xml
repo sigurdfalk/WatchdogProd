@@ -68,8 +68,8 @@
     <!-- User behavior feedback -->
     <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
-    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de siste installerte applikasjonene på telefonen.</string>
-    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de siste installerte applikasjonene på telefonen.</string>
+    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de installerte applikasjonene på telefonen.</string>
+    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de installerte applikasjonene på telefonen.</string>
     <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert. Her vil det komme informasjon ditt trender i ditt installeringssmønster.</string>
 
     <!-- User behavior feedback -->
@@ -90,13 +90,12 @@
     <string name="go_to_app">Gå til app</string>
 
     <!-- Dialog main-->
-    <string name="dialog_main_score_header">Risikofaktor</string>
-    <string name="dialog_main_score_text">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
-    <string name="dialog_main_cards_header">Informasjonskort</string>
-    <string name="dialog_main_cards_text">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser på telefonen, samt tilbakemeldinger på ditt bruksmønster. Disse vil kontinuerlig oppdatere seg etter som du bruker telefonen. </string>
+    <string name="dialog_main_score_header">Total risikofaktor</string>
+    <string name="dialog_main_score_text">Total risikofaktore er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
+    <string name="dialog_main_cards_header">Trender og bruksmønster</string>
+    <string name="dialog_main_cards_text">Trendene og bruksmønstre bruker informasjon fra ditt installerings- og avinstalleringsmønster og besvarelser på spørsmål rettet mot tillateser for å gi deg informasjon som kan være nyttig. Disse vil kontinuerlig oppdatere seg etter som du bruker telefonen. </string>
     <string name="dialog_main_color_codes_header">Fargekoder</string>
-    <string name="dialog_main_color_codes_text">De forskjellige fargekodene i dette skjermbilde indikerer hendelsens alvorlighetsgrad.</string>
-
+    <string name="dialog_main_color_codes_text">Fargekodene indikerer alvorlighetsgraden til hendelsene som blir presentert.</string>
 
     <string name="application_guidance">Listen over dine applikasjoner består av de applikasjoner du selv har lastet ned. Applikasjoner som fulgte med din applikasjon, såkalte systemapplikasjoner, vil ikke vises i denne listen.</string>
     <string name="filer_applications">Du kan filtere applikasjonene</string>

@@ -199,7 +199,6 @@ public class MainActivity extends ActionBarActivity {
         profileDataSource.close();
     }
 
-
     private void writeAllApplicationsToUpdateLog() {
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();
@@ -360,8 +359,6 @@ public class MainActivity extends ActionBarActivity {
         final int hoursInDay = 24;
 
         for (ExtendedPackageInfo application : applicationHelperSingleton.getApplications()) {
-            //IF-TESTEN ER FIX MENS DET ER BUG I LISTA
-
             if (application.getUpdateLog() != null && application.getUpdateLog().size() > 0) {
                 long diff = now.getTime() - application.getUpdateLog().get(0).getLastUpdateTime();
                 if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 3)) {
