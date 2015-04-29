@@ -199,7 +199,6 @@ public class MainActivity extends ActionBarActivity {
         profileDataSource.close();
     }
 
-
     private void writeAllApplicationsToUpdateLog() {
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(this);
         dataSource.open();

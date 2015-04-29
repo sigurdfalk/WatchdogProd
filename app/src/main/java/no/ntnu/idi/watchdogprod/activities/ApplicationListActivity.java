@@ -188,12 +188,15 @@ public class ApplicationListActivity extends ActionBarActivity {
         if (requestCode == ApplicationListAdapter.APP_DELETED_CODE) {
 
             String deletedPackage = "";
-            deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
 
-            if (!deletedPackage.equals("")) {
-                applicationHelperSingleton.removeApplication(deletedPackage);
-                adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
-                list.setAdapter(adapter);
+            if(data != null) {
+                deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
+
+                if (!deletedPackage.equals("")) {
+                    applicationHelperSingleton.removeApplication(deletedPackage);
+                    adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
+                    list.setAdapter(adapter);
+                }
             }
         }
     }
