@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,12 +51,17 @@ public class PermissionListActivity extends ActionBarActivity {
             listView.setAdapter(adapter);
 
         } else {
-            packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
+            ArrayList<PermissionDescription> permissionDescriptions;
+            try {
+                packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
+                permissionDescriptions = applicationHelperSingleton.getPermissionHelper().getApplicationPermissionDescriptions(packageInfo.getPackageInfo().requestedPermissions);
+            } catch (Exception e) {
+                permissionDescriptions = applicationHelperSingleton.getPermissionHelper().parseArray(getIntent().getStringArrayExtra("permissions"));
+            }
 
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
 
-            ArrayList<PermissionDescription> permissionDescriptions = applicationHelperSingleton.getPermissionHelper().getApplicationPermissionDescriptions(packageInfo.getPackageInfo().requestedPermissions);
             Collections.sort(permissionDescriptions);
             PermissionListAdapter adapter = new PermissionListAdapter(this, permissionDescriptions);
             listView.setAdapter(adapter);

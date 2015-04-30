@@ -42,10 +42,15 @@ public class RuleViolationsActivity extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.rule_violations_list);
         View emptyView = findViewById(R.id.rule_violations_empty);
         listView.setEmptyView(emptyView);
+        ArrayList<Rule> violatedRules;
+        ExtendedPackageInfo packageInfo = null;
+        try {
+            packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
+            violatedRules = applicationHelperSingleton.getRuleHelper().getViolatedRules(packageInfo.getPackageInfo().requestedPermissions);
+        } catch (Exception e) {
+            violatedRules = applicationHelperSingleton.getRuleHelper().getViolatedRules(getIntent().getStringArrayExtra("permissions"));
+        }
 
-        ExtendedPackageInfo packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
-
-        ArrayList<Rule> violatedRules = applicationHelperSingleton.getRuleHelper().getViolatedRules(packageInfo.getPackageInfo().requestedPermissions);
         Collections.sort(violatedRules);
         RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
         listView.setAdapter(adapter);

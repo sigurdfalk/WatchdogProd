@@ -45,7 +45,7 @@ public class RecMain extends ActionBarActivity{
     ArrayList<ResponseApp> apps;
     Profile profile;
     private ResponseListAdapter adapter;
-    int originalRisk;
+    double originalRisk;
     PermissionHelperSingleton permissionHelper;
     PrivacyScoreCalculator privacyScoreCalculator;
     RuleHelperSingleton ruleHelper;
@@ -75,7 +75,7 @@ public class RecMain extends ActionBarActivity{
 
         apps = stringToArrayList((String) getIntent().getExtras().getSerializable("response"));
         profile = Profile.getInstance();
-        originalRisk = getIntent().getExtras().getInt("originalScore");
+        originalRisk = getIntent().getExtras().getDouble("originalScore");
         purgeBadApps();
         Collections.sort(apps);
         if(apps.isEmpty()){
@@ -87,23 +87,12 @@ public class RecMain extends ActionBarActivity{
         }
 
     }
-    public ArrayList<PermissionDescription> parseArray(String[] array){
-        ArrayList<PermissionDescription> list = new ArrayList<>();
-        for (String s : array) {
 
-            try {
-                list.add(permissionHelper.getPermissionDescription(s));
-            } catch (Exception e) {
-                Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
-            }
-        }
-        return list;
-    }
     private void purgeBadApps() {
         double score = 99999;
         ArrayList<ResponseApp> temp = new ArrayList<ResponseApp>();
         for (ResponseApp app : apps) {
-            ArrayList<PermissionDescription> permissionDescriptions = parseArray(app.getPermissions());
+            ArrayList<PermissionDescription> permissionDescriptions = permissionHelper.parseArray(app.getPermissions());
             ArrayList<Rule> rules = ruleHelper.getViolatedRules(app.getPermissions());
             score = privacyScoreCalculator.calculatePrivacyScore(permissionDescriptions, rules);
             String name = app.getName();

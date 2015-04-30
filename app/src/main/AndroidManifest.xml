@@ -64,10 +64,16 @@
                 android:value=".activities.ApplicationDetailActivity" />
         </activity>
         <activity android:name=".recommender.RecMain"
-                  android:label="RecMain">
+                  android:label="@string/similar_apps">
                   <meta-data
                             android:name="android.support.PARENT_ACTIVITY"
                             android:value=".activities.ApplicationDetailActivity"/>
+        </activity>
+        <activity android:name=".recommender.ResponseAppDetailActivity"
+                android:launchMode="singleTop" >
+                <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ApplicationDetailActivity"/>
         </activity>
         <receiver
             android:name=".receivers.ApplicationInstalledReceiver"

@@ -2,6 +2,7 @@ package no.ntnu.idi.watchdogprod.helpers;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,7 @@ import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 public class PermissionHelperSingleton {
     public static final String FILE_NAME = "permissiondescriptions.csv";
     public static final String ALL_PERMISSIONS_KEY = "allPermissionsList";
+    public static final String TAG = "permissionHelper";
 
     private static PermissionHelperSingleton instance;
 
@@ -66,6 +68,20 @@ public class PermissionHelperSingleton {
         }
 
         throw new IllegalArgumentException("Permissiondescription of permission " + permission + " do not exist!");
+    }
+    public ArrayList<PermissionDescription> parseArray(String[] array){
+        PermissionHelperSingleton permissionHelper = PermissionHelperSingleton.getInstance(context);
+
+        ArrayList<PermissionDescription> list = new ArrayList<>();
+        for (String s : array) {
+
+            try {
+                list.add(permissionHelper.getPermissionDescription(s));
+            } catch (Exception e) {
+                Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
+            }
+        }
+        return list;
     }
 
     private ArrayList<PermissionDescription> readPermissionDescriptionsFromCsv() {

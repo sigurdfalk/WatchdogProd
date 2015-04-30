@@ -45,6 +45,7 @@
     <string name="similar_apps">Like apps</string>
     <string name="replace">Erstatt</string>
     <string name="noReplacements">Det er ingen apps med lavere score</string>
+    <string name="install">Installer</string>
 
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
     <string name="harmony_apps">Disharmoni</string>

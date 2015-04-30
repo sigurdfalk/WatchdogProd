@@ -1,11 +1,13 @@
 package no.ntnu.idi.watchdogprod.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +16,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
+import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.recommender.ResponseApp;
+import no.ntnu.idi.watchdogprod.recommender.ResponseAppDetailActivity;
 
 /**
  * Created by Wschive on 23/04/15.
@@ -49,10 +58,15 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onItemClick(View caller, int position) {
 
                     ResponseApp responseApp = getItem(position);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("market://details?id=" + responseApp.getPackageName()));
+                    Intent i = new Intent(context, ResponseAppDetailActivity.class);
+                    Gson gson = new Gson();
 
-                    context.startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ApplicationListActivity.PACKAGE_NAME, gson.toJson(responseApp));
+                    i.putExtras(bundle);
+
+                    context.startActivity(i);
+
                 }
             });
         } else if (viewType == TYPE_HEADER) {

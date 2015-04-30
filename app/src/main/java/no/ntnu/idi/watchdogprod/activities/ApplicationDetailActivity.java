@@ -153,7 +153,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         ButtonListener buttonListener = new ButtonListener();
 
         Button replace = (Button) findViewById(R.id.app_detail_replace);
-
+        Button install = (Button) findViewById(R.id.app_detail_install);
+        install.setVisibility(View.GONE);
         permissionsInfoWrapper.setOnClickListener(buttonListener);
         updatesInfoWrapper.setOnClickListener(buttonListener);
         indicatorsWrapper.setOnClickListener(buttonListener);
