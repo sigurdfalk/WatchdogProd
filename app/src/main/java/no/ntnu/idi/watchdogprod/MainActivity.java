@@ -83,12 +83,6 @@ public class MainActivity extends ActionBarActivity {
         appsBtn.setOnClickListener(new MainButtonListener());
         permissionListBtn.setOnClickListener(new MainButtonListener());
 
-        try {
-            initProfile(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         final LinearLayout root = (LinearLayout) findViewById(R.id.main_tips);
 
         final ImageView cancelTips = (ImageView) findViewById(R.id.main_cancel_tips);
@@ -128,11 +122,6 @@ public class MainActivity extends ActionBarActivity {
             linearLayout.setVisibility(View.VISIBLE);
         }
 
-        try {
-            initProfile(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initProfile(Context context) throws SQLException {
@@ -200,7 +189,6 @@ public class MainActivity extends ActionBarActivity {
             }
             found = false;
         }
-
         profileDataSource.close();
     }
 
@@ -218,6 +206,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        try {
+            initProfile(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private int calculateTotalRiskScore() {
@@ -286,10 +280,13 @@ public class MainActivity extends ActionBarActivity {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_positive));
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
+        } else if(uninstallTrend == Profile.APP_TREND_FIXED_HIGH) {
+            backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
+            cardText.setText("Det er høy risikofaktor på siste avinstallerte applikasjonene.");
+            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_down_black_48dp));
         } else if (uninstallTrend == Profile.APP_TREND_NEUTRAL) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_negative));
-//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
         }
     }
 

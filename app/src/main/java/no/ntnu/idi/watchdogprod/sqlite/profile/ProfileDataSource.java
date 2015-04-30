@@ -45,34 +45,46 @@ public class ProfileDataSource {
                 values);
     }
 
-    public double [] getInstallData(String type) {
-        double [] appValues;
+    public boolean isInDatabase(String packageName, String type) {
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=? AND package=?", new String[]{type, packageName}, null,null,null);
+        return cursor.getCount() > 0? true: false;
+    }
+
+    public double[] getInstallData(String type) {
+        double[] appValues;
         int counter = 0;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {type},null,null,null);
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{type}, null, null, "_id DESC");
         cursor.moveToFirst();
-        System.out.println("cursorcount " + cursor.getCount());
-        appValues = new double [cursor.getCount()];
-        while (cursor.moveToNext()) {
-            appValues[counter++] = Double.parseDouble(cursor.getString(3));
+        if(cursor.getCount() > 10) {
+            appValues = new double[10];
+        } else {
+            appValues = new double[cursor.getCount()];
         }
+
+        while (!cursor.isAfterLast() && counter <10) {
+            appValues[counter++] = Double.parseDouble(cursor.getString(3));
+            cursor.moveToNext();
+        }
+
         return appValues;
     }
 
     public ArrayList<ProfileEvent> getInstalledApps() {
         ArrayList<ProfileEvent> profileEvents = new ArrayList<>();
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null, null);
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null,null);
 
-        if(cursor.moveToFirst()){
-            while (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
                 profileEvents.add(new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                cursor.moveToNext();
             }
         }
         return profileEvents;
     }
 
     public ProfileEvent getSpecificEvent(String eventType) {
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String [] {eventType},null, null, "_id DESC", "1");
-        if(cursor != null && cursor.getCount() > 0) {
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{eventType}, null, null,"_id DESC");
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             return new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         } else
@@ -81,16 +93,18 @@ public class ProfileDataSource {
 
     public ProfileEvent getSpecificEventForApp(String eventType, String packageName) {
         ProfileEvent profileEvent = null;
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, null, null, null, null, null);
-        if(cursor != null && cursor.getCount() > 0) {
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=? AND package=?", new String[]{eventType, packageName}, null, null, null);
+        if (cursor != null && cursor.getCount() == 1) {
             cursor.moveToFirst();
-            while (cursor.moveToNext()) {
-                if (cursor.getString(2).equals(eventType) && cursor.getString(4).equals(packageName)) {
-                    profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
-                }
-            }
+            profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        } else {
+            System.out.println("FLERE ELEMENTER AV SAMME APP I INSTALL DB, RETURNERTE NULL");
         }
         return profileEvent;
+    }
+
+    public int deleteEvent(String eventType, String packageName) {
+        return db.delete(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, "event=? AND package=?", new String[]{eventType, packageName});
     }
 
     public long insertUserQuestions(double q1, double q2, double q3) {
