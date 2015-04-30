@@ -6,6 +6,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by fredsten on 29.04.2015.
@@ -24,6 +25,8 @@ public class AnalyticsHelper extends Application {
         GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
     }
+
+    public static int USER_ID = 23;
 
     public AnalyticsHelper() {
         super();

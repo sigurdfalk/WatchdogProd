@@ -226,7 +226,7 @@ public class ApplicationListActivity extends ActionBarActivity {
                             AnalyticsHelper.TrackerName.APP_TRACKER);
                     // Build and send an Event.
                     t.send(new HitBuilders.EventBuilder()
-                            .setCategory("events")
+                            .setCategory("events" + AnalyticsHelper.USER_ID)
                             .setAction("deletedapp")
                             .setLabel(deletedPackage)
                             .setValue(1)
