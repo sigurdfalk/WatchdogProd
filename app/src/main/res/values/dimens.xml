@@ -18,4 +18,34 @@
     <!-- Dialogs -->
     <dimen name="dialog_header">20sp</dimen>
     <dimen name="dialog_text">14sp</dimen>
+
+    <!-- Text -->
+    <dimen name="primary_header">16sp</dimen>
+    <dimen name="primary_text">14sp</dimen>
+    <dimen name="secondary_text">12sp</dimen>
+
+    <!-- List Cards -->
+    <dimen name="list_card_header">18sp</dimen>
+    <dimen name="list_card_text">14sp</dimen>
+    <dimen name="list_card_icon_match_header">20sp</dimen>
+
+    <!-- Flat list items -->
+    <dimen name="list_item_header">18sp</dimen>
+    <dimen name="list_item_text">14sp</dimen>
+
+    <!-- Cards -->
+    <dimen name="card_header">18sp</dimen>
+    <dimen name="card_text_primary">14sp</dimen>
+    <dimen name="card_text_secondary">12sp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="button_flat_header">18sp</dimen>
+    <dimen name="button_flat_text_primary">14sp</dimen>
+    <dimen name="button_flat_text_secondary">12sp</dimen>
+    <dimen name="button_flat_icon_match_header">25sp</dimen>
+    <dimen name="button_flat_icon_large">40sp</dimen>
+    <dimen name="button_flat_icon_match_text_primary">20sp</dimen>
+
+    <!-- Misc -->
+    <dimen name="privacy_score_header">20sp</dimen>
 </resources>

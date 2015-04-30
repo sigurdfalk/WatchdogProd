@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dialog_header"
+        android:text="@string/permissions_harmony"
+        android:padding="10sp"
+        android:textColor="@color/text_primary"/>
+    <TextView
+        android:id="@+id/haromy_dialog_feedback"
+        android:text="@string/harmony_dialog_feedback_text"
+        android:textSize="15dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/harmony_dialog_color_red"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_emoticon_sad_white_36dp"
+            android:tint="@color/risk_red"/>
+
+        <TextView
+            android:id="@+id/red_permissions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/dialog_text"
+           />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/harmony_dialog_color_yellow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_emoticon_neutral_white_36dp"
+            android:tint="@color/risk_yellow"/>
+
+
+        <TextView
+            android:id="@+id/yellow_permissions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="@dimen/dialog_text"
+            android:textColor="@color/text_secondary"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/harmony_dialog_color_green"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+       <ImageView
+           android:layout_width="40dp"
+           android:layout_height="40dp"
+           android:src="@mipmap/ic_emoticon_happy_white_36dp"
+           android:tint="@color/risk_green"/>
+
+        <TextView
+            android:id="@+id/green_permissions"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:textSize="@dimen/dialog_text"
+            android:textColor="@color/text_secondary" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

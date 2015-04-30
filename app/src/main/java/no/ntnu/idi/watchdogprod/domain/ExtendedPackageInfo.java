@@ -20,13 +20,13 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
     private AppVector vector;
 
 
-    public ExtendedPackageInfo(PackageInfo packageInfo, ArrayList<PermissionDescription> permissionDescriptions, ArrayList<Rule> violatedRules, ArrayList<PermissionFact> permissionFacts, ArrayList<AppInfo> updateLog) {
+    public ExtendedPackageInfo(PackageInfo packageInfo, ArrayList<PermissionDescription> permissionDescriptions, ArrayList<Rule> violatedRules, ArrayList<PermissionFact> permissionFacts, ArrayList<AppInfo> updateLog, PrivacyScoreCalculator privacyScoreCalculator) {
         this.packageInfo = packageInfo;
         this.permissionDescriptions = permissionDescriptions;
         this.violatedRules = violatedRules;
         this.permissionFacts = permissionFacts;
         this.updateLog = updateLog;
-        this.privacyScore = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+        this.privacyScore = privacyScoreCalculator.calculatePrivacyScore(this);
         this.vector = new AppVector(permissionDescriptions);
     }
 
@@ -36,6 +36,14 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
 
     public void setVector(AppVector vector) {
         this.vector = vector;
+    }
+
+    public void setPrivacyScore(double privacyScore) {
+        this.privacyScore = privacyScore;
+    }
+
+    public void setUpdateLog(ArrayList<AppInfo> updateLog) {
+        this.updateLog = updateLog;
     }
 
     public PackageInfo getPackageInfo() {

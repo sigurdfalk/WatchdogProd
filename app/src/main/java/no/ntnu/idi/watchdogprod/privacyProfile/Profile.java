@@ -15,7 +15,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.Answer;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
@@ -41,6 +43,10 @@ public class Profile {
     public static final int APP_TREND_INCREASING = 1;
     public static final int APP_TREND_NEUTRAL = -1;
 
+    public static final String BEHAVIOR_APPS_KEY = "behaviorAppsList";
+    public static final String BEHAVIOR_INSTALLED_APPS = "behaviorInstalledApps";
+    public static final String BEHAVIOR_HARMONY_APPS = "behaviorHarmonyApps";
+
     private double understandingOfPermissions;
     private double interestInPrivacy;
     private double utilityOverPrivacy;
@@ -49,6 +55,9 @@ public class Profile {
     private int installTrendRiskIncreasing;
     private int uninstallTrendRiskIncreasing;
     private ArrayList<String> disharmonyApps;
+    private ArrayList<String> installedApps;
+
+    private ApplicationHelperSingleton applicationHelperSingleton;
 
 
     private static Profile instance = new Profile();
@@ -83,12 +92,13 @@ public class Profile {
 
     public void createProfile(Context context) throws SQLException {
 //        double[] answers = getUserQuestions(context);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context);
         installTrendRiskIncreasing = getInstallTrend(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
         uninstallTrendRiskIncreasing = getUninstallTrend(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
-        disharmonyApps = getHarmony(context);
+        disharmonyApps = getHarmonyApps(context);
     }
 
-    private ArrayList<String> getHarmony(Context context) throws SQLException {
+    private ArrayList<String> getHarmonyApps(Context context) throws SQLException {
         AnswersDataSource answersDataSource = new AnswersDataSource(context);
         answersDataSource.open();
         ArrayList<Answer> answers = answersDataSource.getAllAnswers();
@@ -96,7 +106,7 @@ public class Profile {
 
         Map<String, Integer> answerCount = new HashMap<>();
 
-        int sadCount = 0;
+        int sadCount;
 
         for (Answer answer : answers) {
             if (answer.getAnswer() == Answer.ANSWER_SAD) {
@@ -113,11 +123,17 @@ public class Profile {
         ArrayList<String> disharmonyApps = new ArrayList<>();
 
         for (Map.Entry<String, Integer> entry : answerCount.entrySet()) {
-            if (entry.getValue() >= 2) {
-                disharmonyApps.add(entry.getKey());
-            }
+            disharmonyApps.add(entry.getKey());
         }
         return disharmonyApps;
+    }
+
+    public boolean isInDatabase(Context context, String type, String packageName) {
+        ProfileDataSource dataSource = new ProfileDataSource(context);
+        dataSource.open();
+        boolean exists = dataSource.isInDatabase(packageName, type);
+        dataSource.close();
+        return exists;
     }
 
     private double[] getUserQuestions(Context context) {
@@ -137,133 +153,118 @@ public class Profile {
         return appValues;
     }
 
-    private int getInstallTrend(double[] history, Context context, String type) {
-        double oldAvg = 0;
-        ProfileEvent event = getOldAverage(context, type);
-        if (event == null) {
-            oldAvg = -1;
-        } else {
-            oldAvg = Double.parseDouble(event.getValue());
+    private double getCurrentInstalledAverage() {
+        double sum = 0;
+        ArrayList<ExtendedPackageInfo> extendedPackageInfos = applicationHelperSingleton.getApplications();
+        for (ExtendedPackageInfo extendedPackageInfo : extendedPackageInfos) {
+            sum += extendedPackageInfo.getPrivacyScore();
+        }
+        return sum / extendedPackageInfos.size();
+    }
+
+    private boolean isTrendIncreasing(double[] history) {
+
+        double avgOld = 0;
+        double avgNew = 0;
+        double sumOld = 0;
+        double sumNew = 0;
+
+        for (int i = 0; i < history.length - 1; i++) {
+            sumOld += history[i];
         }
 
-        double avg = getAverage(history);
+        for (int i = 0; i < history.length; i++) {
+            sumNew += history[i];
+        }
 
-        System.out.println("Old avg " + oldAvg);
-        System.out.println("New avg " + avg);
+        avgOld = sumOld / history.length - 1;
+        avgNew = sumNew / history.length;
+
+        return (avgNew > avgOld);
+    }
+
+
+    private int getInstallTrend(double[] history, Context context, String type) {
+        System.out.println("INSTALL");
+
+        double oldAvg = getOldAverage(context, type);
+
+        double avg = 0;
 
         if (oldAvg == -1) {
-            if (history.length == 0) {
-                return APP_TREND_NEUTRAL;
-            }
-
+            avg = getCurrentInstalledAverage();
             saveNewAverage(context, avg, type);
-
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
-            } else  {
-                return APP_TREND_DECREASING;
-            }
-        }
-
-        if (oldAvg != avg) {
-            saveNewAverage(context, avg, type);
-            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_DECREASING;
-        }
-
-        Date now = new Date();
-        final int hoursInDay = 24;
-        long diff = now.getTime() - dateConverter(event.getTimestamp());
-
-        if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 2)) {
-            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
-            } else  {
-                return APP_TREND_DECREASING;
-            }
-        } else {
-            if (avg > PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_FIXED_HIGH;
             } else {
                 return APP_TREND_FIXED_LOW;
             }
         }
-    }
 
-    private long dateConverter (String timestamp) {
-        Date date = new Date();
-        DateFormat dateFormat= new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        Date formattedDate = null;
+        avg = getAverage(history);
 
-        try{
-            formattedDate = dateFormat.parse(timestamp);
-            System.out.println(formattedDate.toString());
-        }catch(ParseException parseEx){
-            parseEx.printStackTrace();
+        if(oldAvg == avg) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
         }
-        return formattedDate.getTime();
+
+        if (history.length <= 2) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        if (isTrendIncreasing(history) && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_INCREASING;
+        } else if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_FIXED_HIGH;
+        } else {
+            return APP_TREND_FIXED_LOW;
+        }
     }
 
     private int getUninstallTrend(double[] history, Context context, String type) {
-        double oldAvg = 0;
+        System.out.println("UNINSTALL");
 
-        ProfileEvent event = getOldAverage(context, type);
-        if(event == null) {
-            oldAvg = -1;
-        } else {
-            oldAvg = Double.parseDouble(event.getValue());
-        }
-
-        double avg = getAverage(history);
-
-        System.out.println("Old avg " + oldAvg);
-        System.out.println("New avg " + avg);
+        double oldAvg = getOldAverage(context, type);
+        double avg = 0;
 
         if (oldAvg == -1) {
-            if (history.length == 0) {
-                return -1;
-            }
-
             saveNewAverage(context, avg, type);
-
-            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
-                return APP_TREND_INCREASING;
-            } else  {
-                return APP_TREND_NEUTRAL;
-            }
-        }
-
-        if (oldAvg != avg) {
-            saveNewAverage(context, avg, type);
-            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_NEUTRAL;
-        }
-
-        Date now = new Date();
-        final int hoursInDay = 24;
-        long diff = now.getTime() - dateConverter(event.getTimestamp());
-
-        if (TimeUnit.MILLISECONDS.toHours(diff) < (hoursInDay * 2)) {
-            return avg > oldAvg ? APP_TREND_INCREASING : APP_TREND_NEUTRAL;
-        } else {
             return APP_TREND_NEUTRAL;
+        }
+
+        avg = getAverage(history);
+
+        if (history.length <= 2) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        if (!isTrendIncreasing(history)) {
+            return APP_TREND_INCREASING;
+        } else if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_FIXED_HIGH;
+        } else {
+            return APP_TREND_FIXED_LOW;
         }
     }
 
     public double getAverage(double[] history) {
         double temp = 0;
-        int startingpoint = 0;
-        int total = 10;
-
-        if (history.length > 10) {
-            startingpoint = history.length - 10;
-        } else {
-            total = history.length;
-        }
-
-        for (int i = startingpoint; i < history.length; i++) {
+        for (int i = 0; i < history.length; i++) {
             temp += history[i];
         }
 
-        return temp / total;
+        return temp / history.length;
     }
 
     public long saveNewAverage(Context context, double average, String type) {
@@ -274,28 +275,17 @@ public class Profile {
         return id;
     }
 
-    public ProfileEvent getOldAverage(Context context, String type) {
+    public double getOldAverage(Context context, String type) {
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
         ProfileEvent profileEvent = profileDataSource.getSpecificEvent(type);
         profileDataSource.close();
-        return profileEvent;
-    }
 
-    public double getUnderstandingOfPermissions() {
-        return understandingOfPermissions;
-    }
-
-    public double getInterestInPrivacy() {
-        return interestInPrivacy;
-    }
-
-    public double getUtilityOverPrivacy() {
-        return utilityOverPrivacy;
-    }
-
-    public double getConcernedForLeaks() {
-        return concernedForLeaks;
+        if (profileEvent == null) {
+            return -1;
+        } else {
+            return Double.parseDouble(profileEvent.getValue());
+        }
     }
 
     public int getUninstallTrendRiskIncreasing() {

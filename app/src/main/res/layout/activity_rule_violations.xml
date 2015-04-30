@@ -15,10 +15,10 @@
         android:id="@+id/rule_violations_empty">
 
         <ImageView
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:src="@mipmap/ic_emoticon_happy_white_36dp"
-            android:tint="#000000"
+            android:layout_width="@dimen/button_flat_icon_large"
+            android:layout_height="@dimen/button_flat_icon_large"
+            android:src="@mipmap/ic_emoticon_happy_white_48dp"
+            android:tint="@color/button_flat_icon_tint"
             android:layout_marginBottom="5sp"/>
 
         <TextView
@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:text="@string/no_app_risk_indikators"
             android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="#000000"
+            android:textSize="@dimen/button_flat_header"
+            android:textColor="@color/button_flat_header"
             android:layout_marginBottom="5sp"/>
 
         <LinearLayout
@@ -40,16 +40,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#000000"
+                android:textColor="@color/button_flat_text"
                 android:text="@string/for_more_risk_indicator_info_touch"
-                android:textSize="12sp"/>
+                android:textSize="@dimen/button_flat_text_primary"/>
 
             <ImageView
-                android:layout_width="18sp"
-                android:layout_height="18sp"
+                android:layout_width="@dimen/button_flat_icon_match_text_primary"
+                android:layout_height="@dimen/button_flat_icon_match_text_primary"
                 android:src="@mipmap/ic_info_outline_white_48dp"
                 android:layout_marginLeft="5sp"
-                android:tint="#000000"/>
+                android:tint="@color/button_flat_icon_tint"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -28,12 +28,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".activities.ApplicationDetailActivity" android:launchMode="singleTop">
+        <activity
+            android:name=".activities.ApplicationDetailActivity"
+            android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ApplicationListActivity" />
         </activity>
-        <activity android:name=".activities.RuleViolationsActivity" android:label="@string/risk_indicators" >
+        <activity
+            android:name=".activities.RuleViolationsActivity"
+            android:label="@string/risk_indicators" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ApplicationDetailActivity" />
@@ -45,12 +49,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".activities.PermissionListActivity" android:label="@string/permissions">
+        <activity
+            android:name=".activities.PermissionListActivity"
+            android:label="@string/permissions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ApplicationDetailActivity" />
         </activity>
-        <activity android:name=".activities.ApplicationUpdateLogActivity" android:label="@string/updates">
+        <activity
+            android:name=".activities.ApplicationUpdateLogActivity"
+            android:label="@string/updates" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ApplicationDetailActivity" />
@@ -66,6 +74,7 @@
             android:label="NewAppInstalledReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -74,6 +83,7 @@
             android:label="UninstalledReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_FULLY_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -85,7 +95,10 @@
             android:name=".activities.UserQuestionActivity"
             android:label="@string/title_activity_user_question" >
         </activity>
-
+        <activity
+            android:name=".activities.BehaviorApplicationListActivity"
+            android:label="@string/title_activity_behavior_application_list" >
+        </activity>
     </application>
 
 </manifest>

@@ -11,14 +11,13 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 
 /**
  * Created by sigurdhf on 10.03.2015.
@@ -47,16 +46,17 @@ public class ApplicationUpdateLogListAdapter extends ArrayAdapter<AppInfo> {
         LinearLayout removedPermissionsView = (LinearLayout) convertView.findViewById(R.id.item_update_log_container_removed);
 
         AppInfo appInfo = objects.get(position);
-        ArrayList<PermissionDescription> permissionDescriptions = PermissionHelper.getApplicationPermissionDescriptions(appInfo.getPermissions(), context);
-        int riskScore = (int) PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+        ApplicationHelperSingleton applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context.getApplicationContext());
+
+        int riskScore = (int) applicationHelperSingleton.getApplicationByPackageName(appInfo.getPackageName()).getPrivacyScore();
 
         if (position == objects.size() - 1 || objects.size() == 1) {
             addedPermissionsView.setVisibility(View.GONE);
             removedPermissionsView.setVisibility(View.GONE);
         } else {
             AppInfo oldAppInfo = objects.get(position + 1);
-            ArrayList<PermissionDescription> newPermissions = PermissionHelper.newRequestedPermissions(context, oldAppInfo.getPermissions(), appInfo.getPermissions());
-            ArrayList<PermissionDescription> removedPermissions = PermissionHelper.removedPermissions(context, oldAppInfo.getPermissions(), appInfo.getPermissions());
+            ArrayList<PermissionDescription> newPermissions = applicationHelperSingleton.getPermissionHelper().newRequestedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
+            ArrayList<PermissionDescription> removedPermissions = applicationHelperSingleton.getPermissionHelper().removedPermissions(oldAppInfo.getPermissions(), appInfo.getPermissions());
 
             if (newPermissions.size() > 0) {
 

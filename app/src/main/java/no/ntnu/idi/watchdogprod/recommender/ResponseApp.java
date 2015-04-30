@@ -3,7 +3,9 @@ package no.ntnu.idi.watchdogprod.recommender;
 import org.apache.mahout.common.distance.EuclideanDistanceMeasure;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.domain.Rule;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
 /**
@@ -18,6 +20,16 @@ public class ResponseApp implements Comparable<ResponseApp>{
     private AppVector vector;
     private double privacyScore;
     private double distanceFromProfile;
+
+    public ArrayList<Rule> getViolatedRules() {
+        return violatedRules;
+    }
+
+    public void setViolatedRules(ArrayList<Rule> violatedRules) {
+        this.violatedRules = violatedRules;
+    }
+
+    private ArrayList<Rule> violatedRules;
 
     public String getInfoLine() {
         return infoLine;

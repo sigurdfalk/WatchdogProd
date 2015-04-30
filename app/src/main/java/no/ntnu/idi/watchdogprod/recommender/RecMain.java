@@ -28,7 +28,9 @@ import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.adapters.ResponseListAdapter;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.domain.Rule;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelperSingleton;
+import no.ntnu.idi.watchdogprod.helpers.RuleHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 
@@ -44,20 +46,29 @@ public class RecMain extends ActionBarActivity{
     Profile profile;
     private ResponseListAdapter adapter;
     int originalRisk;
+    PermissionHelperSingleton permissionHelper;
+    PrivacyScoreCalculator privacyScoreCalculator;
+    RuleHelperSingleton ruleHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
+
+
         setContentView(R.layout.activity_application_list);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        context = getApplicationContext();
         RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.applications_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        permissionHelper = PermissionHelperSingleton.getInstance(context);
+        privacyScoreCalculator = PrivacyScoreCalculator.getInstance(context);
+        ruleHelper = RuleHelperSingleton.getInstance(context);
 
         packageName = getIntent().getExtras().getString("packageName");
         appName = getIntent().getExtras().getString("appName");
@@ -81,7 +92,7 @@ public class RecMain extends ActionBarActivity{
         for (String s : array) {
 
             try {
-                list.add(PermissionHelper.getPermissionDescription(context, s));
+                list.add(permissionHelper.getPermissionDescription(s));
             } catch (Exception e) {
                 Log.e(TAG, "Permissiondescription of permission " + s + " do not exist!");
             }
@@ -93,13 +104,15 @@ public class RecMain extends ActionBarActivity{
         ArrayList<ResponseApp> temp = new ArrayList<ResponseApp>();
         for (ResponseApp app : apps) {
             ArrayList<PermissionDescription> permissionDescriptions = parseArray(app.getPermissions());
-            score = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+            ArrayList<Rule> rules = ruleHelper.getViolatedRules(app.getPermissions());
+            score = privacyScoreCalculator.calculatePrivacyScore(permissionDescriptions, rules);
             String name = app.getName();
             app.setPrivacyScore(score);
             if(originalRisk < score){
                 temp.add(app);
             }
             else{
+                app.setViolatedRules(rules);
                 app.setPrivacyScore(score);
             }
         }

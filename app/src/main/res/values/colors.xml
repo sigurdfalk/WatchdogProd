@@ -42,4 +42,9 @@
     <color name="text_primary">#000000</color>
     <color name="text_secondary">#5a595b</color>
 
+    <!-- Buttons -->
+    <color name="button_flat_icon_tint">#000000</color>
+    <color name="button_flat_header">#000000</color>
+    <color name="button_flat_text">#000000</color>
+
 </resources>

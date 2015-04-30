@@ -36,6 +36,7 @@
     <string name="recently_updated">Nylig oppdatert</string>
     <string name="installed">Installert</string>
     <string name="permissions">Tillatelser</string>
+    <string name="permissions_harmony">Tillatelser</string>
     <string name="latest_update">Siste oppdatering</string>
     <string name="touch_for_more_information">Trykk for mer informasjon</string>
     <string name="touch_for_all_updates">Trykk for å se alle oppdateringer</string>
@@ -46,6 +47,8 @@
     <string name="noReplacements">Det er ingen apps med lavere score</string>
 
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
+    <string name="harmony_apps">Disharmoni</string>
+    <string name="harmony_dialog_feedback_text">Du har gitt følgende tilbakemeldinger</string>
 
     <!--Tips -->
     <string name="tips_screen_lock">For å ytterligere øke sikkerheten på telefonen kan du aktivere skjermlås. Dette hindrer fri adgang til telefonen hvis du skulle miste den.</string>
@@ -53,9 +56,9 @@
     <string name="lorum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel lectus non enim iaculis sodales. Nunc quis varius nulla. Nullam molestie vitae orci in congue.</string>
     <string name="risk_indicators">Risikoindikatorer</string>
     <string name="updates">Oppdateringer</string>
-    <string name="no_required_app_permissions">Denne applikasjonen krever ingen tillatelser.</string>
+    <string name="no_required_app_permissions">Ingen tillatelser</string>
     <string name="for_more_permission_info_touch">For mer informasjon om tillatelser, trykk på</string>
-    <string name="no_app_risk_indikators">Denne applikasjonen har ingen indikatorer på farlig adferd.</string>
+    <string name="no_app_risk_indikators">Ingen risikoindikatorer</string>
     <string name="for_more_risk_indicator_info_touch">For mer informasjon om risikoindikatorer, trykk på</string>
     <string name="risk_score_description">Risikofaktoren regnes ut hovedsaklig basert på hvilke tillatelser applikasjonen krever. En tillatelse som utgjør en høy risiko for ditt personvern vil veie høyere enn en tillatelse med lav risiko. Hvis en eller flere risikoindikatorer blir funnet vil dette øke den totale risikofaktoren.</string>
     <string name="questions_risk_score_description">På enkelte applikasjoner ønsker vi din tilbakemelding på hva du føler om funksjonalitet som kan forekomme i applikasjonen. Din tilbakemelding her vil påvirke risikofaktoren med en redusering hvis tilbakemeldingen er et smilefjes, eller en økning ved et surt fjes.</string>
@@ -65,13 +68,13 @@
     <string name="permission_risk_medium_description">Medium risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til tilgang til personlig informasjon, men kan typisk få vite hvordan du bruker din telefon (f.eks. hvilke nettverk du er koblet til og se din nettleserhistore)</string>
     <string name="permission_risk_low_description">Lav risiko for ditt personvern. En tillatelse i denne kategorien vil ikke gi tilgang til data som kan bryte ditt personvern alene.</string>
     <string name="risk_indicators_description">En tillatelse er ikke nødvendigvis farlig for ditt personvern alene, men om den kombineres den med andre tillatelser kan de sammen utgjøre en betydelig risiko. Risikoindikatorer forebygger dette ved å analysere alle applikasjonens tillatelser og lete etter mønster som indikerer farlig adferd.</string>
-
+    <string name="delete_answers_text">Slett besvarelser</string>
 
     <!-- User behavior feedback -->
-    <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor. Klikk her for å se hvilke applikasjoner.</string>
+    <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
-    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de siste installerte applikasjonene på telefonen. Klikk her for å se hvilke applikasjoner.</string>
-    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de siste installerte applikasjonene på telefonen</string>
+    <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de installerte applikasjonene på telefonen.</string>
+    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de installerte applikasjonene på telefonen.</string>
     <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert. Her vil det komme informasjon ditt trender i ditt installeringssmønster.</string>
 
     <!-- User behavior feedback -->
@@ -89,13 +92,15 @@
     <string name="risk_factor_medium">Medium risikofaktor</string>
     <string name="risk_factor_low">Lav risikofaktor</string>
 
+    <string name="go_to_app">Gå til app</string>
+
     <!-- Dialog main-->
-    <string name="dialog_main_score_header">Risikofaktor</string>
-    <string name="dialog_main_score_text">Risikofaktoren i dette skjermbildet er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
-    <string name="dialog_main_cards_header">Informasjonskort</string>
-    <string name="dialog_main_cards_text">De forskjellige kortene i dette skjermbildet vil gi deg informasjon om viktige hendelser på telefonen, samt tilbakemeldinger på ditt bruksmønster. De vil kontinuerlig oppdatere seg etter som du bruker telefonen. </string>
+    <string name="dialog_main_score_header">Total risikofaktor</string>
+    <string name="dialog_main_score_text">Total risikofaktore er gjennomsnittet av risikofaktoren samlet fra alle installerte applikasjoner, og er ment som et totalt bilde på nåværende trusselnivå. </string>
+    <string name="dialog_main_cards_header">Trender og bruksmønster</string>
+    <string name="dialog_main_cards_text">Trendene og bruksmønstre bruker informasjon fra ditt installerings- og avinstalleringsmønster og besvarelser på spørsmål rettet mot tillateser for å gi deg informasjon som kan være nyttig. Disse vil kontinuerlig oppdatere seg etter som du bruker telefonen. </string>
     <string name="dialog_main_color_codes_header">Fargekoder</string>
-    <string name="dialog_main_color_codes_text">De forskjellige fargekodene i dette skjermbilde indikerer hendelsens alvorlighetsgrad.   </string>
+    <string name="dialog_main_color_codes_text">Fargekodene indikerer alvorlighetsgraden til hendelsene som blir presentert.</string>
 
     <string name="application_guidance">Listen over dine applikasjoner består av de applikasjoner du selv har lastet ned. Applikasjoner som fulgte med din applikasjon, såkalte systemapplikasjoner, vil ikke vises i denne listen.</string>
     <string name="filer_applications">Du kan filtere applikasjonene</string>
@@ -106,4 +111,12 @@
     <string name="remove_all">Fjern alle</string>
     <string name="no_matches">Ingen treff</string>
     <string name="touch_to_uninstall">Trykk her for å avinstallere %s</string>
+    <string name="title_activity_disharmony">Disharmoniske apper</string>
+    <string name="title_activity_behavior_application_list">Disharmoniske apper</string>
+
+    <!-- Dialog behavior-->
+    <string name="disharmony_sad_text">Misfornøyd med </string>
+    <string name="disharmony_neutral_text">Nøytral til</string>
+    <string name="dialog_behavior_info_header">Disharmoni</string>
+    <string name="dialog_behavior_info_text">Disharmoniske applikasjoner har tillatelser du har stilt deg negativt til. Hvis du viser sterkt misnøye mot en applikasjons tillatelser bør du revurdere om du ønsker å ha den installert på telefonen.</string>
 </resources>

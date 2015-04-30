@@ -5,12 +5,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,11 +19,9 @@ import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationUpdateLogActivity;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
@@ -55,29 +49,25 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         Collections.sort(allPreviousVersions);
 
         AppInfo newVersion = null;
+        ApplicationHelperSingleton applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context.getApplicationContext());
+        applicationHelperSingleton.updateInstance();
+        ExtendedPackageInfo packageInfo = applicationHelperSingleton.getApplicationByPackageName(packageName);
 
-        try {
-            newVersion = dataSource.insertApplicationUpdate(ApplicationHelper.getAppInfo(packageName, context));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+            newVersion = dataSource.insertApplicationUpdate(packageInfo.getPackageInfo());
+
 
         if (newVersion != null && allPreviousVersions.size() > 0) {
             AppInfo mostRecentPreviousVersion = allPreviousVersions.get(0);
 
-            ArrayList<PermissionDescription> newPermissions = PermissionHelper.newRequestedPermissions(context, mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
-            ArrayList<PermissionDescription> oldPermissions = PermissionHelper.removedPermissions(context, mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
+            ArrayList<PermissionDescription> newPermissions = applicationHelperSingleton.getPermissionHelper().newRequestedPermissions(mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
+            ArrayList<PermissionDescription> oldPermissions = applicationHelperSingleton.getPermissionHelper().removedPermissions(mostRecentPreviousVersion.getPermissions(), newVersion.getPermissions());
 
             if (newPermissions.size() > 0 || oldPermissions.size() > 0) {
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, true);
 
-                try {
-                    PackageInfo packageInfo = ApplicationHelper.getPackageInfo(packageName, context);
-                    String appName = context.getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
+                    String appName = context.getPackageManager().getApplicationLabel(packageInfo.getPackageInfo().applicationInfo).toString();
                     showNotification(context, appName + " oppdatert", "Risikofaktor endret ved siste oppdatering", packageName);
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
+
             } else {
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, false);
             }
@@ -86,10 +76,9 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
 
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
-        ExtendedPackageInfo extendedPackageInfo = ApplicationHelper.getThirdPartyApplication(context,packageName);
-        long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()) + "");
+        long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, packageInfo.getPrivacyScore() + "");
         if(id != -1) {
-            System.out.println("INSTALL APP DB ER GOOD" + packageName  + " SCORE: " + PrivacyScoreCalculator.calculateScore(extendedPackageInfo.getPermissionDescriptions()));
+            System.out.println("ROW ID " + id + "  INSTALL receiver APP DB ER GOOD" + packageName  + " SCORE: " + packageInfo.getPrivacyScore());
         }
         profileDataSource.close();
     }
@@ -103,9 +92,9 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
 
         Intent resultIntent = new Intent(context, ApplicationUpdateLogActivity.class);
         resultIntent.putExtra(ApplicationListActivity.PACKAGE_NAME, packageName);
-        resultIntent.putExtra(ApplicationUpdateLogActivity.FROM_NOTIFICATION, true);
         Intent firstBackIntent = new Intent(context, ApplicationDetailActivity.class);
         firstBackIntent.putExtra(ApplicationListActivity.PACKAGE_NAME, packageName);
+        firstBackIntent.putExtra(ApplicationDetailActivity.FROM_NOTIFICATION, true);
         Intent secondBackIntent = new Intent(context, ApplicationListActivity.class);
         Intent thirdBackIntent = new Intent(context, MainActivity.class);
 

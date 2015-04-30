@@ -4,17 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,26 +22,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.privacyProfile.UpdateProfileThread;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
+
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 
 /**
@@ -50,13 +45,14 @@ import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 public class ApplicationListActivity extends ActionBarActivity {
     public static final String PACKAGE_NAME = "packageName";
 
+    public Intent intent;
+
     private RecyclerView list;
     private ApplicationListAdapter adapter;
 
     private View popupView;
     private PopupWindow popupWindow;
 
-    private ArrayList<ExtendedPackageInfo> apps;
     private ArrayList<ExtendedPackageInfo> filteredApps;
     private ArrayList<CheckBox> permissionsCheckBoxes;
 
@@ -67,6 +63,8 @@ public class ApplicationListActivity extends ActionBarActivity {
     private CheckBox filterRiskMedium;
     private CheckBox filterRiskLow;
 
+    private ApplicationHelperSingleton applicationHelperSingleton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,26 +72,25 @@ public class ApplicationListActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        ApplicationHelper.clearApplicationList();
-        apps = ApplicationHelper.getThirdPartyApplications(this);
-        permissionsCheckBoxes = new ArrayList<>();
-        filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
 
-        ArrayList<ExtendedPackageInfo> apps = ApplicationHelper.getThirdPartyApplications(this);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
+
+        permissionsCheckBoxes = new ArrayList<>();
+        filteredApps = (ArrayList<ExtendedPackageInfo>) applicationHelperSingleton.getApplications().clone();
+
+        ArrayList<ExtendedPackageInfo> apps = applicationHelperSingleton.getApplications();
         UpdateProfileThread updateProfileThread = new UpdateProfileThread(apps);
         updateProfileThread.run();
 
-        RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.applications_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        list = (RecyclerView)findViewById(R.id.applications_list);
+
+        list = (RecyclerView) findViewById(R.id.applications_list);
+
         list.setLayoutManager(new LinearLayoutManager(this));
         list.setItemAnimator(new DefaultItemAnimator());
-
         adapter = new ApplicationListAdapter(this, apps);
         list.setAdapter(adapter);
 
-        LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         popupView = layoutInflater.inflate(R.layout.activity_application_list_search_popup, null, false);
 
         LinearLayout headerWrapper = (LinearLayout) popupView.findViewById(R.id.search_popup_header_wrapper);
@@ -164,7 +161,7 @@ public class ApplicationListActivity extends ActionBarActivity {
         Point size = new Point();
         display.getSize(size);
 
-        popupWindow = new PopupWindow(popupView, size.x,size.y - getSupportActionBar().getHeight(), true );
+        popupWindow = new PopupWindow(popupView, size.x, size.y - getSupportActionBar().getHeight(), true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setFocusable(true);
         popupWindow.setAnimationStyle(R.style.AnimationPopup);
@@ -173,7 +170,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
     private void populateSearchPopupWindowPermissionCheckboxes(View view) {
         LinearLayout wrapper = (LinearLayout) view.findViewById(R.id.search_popup_permission_checkbox_wrapper);
-        ArrayList<PermissionDescription> permissions = PermissionHelper.getAllPermissionDescriptions(this);
+        ArrayList<PermissionDescription> permissions = applicationHelperSingleton.getPermissionHelper().getPermissionDescriptions();
 
         for (PermissionDescription permission : permissions) {
             if (permission.getRisk() == PrivacyScoreCalculator.RISK_HIGH) {
@@ -188,6 +185,26 @@ public class ApplicationListActivity extends ActionBarActivity {
                 });
                 permissionsCheckBoxes.add(cb);
                 wrapper.addView(cb);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ApplicationListAdapter.APP_DELETED_CODE) {
+
+            String deletedPackage = "";
+
+            if(data != null) {
+                deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
+
+                if (!deletedPackage.equals("")) {
+                    applicationHelperSingleton.removeApplication(deletedPackage);
+                    adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());
+                    list.setAdapter(adapter);
+                }
             }
         }
     }
@@ -207,7 +224,7 @@ public class ApplicationListActivity extends ActionBarActivity {
             }
         }
 
-        for (ExtendedPackageInfo app : apps) {
+        for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
             ArrayList<String> reqPermissions = new ArrayList<>();
 
             for (PermissionDescription reqPermission : app.getPermissionDescriptions()) {
@@ -221,7 +238,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     }
 
     private void filterAppsByRiskFactor() {
-        for (ExtendedPackageInfo app : apps) {
+        for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
             boolean remove = true;
 
             if (filterRiskHigh.isChecked() && getAppRiskFactor(app) == PrivacyScoreCalculator.RISK_HIGH) {
@@ -257,7 +274,7 @@ public class ApplicationListActivity extends ActionBarActivity {
     }
 
     private void filterApps() {
-        filteredApps = (ArrayList<ExtendedPackageInfo>) apps.clone();
+        filteredApps = (ArrayList<ExtendedPackageInfo>) applicationHelperSingleton.getApplications().clone();
 
         filterAppsByPermissions();
         filterAppsByRiskFactor();
@@ -328,8 +345,7 @@ public class ApplicationListActivity extends ActionBarActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public class MyGestureDetector extends GestureDetector.SimpleOnGestureListener
-    {
+    public class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 120;
         private static final int SWIPE_MAX_OFF_PATH = 250;
         private static final int SWIPE_THRESHOLD_VELOCITY = 150;

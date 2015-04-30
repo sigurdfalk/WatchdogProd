@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
@@ -26,16 +23,32 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
 
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
-        ProfileEvent profileEvent = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP,packageName);
+
+        ProfileEvent profileEvent = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP, packageName);
         if(profileEvent != null) {
             String riskScore = profileEvent.getValue();
             long id = profileDataSource.insertEvent(packageName, Profile.UNINSTALLED_DANGEROUS_APP, riskScore);
             if(id != -1) {
                 System.out.println("UNINSTALL APP DB ER GOOD" + packageName + " SCORE: " + riskScore);
             }
-            profileDataSource.close();
         } else {
             System.out.println("APP UNINSTALL ER NULL I DB" + packageName);
         }
+
+        long deletedFromInstalled = profileDataSource.deleteEvent(Profile.INSTALLED_DANGEROUS_APP, packageName);
+
+        if(deletedFromInstalled == 0) {
+            System.out.println("NO APPS DELETED");
+        }
+        if(deletedFromInstalled == 1) {
+            System.out.println("APP DELETED");
+        }
+        if(deletedFromInstalled > 1) {
+            System.out.println("SEVERAL APPS DELETED");
+        }
+
+        profileDataSource.close();
+
+
     }
 }

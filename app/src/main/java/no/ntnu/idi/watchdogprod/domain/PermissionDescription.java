@@ -61,4 +61,9 @@ public class PermissionDescription implements Comparable<PermissionDescription> 
             return this.getDesignation().compareTo(another.getDesignation());
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return ((PermissionDescription) o).getName().equals(this.getName());
+    }
 }

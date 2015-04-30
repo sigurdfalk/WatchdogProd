@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="@string/search_guidance"
             android:textSize="@dimen/dialog_text"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/black"
             android:gravity="center" />
     </LinearLayout>
 
@@ -36,7 +36,7 @@
         android:layout_marginRight="25sp"
         android:layout_marginTop="5sp"
         android:layout_marginBottom="5sp"
-        android:background="@color/text_primary" />
+        android:background="@color/text_secondary" />
 
     <ScrollView
         android:layout_width="fill_parent"

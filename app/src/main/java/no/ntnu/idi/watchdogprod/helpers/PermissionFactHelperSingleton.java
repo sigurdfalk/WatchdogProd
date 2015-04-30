@@ -14,25 +14,32 @@ import no.ntnu.idi.watchdogprod.domain.PermissionFact;
 /**
  * Created by sigurdhf on 25.03.2015.
  */
-public class PermissionFactHelper {
+public class PermissionFactHelperSingleton {
     public static final String FILE_NAME = "permissionfacts.csv";
 
-    private static ArrayList<PermissionFact> permissionFacts;
+    private static PermissionFactHelperSingleton instance;
 
-    public static ArrayList<PermissionFact> getAllPermissionFacts(Context context) {
-        if (isPermissionDescriptionsPopulated()) {
-            return permissionFacts;
+    private ArrayList<PermissionFact> permissionFacts;
+    private Context context;
+
+    private PermissionFactHelperSingleton(Context context) {
+        this.context = context;
+        this.permissionFacts = readPermissionFactsFromCsv();
+    }
+
+    public static PermissionFactHelperSingleton getInstance(Context context) {
+        if (instance == null) {
+            instance = new PermissionFactHelperSingleton(context);
         }
 
-        permissionFacts = readPermissionFactsFromCsv(context);
+        return instance;
+    }
+
+    public ArrayList<PermissionFact> getPermissionFacts() {
         return permissionFacts;
     }
 
-    public static ArrayList<PermissionFact> getAppPermissionFacts(Context context, String[] reqPermissions) {
-        if (!isPermissionDescriptionsPopulated()) {
-            permissionFacts = readPermissionFactsFromCsv(context);
-        }
-
+    public ArrayList<PermissionFact> getApplicationPermissionFacts(String[] reqPermissions) {
         ArrayList<PermissionFact> appFacts = new ArrayList<>();
 
         if (reqPermissions == null) {
@@ -48,11 +55,7 @@ public class PermissionFactHelper {
         return appFacts;
     }
 
-    private static boolean isPermissionDescriptionsPopulated() {
-        return permissionFacts != null && !permissionFacts.isEmpty();
-    }
-
-    private static ArrayList<PermissionFact> readPermissionFactsFromCsv(Context context) {
+    private ArrayList<PermissionFact> readPermissionFactsFromCsv() {
         ArrayList<PermissionFact> facts = new ArrayList<>();
         AssetManager assetManager = context.getAssets();
 
@@ -75,7 +78,7 @@ public class PermissionFactHelper {
         return facts;
     }
 
-    private static PermissionFact getPermissionFactsFromCSVLine(String[] line) {
+    private PermissionFact getPermissionFactsFromCSVLine(String[] line) {
         int id = Integer.parseInt(line[0]);
         String[] permissions = line[1].split(",");
         String header = line[2];

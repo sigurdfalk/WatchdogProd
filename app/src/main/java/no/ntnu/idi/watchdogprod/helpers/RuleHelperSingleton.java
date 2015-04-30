@@ -14,25 +14,32 @@ import no.ntnu.idi.watchdogprod.domain.Rule;
 /**
  * Created by sigurdhf on 09.03.2015.
  */
-public class RuleHelper {
+public class RuleHelperSingleton {
     public static final String FILE_NAME = "ruleset.csv";
 
-    private static ArrayList<Rule> rules;
+    private static RuleHelperSingleton instance;
 
-    public static ArrayList<Rule> getAllRules(Context context) {
-        if (isRulesPopulated()) {
-            return rules;
+    private ArrayList<Rule> rules;
+    private Context context;
+
+    private RuleHelperSingleton(Context context) {
+        this.context = context;
+        this.rules = readRulesFromCsv();
+    }
+
+    public static RuleHelperSingleton getInstance(Context context) {
+        if (instance == null) {
+            instance = new RuleHelperSingleton(context);
         }
 
-        rules = readRulesFromCsv(context);
+        return instance;
+    }
+
+    public ArrayList<Rule> getRules() {
         return rules;
     }
 
-    public static ArrayList<Rule> getViolatedRules(String[] reqPermissions, Context context) {
-        if (!isRulesPopulated()) {
-            rules = readRulesFromCsv(context);
-        }
-
+    public ArrayList<Rule> getViolatedRules(String[] reqPermissions) {
         ArrayList<Rule> violatedRules = new ArrayList<>();
 
         if (reqPermissions == null) {
@@ -48,11 +55,7 @@ public class RuleHelper {
         return violatedRules;
     }
 
-    private static boolean isRulesPopulated() {
-        return rules != null && !rules.isEmpty();
-    }
-
-    private static ArrayList<Rule> readRulesFromCsv(Context context) {
+    private ArrayList<Rule> readRulesFromCsv() {
         ArrayList<Rule> ruleList = new ArrayList<>();
         AssetManager assetManager = context.getAssets();
 
@@ -75,7 +78,7 @@ public class RuleHelper {
         return ruleList;
     }
 
-    private static Rule getRuleFromCSVLine(String[] line) {
+    private Rule getRuleFromCSVLine(String[] line) {
         String key = line[Rule.KEY];
         String name = line[Rule.NAME];
         String rule = line[Rule.RULE];

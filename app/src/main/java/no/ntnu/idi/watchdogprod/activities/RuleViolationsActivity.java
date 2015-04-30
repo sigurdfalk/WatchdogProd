@@ -2,8 +2,6 @@ package no.ntnu.idi.watchdogprod.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -17,10 +15,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Rule;
-import no.ntnu.idi.watchdogprod.helpers.RuleHelper;
 import no.ntnu.idi.watchdogprod.adapters.RuleListAdapter;
 
 /**
@@ -28,6 +26,7 @@ import no.ntnu.idi.watchdogprod.adapters.RuleListAdapter;
  */
 public class RuleViolationsActivity extends ActionBarActivity {
     private String applicationPackageName;
+    private ApplicationHelperSingleton applicationHelperSingleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,7 @@ public class RuleViolationsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_rule_violations);
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -43,16 +43,9 @@ public class RuleViolationsActivity extends ActionBarActivity {
         View emptyView = findViewById(R.id.rule_violations_empty);
         listView.setEmptyView(emptyView);
 
-        PackageInfo packageInfo = null;
+        ExtendedPackageInfo packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
 
-        try {
-            packageInfo = ApplicationHelper.getPackageInfo(applicationPackageName, this);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            // ToDo implement error handling
-        }
-
-        ArrayList<Rule> violatedRules = RuleHelper.getViolatedRules(packageInfo.requestedPermissions, this);
+        ArrayList<Rule> violatedRules = applicationHelperSingleton.getRuleHelper().getViolatedRules(packageInfo.getPackageInfo().requestedPermissions);
         Collections.sort(violatedRules);
         RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
         listView.setAdapter(adapter);

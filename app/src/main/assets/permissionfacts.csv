@@ -1,12 +1,16 @@
 id,permissions,header,fact
-0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
+0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, nårr som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
 1,ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
-2,SEND_SMS,SEND_SMS,SEND_SMS
-3,CALL_PHONE,CALL_PHONE,CALL_PHONE
-4,INTERNET,INTERNET,INTERNET
-5,READ_CONTACTS,READ_CONTACTS,READ_CONTACTS
-6,RECORD_AUDIO,RECORD_AUDIO,RECORD_AUDIO
-7,DISABLE_KEYGUARD,DISABLE_KEYGUARD,DISABLE_KEYGUARD
-8,READ_CALL_LOG,READ_CALL_LOG,READ_CALL_LOG
-9,READ_PHONE_STATE,READ_PHONE_STATE,READ_PHONE_STATE
-10,WRITE_CONTACTS,WRITE_CONTACTS,WRITE_CONTACTS
+2,SEND_SMS,Visste du at...,"Denne appen kan, uten din tillatelse, send SMS-meldinger fra din telefon."
+3,CALL_PHONE,Visste du at...,"Denne appen kan, uten din tillatelse, ringe opp et telefonnummer fra din telefon."
+4,INTERNET,Visste du at...,"Denne appen kan, uten din involvering, bruke internett fritt til å laste opp og ned data fra telefonen."
+5,READ_CONTACTS,Visste du at...,Denne appen kan lese alle dine lagrede kontakter på telefonen.
+6,RECORD_AUDIO,Visste du at...,"Denne appen kan, uten din tillatelse, gjøre lydopptak gjennom mikrofonen."
+7,READ_CALL_LOG,Visste du at...,Denne appen kan lese telefonens samtalelogg.
+8,READ_PHONE_STATE,Visste du at...,"Denne appen kan lese telefonstatus. Dette innebærer nåværende hendelser, f.eks. pågående telefonsamtaler."
+9,READ_HISTORY_BOOKMARKS,Visste du at...,Denne appen kan lese din internettlogg og dine lagrede bokmerker fra nettleseren din.
+10,CAMERA,Visste du at...,Denne appen kan ta bilder og videoer fra telefonens kamera.
+11,GET_ACCOUNTS,Visste du at...,Denne appen kan lese hvilke epost-kontoer som er knyttet til din telefon.
+12,READ_CALENDAR,Visste du at...,Denne appen kan lese av hendelser fra din kalender.
+13,READ_SMS,Visste du at...,Denne appen kan lese lagrede SMS-meldinger og MMS-meldinger på din telefon.
+14,GET_TASKS,Visste du at...,Denne appen kan lese hvilke andre applikasjoner som er kjørende på din telefon.

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -47,12 +49,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import no.ntnu.idi.watchdogprod.recommender.RecMain;
+import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.Answer;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelper;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelper;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Rule;
@@ -65,10 +67,15 @@ import no.ntnu.idi.watchdogprod.domain.AppInfo;
  * Created by sigurdhf on 06.03.2015.
  */
 public class ApplicationDetailActivity extends ActionBarActivity {
+    public static final String FROM_NOTIFICATION = "fromNotification";
+
     private String applicationPackageName;
     private static final String DEBUG_TAG = "AppDetailActivity";
 
     private ExtendedPackageInfo packageInfo;
+
+    private ApplicationHelperSingleton applicationHelperSingleton;
+    private PrivacyScoreCalculator privacyScoreCalculator;
 
     private View permissionFactWrapper;
     private TextView infoHeader;
@@ -76,9 +83,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private int currentPermissionFact;
     private LinearLayout uninstall;
 
+    private String deletedAppPackage;
+    private int APP_DELETE_CODE = 2015;
+    public static String APP_DELETED_INTENT_KEY = "deletedPackage";
+
     private AnswersDataSource answersDataSource;
 
-    private int riskScore;
+    private double riskScore;
 
     private LinearLayout riskScoreBackground;
     private TextView riskScoreText;
@@ -90,37 +101,40 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_application_detail);
 
         answersDataSource = new AnswersDataSource(this);
+        applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
 
         applicationPackageName = getIntent().getExtras().getString(ApplicationListActivity.PACKAGE_NAME);
-        packageInfo = ApplicationHelper.getExtendedPackageInfo(this, applicationPackageName);
+
+        if (getIntent().getExtras().getBoolean(FROM_NOTIFICATION, false)) {
+            applicationHelperSingleton.updateInstance();
+        }
+
+        packageInfo = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName);
         currentPermissionFact = 0;
 
-        String appName = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), this);
+        String appName = ApplicationHelperSingleton.getApplicationName(this, packageInfo.getPackageInfo());
 
-        try {
-            riskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        riskScore = packageInfo.getPrivacyScore();
 
         riskScoreBackground = (LinearLayout) findViewById(R.id.app_detail_privacy_score_background);
         riskScoreText = (TextView) findViewById(R.id.app_detail_privacy_score);
         riskScoreIndicator = (ImageView) findViewById(R.id.app_detail_privacy_score_indicator);
 
         //riskScoreText.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
-        riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
         setScoreBackgroundColor(riskScoreBackground, riskScore);
 
-        uninstall = (LinearLayout)findViewById(R.id.app_detail_uninstall_wrapper);
+        uninstall = (LinearLayout) findViewById(R.id.app_detail_uninstall_wrapper);
         TextView uninstallText = (TextView) findViewById(R.id.app_detail_uninstall_text);
         uninstallText.setText(String.format(getResources().getString(R.string.touch_to_uninstall), appName));
 
         uninstall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri packageURI = Uri.parse("package:"+applicationPackageName);
+                Uri packageURI = Uri.parse("package:" + applicationPackageName);
                 Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                startActivity(uninstallIntent);
+                deletedAppPackage = applicationPackageName;
+                startActivityForResult(uninstallIntent, APP_DELETE_CODE);
             }
         });
 
@@ -150,6 +164,31 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         fillUpdatesCard(packageInfo);
         fillIndicatorsCard(packageInfo);
         initQuestions();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == APP_DELETE_CODE) {
+
+            PackageInfo packageInfoExists = null;
+
+            try {
+                packageInfoExists = ApplicationHelperSingleton.getApplicationPackageInfo(this, deletedAppPackage);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if (packageInfoExists == null) {
+                Intent intent = new Intent();
+                intent.putExtra(APP_DELETED_INTENT_KEY, deletedAppPackage);
+                setResult(ApplicationListAdapter.APP_DELETED_CODE, intent);
+                ApplicationDetailActivity.this.finish();
+            } else {
+                //user Clicked on cancel
+            }
+        }
     }
 
     private void initQuestions() {
@@ -222,8 +261,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         }
         else {
             AppInfo previousUpdate = app.getUpdateLog().get(1);
-            ArrayList<PermissionDescription> addedPermissions = PermissionHelper.newRequestedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
-            ArrayList<PermissionDescription> removedPermissions = PermissionHelper.removedPermissions(this, previousUpdate.getPermissions(), latestUpdate.getPermissions());
+            ArrayList<PermissionDescription> addedPermissions = applicationHelperSingleton.getPermissionHelper().newRequestedPermissions(previousUpdate.getPermissions(), latestUpdate.getPermissions());
+            ArrayList<PermissionDescription> removedPermissions = applicationHelperSingleton.getPermissionHelper().removedPermissions(previousUpdate.getPermissions(), latestUpdate.getPermissions());
 
             if (addedPermissions.size() == 0 && removedPermissions.size() == 0) {
                 updatesText.setText("Denne oppdateringen hadde ingen innvirkning på applikasjonens risikofaktor.");
@@ -367,7 +406,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     public void onRadioButtonClicked(View view) {
         System.out.println("onRadioButtonClicked");
 
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.permission_fact_radio_happy:
                 writePermissionFactInteraction(Answer.ANSWER_HAPPY);
                 break;
@@ -386,26 +425,24 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void showNewPermissionFact() {
         final ArrayList<PermissionFact> permissionFacts = packageInfo.getPermissionFacts();
 
-        try {
-             int newRiskScore = (int) PrivacyScoreCalculator.calculateScore(this, packageInfo);
-            if (newRiskScore > riskScore) {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
-            } else if (newRiskScore < riskScore) {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
-            } else {
-                riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
-            }
+        applicationHelperSingleton.updateApplicationPrivacyScores();
+        double newRiskScore = applicationHelperSingleton.getApplicationByPackageName(applicationPackageName).getPrivacyScore();
 
-            riskScore = newRiskScore;
-            riskScoreText.setText("Risikofaktor " + riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
-            setScoreBackgroundColor(riskScoreBackground, riskScore);
-
-            Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
-            riskScoreIndicator.startAnimation(pulse);
-            riskScoreText.startAnimation(pulse);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (newRiskScore > riskScore) {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_up_black_48dp);
+        } else if (newRiskScore < riskScore) {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_arrow_down_black_48dp);
+        } else {
+            riskScoreIndicator.setImageResource(R.mipmap.ic_trending_neutral_black_48dp);
         }
+
+        riskScore = newRiskScore;
+        riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
+        setScoreBackgroundColor(riskScoreBackground, riskScore);
+
+        Animation pulse = AnimationUtils.loadAnimation(this, R.anim.anim_pulse);
+        riskScoreIndicator.startAnimation(pulse);
+        riskScoreText.startAnimation(pulse);
 
         if (currentPermissionFact >= permissionFacts.size()) {
             permissionFactWrapper.setVisibility(View.GONE);
@@ -451,21 +488,13 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         answersDataSource.insertAnswer(fact.getId(), new Date().getTime(), packageInfo.getPackageInfo().packageName, answer);
 
         answersDataSource.close();
-
-        try {
-            double score = PrivacyScoreCalculator.calculateScore(this, packageInfo);
-            System.out.println("New score " + packageInfo.getPackageInfo().packageName + ": " + score);
-        } catch (SQLException e) {
-            System.out.println("FEIL FOR FETTE FAEN");
-            e.printStackTrace();
-        }
     }
 
     private class ButtonListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.app_detail_indicators_wrapper) {
+            if (v.getId() == R.id.app_detail_indicators_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, RuleViolationsActivity.class);
 
                 Bundle bundle = new Bundle();
@@ -481,8 +510,8 @@ public class ApplicationDetailActivity extends ActionBarActivity {
                 i.putExtras(bundle);
 
                 startActivity(i);
-            }
-             else if (v.getId() == R.id.app_detail_updates_wrapper) {
+
+            } else if (v.getId() == R.id.app_detail_updates_wrapper) {
                 Intent i = new Intent(ApplicationDetailActivity.this, ApplicationUpdateLogActivity.class);
 
                 Bundle bundle = new Bundle();
@@ -506,7 +535,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String appname = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext());
+        final String appname = ApplicationHelperSingleton.getApplicationName(this, packageInfo.getPackageInfo());
         String url = "http://78.91.58.168:8888/replace?"+applicationPackageName;
         StringRequest json = new StringRequest(url, new Response.Listener<String>() {
 
