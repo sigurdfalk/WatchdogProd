@@ -116,11 +116,6 @@ public class MainActivity extends ActionBarActivity {
             linearLayout.setVisibility(View.VISIBLE);
         }
 
-        try {
-            initProfile(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void initProfile(Context context) throws SQLException {
@@ -206,6 +201,12 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        try {
+            initProfile(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private int calculateTotalRiskScore() {

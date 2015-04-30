@@ -75,7 +75,7 @@
     <string name="card_install_trend_positive">Det har vært en økning av risikofylte applikasjoner installert på telefonen. Dette har medført en økt total risikofaktor.</string>
     <string name="card_install_trend_negative">Det har vært en nedgang av risikofylte applikasjoner installert telefonen. Dette har medført en lavere risikofaktor. </string>
     <string name="card_install_trend_fixed_high">Det er høy risikofaktor på de installerte applikasjonene på telefonen.</string>
-    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de installerte applikasjonene på telefonen.</string>
+    <string name="card_install_trend_fixed_low">Det er lav riskofaktor på de siste installerte applikasjonene på telefonen.</string>
     <string name="card_install_trend_neutral">Ingen installerte applikasjoner registrert. Her vil det komme informasjon ditt trender i ditt installeringssmønster.</string>
 
     <!-- User behavior feedback -->
