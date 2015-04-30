@@ -62,7 +62,8 @@ public class PrivacyScoreCalculator {
         } else if (hasMediumPermission) {
             score += HAS_MEDIUM_BONUS;
         }
-
+         hasMediumPermission = false;
+         hasHighPermission = false;
         return score;
         //return (score > MAX_SCORE) ? MAX_SCORE : score;
     }

@@ -30,7 +30,7 @@ public class ResponseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    private ArrayList<ResponseApp> applications;
+    public ArrayList<ResponseApp> applications;
 
     private Context context;
 

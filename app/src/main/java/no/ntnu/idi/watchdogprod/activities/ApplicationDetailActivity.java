@@ -507,7 +507,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         final String appname = ApplicationHelper.getApplicationName(packageInfo.getPackageInfo(), getBaseContext());
-        String url = "http://78.91.83.175:8888/replace?"+applicationPackageName;
+        String url = "http://78.91.58.168:8888/replace?"+applicationPackageName;
         StringRequest json = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
@@ -525,7 +525,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // TODO Auto-generated method stub
-                Toast.makeText(getApplicationContext(), "VolleyError", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                 Log.e(DEBUG_TAG, error.toString());
                 Log.e(DEBUG_TAG, error.getStackTrace().toString());
 

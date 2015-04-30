@@ -1,7 +1,10 @@
 package no.ntnu.idi.watchdogprod.recommender;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -62,10 +65,11 @@ public class RecMain extends ActionBarActivity{
         apps = stringToArrayList((String) getIntent().getExtras().getSerializable("response"));
         profile = Profile.getInstance();
         originalRisk = getIntent().getExtras().getInt("originalScore");
-        Collections.sort(apps);
         purgeBadApps();
+        Collections.sort(apps);
         if(apps.isEmpty()){
-            NoReplacementsDialog dialog = new NoReplacementsDialog();
+            DialogFragment dialog = new NoReplacementsDialog();
+            dialog.show(getFragmentManager(), "noBetterApps");
         }else{
             adapter = new ResponseListAdapter(this,apps);
             mRecyclerView.setAdapter(adapter);
@@ -86,16 +90,20 @@ public class RecMain extends ActionBarActivity{
     }
     private void purgeBadApps() {
         double score = 99999;
+        ArrayList<ResponseApp> temp = new ArrayList<ResponseApp>();
         for (ResponseApp app : apps) {
             ArrayList<PermissionDescription> permissionDescriptions = parseArray(app.getPermissions());
             score = PrivacyScoreCalculator.calculateScore(permissionDescriptions);
+            String name = app.getName();
+            app.setPrivacyScore(score);
             if(originalRisk < score){
-                this.apps.remove(app);
+                temp.add(app);
             }
             else{
                 app.setPrivacyScore(score);
             }
         }
+        this.apps.removeAll(temp);
     }
 
     @Override
@@ -113,7 +121,12 @@ public class RecMain extends ActionBarActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+
+        try {
+            adapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private ArrayList<ResponseApp> stringToArrayList(String jsonString){
         Gson gson = new Gson();
@@ -123,6 +136,19 @@ public class RecMain extends ActionBarActivity{
             app.calculate();
         }
         return posts;
+    }
+    public class NoReplacementsDialog extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.noReplacements)
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+            return builder.create();
+        }
     }
 
 }
