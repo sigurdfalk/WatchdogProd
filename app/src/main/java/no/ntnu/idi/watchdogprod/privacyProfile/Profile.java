@@ -73,7 +73,7 @@ public class Profile {
     public void createProfile(Context context) throws SQLException {
 //        double[] answers = getUserQuestions(context);
         applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context);
-        installTrendRiskIncreasing = getInstallTrend(context, Profile.AVG_INSTALLS_VALUE);
+        installTrendRiskIncreasing = getInstallTrend(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
         uninstallTrendRiskIncreasing = getUninstallTrend(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
         disharmonyApps = getHarmonyApps(context);
     }
@@ -163,12 +163,79 @@ public class Profile {
         return (avgNew > avgOld);
     }
 
-    private int getInstallTrend(Context context, String type) {
-      return -1;
+    private int getInstallTrend(double[] history, Context context, String type) {
+
+        System.out.println("INSTALL");
+
+        double oldAvg = getOldAverage(context, type);
+
+        double avg = 0;
+
+        if (oldAvg == -1) {
+            avg = getCurrentInstalledAverage();
+            saveNewAverage(context, avg, type);
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        avg = getAverage(history);
+
+        if(oldAvg == avg) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        if (history.length <= 2) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        if (isTrendIncreasing(history) && avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_INCREASING;
+        } else if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_FIXED_HIGH;
+        } else {
+            return APP_TREND_FIXED_LOW;
+        }
     }
 
     private int getUninstallTrend(double[] history, Context context, String type) {
-       return -1;
+        System.out.println("UNINSTALL");
+
+        double oldAvg = getOldAverage(context, type);
+        double avg = 0;
+
+        if (oldAvg == -1) {
+            saveNewAverage(context, avg, type);
+            return APP_TREND_NEUTRAL;
+        }
+
+        avg = getAverage(history);
+
+        if (history.length <= 2) {
+            if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+                return APP_TREND_FIXED_HIGH;
+            } else {
+                return APP_TREND_FIXED_LOW;
+            }
+        }
+
+        if (!isTrendIncreasing(history)) {
+            return APP_TREND_INCREASING;
+        } else if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
+            return APP_TREND_FIXED_HIGH;
+        } else {
+            return APP_TREND_FIXED_LOW;
+        }
     }
 
     public double getAverage(double[] history) {
