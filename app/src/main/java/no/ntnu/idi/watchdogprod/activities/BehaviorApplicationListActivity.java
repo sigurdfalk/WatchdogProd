@@ -1,5 +1,6 @@
 package no.ntnu.idi.watchdogprod.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +39,14 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
     ApplicationHelperSingleton applicationHelperSingleton;
 
+    public static int APP_DELETED_CODE = 2017;
+
+    private BehaviorApplicationListAdapter adapter;
+    private ListView listView;
+
+    private ArrayList<DisharomyApplication> disharomyApplications;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +59,14 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
         applicationHelperSingleton = ApplicationHelperSingleton.getInstance(this.getApplicationContext());
 
-        ListView listView = (ListView) findViewById(R.id.list_disharmony);
+        listView = (ListView) findViewById(R.id.list_disharmony);
 
         ArrayList<Answer> answers = getAllAnswers();
         ArrayList<ExtendedPackageInfo> extendedPackageInfos = applicationHelperSingleton.getApplications();
 
-        final ArrayList<DisharomyApplication> disharomyApplications = createHarmonyApps(answers, extendedPackageInfos);
+        disharomyApplications = createHarmonyApps(answers, extendedPackageInfos);
 
-        BehaviorApplicationListAdapter adapter = new BehaviorApplicationListAdapter(this, disharomyApplications);
+        adapter = new BehaviorApplicationListAdapter(this, disharomyApplications);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -188,7 +197,8 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(ApplicationListActivity.PACKAGE_NAME, disharomyApplication.getExtendedPackageInfo().getPackageInfo().packageName);
                 i.putExtras(bundle);
-                context.startActivity(i);
+                ((Activity) context).startActivityForResult(i, APP_DELETED_CODE);
+//                context.startActivity(i);
             }
         });
 
@@ -200,6 +210,36 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
         builder.create();
         builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == BehaviorApplicationListActivity.APP_DELETED_CODE) {
+
+            String deletedPackage = "";
+
+            if(data != null) {
+                deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
+
+                if (!deletedPackage.equals("")) {
+                    removeApplication(deletedPackage);
+                    applicationHelperSingleton.removeApplication(deletedPackage);
+                    adapter = new BehaviorApplicationListAdapter(this, disharomyApplications);
+                    listView.setAdapter(adapter);
+                }
+            }
+        }
+    }
+
+    public void removeApplication(String deletedPackageName) {
+        for(DisharomyApplication disharomyApplication : disharomyApplications) {
+            if(disharomyApplication.getExtendedPackageInfo().getPackageInfo().packageName.equals(deletedPackageName)) {
+                disharomyApplications.remove(disharomyApplication);
+                break;
+            }
+        }
     }
 
     private void showInformationDialog() {
