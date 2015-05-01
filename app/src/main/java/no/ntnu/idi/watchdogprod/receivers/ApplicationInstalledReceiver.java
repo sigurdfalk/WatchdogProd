@@ -78,7 +78,7 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         profileDataSource.open();
         long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, packageInfo.getPrivacyScore() + "");
         if(id != -1) {
-            System.out.println("INSTALL receiver APP DB ER GOOD" + packageName  + " SCORE: " + packageInfo.getPrivacyScore());
+            System.out.println("ROW ID " + id + "  INSTALL receiver APP DB ER GOOD" + packageName  + " SCORE: " + packageInfo.getPrivacyScore());
         }
         profileDataSource.close();
     }
