@@ -86,7 +86,7 @@ public class PrivacyScoreCalculator {
 
         double logistic = generalLogisticFunction(normalizedScore);
 
-        double sigmoid = sigmoid(score);
+        double sigmoid = logisticFunction(score);
 
         System.out.println(";" + score + ";" + normalizedScore + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_HIGH) + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_MEDIUM) + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_LOW) + ";" + violatedRules.size());
 
@@ -113,9 +113,15 @@ public class PrivacyScoreCalculator {
         return count;
     }
 
+    private double sigmoid(double input) {
+        double output = 1 / (1 + Math.pow(Math.E, -input));
+
+        return output;
+    }
+
     // http://en.wikipedia.org/wiki/Logistic_function
     // plot y = 1.0 / (1.0 + e^(-0.08*(x - 60))) for x from 0 to 371
-    private double sigmoid(double input) {
+    private double logisticFunction(double input) {
         final double L = 100.0; // max output value
         final double X0 = 35.0; // curve midpoint
         final double k = 0.08; // steepness
@@ -188,7 +194,8 @@ public class PrivacyScoreCalculator {
         }
 
         for (PermissionDescription permission : permissions) {
-            double weight = getPermissionWeight(permission, answers, facts);
+            //double weight = getPermissionWeight(permission, answers, facts);
+            double weight = getPermissionWeightSigmoid(permission, answers, facts);
             permissionWeights.put(permission, weight);
         }
     }
@@ -230,6 +237,42 @@ public class PrivacyScoreCalculator {
         System.out.println(matchingFact.getPermissions()[0] + " weight: " + weight);
 
         return weight;
+    }
+
+    private double getPermissionWeightSigmoid(PermissionDescription permission, ArrayList<Answer> allAnswers, ArrayList<PermissionFact> facts) {
+        if (allAnswers == null) {
+            return sigmoid(0);
+        }
+
+        PermissionFact matchingFact = getPermissionFactMatchingPermission(permission, facts);
+
+        if (matchingFact == null) {
+            return sigmoid(0);
+        }
+
+        ArrayList<Answer> matchingAnswers = getAnswersByPermissionFact(matchingFact, allAnswers);
+
+        if (matchingAnswers.size() == 0) {
+            return sigmoid(0);
+        }
+
+        int answerSum = 0;
+
+        for (Answer answer : matchingAnswers) {
+            switch (answer.getAnswer()) {
+                case Answer.ANSWER_SAD:
+                    answerSum += 1;
+                    break;
+                case Answer.ANSWER_NEUTRAL:
+                    answerSum += 0;
+                    break;
+                case Answer.ANSWER_HAPPY:
+                    answerSum -= 1;
+                    break;
+            }
+        }
+
+        return sigmoid((double) answerSum);
     }
 
     private ArrayList<Answer> getAnswersByPermissionFact(PermissionFact fact, ArrayList<Answer> allAnswers) {
