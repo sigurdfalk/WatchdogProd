@@ -46,6 +46,11 @@
     <string name="replace">Erstatt</string>
     <string name="noReplacements">Det er ingen apps med lavere score</string>
     <string name="install">Installer</string>
+    <string name="replacements">Dette er anbefalte erstatninger</string>
+    <string name="replace_guidance">Listen over anbefalinger består av de applikasjoner Google Play Store sier ligner på den originale applikasjonen. Disse er sortert basert på profilen din.</string>
+    <string name="yourProfile">Din profil</string>
+    <string name="profile_details">Din profil er basert på alle applikasjoner som er på telefonen. Denne viser hvilke tillatelser du synes er grei å ha i en applikasjon. Profilen din er lagret på telefonen og vil ikke bli delt med andre</string>
+
 
     <string name="uninstall_btn_text">Avinstaller applikasjon</string>
     <string name="harmony_apps">Disharmoni</string>

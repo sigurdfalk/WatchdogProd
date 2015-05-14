@@ -537,7 +537,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     private void replaceRequest(){
         RequestQueue queue = Volley.newRequestQueue(this);
         final String appname = ApplicationHelperSingleton.getApplicationName(this, packageInfo.getPackageInfo());
-        String url = "http://78.91.58.168:8888/replace?"+applicationPackageName;
+        String url = "http://78.91.81.12:8888/replace?"+applicationPackageName;
         StringRequest json = new StringRequest(url, new Response.Listener<String>() {
 
             @Override
