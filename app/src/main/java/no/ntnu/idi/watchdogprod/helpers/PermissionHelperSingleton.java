@@ -79,7 +79,7 @@ public class PermissionHelperSingleton {
             String[] line;
 
             // throw away the header
-            csvReader.readNext();
+            //csvReader.readNext();
 
             while ((line = csvReader.readNext()) != null) {
                 permDescList.add(getPermissionDescriptionFromCSVLine(line));

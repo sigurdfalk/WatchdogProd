@@ -299,7 +299,7 @@ public class MainActivity extends ActionBarActivity {
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
         } else if(uninstallTrend == Profile.APP_TREND_FIXED_HIGH) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
-            cardText.setText("Det er høy risikofaktor på siste avinstallerte applikasjonene.");
+            cardText.setText("Det har den siste tiden blitt avinstallert flere apper med høy risikofaktor.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_down_black_48dp));
         } else if (uninstallTrend == Profile.APP_TREND_NEUTRAL) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
