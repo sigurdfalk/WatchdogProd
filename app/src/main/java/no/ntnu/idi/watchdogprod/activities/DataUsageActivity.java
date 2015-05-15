@@ -328,46 +328,10 @@ public class DataUsageActivity extends ActionBarActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else if (id == R.id.action_settings) {
-            DialogFragment newFragment = new FireMissilesDialogFragment();
-            newFragment.show(getSupportFragmentManager(), "missiles");
 
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public class FireMissilesDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Varsler");
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-
-            View v = inflater.inflate(R.layout.data_notification_dialog_layout, null);
-
-            Spinner spinner = (Spinner)v.findViewById(R.id.data_usage_spinner);
-            spinner.setAdapter(new ArrayAdapter<>(context,
-                    android.R.layout.simple_spinner_item, dataMeasures));
-
-
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the dialog layout
-            builder.setView(v)
-                    // Add action buttons
-                    .setPositiveButton("Angi", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            // sign in the user ...
-                        }
-                    })
-                    .setNegativeButton("Avbryt", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            FireMissilesDialogFragment.this.getDialog().cancel();
-                        }
-                    });
-            return builder.create();
-        }
     }
 
 }

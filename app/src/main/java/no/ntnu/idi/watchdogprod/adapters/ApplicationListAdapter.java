@@ -220,7 +220,7 @@ public class ApplicationListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         PrivacyScoreCalculator privacyScoreCalculator = PrivacyScoreCalculator.getInstance(context);
         double score = privacyScoreCalculator.calculatePrivacyScore(extendedPackageInfo);
-        itemViewHolder.secondLine.setText("Score: " + score);
+        itemViewHolder.secondLine.setText("Score: " + (int)score);
 
         if (SharedPreferencesHelper.doShowAppWarningSign(context, extendedPackageInfo.getPackageInfo().packageName)) {
             itemViewHolder.errorSign.setVisibility(View.VISIBLE);
