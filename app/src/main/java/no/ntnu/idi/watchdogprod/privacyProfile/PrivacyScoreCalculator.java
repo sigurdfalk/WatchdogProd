@@ -34,7 +34,7 @@ public class PrivacyScoreCalculator {
     public static final int MAX_SCORE = 100;
 
     public static final int LOW_THRESHOLD = 0;
-    public static final int MEDIUM_THRESHOLD = 30;
+    public static final int MEDIUM_THRESHOLD = 15;
     public static final int HIGH_THRESHOLD = 60;
 
     private static PrivacyScoreCalculator instance;
@@ -82,12 +82,67 @@ public class PrivacyScoreCalculator {
 
         score += violatedRules.size() * PENALTY_VIOLATED_RULE;
 
-        return hyperbolicTan(normalizeScore(score, 0.0, 8.0)) * 100.0;
+        double normalizedScore = normalizeScore(score, 0.0, 1.0);
+
+        double logistic = generalLogisticFunction(normalizedScore);
+
+        double sigmoid = logisticFunction(score);
+
+        System.out.println(";" + score + ";" + normalizedScore + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_HIGH) + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_MEDIUM) + ";" + getPermissionTypeCount(packageInfo.getPermissionDescriptions(), RISK_LOW) + ";" + violatedRules.size());
+
+        double hypTan = hyperbolicTan(normalizedScore);
+        double finalScore = sigmoid;
+
+        return finalScore;
     }
 
     // http://math.stackexchange.com/questions/57429/functions-similar-to-log-but-with-results-between-0-and-1
     private double hyperbolicTan(double rawScore) {
         return 1 - (2 / (Math.pow(Math.E, 2 * rawScore) + 1));
+    }
+
+    private int getPermissionTypeCount(ArrayList<PermissionDescription> permissions, int type) {
+        int count = 0;
+
+        for (PermissionDescription permissionDescription : permissions) {
+            if (permissionDescription.getRisk() == type) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private double sigmoid(double input) {
+        double output = 1 / (1 + Math.pow(Math.E, -input));
+
+        return output;
+    }
+
+    // http://en.wikipedia.org/wiki/Logistic_function
+    // plot y = 1.0 / (1.0 + e^(-0.08*(x - 60))) for x from 0 to 371
+    private double logisticFunction(double input) {
+        final double L = 100.0; // max output value
+        final double X0 = 35.0; // curve midpoint
+        final double k = 0.08; // steepness
+
+        double output = L / (1 + Math.pow(Math.E, -k * (input - X0)));
+
+        return output;
+    }
+
+    // http://en.wikipedia.org/wiki/Generalised_logistic_function
+    private double generalLogisticFunction(double input) {
+        final double A = 0;
+        final double K = 1;
+        final double B = 2;
+        final double v = 1;
+        final double Q = 1;
+        final double M = 3;
+
+        double output = A + ((K-A)/(Math.pow(1 + (Q * Math.pow(Math.E, -B * (input - M))), 1 / v)));
+
+        return output;
     }
 
     private double normalizeScore(double rawScore, double minRange, double maxRange) {
@@ -139,26 +194,27 @@ public class PrivacyScoreCalculator {
         }
 
         for (PermissionDescription permission : permissions) {
-            double weight = getPermissionWeight(permission, answers, facts);
+            //double weight = getPermissionWeight(permission, answers, facts);
+            double weight = getPermissionWeightSigmoid(permission, answers, facts);
             permissionWeights.put(permission, weight);
         }
     }
 
     private double getPermissionWeight(PermissionDescription permission, ArrayList<Answer> allAnswers, ArrayList<PermissionFact> facts) {
         if (allAnswers == null) {
-            return 1.0;
+            return 0.5;
         }
 
         PermissionFact matchingFact = getPermissionFactMatchingPermission(permission, facts);
 
         if (matchingFact == null) {
-            return 1.0;
+            return 0.5;
         }
 
         ArrayList<Answer> matchingAnswers = getAnswersByPermissionFact(matchingFact, allAnswers);
 
         if (matchingAnswers.size() == 0) {
-            return 1.0;
+            return 0.5;
         }
 
         double answerSum = 0.0;
@@ -172,7 +228,7 @@ public class PrivacyScoreCalculator {
                     answerSum += 0.5;
                     break;
                 case Answer.ANSWER_HAPPY:
-                    answerSum += 0.0;
+                    answerSum += 0.1;
                     break;
             }
         }
@@ -181,6 +237,42 @@ public class PrivacyScoreCalculator {
         System.out.println(matchingFact.getPermissions()[0] + " weight: " + weight);
 
         return weight;
+    }
+
+    private double getPermissionWeightSigmoid(PermissionDescription permission, ArrayList<Answer> allAnswers, ArrayList<PermissionFact> facts) {
+        if (allAnswers == null) {
+            return sigmoid(0);
+        }
+
+        PermissionFact matchingFact = getPermissionFactMatchingPermission(permission, facts);
+
+        if (matchingFact == null) {
+            return sigmoid(0);
+        }
+
+        ArrayList<Answer> matchingAnswers = getAnswersByPermissionFact(matchingFact, allAnswers);
+
+        if (matchingAnswers.size() == 0) {
+            return sigmoid(0);
+        }
+
+        int answerSum = 0;
+
+        for (Answer answer : matchingAnswers) {
+            switch (answer.getAnswer()) {
+                case Answer.ANSWER_SAD:
+                    answerSum += 1;
+                    break;
+                case Answer.ANSWER_NEUTRAL:
+                    answerSum += 0;
+                    break;
+                case Answer.ANSWER_HAPPY:
+                    answerSum -= 1;
+                    break;
+            }
+        }
+
+        return sigmoid((double) answerSum);
     }
 
     private ArrayList<Answer> getAnswersByPermissionFact(PermissionFact fact, ArrayList<Answer> allAnswers) {

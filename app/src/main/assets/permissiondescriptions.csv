@@ -1,75 +1,74 @@
-,,,,,
  ACCESS_COARSE_LOCATION ,Nettverksbasert posisjon, Location , da ,3,Gir tilgang en tilnærmet posisjon ved hjelp av Wi-Fi eller triangulering av mobilsignaler
  ACCESS_FINE_LOCATION ,Nøyaktig posisjon, Location , da ,3,"Gir tilgang til nøyaktig posisjon ved hjep av GPS, Wi-Fi eller triangulering av mobilsignaler."
- ACCESS_MOCK_LOCATION ,Falsk posisjon, Location , da ,2,Gir mulighet for å utgi seg på en annen posisjon enn der telefonen faktisk befinner seg.
- ACCESS_NETWORK_STATE ,Se nettverkstilkoblinger, Network , no ,2,"Gir tilgang til informasjon om nettverk, inkludert hvilke nettverk telefonen er koblet til og hvilke nettverk som er tilgjengelige i området der telefonen befinner seg."
- ACCESS_WIFI_STATE ,Se Wi-Fi-nettverkstilkoblinger, Network , no ,2,"Gir tilgang til informasjon om Wi-Fi-nettverk, inkludert hvilke Wi-Fi-nettverk telefonen er koblet til og hvilke Wi-Fi-nettverk som er tilgjengelige i området der telefonen befinner seg."
- ACCESS_WIMAX_STATE ,Se WiMAX-nettverkstilkoblinger, Network , da ,1,
- ADD_VOICEMAIL ,Legg til talepost, Voice Mailbox , da ,2,Gir en applikasjon mulighet til å legge til meldinger i din talepostkasse.
- AUTHENTICATE_ACCOUNTS ,Opprette tilkoblede kontoer, Accounts , da ,3,Gir tilgang til å opprette en ny tilkoblet konto med brukernavn og passord på din telefon.
- BLUETOOTH ,Paring med andre bluetooth-enheter, Bluetooth , da ,2,Gir tilgang til å koble til parede bluetooth-enheter.
- BLUETOOTH_ADMIN ,Bluetooth innstillinger, Bluetooth , da ,2,Gir tilgang til å søke etter og pare med andre bluetooth-enheter.
- BODY_SENSORS ,Kroppssensorer, Personal Information , no ,1,Gir applikasjonen tilgang til å benytte tilgjengelige kroppssensorer som f.eks. pulsmåler.
- CALL_PHONE ,Ring et telefonnummer, Phone Calls , da ,3,Gir tilgang til å ringe et telefonnummer (utenom nødnummerene) uten ditt samtykke. Kan f.eks. brukes til å ringe betaltjenester.
- CAMERA ,Ta bilder og videoer , Camera , da ,2,Gir tilgang til å ta bilder og ta opp video med alle telefonens kameraer. Dette kan gjøres uten at du får vite det.
- CHANGE_CONFIGURATION ,Endre telefoninnstillinger, Development Tools , dv ,2,Gir tilgang til å endre enkelte av dine telefoninnstillinger (f.eks. standard språk på mobilen).
- CHANGE_NETWORK_STATE ,Endre nettverkstilkobling, Network , da ,2,Gir tilgang til å slå av og på bruk av nettverk. Kan også koble seg til eller fra et nettverk.
- CHANGE_WIFI_MULTICAST_STATE ,Kjøre WiFi multicast, Effects on Battery Life , da ,1,Gir tilgang til å motta og sende nettverkspakker på multicast modus. Kan påvirke din batteritid negativt.
- CHANGE_WIFI_STATE ,Koble til eller koble fra Wi-Fi, Network , da ,2,Gir tilgang til å slå av og på bruk av Wi-Fi. Kan også koble seg til eller fra et Wi-Fi-nettverk.
- CHANGE_WIMAX_STATE ,Koble til eller koble fra WiMAX, Network , da ,1,Gir tilgang til å slå av og på bruk av WiMAX. WiMAX er en type 4g-nettverk.
- CLEAR_APP_CACHE ,Slette korttidsminne, System Tools , da ,2,Gir tilgang til å slette korttidsminnet for alle innstallerte applikasjoner på telefonen. I korttidsminnet ligger data som nylig er blitt brukt av en applikasjon slik at den skal kunne hente det raskere.
  DISABLE_KEYGUARD ,Deaktivere skjermlås, Screenlock , da ,3,"Gir tilgang til å deaktivere telefonens skjermlås (pinkode, mønster, fingeravtrykk etc.)"
- EXPAND_STATUS_BAR ,Åpne eller lukke statuslinjen, Status bar , no ,1,Gir tilgang til å enten åpne eller lukke statuslinjen på din telefon.
- FLASHLIGHT ,Bruke lommelykt, Effects on Battery Life , no ,1,Gir tilgang til å bruke LED-lyset på telefonen som lommelykt. Kan øke telefonens batteribruk drastisk.
- GET_ACCOUNTS ,Se tilkoblede kontoer, Accounts , no ,2,"Gir tilgang til å se informasjon om dine tilkoblede kontoer på telefonen, f.eks. Facebook eller Google."
- GET_PACKAGE_SIZE ,Måle størrelse på en applikasjon, System Tools , no ,1,Gir tilgang til å måle hvor mye plass en applikasjon tar opp på telefonen.
- GET_TASKS ,Se kjørende applikasjoner, App Information , da ,2,Gir tilgang til å til enhver tid se hvilke applikasjoner som kjører på telefonen.
- INSTALL_SHORTCUT ,Opprette snarvei, , da ,1,Gir tilgang til å opprette en snarvei på telefonens hjemskjerm. Kan brukes til å opprette falske snarveier som utgir seg for å åpne noe annet enn det de faktisk gjør.
- INTERNET ,Internetttilgang, Network , da ,1,Gir tilgang til å bruke internett. Kan laste opp og ned data uten at du får vite det.
- KILL_BACKGROUND_PROCESSES ,Lukke andre applikasjoner, System Tools , no ,3,Gir tilgang til å lukke en kjørende applikasjon. Kan f.eks. brukes til å lukke telefonens ativirus-applikasjon.
- MANAGE_ACCOUNTS ,Administrere tilkoblede kontoer, Accounts , da ,2,"Gir tilgang til å legge til eller fjerne tilkoblede kontoer, f.eks. Facebook eller Google."
- MODIFY_AUDIO_SETTINGS ,Endre lydinnstillinger, Hardware Controls , da ,2,"Gir tilgang til å endre telefonens lydinnstillinger, f.eks sette på lydløs eller justere volumet."
- NFC ,Kontrollere Near Field Communication (NFC), Network , da ,2,Gir tilgang til å sende eller motta data over NFC. For at NFC skal kunne fungere må enhetene som kommuniserer være kun få centimeter fra hverandre.
  PROCESS_OUTGOING_CALLS ,Redirigere utgående samtaler, Phone Calls , da ,3,"Gir tilgang til å se informasjon om en utgående samtale, bl.a. telefonnummer. Gir også muligheten til å redirigere utgående samtaler til et annet nummer enn det du tastet inn eller fullstendig avslutte samtalen."
  READ_CALENDAR ,Se kalenderhendelser, Personal Information , da ,3,Gir tilgang til å se detaljer om hendelser i din kalender.
  READ_CALL_LOG ,Se samtalelogg, Personal Information , da ,3,Gir tilgang til å se telefonens samtalelogg.
  READ_CONTACTS ,Se kontaktliste, Personal Information , da ,3,"Gir tilgang til informasjon om alle kontakter lagret på telefonen. Denne informasjonen kan bl.a. inkludere navn, telefonnummer, husadresse, emailadresse."
- READ_EXTERNAL_STORAGE ,Se data på en ekstern lagringsenhet, Storage , no ,1,"Gir tilgang til å se data lagret på en ekstern lagringsenhet, f.eks. ekstern harddisk koblet til med USB."
- READ_HISTORY_BOOKMARKS ,Se din nettleserhistorie og dine bookmarks, Personal Information , da ,2,"Gir tilgang til å se din hvilke nettsteder du har besøkt i din nettleserhistorie, samt hvilke sider du har lagret som bookmarks."
- READ_PHONE_STATE ,Se telefonens status og identitet, Phone Calls , da ,2,"Gir tilgang til å se unike identitetsnummer forbundet med din telefon. Kan også se telefonens status, f.eks. at en telefonsamtale er gående."
  READ_PROFILE ,Se ditt kontaktkort, Personal Information , da ,3,Gir tilgang til å se personlige opplysninger lagret i ditt kontaktkort.
  READ_SMS ,Se dine SMS og MMS, Messages , da ,3,Gir tilgang til å lese dine sendte og mottatte SMS og MMS i sin helhet. Enkelte applikasjoner bruker denne funksjonaliteten for å automatisk mottat bekreftelseskoder sendt på SMS.
  READ_SOCIAL_STREAM ,Se nyhetsstrøm på sosiale medier, Social Information , da ,3,"Gir tilgang til å se dine og dine venners oppdateringer på sosiale medier, f.eks. Facebook, Google+, Twitter."
- READ_SYNC_SETTINGS ,Se synkroniseringsinnstillinger, Sync settings , no ,1,Gir tilgang til å se om automatisk synkronisering er skrudd på eller av for innstallerte applikasjoner.
- READ_SYNC_STATS ,Se synkroniseringsstatistikk, Sync settings , no ,2,Gir tilgang til å se når synkronisering av en applikasjon skjedde og hvor mye data som ble synkronisert.
- READ_USER_DICTIONARY ,Se ord i din ordliste, User Dictionary , da ,1,Gir tilgang til å se hvilke ord som er lagret i din personlige ordliste.
- RECEIVE_BOOT_COMPLETED ,Oppdage oppstart av telefonen, App Information , no ,1,Gir tilgang til å få beskjed om at telefonen akkurat ble slått på. Brukes ofte av applikasjoner som skal starte når telefonen starter.
  RECEIVE_MMS ,Oppdage mottatt MMS, Messages , da ,3,Gir tilgang til å få beskjed når en MMS blir mottatt på din telefon. Gir også tilgang til å lese innholdet.
  RECEIVE_SMS ,Oppdage mottatt SMS, Messages , da ,3,Gir tilgang til å få beskjed når en SMS blir mottatt på din telefon. Gir også tilgang til å lese innholdet.
- RECEIVE_WAP_PUSH ,Oppdage motatt WAP push-melding, Messages , da ,1,Gir tilgang til å få beskjed når en WAP push-melding blir mottatt på din telefon. WAP push forekommer f.eks. når din telefon mottar informasjon om at en MMS er klar for å lastes ned.
  RECORD_AUDIO ,Ta opp lyd med mikrofonen, Microphone , da ,3,Gir tilgang til å ta opp lyd med mikrofonen på din telefon. Lyd kan spilles inn uten at du får vite om det.
+ CAMERA ,Ta bilder og videoer , Camera , da ,3,Gir tilgang til å ta bilder og ta opp video med alle telefonens kameraer. Dette kan gjøres uten at du får vite det.
+ GET_TASKS ,Se kjørende applikasjoner, App Information , da ,3,Gir tilgang til å til enhver tid se hvilke applikasjoner som kjører på telefonen.
+ READ_HISTORY_BOOKMARKS ,Se din nettleserhistorie og dine bookmarks, Personal Information , da ,3,"Gir tilgang til å se din hvilke nettsteder du har besøkt i din nettleserhistorie, samt hvilke sider du har lagret som bookmarks."
+ READ_PHONE_STATE ,Se telefonens status og identitet, Phone Calls , da ,3,"Gir tilgang til å se unike identitetsnummer forbundet med din telefon. Kan også se telefonens status, f.eks. at en telefonsamtale er gående."
+ USE_CREDENTIALS ,Hente påloggingsinformasjon fra tilkoblede kontoer, Accounts , da ,3,"Gir tilgang til å bruke påloggingsinformasjon fra tilkoblede kontoer (Google, Facebook, Dropbox etc.) på din telefon. "
+ READ_EXTERNAL_STORAGE ,Se data på en ekstern lagringsenhet, Storage , no ,3,"Gir tilgang til å se data lagret på en ekstern lagringsenhet, f.eks. ekstern harddisk koblet til med USB."
+ AUTHENTICATE_ACCOUNTS ,Opprette tilkoblede kontoer, Accounts , da ,2,Gir tilgang til å opprette en ny tilkoblet konto med brukernavn og passord på din telefon.
+ CALL_PHONE ,Ring et telefonnummer, Phone Calls , da ,2,Gir tilgang til å ringe et telefonnummer (utenom nødnummerene) uten ditt samtykke. Kan f.eks. brukes til å ringe betaltjenester.
+ KILL_BACKGROUND_PROCESSES ,Lukke andre applikasjoner, System Tools , no ,2,Gir tilgang til å lukke en kjørende applikasjon. Kan f.eks. brukes til å lukke telefonens ativirus-applikasjon.
+ USE_SIP ,Tillate telefoni over internett, Phone Calls , da ,2,Gir tilgang til å utføre internettsamtaler.
+ WRITE_CALENDAR ,Legge til hendelser i kalenderen, Personal Information , da ,2,Gir tilgang til å legge til hendelser i din kalender.
+ WRITE_CALL_LOG ,Endre eller slette innhold i samtaleloggen, Personal Information , da ,2,"Gir tilgang til å endre telefonens samtalelogg, inkludert data om inkommende og utgående samtaler. Farlige applikasjoner kan bruke dette til å skjule uønsket adferd ved å f.eks. slette logg om en spesifik samtale."
+ WRITE_CONTACTS ,Endre kontaktlisten, Personal Information , da ,2,"Gir tilgang til å endre din kontaktliste, herunder legge til nye kontakter."
+ WRITE_PROFILE ,Endre ditt kontaktkort, Personal Information , da ,2,Gir tilgang til å endre personlig informasjon lagret i ditt kontaktkort.
+ WRITE_SMS ,Skrive SMS eller MMS, Messages , da ,2,"Gir tilgang til å skrive, men ikke sende SMS eller MMS."
+ WRITE_SOCIAL_STREAM ,Skrive innlegg til din nyhetsstrøm på sosiale medier, Social Information , da ,2,"Gir tilgang til å poste innlegg sosiale medier registrert på telefonen, f.eks. Facebook, Google+, Twitter."
+ ACCESS_MOCK_LOCATION ,Falsk posisjon, Location , da ,2,Gir mulighet for å utgi seg på en annen posisjon enn der telefonen faktisk befinner seg.
+ ACCESS_NETWORK_STATE ,Se nettverkstilkoblinger, Network , no ,2,"Gir tilgang til informasjon om nettverk, inkludert hvilke nettverk telefonen er koblet til og hvilke nettverk som er tilgjengelige i området der telefonen befinner seg."
+ ACCESS_WIFI_STATE ,Se Wi-Fi-nettverkstilkoblinger, Network , no ,2,"Gir tilgang til informasjon om Wi-Fi-nettverk, inkludert hvilke Wi-Fi-nettverk telefonen er koblet til og hvilke Wi-Fi-nettverk som er tilgjengelige i området der telefonen befinner seg."
+ ADD_VOICEMAIL ,Legg til talepost, Voice Mailbox , da ,2,Gir en applikasjon mulighet til å legge til meldinger i din talepostkasse.
+ BLUETOOTH ,Paring med andre bluetooth-enheter, Bluetooth , da ,2,Gir tilgang til å koble til parede bluetooth-enheter.
+ BLUETOOTH_ADMIN ,Bluetooth innstillinger, Bluetooth , da ,2,Gir tilgang til å søke etter og pare med andre bluetooth-enheter.
+ CHANGE_CONFIGURATION ,Endre telefoninnstillinger, Development Tools , dv ,2,Gir tilgang til å endre enkelte av dine telefoninnstillinger (f.eks. standard språk på mobilen).
+ CHANGE_NETWORK_STATE ,Endre nettverkstilkobling, Network , da ,2,Gir tilgang til å slå av og på bruk av nettverk. Kan også koble seg til eller fra et nettverk.
+ CHANGE_WIFI_STATE ,Koble til eller koble fra Wi-Fi, Network , da ,2,Gir tilgang til å slå av og på bruk av Wi-Fi. Kan også koble seg til eller fra et Wi-Fi-nettverk.
+ CLEAR_APP_CACHE ,Slette korttidsminne, System Tools , da ,2,Gir tilgang til å slette korttidsminnet for alle innstallerte applikasjoner på telefonen. I korttidsminnet ligger data som nylig er blitt brukt av en applikasjon slik at den skal kunne hente det raskere.
+ GET_ACCOUNTS ,Se tilkoblede kontoer, Accounts , no ,2,"Gir tilgang til å se informasjon om dine tilkoblede kontoer på telefonen, f.eks. Facebook eller Google."
+ MANAGE_ACCOUNTS ,Administrere tilkoblede kontoer, Accounts , da ,2,"Gir tilgang til å legge til eller fjerne tilkoblede kontoer, f.eks. Facebook eller Google."
+ MODIFY_AUDIO_SETTINGS ,Endre lydinnstillinger, Hardware Controls , da ,2,"Gir tilgang til å endre telefonens lydinnstillinger, f.eks sette på lydløs eller justere volumet."
+ NFC ,Kontrollere Near Field Communication (NFC), Network , da ,2,Gir tilgang til å sende eller motta data over NFC. For at NFC skal kunne fungere må enhetene som kommuniserer være kun få centimeter fra hverandre.
+ READ_SYNC_STATS ,Se synkroniseringsstatistikk, Sync settings , no ,2,Gir tilgang til å se når synkronisering av en applikasjon skjedde og hvor mye data som ble synkronisert.
  REORDER_TASKS ,Reorganisere kjørende applikasjoner, System Tools , no ,2,Gir tilgang til å endre rekkefølgen på kjørende applikasjoner. Reklame-applikasjoner kan f.eks. bruke dette til å kjøre en reklame over alle andre applikasjoner.
  SEND_SMS ,Sende SMS, Messages , da ,2,Gir tilgang til å sende SMS på dine vegne. Dette kan f.eks. brukes til å sende SMS til dyre betalingsnummere.
+ SUBSCRIBED_FEEDS_READ ,Se RSS nyhetsstrøm, System Tools , no ,2,Gir tilgang til å se hvilker RSS nyheter du abonnerer på og innholdet i disse. Ikke farlig hvis du ikke abbonerer på RSS.
+ SUBSCRIBED_FEEDS_WRITE ,Endre RSS nyhetsstrøm, System Tools , da ,2,Gir tilgang til å endre din RSS nyhetsstrøm.
+ WRITE_EXTERNAL_STORAGE ,Endre eller slette innhold på SD-kortet, Storage , da ,2,Gir tilgang til å endre eller slette eksisterende filer eller opprette nye filer på telefonens SD-kort.
+ WRITE_HISTORY_BOOKMARKS ,Legge til nettleserhistorie eller bookmarks, Personal Information , da ,2,Gir tilgang til å legge til sider i din nettleserhistorie. Gir også tilgang til å opprette nye bookmarks i din nettleser.
+ WRITE_SYNC_SETTINGS ,Skru synkronisering av applikasjoner av eller på, Sync settings , da ,2,Gir tilgang til å skru av eller på synkronisering av applikasjoner.
+ ACCESS_WIMAX_STATE ,Se WiMAX-nettverkstilkoblinger, Network , da ,1,
+ BODY_SENSORS ,Kroppssensorer, Personal Information , no ,1,Gir applikasjonen tilgang til å benytte tilgjengelige kroppssensorer som f.eks. pulsmåler.
+ CHANGE_WIFI_MULTICAST_STATE ,Kjøre WiFi multicast, Effects on Battery Life , da ,1,Gir tilgang til å motta og sende nettverkspakker på multicast modus. Kan påvirke din batteritid negativt.
+ CHANGE_WIMAX_STATE ,Koble til eller koble fra WiMAX, Network , da ,1,Gir tilgang til å slå av og på bruk av WiMAX. WiMAX er en type 4g-nettverk.
+ EXPAND_STATUS_BAR ,Åpne eller lukke statuslinjen, Status bar , no ,1,Gir tilgang til å enten åpne eller lukke statuslinjen på din telefon.
+ FLASHLIGHT ,Bruke lommelykt, Effects on Battery Life , no ,1,Gir tilgang til å bruke LED-lyset på telefonen som lommelykt. Kan øke telefonens batteribruk drastisk.
+ GET_PACKAGE_SIZE ,Måle størrelse på en applikasjon, System Tools , no ,1,Gir tilgang til å måle hvor mye plass en applikasjon tar opp på telefonen.
+ INSTALL_SHORTCUT ,Opprette snarvei, , da ,1,Gir tilgang til å opprette en snarvei på telefonens hjemskjerm. Kan brukes til å opprette falske snarveier som utgir seg for å åpne noe annet enn det de faktisk gjør.
+ INTERNET ,Internettilgang, Network , da ,1,Gir tilgang til å bruke internett. Kan laste opp og ned data uten at du får vite det.
+ READ_SYNC_SETTINGS ,Se synkroniseringsinnstillinger, Sync settings , no ,1,Gir tilgang til å se om automatisk synkronisering er skrudd på eller av for innstallerte applikasjoner.
+ READ_USER_DICTIONARY ,Se ord i din ordliste, User Dictionary , da ,1,Gir tilgang til å se hvilke ord som er lagret i din personlige ordliste.
+ RECEIVE_BOOT_COMPLETED ,Oppdage oppstart av telefonen, App Information , no ,1,Gir tilgang til å få beskjed om at telefonen akkurat ble slått på. Brukes ofte av applikasjoner som skal starte når telefonen starter.
+ RECEIVE_WAP_PUSH ,Oppdage motatt WAP push-melding, Messages , da ,1,Gir tilgang til å få beskjed når en WAP push-melding blir mottatt på din telefon. WAP push forekommer f.eks. når din telefon mottar informasjon om at en MMS er klar for å lastes ned.
  SET_ALARM ,Opprette en alarm, Device Alarms , no ,1,Gir tilgang til å opprette en alarm til et bestemt tidspunkt på din mobil.
  SET_TIME_ZONE ,Endre tidssone, System clock , da ,1,Gir tilgang til å endre tidssonen som blir brukt på din telefon.
  SET_WALLPAPER ,Endre bakgrunn på hjemskjerm, Wallpaper , no ,1,Gir tilgang til å endre bakgrunnsbilde eller bakgrunnsanimasjon på din hjemskjerm.
- SUBSCRIBED_FEEDS_READ ,Se RSS nyhetsstrøm, System Tools , no ,2,Gir tilgang til å se hvilker RSS nyheter du abonnerer på og innholdet i disse. Ikke farlig hvis du ikke abbonerer på RSS.
- SUBSCRIBED_FEEDS_WRITE ,Endre RSS nyhetsstrøm, System Tools , da ,2,Gir tilgang til å endre din RSS nyhetsstrøm.
  SYSTEM_ALERT_WINDOW ,Kjøre over andre applikasjoner, Display , da ,1,"Gir tilgang til å kjøre ""popup""-vinduer over andre applikasjoner. Reklameapplikasjoner kan typisk bruke denne tillatelsen til å vise reklame. I utgangspunktet ikke ment for vanlige applikasjoner."
  TRANSMIT_IR ,Bruke infrarød (IR) sender, Effects on Battery Life , no ,1,Gir tilgang til å bruke telefonens infrarøde sender dersom en slik er tilgjengelig.
  UNINSTALL_SHORTCUT ,Fjerne snarveier, , no ,1,Gir tilgang til å fjerne snarveier på telefonens hjemskjerm.
- USE_CREDENTIALS ,Hente påloggingsinformasjon fra tilkoblede kontoer, Accounts , da ,2,"Gir tilgang til å bruke påloggingsinformasjon fra tilkoblede kontoer (Google, Facebook, Dropbox etc.) på din telefon. "
- USE_SIP ,Tillate telefoni over internett, Phone Calls , da ,3,Gir tilgang til å utføre internettsamtaler.
  VIBRATE ,Kontroll over vibrator, Effects on Battery Life , no ,1,Gir tilgang til å kontrollere telefonens vibrator.
  WAKE_LOCK ,Forhindre skjermen i å skru seg av, Effects on Battery Life , no ,1,Gir tilgang til å forhindre at skjermen skrur seg av etter inaktivitet. Kan i stor grad påvirke telefonens strømforbruk.
- WRITE_CALENDAR ,Legge til hendelser i kalenderen, Personal Information , da ,3,Gir tilgang til å legge til hendelser i din kalender.
- WRITE_CALL_LOG ,Endre eller slette innhold i samtaleloggen, Personal Information , da ,3,"Gir tilgang til å endre telefonens samtalelogg, inkludert data om inkommende og utgående samtaler. Farlige applikasjoner kan bruke dette til å skjule uønsket adferd ved å f.eks. slette logg om en spesifik samtale."
- WRITE_CONTACTS ,Endre kontaktlisten, Personal Information , da ,3,"Gir tilgang til å endre din kontaktliste, herunder legge til nye kontakter."
- WRITE_EXTERNAL_STORAGE ,Endre eller slette innhold på SD-kortet, Storage , da ,2,Gir tilgang til å endre eller slette eksisterende filer eller opprette nye filer på telefonens SD-kort.
- WRITE_HISTORY_BOOKMARKS ,Legge til nettleserhistorie eller bookmarks, Personal Information , da ,2,Gir tilgang til å legge til sider i din nettleserhistorie. Gir også tilgang til å opprette nye bookmarks i din nettleser.
- WRITE_PROFILE ,Endre ditt kontaktkort, Personal Information , da ,3,Gir tilgang til å endre personlig informasjon lagret i ditt kontaktkort.
- WRITE_SMS ,Skrive SMS eller MMS, Messages , da ,3,"Gir tilgang til å skrive, men ikke sende SMS eller MMS."
- WRITE_SOCIAL_STREAM ,Skrive innlegg til din nyhetsstrøm på sosiale medier, Social Information , da ,3,"Gir tilgang til å poste innlegg sosiale medier registrert på telefonen, f.eks. Facebook, Google+, Twitter."
- WRITE_SYNC_SETTINGS ,Skru synkronisering av applikasjoner av eller på, Sync settings , da ,2,Gir tilgang til å skru av eller på synkronisering av applikasjoner.
  WRITE_USER_DICTIONARY ,Legg til ord i din ordliste, User Dictionary , no ,1,Gir tilgang til å legge til ord i din persolige ordliste. Auto-correct bruker denne ordlisten når du skriver f.eks. SMS.
  WRITE_VOICEMAIL,Endre eller fjerne talepost,,,1,Gir tilgang til å endre eller fjerne eksisterende talepost på din telefon.

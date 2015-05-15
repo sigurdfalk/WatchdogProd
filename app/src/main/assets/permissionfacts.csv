@@ -1,5 +1,5 @@
 id,permissions,header,fact
-0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, nårr som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
+0,ACCESS_FINE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert GPS på din telefon, når som helst få vite hvor i verden du befinner deg med en nøyaktighet ned til en meter."
 1,ACCESS_COARSE_LOCATION,Visste du at...,"Denne appen kan, dersom du har aktivert posisjon på din telefon, når som helst få vite hvor i verden du befinner deg."
 2,SEND_SMS,Visste du at...,"Denne appen kan, uten din tillatelse, send SMS-meldinger fra din telefon."
 3,CALL_PHONE,Visste du at...,"Denne appen kan, uten din tillatelse, ringe opp et telefonnummer fra din telefon."
@@ -14,3 +14,10 @@ id,permissions,header,fact
 12,READ_CALENDAR,Visste du at...,Denne appen kan lese av hendelser fra din kalender.
 13,READ_SMS,Visste du at...,Denne appen kan lese lagrede SMS-meldinger og MMS-meldinger på din telefon.
 14,GET_TASKS,Visste du at...,Denne appen kan lese hvilke andre applikasjoner som er kjørende på din telefon.
+15,DISABLE_KEYGUARD,Visste du at...,asdf
+16,PROCESS_OUTGOING_CALLS,Visste du at...,asdf
+17,READ_PROFILE,Visste du at...,asdf
+18,RECEIVE_MMS,Visste du at...,asdf
+19,RECEIVE_SMS,Visste du at...,asdf
+20,USE_CREDENTIALS,Visste du at...,asdf
+21,READ_EXTERNAL_STORAGE,Visste du at...,asdf
