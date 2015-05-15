@@ -145,9 +145,6 @@ public class ApplicationListActivity extends ActionBarActivity {
         // Get tracker.
         Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
                 AnalyticsHelper.TrackerName.APP_TRACKER);
-        t.setScreenName("APP LIST");
-        t.send(new HitBuilders.ScreenViewBuilder().build());
-
     }
 
     @Override
@@ -160,7 +157,6 @@ public class ApplicationListActivity extends ActionBarActivity {
     protected void onStop() {
         super.onStop();
         GoogleAnalytics.getInstance(ApplicationListActivity.this).reportActivityStop(this);
-
     }
 
     private void clearAllPermissionCheckBoxes() {
@@ -220,17 +216,6 @@ public class ApplicationListActivity extends ActionBarActivity {
                 deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
 
                 if (!deletedPackage.equals("")) {
-
-                    // Get tracker.
-                    Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
-                            AnalyticsHelper.TrackerName.APP_TRACKER);
-                    // Build and send an Event.
-                    t.send(new HitBuilders.EventBuilder()
-                            .setCategory("events" + AnalyticsHelper.USER_ID)
-                            .setAction("deletedapp")
-                            .setLabel(deletedPackage)
-                            .setValue(1)
-                            .build());
 
                     applicationHelperSingleton.removeApplication(deletedPackage);
                     adapter = new ApplicationListAdapter(this, applicationHelperSingleton.getApplications());

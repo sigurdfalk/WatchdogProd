@@ -12,9 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
+import no.ntnu.idi.watchdogprod.AnalyticsHelper;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.R;
@@ -49,6 +54,22 @@ public class RuleViolationsActivity extends ActionBarActivity {
         Collections.sort(violatedRules);
         RuleListAdapter adapter = new RuleListAdapter(this, violatedRules);
         listView.setAdapter(adapter);
+
+        // Get tracker.
+        Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                AnalyticsHelper.TrackerName.APP_TRACKER);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(RuleViolationsActivity.this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(RuleViolationsActivity.this).reportActivityStop(this);
     }
 
     @Override

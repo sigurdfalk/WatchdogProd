@@ -5,9 +5,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
+import no.ntnu.idi.watchdogprod.AnalyticsHelper;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationUpdateLogListAdapter;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
@@ -40,7 +44,24 @@ public class ApplicationUpdateLogActivity extends ActionBarActivity {
         Collections.sort(updateLog);
         ApplicationUpdateLogListAdapter adapter = new ApplicationUpdateLogListAdapter(this, updateLog);
         listView.setAdapter(adapter);
+
+        // Get tracker.
+        Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                AnalyticsHelper.TrackerName.APP_TRACKER);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(ApplicationUpdateLogActivity.this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(ApplicationUpdateLogActivity.this).reportActivityStop(this);
+    }
+
 
     @Override
     protected void onDestroy() {

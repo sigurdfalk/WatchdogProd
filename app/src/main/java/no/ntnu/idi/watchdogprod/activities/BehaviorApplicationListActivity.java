@@ -18,9 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.AnalyticsHelper;
 import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.BehaviorApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.Answer;
@@ -68,6 +72,23 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
                 showHarmonyDialog();
             }
         });
+
+        // Get tracker.
+        Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                AnalyticsHelper.TrackerName.APP_TRACKER);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(BehaviorApplicationListActivity.this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(BehaviorApplicationListActivity.this).reportActivityStop(this);
     }
 
     @Override

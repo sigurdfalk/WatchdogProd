@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -122,6 +124,21 @@ public class MainActivity extends ActionBarActivity {
             linearLayout.setVisibility(View.VISIBLE);
         }
 
+        // Get tracker.
+        Tracker t = ((AnalyticsHelper) getApplication()).getTracker(
+                AnalyticsHelper.TrackerName.APP_TRACKER);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(MainActivity.this).reportActivityStop(this);
     }
 
     private void initProfile(Context context) throws SQLException {

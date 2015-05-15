@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="ga_sessionTimeout">300</integer>
+    <resources xmlns:tools="http://schemas.android.com/tools"> <span style="line-height: 1.5; font-style: inherit; font-weight: inherit;">tools:ignore="TypographyDashes"></span>
 
-    <!-- Enable automatic Activity measurement -->
-    <bool name="ga_autoActivityTracking">true</bool>
+    <!-- the Local LogLevel for Analytics -->
+    <string name="ga_logLevel">verbose</string>
+
+    <!-- how often the dispatcher should fire -->
+    <integer name="ga_dispatchPeriod">30</integer>
+
+    <!-- Treat events as test events and don't send to google -->
+    <bool name="ga_dryRun">false</bool>
 
     <!-- The screen names that will appear in reports -->
     <screenName name="no.ntnu.idi.watchdogprod.activities.ApplicationListActivity">
         ApplicationListActivity
     </screenName>
-    <screenName name="no.ntnu.idi.watchdogprod.activities.ApplicationListActivity">
+    <screenName name="no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity">
         ApplicationDetailActivity
     </screenName>
     <screenName name="no.ntnu.idi.watchdogprod.activities.PermissionListActivity">
         PermissionListActivity
     </screenName>
-    <!--  The following value should be replaced with correct property id. -->
-    <string name="ga_trackingId">UA-62425216-1</string>
+    <screenName name="no.ntnu.idi.watchdogprod.MainActivity">
+        MainActivity
+    </screenName>
+    <screenName name="no.ntnu.idi.watchdogprod.activities.ApplicationUpdateLogActivity">
+        ApplicationUpdateLogActivity
+    </screenName>
+    <screenName name="no.ntnu.idi.watchdogprod.activities.BehaviorApplicationListActivity">
+        BehaviorApplicationListActivity
+    </screenName>
+    <screenName name="no.ntnu.idi.watchdogprod.activities.RuleViolationsActivity">
+        RuleViolationsActivity
+    </screenName>
 </resources>
