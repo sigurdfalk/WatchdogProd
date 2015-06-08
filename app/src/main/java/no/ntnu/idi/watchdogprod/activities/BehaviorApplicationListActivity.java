@@ -5,10 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PermissionGroupInfo;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +26,9 @@ import no.ntnu.idi.watchdogprod.adapters.BehaviorApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.domain.DisharomyApplication;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.domain.PermissionAnswerPair;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
-import no.ntnu.idi.watchdogprod.domain.PermissionAnswerPair;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 
@@ -198,7 +197,6 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
                 bundle.putString(ApplicationListActivity.PACKAGE_NAME, disharomyApplication.getExtendedPackageInfo().getPackageInfo().packageName);
                 i.putExtras(bundle);
                 ((Activity) context).startActivityForResult(i, APP_DELETED_CODE);
-//                context.startActivity(i);
             }
         });
 

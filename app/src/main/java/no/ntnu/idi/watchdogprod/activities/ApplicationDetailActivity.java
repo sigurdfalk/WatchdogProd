@@ -27,18 +27,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.Answer;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.domain.PermissionFact;
-import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
-import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.Rule;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
+import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
-import no.ntnu.idi.watchdogprod.domain.AppInfo;
 
 /**
  * Created by sigurdhf on 06.03.2015.
@@ -94,8 +94,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
         riskScoreBackground = (LinearLayout) findViewById(R.id.app_detail_privacy_score_background);
         riskScoreText = (TextView) findViewById(R.id.app_detail_privacy_score);
         riskScoreIndicator = (ImageView) findViewById(R.id.app_detail_privacy_score_indicator);
-
-        //riskScoreText.setText("Risikofaktor " + (int) packageInfo.getPrivacyScore() + "/" + PrivacyScoreCalculator.MAX_SCORE);
         riskScoreText.setText("Risikofaktor " + (int) riskScore + "/" + PrivacyScoreCalculator.MAX_SCORE);
         setScoreBackgroundColor(riskScoreBackground, riskScore);
 
@@ -437,7 +435,7 @@ public class ApplicationDetailActivity extends ActionBarActivity {
             answersDataSource.open();
         } catch (SQLException e) {
             e.printStackTrace();
-            // ToDo error handling
+            // handle error
         }
 
         answersDataSource.insertAnswer(fact.getId(), new Date().getTime(), packageInfo.getPackageInfo().packageName, answer);

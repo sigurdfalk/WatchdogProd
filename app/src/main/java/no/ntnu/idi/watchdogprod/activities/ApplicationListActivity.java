@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -30,11 +28,11 @@ import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 
-import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
+import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.adapters.ApplicationListAdapter;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 
 /**
