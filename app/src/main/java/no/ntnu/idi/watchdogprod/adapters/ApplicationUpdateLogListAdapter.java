@@ -13,11 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
-import no.ntnu.idi.watchdogprod.R;
-import no.ntnu.idi.watchdogprod.domain.AppInfo;
 
 /**
  * Created by sigurdhf on 10.03.2015.

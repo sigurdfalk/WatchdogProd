@@ -17,11 +17,11 @@ import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.activities.ApplicationDetailActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
 import no.ntnu.idi.watchdogprod.activities.ApplicationUpdateLogActivity;
+import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.helpers.SharedPreferencesHelper;
-import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
@@ -53,7 +53,7 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         applicationHelperSingleton.updateInstance();
         ExtendedPackageInfo packageInfo = applicationHelperSingleton.getApplicationByPackageName(packageName);
 
-            newVersion = dataSource.insertApplicationUpdate(packageInfo.getPackageInfo());
+        newVersion = dataSource.insertApplicationUpdate(packageInfo.getPackageInfo());
 
 
         if (newVersion != null && allPreviousVersions.size() > 0) {
@@ -65,8 +65,8 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
             if (newPermissions.size() > 0 || oldPermissions.size() > 0) {
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, true);
 
-                    String appName = context.getPackageManager().getApplicationLabel(packageInfo.getPackageInfo().applicationInfo).toString();
-                    showNotification(context, appName + " oppdatert", "Risikofaktor endret ved siste oppdatering", packageName);
+                String appName = context.getPackageManager().getApplicationLabel(packageInfo.getPackageInfo().applicationInfo).toString();
+                showNotification(context, appName + " oppdatert", "Risikofaktor endret ved siste oppdatering", packageName);
 
             } else {
                 SharedPreferencesHelper.setDoShowAppWarningSign(context, packageName, false);
@@ -77,9 +77,6 @@ public class ApplicationInstalledReceiver extends BroadcastReceiver {
         ProfileDataSource profileDataSource = new ProfileDataSource(context);
         profileDataSource.open();
         long id = profileDataSource.insertEvent(packageName, Profile.INSTALLED_DANGEROUS_APP, packageInfo.getPrivacyScore() + "");
-        if(id != -1) {
-            System.out.println("ROW ID " + id + "  INSTALL receiver APP DB ER GOOD" + packageName  + " SCORE: " + packageInfo.getPrivacyScore());
-        }
         profileDataSource.close();
     }
 

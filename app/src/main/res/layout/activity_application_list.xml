@@ -8,6 +8,6 @@
         android:id="@+id/applications_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ApplicationListActivity"
-        android:background="@color/primary_material_light" />
+        android:background="@color/primary_material_light"
+        tools:context=".ApplicationListActivity" />
 </RelativeLayout>

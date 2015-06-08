@@ -1,8 +1,5 @@
 package no.ntnu.idi.watchdogprod.domain;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by sigurdhf on 25.03.2015.
  */

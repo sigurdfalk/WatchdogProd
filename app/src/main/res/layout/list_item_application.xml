@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginBottom="10dp"
-    card_view:cardCornerRadius="5dp"
+    android:id="@+id/list_applications_cardview"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/list_applications_cardview">
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="horizontal"
+    card_view:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -18,12 +19,12 @@
         <LinearLayout
             android:id="@+id/list_applications_wrapper"
             android:layout_width="0sp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:padding="6sp"
+            android:layout_weight="1"
             android:background="?android:selectableItemBackground"
+            android:clickable="true"
             android:focusable="true"
-            android:clickable="true">
+            android:padding="6sp">
 
             <ImageView
                 android:id="@+id/list_applications_icon"
@@ -34,8 +35,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginStart="10sp"
                 android:layout_marginLeft="10sp"
+                android:layout_marginStart="10sp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -47,25 +48,25 @@
                     <TextView
                         android:id="@+id/list_applications_firstLine"
                         android:layout_width="0sp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
+                        android:layout_weight="1"
                         android:singleLine="true"
-                        android:textSize="@dimen/list_card_header"/>
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/list_card_header" />
 
                     <ImageView
                         android:id="@+id/list_applications_info"
-                        android:src="@mipmap/ic_info_black_48dp"
                         android:layout_width="@dimen/list_card_icon_match_header"
                         android:layout_height="@dimen/list_card_icon_match_header"
-                        android:layout_marginRight="5sp"/>
+                        android:layout_marginRight="5sp"
+                        android:src="@mipmap/ic_info_black_48dp" />
 
                     <ImageView
                         android:id="@+id/list_applications_warning"
-                        android:src="@mipmap/ic_warning_black_48dp"
                         android:layout_width="@dimen/list_card_icon_match_header"
                         android:layout_height="@dimen/list_card_icon_match_header"
-                        android:layout_marginRight="5sp"/>
+                        android:layout_marginRight="5sp"
+                        android:src="@mipmap/ic_warning_black_48dp" />
 
                 </LinearLayout>
 
@@ -75,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/list_card_text"/>
+                    android:textSize="@dimen/list_card_text" />
             </LinearLayout>
 
         </LinearLayout>
@@ -88,6 +89,4 @@
     </LinearLayout>
 
 
-
-
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>

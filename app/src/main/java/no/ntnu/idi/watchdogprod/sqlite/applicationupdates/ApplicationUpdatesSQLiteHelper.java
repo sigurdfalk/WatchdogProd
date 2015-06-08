@@ -9,16 +9,14 @@ import android.util.Log;
  * Created by sigurdhf on 10.03.2015.
  */
 public class ApplicationUpdatesSQLiteHelper extends SQLiteOpenHelper {
-    static final String TABLE_APPLICATION_UPDATES = "applicationUpdates";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PACKAGE_NAME = "packageName";
     public static final String COLUMN_PERMISSIONS = "permissions";
     public static final String COLUMN_VERSION_CODE = "versionCode";
     public static final String COLUMN_LAST_UPDATE_TIME = "lastUpdateTime";
-
     public static final String DATABASE_NAME = "applicationupdates.db";
     public static final int DATABASE_VERSION = 1;
-
+    static final String TABLE_APPLICATION_UPDATES = "applicationUpdates";
     public static final String DATABASE_CREATE = "create table "
             + TABLE_APPLICATION_UPDATES + "(" + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_PACKAGE_NAME + " text not null, "

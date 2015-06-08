@@ -39,13 +39,13 @@ public class BehaviorApplicationListAdapter extends ArrayAdapter<DisharomyApplic
         TextView firstLine = (TextView) convertView.findViewById(R.id.item_harmony_firstLine);
         ImageView icon = (ImageView) convertView.findViewById(R.id.item_icon);
 
-        TextView sadCountView = (TextView)convertView.findViewById(R.id.item_sad_count);
-        TextView neutralCountView = (TextView)convertView.findViewById(R.id.item_neutral_count);
-        TextView happyCountView = (TextView)convertView.findViewById(R.id.item_happy_count);
+        TextView sadCountView = (TextView) convertView.findViewById(R.id.item_sad_count);
+        TextView neutralCountView = (TextView) convertView.findViewById(R.id.item_neutral_count);
+        TextView happyCountView = (TextView) convertView.findViewById(R.id.item_happy_count);
 
-        LinearLayout linearLayoutRed =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_red);
-        LinearLayout linearLayoutYellow =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_yellow);
-        LinearLayout linearLayoutGreen =(LinearLayout)convertView.findViewById(R.id.harmony_main_count_green);
+        LinearLayout linearLayoutRed = (LinearLayout) convertView.findViewById(R.id.harmony_main_count_red);
+        LinearLayout linearLayoutYellow = (LinearLayout) convertView.findViewById(R.id.harmony_main_count_yellow);
+        LinearLayout linearLayoutGreen = (LinearLayout) convertView.findViewById(R.id.harmony_main_count_green);
 
         DisharomyApplication disharomyApplication = objects.get(position);
         firstLine.setText(ApplicationHelperSingleton.getApplicationName(context, disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "");
@@ -55,15 +55,15 @@ public class BehaviorApplicationListAdapter extends ArrayAdapter<DisharomyApplic
         int neutralCount = disharomyApplication.getCount(Answer.ANSWER_NEUTRAL);
         int happyCount = disharomyApplication.getCount(Answer.ANSWER_HAPPY);
 
-        if(sadCount > 0) {
+        if (sadCount > 0) {
             linearLayoutRed.setVisibility(View.VISIBLE);
-            sadCountView.setText(context.getResources().getString(R.string.disharmony_sad_text) + " " + sadCount + " " +(sadCount == 1? "tillatelse":"tillatelser"));
+            sadCountView.setText(context.getResources().getString(R.string.disharmony_sad_text) + " " + sadCount + " " + (sadCount == 1 ? "tillatelse" : "tillatelser"));
         }
-        if(neutralCount > 0) {
+        if (neutralCount > 0) {
             linearLayoutYellow.setVisibility(View.VISIBLE);
             neutralCountView.setText(context.getResources().getString(R.string.disharmony_neutral_text) + " " + neutralCount + " " + (neutralCount == 1 ? "tillatelse" : "tillatelser"));
         }
-        if(happyCount > 0) {
+        if (happyCount > 0) {
             linearLayoutGreen.setVisibility(View.VISIBLE);
             happyCountView.setText("Positiv til " + happyCount + " " + (happyCount == 1 ? "tillatelse" : "tillatelser"));
         }

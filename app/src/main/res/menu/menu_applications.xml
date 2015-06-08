@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
 
     <!--<item android:id="@+id/action_search"
         android:title="@string/search"
@@ -9,13 +10,15 @@
         app:actionViewClass="android.support.v7.widget.SearchView" />-->
 
 
-    <item android:id="@+id/action_search"
-        android:title="@string/search"
+    <item
+        android:id="@+id/action_search"
         android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
-        app:showAsAction="always"/>
+        android:title="@string/search"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/menu_applications_info"
+    <item
+        android:id="@+id/menu_applications_info"
         android:icon="@mipmap/ic_info_outline_white_48dp"
         android:title="@string/main_info"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

@@ -2,8 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="no.ntnu.idi.watchdogprod.activities.BehaviorApplicationListActivity">
-    <item android:id="@+id/menu_behavior_info"
+    <item
+        android:id="@+id/menu_behavior_info"
         android:icon="@mipmap/ic_info_outline_white_48dp"
         android:title="@string/main_info"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 </menu>

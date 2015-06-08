@@ -1,6 +1,5 @@
 package no.ntnu.idi.watchdogprod.domain;
 
-import android.graphics.drawable.Drawable;
 import android.media.Image;
 
 /**

@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by fredsten on 20.03.2015.
  */
-public class ProfileSQLiteOpenHelper extends SQLiteOpenHelper{
+public class ProfileSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_PROFILE_EVENT = "profileevent";
     public static final String COLUMN_ID_PROFILE = "_id";

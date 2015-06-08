@@ -8,8 +8,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import no.ntnu.idi.watchdogprod.adapters.ApplicationUpdateLogListAdapter;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.adapters.ApplicationUpdateLogListAdapter;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
 

@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ripple_material_light"
-    android:id="@+id/main_layout">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
         <LinearLayout
+            android:id="@+id/main_layout_cards"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/main_layout_cards">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/main_tips"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@color/ripple_material_light"
-                android:weightSum="100"
-                android:visibility="gone">
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:visibility="gone"
+                android:weightSum="100">
 
                 <ImageView
                     android:id="@+id/main_info_tips"
-                    android:src="@mipmap/ic_info_outline_white_48dp"
-                    android:tint="@color/material_blue_grey_800"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="5" />
+                    android:layout_weight="5"
+                    android:src="@mipmap/ic_info_outline_white_48dp"
+                    android:tint="@color/material_blue_grey_800" />
 
                 <TextView
                     android:id="@+id/main_tips_text"
-                    android:text="@string/tips_screen_lock"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="90" />
+                    android:layout_weight="90"
+                    android:text="@string/tips_screen_lock" />
 
                 <ImageView
                     android:id="@+id/main_cancel_tips"
-                    android:src="@drawable/ic_close_circle_outline_grey600_24dp"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:tint="@color/material_blue_grey_800"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="5" />
+                    android:layout_weight="5"
+                    android:src="@drawable/ic_close_circle_outline_grey600_24dp"
+                    android:tint="@color/material_blue_grey_800" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/main_total_risk_score"
-                android:textSize="20dp"
-                android:padding="15dp"
-                android:textStyle="bold"
-                android:background="@color/risk_yellow"
-                android:textColor="@color/black"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:background="@color/risk_yellow"
+                android:gravity="center"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_marginRight="10sp"
-                android:layout_marginLeft="10sp"
-                android:layout_marginTop="20sp"
-                android:layout_marginBottom="20sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_marginTop="20sp"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
@@ -78,24 +78,24 @@
                     android:id="@+id/main_apps_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="33">
+                    android:layout_weight="33"
+                    android:orientation="vertical">
 
                     <ImageView
 
-                        android:src="@mipmap/ic_apps_grey600_48dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_apps_grey600_48dp"
+                        android:tint="@color/black" />
 
                     <TextView
-                        android:text="Apper"
-                        android:textSize="18dp"
-                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
+                        android:text="Apper"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
@@ -103,47 +103,47 @@
                     android:id="@+id/main_permissions_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="33">
+                    android:layout_weight="33"
+                    android:orientation="vertical">
 
                     <ImageView
 
-                        android:src="@mipmap/ic_format_list_bulleted_grey600_48dp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:tint="@color/black"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_format_list_bulleted_grey600_48dp"
+                        android:tint="@color/black" />
 
                     <TextView
-                        android:text="Tillatelser"
-                        android:textSize="18dp"
-                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
+                        android:text="Tillatelser"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="33">
+                    android:layout_weight="33"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:src="@mipmap/ic_information_outline_grey600_48dp"
-                        android:tint="@color/black"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_information_outline_grey600_48dp"
+                        android:tint="@color/black" />
 
                     <TextView
-                        android:text="Om"
-                        android:textSize="18dp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Om"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -152,9 +152,9 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -187,8 +187,8 @@
                                 <TextView
                                     android:id="@+id/main_card_overallthreat_title"
                                     android:layout_width="0sp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:text="Trusselbilde"
                                     android:textColor="@color/text_primary"
                                     android:textSize="@dimen/card_header" />
@@ -200,9 +200,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
+                                android:text="Ingen informasjon tilgjengelig for øyeblikket."
                                 android:textColor="@color/text_secondary"
-                                android:textSize="@dimen/card_text_primary"
-                                android:text="Ingen informasjon tilgjengelig for øyeblikket." />
+                                android:textSize="@dimen/card_text_primary" />
 
                         </LinearLayout>
 
@@ -219,8 +219,8 @@
                                 android:id="@+id/main_card_overallthreat_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_neutral_white_48dp" />
+                                android:src="@mipmap/ic_emoticon_neutral_white_48dp"
+                                android:tint="@color/black" />
 
                         </LinearLayout>
 
@@ -270,8 +270,8 @@
                                 <TextView
                                     android:id="@+id/main_card_installtrend_title"
                                     android:layout_width="0sp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:text="Installerte apper"
                                     android:textColor="@color/text_primary"
                                     android:textSize="@dimen/card_header" />
@@ -283,9 +283,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
+                                android:text="@string/card_install_trend_neutral"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="@dimen/card_text_primary"
-                                android:text="@string/card_install_trend_neutral" />
+                                android:textSize="@dimen/card_text_primary" />
 
                         </LinearLayout>
 
@@ -302,8 +302,8 @@
                                 android:id="@+id/main_card_installtrend_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp"
+                                android:tint="@color/black" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -347,8 +347,8 @@
                                 <TextView
                                     android:id="@+id/main_card_uninstalltrend_title"
                                     android:layout_width="0sp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:text="Avinstallerte apper"
                                     android:textColor="@color/text_primary"
                                     android:textSize="@dimen/card_header" />
@@ -361,9 +361,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
+                                android:text="@string/card_uninstall_trend_neutral"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="@dimen/card_text_primary"
-                                android:text="@string/card_uninstall_trend_neutral" />
+                                android:textSize="@dimen/card_text_primary" />
 
                         </LinearLayout>
 
@@ -380,8 +380,8 @@
                                 android:id="@+id/main_card_uninstalltrend_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp"
+                                android:tint="@color/black" />
 
                         </LinearLayout>
 
@@ -394,9 +394,9 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
                 card_view:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -429,8 +429,8 @@
                                 <TextView
                                     android:id="@+id/main_card_updates_title"
                                     android:layout_width="0sp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:text="Oppdaterte apper"
                                     android:textColor="@color/text_primary"
                                     android:textSize="@dimen/card_header" />
@@ -442,9 +442,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
+                                android:text="@string/card_updates_no"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="@dimen/card_text_primary"
-                                android:text="@string/card_updates_no" />
+                                android:textSize="@dimen/card_text_primary" />
 
                         </LinearLayout>
 
@@ -461,8 +461,8 @@
                                 android:id="@+id/main_card_updates_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp"
+                                android:tint="@color/black" />
 
                         </LinearLayout>
 
@@ -510,8 +510,8 @@
                                 <TextView
                                     android:id="@+id/main_card_harmony_title"
                                     android:layout_width="0sp"
-                                    android:layout_weight="1"
                                     android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:text="Disharmoni"
                                     android:textColor="@color/text_primary"
                                     android:textSize="@dimen/card_header" />
@@ -523,9 +523,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5sp"
                                 android:layout_marginTop="5sp"
+                                android:text="@string/card_disharmony_neutral"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="@dimen/card_text_primary"
-                                android:text="@string/card_disharmony_neutral" />
+                                android:textSize="@dimen/card_text_primary" />
 
                         </LinearLayout>
 
@@ -542,8 +542,8 @@
                                 android:id="@+id/main_card_harmony_image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:tint="@color/black"
-                                android:src="@mipmap/ic_emoticon_happy_white_48dp" />
+                                android:src="@mipmap/ic_emoticon_happy_white_48dp"
+                                android:tint="@color/black" />
                         </LinearLayout>
 
                     </LinearLayout>

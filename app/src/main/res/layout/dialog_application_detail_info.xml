@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="10sp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/dialog_header"
-        android:textColor="@color/text_primary"
         android:layout_margin="5sp"
-        android:text="@string/risk_score"/>
+        android:gravity="center"
+        android:text="@string/risk_score"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/dialog_header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5sp"
-        android:textSize="@dimen/dialog_text"
+        android:text="@string/risk_score_description"
         android:textColor="@color/text_secondary"
-        android:text="@string/risk_score_description"/>
+        android:textSize="@dimen/dialog_text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/dialog_header"
-        android:textColor="@color/text_primary"
         android:layout_margin="5sp"
-        android:text="@string/your_feedback_counts"/>
+        android:gravity="center"
+        android:text="@string/your_feedback_counts"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/dialog_header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5sp"
-        android:textSize="@dimen/dialog_text"
+        android:text="@string/questions_risk_score_description"
         android:textColor="@color/text_secondary"
-        android:text="@string/questions_risk_score_description"/>
+        android:textSize="@dimen/dialog_text" />
 
 </LinearLayout>

@@ -23,14 +23,14 @@
                 android:padding="15sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/app_detail_privacy_score_indicator"
                 android:layout_width="25sp"
-                android:layout_toRightOf="@+id/app_detail_privacy_score"
+                android:layout_height="25sp"
                 android:layout_centerVertical="true"
-                android:layout_height="25sp"/>
+                android:layout_toRightOf="@+id/app_detail_privacy_score" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -42,9 +42,9 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:paddingTop="10sp"
+            android:orientation="vertical"
             android:paddingBottom="10sp"
-            android:orientation="vertical">
+            android:paddingTop="10sp">
 
 
             <LinearLayout
@@ -102,33 +102,6 @@
                         android:text="@string/opinion_information"
                         android:textColor="@color/button_flat_text"
                         android:textSize="@dimen/button_flat_text_primary" />
-
-                   <!-- <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <ImageButton
-                            android:layout_width="@dimen/button_answer_permission_fact"
-                            android:layout_height="@dimen/button_answer_permission_fact"
-                            android:src="@mipmap/ic_emoticon_happy_white_48dp"
-                            android:tint="@color/risk_green" />
-
-                        <ImageButton
-                            android:layout_width="@dimen/button_answer_permission_fact"
-                            android:layout_height="@dimen/button_answer_permission_fact"
-                            android:src="@mipmap/ic_emoticon_neutral_white_48dp"
-                            android:tint="@color/risk_yellow" />
-
-                        <ImageButton
-                            android:layout_width="@dimen/button_answer_permission_fact"
-                            android:layout_height="@dimen/button_answer_permission_fact"
-                            android:src="@mipmap/ic_emoticon_sad_white_48dp"
-                            android:tint="@color/risk_red" />
-                    </LinearLayout>-->
-
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -233,10 +206,10 @@
 
                                 <LinearLayout
                                     android:layout_width="0sp"
-                                    android:layout_weight="0.33"
                                     android:layout_height="fill_parent"
                                     android:layout_marginLeft="5sp"
                                     android:layout_marginRight="5sp"
+                                    android:layout_weight="0.33"
                                     android:gravity="bottom"
                                     android:orientation="vertical">
 
@@ -250,11 +223,11 @@
 
                                 <LinearLayout
                                     android:layout_width="0sp"
-                                    android:layout_weight="0.33"
                                     android:layout_height="fill_parent"
-                                    android:gravity="bottom"
                                     android:layout_marginLeft="5sp"
                                     android:layout_marginRight="5sp"
+                                    android:layout_weight="0.33"
+                                    android:gravity="bottom"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -267,11 +240,11 @@
 
                                 <LinearLayout
                                     android:layout_width="0sp"
-                                    android:layout_weight="0.33"
                                     android:layout_height="fill_parent"
-                                    android:gravity="bottom"
                                     android:layout_marginLeft="5sp"
                                     android:layout_marginRight="5sp"
+                                    android:layout_weight="0.33"
+                                    android:gravity="bottom"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -344,8 +317,8 @@
 
                                     <TextView
                                         android:layout_width="0sp"
-                                        android:layout_weight="1"
                                         android:layout_height="wrap_content"
+                                        android:layout_weight="1"
                                         android:text="@string/latest_update"
                                         android:textColor="@color/text_primary"
                                         android:textSize="@dimen/card_header" />
@@ -491,31 +464,31 @@
                 </android.support.v7.widget.CardView>
 
                 <LinearLayout
+                    android:id="@+id/app_detail_uninstall_wrapper"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="10sp"
-                    android:id="@+id/app_detail_uninstall_wrapper"
-                    android:gravity="center">
+                    android:padding="10sp">
 
                     <ImageView
                         android:layout_width="@dimen/button_flat_icon_large"
                         android:layout_height="@dimen/button_flat_icon_large"
-                        android:src="@mipmap/ic_highlight_remove_black_48dp"/>
+                        android:src="@mipmap/ic_highlight_remove_black_48dp" />
 
                     <TextView
                         android:id="@+id/app_detail_uninstall_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/button_flat_header"
                         android:layout_marginTop="5sp"
-                        android:textSize="@dimen/button_flat_text_primary"/>
+                        android:textColor="@color/button_flat_header"
+                        android:textSize="@dimen/button_flat_text_primary" />
                 </LinearLayout>
 
             </LinearLayout>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 </LinearLayout>

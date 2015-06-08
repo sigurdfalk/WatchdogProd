@@ -96,7 +96,6 @@ public class PrivacyScoreCalculator {
         return finalScore;
     }
 
-    // http://math.stackexchange.com/questions/57429/functions-similar-to-log-but-with-results-between-0-and-1
     private double hyperbolicTan(double rawScore) {
         return 1 - (2 / (Math.pow(Math.E, 2 * rawScore) + 1));
     }
@@ -119,8 +118,6 @@ public class PrivacyScoreCalculator {
         return output;
     }
 
-    // http://en.wikipedia.org/wiki/Logistic_function
-    // plot y = 1.0 / (1.0 + e^(-0.08*(x - 60))) for x from 0 to 371
     private double logisticFunction(double input) {
         final double L = 100.0; // max output value
         final double X0 = 35.0; // curve midpoint
@@ -131,7 +128,6 @@ public class PrivacyScoreCalculator {
         return output;
     }
 
-    // http://en.wikipedia.org/wiki/Generalised_logistic_function
     private double generalLogisticFunction(double input) {
         final double A = 0;
         final double K = 1;
@@ -140,7 +136,7 @@ public class PrivacyScoreCalculator {
         final double Q = 1;
         final double M = 3;
 
-        double output = A + ((K-A)/(Math.pow(1 + (Q * Math.pow(Math.E, -B * (input - M))), 1 / v)));
+        double output = A + ((K - A) / (Math.pow(1 + (Q * Math.pow(Math.E, -B * (input - M))), 1 / v)));
 
         return output;
     }
@@ -194,7 +190,6 @@ public class PrivacyScoreCalculator {
         }
 
         for (PermissionDescription permission : permissions) {
-            //double weight = getPermissionWeight(permission, answers, facts);
             double weight = getPermissionWeightSigmoid(permission, answers, facts);
             permissionWeights.put(permission, weight);
         }
@@ -234,7 +229,6 @@ public class PrivacyScoreCalculator {
         }
 
         double weight = answerSum / matchingAnswers.size();
-        System.out.println(matchingFact.getPermissions()[0] + " weight: " + weight);
 
         return weight;
     }
@@ -284,7 +278,6 @@ public class PrivacyScoreCalculator {
             }
         }
 
-        System.out.println(fact.getPermissions()[0] + " answers: " + matchingAnswers.size());
         return matchingAnswers;
     }
 

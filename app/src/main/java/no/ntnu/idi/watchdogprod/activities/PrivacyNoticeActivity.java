@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import no.ntnu.idi.watchdogprod.views.InteractiveScrollView;
 import no.ntnu.idi.watchdogprod.MainActivity;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.views.InteractiveScrollView;
 
 /**
  * Created by sigurdhf on 16.03.2015.
@@ -75,8 +75,7 @@ public class PrivacyNoticeActivity extends Activity {
                 text.append('\n');
             }
             br.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //ToDo implement error handling
         }
 

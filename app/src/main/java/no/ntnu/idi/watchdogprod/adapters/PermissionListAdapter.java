@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import no.ntnu.idi.watchdogprod.R;
 import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
-import no.ntnu.idi.watchdogprod.R;
 
 /**
  * Created by sigurdhf on 09.03.2015.

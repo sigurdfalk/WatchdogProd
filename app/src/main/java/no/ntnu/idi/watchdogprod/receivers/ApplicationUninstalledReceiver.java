@@ -25,26 +25,23 @@ public class ApplicationUninstalledReceiver extends BroadcastReceiver {
         profileDataSource.open();
 
         ProfileEvent profileEvent = profileDataSource.getSpecificEventForApp(Profile.INSTALLED_DANGEROUS_APP, packageName);
-        if(profileEvent != null) {
+        if (profileEvent != null) {
             String riskScore = profileEvent.getValue();
             long id = profileDataSource.insertEvent(packageName, Profile.UNINSTALLED_DANGEROUS_APP, riskScore);
-            if(id != -1) {
-                System.out.println("UNINSTALL APP DB ER GOOD" + packageName + " SCORE: " + riskScore);
-            }
         } else {
-            System.out.println("APP UNINSTALL ER NULL I DB" + packageName);
+            System.out.println("Not found in database: " + packageName);
         }
 
         long deletedFromInstalled = profileDataSource.deleteEvent(Profile.INSTALLED_DANGEROUS_APP, packageName);
 
-        if(deletedFromInstalled == 0) {
-            System.out.println("NO APPS DELETED");
+        if (deletedFromInstalled == 0) {
+            System.out.println("No applications deleted");
         }
-        if(deletedFromInstalled == 1) {
-            System.out.println("APP DELETED");
+        if (deletedFromInstalled == 1) {
+            System.out.println("Application deleted");
         }
-        if(deletedFromInstalled > 1) {
-            System.out.println("SEVERAL APPS DELETED");
+        if (deletedFromInstalled > 1) {
+            System.out.println("Several applications deleted");
         }
 
         profileDataSource.close();

@@ -15,11 +15,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.R;
-import no.ntnu.idi.watchdogprod.domain.Rule;
 import no.ntnu.idi.watchdogprod.adapters.RuleListAdapter;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.domain.Rule;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 
 /**
  * Created by sigurdhf on 09.03.2015.

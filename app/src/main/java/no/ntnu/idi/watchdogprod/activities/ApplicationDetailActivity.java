@@ -45,23 +45,18 @@ import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
  */
 public class ApplicationDetailActivity extends ActionBarActivity {
     public static final String FROM_NOTIFICATION = "fromNotification";
-
+    public static String APP_DELETED_INTENT_KEY = "deletedPackage";
     private String applicationPackageName;
     private ExtendedPackageInfo packageInfo;
-
     private ApplicationHelperSingleton applicationHelperSingleton;
     private PrivacyScoreCalculator privacyScoreCalculator;
-
     private View permissionFactWrapper;
     private TextView infoHeader;
     private TextView infoFact;
     private int currentPermissionFact;
     private LinearLayout uninstall;
-
     private String deletedAppPackage;
     private int APP_DELETE_CODE = 2015;
-    public static String APP_DELETED_INTENT_KEY = "deletedPackage";
-
     private AnswersDataSource answersDataSource;
 
     private double riskScore;
@@ -357,7 +352,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     public void onRadioButtonClicked(View view) {
-        System.out.println("onRadioButtonClicked");
 
         switch (view.getId()) {
             case R.id.permission_fact_radio_happy:
@@ -428,7 +422,6 @@ public class ApplicationDetailActivity extends ActionBarActivity {
     }
 
     private void writePermissionFactInteraction(int answer) {
-        System.out.println("writePermissionFactInteraction");
         PermissionFact fact = packageInfo.getPermissionFacts().get(currentPermissionFact);
 
         try {

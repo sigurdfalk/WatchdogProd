@@ -3,14 +3,9 @@ package no.ntnu.idi.watchdogprod.privacyProfile;
 import android.content.Context;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import no.ntnu.idi.watchdogprod.domain.Answer;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
@@ -23,15 +18,8 @@ import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
  * Created by sigurdhf on 20.03.2015.
  */
 public class Profile {
-    public static final String DID_READ_EULA = "didReadEULA";
-    public static final String DID_NOT_READ_EULA = "didNotReadEULA";
     public static final String INSTALLED_DANGEROUS_APP = "installedDangerousApp";
     public static final String UNINSTALLED_DANGEROUS_APP = "uninstalledDangerousApp";
-    public static final String CHANGED_SCREEN_LOCK = "changedScreenLock";
-    public static final String UNDERSTANDING_OF_PERMISSIONS = "understandingOfPermissions";
-    public static final String INTEREST_IN_PRIVACY = "interestInPrivacy";
-    public static final String UTILITY_OVER_PRIVACY = "utilityOverPrivacy";
-    public static final String CONCERNED_FOR_LEAKS = "concernedForLeaks";
     public static final String AVG_INSTALLS_VALUE = "averageInstallValue";
     public static final String AVG_UNINSTALL_VALUE = "averageUninstallValue";
 
@@ -45,33 +33,14 @@ public class Profile {
     public static final String BEHAVIOR_INSTALLED_APPS = "behaviorInstalledApps";
     public static final String BEHAVIOR_HARMONY_APPS = "behaviorHarmonyApps";
 
-    private double understandingOfPermissions;
-    private double interestInPrivacy;
-    private double utilityOverPrivacy;
-    private double concernedForLeaks;
+
     private int installTrendRiskIncreasing;
     private int uninstallTrendRiskIncreasing;
     private ArrayList<String> disharmonyApps;
-    private ArrayList<String> installedApps;
 
     private ApplicationHelperSingleton applicationHelperSingleton;
 
-    public Profile() {
-        this.understandingOfPermissions = 3.0;
-        this.interestInPrivacy = 5.0;
-        this.concernedForLeaks = 5.0;
-        this.utilityOverPrivacy = 3.0;
-    }
-
-    public Profile(double understandingOfPermissions, double interestInPrivacy, double utilityOverPrivacy, double concernedForLeaks) {
-        this.understandingOfPermissions = understandingOfPermissions;
-        this.interestInPrivacy = interestInPrivacy;
-        this.concernedForLeaks = concernedForLeaks;
-        this.utilityOverPrivacy = utilityOverPrivacy;
-    }
-
     public void createProfile(Context context) throws SQLException {
-//        double[] answers = getUserQuestions(context);
         applicationHelperSingleton = ApplicationHelperSingleton.getInstance(context);
         installTrendRiskIncreasing = getInstallTrend(getInstalledDataValues(context, Profile.INSTALLED_DANGEROUS_APP), context, Profile.AVG_INSTALLS_VALUE);
         uninstallTrendRiskIncreasing = getUninstallTrend(getInstalledDataValues(context, Profile.UNINSTALLED_DANGEROUS_APP), context, Profile.AVG_UNINSTALL_VALUE);
@@ -106,22 +75,6 @@ public class Profile {
             disharmonyApps.add(entry.getKey());
         }
         return disharmonyApps;
-    }
-
-    public boolean isInDatabase(Context context, String type, String packageName) {
-        ProfileDataSource dataSource = new ProfileDataSource(context);
-        dataSource.open();
-        boolean exists = dataSource.isInDatabase(packageName, type);
-        dataSource.close();
-        return exists;
-    }
-
-    private double[] getUserQuestions(Context context) {
-        ProfileDataSource dataSource = new ProfileDataSource(context);
-        dataSource.open();
-        double[] answers = dataSource.getUserQuestions();
-        dataSource.close();
-        return answers;
     }
 
     private double[] getInstalledDataValues(Context context, String type) {
@@ -165,8 +118,6 @@ public class Profile {
 
 
     private int getInstallTrend(double[] history, Context context, String type) {
-        System.out.println("INSTALL");
-
         double oldAvg = getOldAverage(context, type);
 
         double avg = 0;
@@ -183,7 +134,7 @@ public class Profile {
 
         avg = getAverage(history);
 
-        if(oldAvg == avg) {
+        if (oldAvg == avg) {
             if (avg >= PrivacyScoreCalculator.MEDIUM_THRESHOLD) {
                 return APP_TREND_FIXED_HIGH;
             } else {
@@ -209,8 +160,6 @@ public class Profile {
     }
 
     private int getUninstallTrend(double[] history, Context context, String type) {
-        System.out.println("UNINSTALL");
-
         double oldAvg = getOldAverage(context, type);
         double avg = 0;
 

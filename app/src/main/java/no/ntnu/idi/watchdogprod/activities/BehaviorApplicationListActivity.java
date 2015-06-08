@@ -33,13 +33,10 @@ import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
 import no.ntnu.idi.watchdogprod.sqlite.answers.AnswersDataSource;
 
 public class BehaviorApplicationListActivity extends ActionBarActivity {
+    public static int APP_DELETED_CODE = 2017;
+    ApplicationHelperSingleton applicationHelperSingleton;
     private DisharomyApplication disharomyApplication;
     private Context context;
-
-    ApplicationHelperSingleton applicationHelperSingleton;
-
-    public static int APP_DELETED_CODE = 2017;
-
     private BehaviorApplicationListAdapter adapter;
     private ListView listView;
 
@@ -96,7 +93,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         }
     }
 
-    private ArrayList<PermissionAnswerPair> createQuestionAnswerPairs (String packageName, ArrayList<Answer> answers) {
+    private ArrayList<PermissionAnswerPair> createQuestionAnswerPairs(String packageName, ArrayList<Answer> answers) {
         ArrayList<PermissionAnswerPair> questionAnswerPairs = new ArrayList<>();
         ArrayList<PermissionFact> permissionFacts = applicationHelperSingleton.getPermissionFactHelper().getPermissionFacts();
 
@@ -111,15 +108,15 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
                 }
             }
         }
-            return questionAnswerPairs;
+        return questionAnswerPairs;
     }
 
     private ArrayList<DisharomyApplication> createHarmonyApps(ArrayList<Answer> answers, ArrayList<ExtendedPackageInfo> extendedPackageInfos) {
         ArrayList<DisharomyApplication> disharomyApplications = new ArrayList<>();
 
-        for(ExtendedPackageInfo extendedPackageInfo : extendedPackageInfos) {
-            if(hasAnsweredQuestions(extendedPackageInfo, answers)) {
-                disharomyApplications.add(new DisharomyApplication(extendedPackageInfo,createQuestionAnswerPairs(extendedPackageInfo.getPackageInfo().packageName,answers)));
+        for (ExtendedPackageInfo extendedPackageInfo : extendedPackageInfos) {
+            if (hasAnsweredQuestions(extendedPackageInfo, answers)) {
+                disharomyApplications.add(new DisharomyApplication(extendedPackageInfo, createQuestionAnswerPairs(extendedPackageInfo.getPackageInfo().packageName, answers)));
             }
         }
         return disharomyApplications;
@@ -128,7 +125,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
     private boolean hasAnsweredQuestions(ExtendedPackageInfo extendedPackageInfo, ArrayList<Answer> answers) {
         for (Answer answer : answers) {
-            if(answer.getPackageName().equals(extendedPackageInfo.getPackageInfo().packageName)) {
+            if (answer.getPackageName().equals(extendedPackageInfo.getPackageInfo().packageName)) {
                 return true;
             }
         }
@@ -153,16 +150,16 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         View dialogView = inflater.inflate(R.layout.dialog_harmony_app, null);
-        LinearLayout redLayout = (LinearLayout)dialogView.findViewById(R.id.harmony_dialog_color_red);
+        LinearLayout redLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_red);
         LinearLayout yellowLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_yellow);
         LinearLayout greenLayout = (LinearLayout) dialogView.findViewById(R.id.harmony_dialog_color_green);
 
-        TextView haromy_dialog_feedback_title = (TextView)dialogView.findViewById(R.id.haromy_dialog_feedback);
-        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " til " + applicationHelperSingleton.getApplicationName(context,disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "s tillatelser:");
+        TextView haromy_dialog_feedback_title = (TextView) dialogView.findViewById(R.id.haromy_dialog_feedback);
+        haromy_dialog_feedback_title.setText(getResources().getString(R.string.harmony_dialog_feedback_text) + " til " + applicationHelperSingleton.getApplicationName(context, disharomyApplication.getExtendedPackageInfo().getPackageInfo()) + "s tillatelser:");
 
-        TextView redPermissions =(TextView) dialogView.findViewById(R.id.red_permissions);
-        TextView yellowPermissions =(TextView) dialogView.findViewById(R.id.yellow_permissions);
-        TextView greenPermissions =(TextView) dialogView.findViewById(R.id.green_permissions);
+        TextView redPermissions = (TextView) dialogView.findViewById(R.id.red_permissions);
+        TextView yellowPermissions = (TextView) dialogView.findViewById(R.id.yellow_permissions);
+        TextView greenPermissions = (TextView) dialogView.findViewById(R.id.green_permissions);
 
         ArrayList<PermissionAnswerPair> permissionAnswerPairs = disharomyApplication.getQuestionAnswerPairs();
 
@@ -170,16 +167,16 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
         StringBuilder yellowPermissionsList = new StringBuilder();
         StringBuilder greenPermissionsList = new StringBuilder();
 
-        for(PermissionAnswerPair permissionAnswerPair : permissionAnswerPairs) {
-            if(permissionAnswerPair.getAnswer() == Answer.ANSWER_SAD) {
+        for (PermissionAnswerPair permissionAnswerPair : permissionAnswerPairs) {
+            if (permissionAnswerPair.getAnswer() == Answer.ANSWER_SAD) {
                 redLayout.setVisibility(View.VISIBLE);
-                redPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation() +"\n");
-            } else if(permissionAnswerPair.getAnswer() == Answer.ANSWER_NEUTRAL) {
+                redPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation() + "\n");
+            } else if (permissionAnswerPair.getAnswer() == Answer.ANSWER_NEUTRAL) {
                 yellowLayout.setVisibility(View.VISIBLE);
-                yellowPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation()+"\n");
-            } else if(permissionAnswerPair.getAnswer() == Answer.ANSWER_HAPPY) {
+                yellowPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation() + "\n");
+            } else if (permissionAnswerPair.getAnswer() == Answer.ANSWER_HAPPY) {
                 greenLayout.setVisibility(View.VISIBLE);
-                greenPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation()+"\n");
+                greenPermissionsList.append("- " + permissionAnswerPair.getPermissionDesignation() + "\n");
             }
         }
 
@@ -218,7 +215,7 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
 
             String deletedPackage = "";
 
-            if(data != null) {
+            if (data != null) {
                 deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
 
                 if (!deletedPackage.equals("")) {
@@ -232,8 +229,8 @@ public class BehaviorApplicationListActivity extends ActionBarActivity {
     }
 
     public void removeApplication(String deletedPackageName) {
-        for(DisharomyApplication disharomyApplication : disharomyApplications) {
-            if(disharomyApplication.getExtendedPackageInfo().getPackageInfo().packageName.equals(deletedPackageName)) {
+        for (DisharomyApplication disharomyApplication : disharomyApplications) {
+            if (disharomyApplication.getExtendedPackageInfo().getPackageInfo().packageName.equals(deletedPackageName)) {
                 disharomyApplications.remove(disharomyApplication);
                 break;
             }

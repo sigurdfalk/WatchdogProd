@@ -48,6 +48,14 @@ public class ApplicationHelperSingleton {
         return instance;
     }
 
+    public static String getApplicationName(Context context, PackageInfo packageInfo) {
+        return context.getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
+    }
+
+    public static PackageInfo getApplicationPackageInfo(Context context, String packageName) throws PackageManager.NameNotFoundException {
+        return context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
+    }
+
     private void initializeInstance() {
         List<PackageInfo> allApplications = context.getPackageManager().getInstalledPackages(PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
         ApplicationUpdatesDataSource dataSource = new ApplicationUpdatesDataSource(context);
@@ -81,8 +89,8 @@ public class ApplicationHelperSingleton {
     }
 
     public void removeApplication(String packageName) {
-        for(ExtendedPackageInfo extendedPackageInfo : applications) {
-            if(extendedPackageInfo.getPackageInfo().packageName.equals(packageName)) {
+        for (ExtendedPackageInfo extendedPackageInfo : applications) {
+            if (extendedPackageInfo.getPackageInfo().packageName.equals(packageName)) {
                 applications.remove(extendedPackageInfo);
                 return;
             }
@@ -130,13 +138,5 @@ public class ApplicationHelperSingleton {
     public void updateInstance() {
         applications.clear();
         initializeInstance();
-    }
-
-    public static String getApplicationName(Context context, PackageInfo packageInfo) {
-        return context.getPackageManager().getApplicationLabel(packageInfo.applicationInfo).toString();
-    }
-
-    public static PackageInfo getApplicationPackageInfo(Context context, String packageName) throws PackageManager.NameNotFoundException {
-        return context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA | PackageManager.GET_PERMISSIONS);
     }
 }

@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ListView
+        android:id="@+id/rule_violations_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/rule_violations_list"/>
+        android:layout_height="fill_parent" />
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:id="@+id/rule_violations_empty"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:id="@+id/rule_violations_empty">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="@dimen/button_flat_icon_large"
             android:layout_height="@dimen/button_flat_icon_large"
+            android:layout_marginBottom="5sp"
             android:src="@mipmap/ic_emoticon_happy_white_48dp"
-            android:tint="@color/button_flat_icon_tint"
-            android:layout_marginBottom="5sp"/>
+            android:tint="@color/button_flat_icon_tint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_app_risk_indikators"
+            android:layout_marginBottom="5sp"
             android:gravity="center"
-            android:textSize="@dimen/button_flat_header"
+            android:text="@string/no_app_risk_indikators"
             android:textColor="@color/button_flat_header"
-            android:layout_marginBottom="5sp"/>
+            android:textSize="@dimen/button_flat_header" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/button_flat_text"
                 android:text="@string/for_more_risk_indicator_info_touch"
-                android:textSize="@dimen/button_flat_text_primary"/>
+                android:textColor="@color/button_flat_text"
+                android:textSize="@dimen/button_flat_text_primary" />
 
             <ImageView
                 android:layout_width="@dimen/button_flat_icon_match_text_primary"
                 android:layout_height="@dimen/button_flat_icon_match_text_primary"
-                android:src="@mipmap/ic_info_outline_white_48dp"
                 android:layout_marginLeft="5sp"
-                android:tint="@color/button_flat_icon_tint"/>
+                android:src="@mipmap/ic_info_outline_white_48dp"
+                android:tint="@color/button_flat_icon_tint" />
 
         </LinearLayout>
     </LinearLayout>

@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,8 +45,8 @@ public class ProfileDataSource {
     }
 
     public boolean isInDatabase(String packageName, String type) {
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=? AND package=?", new String[]{type, packageName}, null,null,null);
-        return cursor.getCount() > 0? true: false;
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=? AND package=?", new String[]{type, packageName}, null, null, null);
+        return cursor.getCount() > 0 ? true : false;
     }
 
     public double[] getInstallData(String type) {
@@ -55,13 +54,13 @@ public class ProfileDataSource {
         int counter = 0;
         Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{type}, null, null, "_id DESC");
         cursor.moveToFirst();
-        if(cursor.getCount() > 10) {
+        if (cursor.getCount() > 10) {
             appValues = new double[10];
         } else {
             appValues = new double[cursor.getCount()];
         }
 
-        while (!cursor.isAfterLast() && counter <10) {
+        while (!cursor.isAfterLast() && counter < 10) {
             appValues[counter++] = Double.parseDouble(cursor.getString(3));
             cursor.moveToNext();
         }
@@ -71,7 +70,7 @@ public class ProfileDataSource {
 
     public ArrayList<ProfileEvent> getInstalledApps() {
         ArrayList<ProfileEvent> profileEvents = new ArrayList<>();
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null,null);
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{Profile.INSTALLED_DANGEROUS_APP}, null, null, null);
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -83,7 +82,7 @@ public class ProfileDataSource {
     }
 
     public ProfileEvent getSpecificEvent(String eventType) {
-        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{eventType}, null, null,"_id DESC");
+        Cursor cursor = db.query(ProfileSQLiteOpenHelper.TABLE_PROFILE_EVENT, allColumns, "event=?", new String[]{eventType}, null, null, "_id DESC");
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             return new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
@@ -98,7 +97,7 @@ public class ProfileDataSource {
             cursor.moveToFirst();
             profileEvent = new ProfileEvent(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         } else {
-            System.out.println("FLERE ELEMENTER AV SAMME APP I INSTALL DB, RETURNERTE NULL");
+            System.out.println("Returned null");
         }
         return profileEvent;
     }

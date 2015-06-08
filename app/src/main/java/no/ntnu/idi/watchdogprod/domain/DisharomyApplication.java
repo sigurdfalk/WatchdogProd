@@ -24,8 +24,8 @@ public class DisharomyApplication {
 
     public int getCount(int answerType) {
         int count = 0;
-        for(PermissionAnswerPair permissionAnswerPair : questionAnswerPairs) {
-            if(permissionAnswerPair.getAnswer() == answerType) {
+        for (PermissionAnswerPair permissionAnswerPair : questionAnswerPairs) {
+            if (permissionAnswerPair.getAnswer() == answerType) {
                 count++;
             }
         }

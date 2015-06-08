@@ -1,17 +1,12 @@
 package no.ntnu.idi.watchdogprod;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Method;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import no.ntnu.idi.watchdogprod.activities.ApplicationListActivity;
+import no.ntnu.idi.watchdogprod.activities.BehaviorApplicationListActivity;
+import no.ntnu.idi.watchdogprod.activities.PermissionListActivity;
 import no.ntnu.idi.watchdogprod.domain.AppInfo;
 import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
 import no.ntnu.idi.watchdogprod.domain.ProfileEvent;
@@ -36,9 +33,6 @@ import no.ntnu.idi.watchdogprod.helpers.PermissionHelperSingleton;
 import no.ntnu.idi.watchdogprod.privacyProfile.PrivacyScoreCalculator;
 import no.ntnu.idi.watchdogprod.privacyProfile.Profile;
 import no.ntnu.idi.watchdogprod.sqlite.applicationupdates.ApplicationUpdatesDataSource;
-import no.ntnu.idi.watchdogprod.services.DataUsagePosterService;
-import no.ntnu.idi.watchdogprod.services.DataUsageService;
-import no.ntnu.idi.watchdogprod.activities.*;
 import no.ntnu.idi.watchdogprod.sqlite.profile.ProfileDataSource;
 
 
@@ -103,25 +97,9 @@ public class MainActivity extends ActionBarActivity {
                 root.startAnimation(animation);
             }
         });
-
-        boolean answeredQuestions = checkAnsweredQuestionsState();
-        if (!answeredQuestions) {
-//            Intent intent = new Intent(MainActivity.this, UserQuestionActivity.class);
-//            startActivity(intent);
-        }
-
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.main_tips);
-        if (!isScreenLockActivated()) {
-            //TODO LAGRE I SHARED OR VISE SJELDENT ?
-            linearLayout.setVisibility(View.VISIBLE);
-        }
-
     }
 
     private void initProfile(Context context) throws SQLException {
-        //TODO FRA DB: EULA LEST/IKKE LEST - BESVARELSE PÅ SPØRSMÅL - EVENTS - TILBAKEMELDINGER PÅ FRA APPANALYSE
-        //TODO INIT PROFILE PÅ ONRESUME OGSÅ
-
         setTotalRiskScore();
 
         profile = new Profile();
@@ -160,8 +138,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void writeInstalledApplicationsToProfileDb() {
-        //TODO LAGRE APPER MED PERMISSIONS, IKKE RISIKOFAKTOR
-
         ProfileDataSource profileDataSource = new ProfileDataSource(this);
         profileDataSource.open();
 
@@ -178,7 +154,7 @@ public class MainActivity extends ActionBarActivity {
             if (!found) {
                 long id = profileDataSource.insertEvent(extendedPackageInfo.getPackageInfo().packageName, Profile.INSTALLED_DANGEROUS_APP, Double.toString(extendedPackageInfo.getPrivacyScore()));
                 if (id != -1) {
-                    System.out.println("INSTALL APP DB ER GOOD " + extendedPackageInfo.getPackageInfo().packageName + " SCORE: " + Double.toString(extendedPackageInfo.getPrivacyScore()));
+                    System.out.println("Application added to database: " + extendedPackageInfo.getPackageInfo().packageName);
                 }
             }
             found = false;
@@ -191,7 +167,7 @@ public class MainActivity extends ActionBarActivity {
         dataSource.open();
 
         for (ExtendedPackageInfo app : applicationHelperSingleton.getApplications()) {
-                AppInfo appInfo = dataSource.insertApplicationUpdate(app.getPackageInfo());
+            AppInfo appInfo = dataSource.insertApplicationUpdate(app.getPackageInfo());
         }
 
         dataSource.close();
@@ -232,7 +208,6 @@ public class MainActivity extends ActionBarActivity {
         installLayout.setOnClickListener(new MainButtonListener());
 
         int installTrend = profile.getInstallTrendRiskIncreasing();
-        System.out.println("IN TREND " + installTrend);
 
         backgroundColor = (LinearLayout) findViewById(R.id.card_background_install_trend);
         cardText = (TextView) findViewById(R.id.main_card_installtrend_text);
@@ -241,7 +216,6 @@ public class MainActivity extends ActionBarActivity {
         if (installTrend == Profile.APP_TREND_NEUTRAL) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_install_trend_neutral));
-//            cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_neutral_black_36dp));
         } else if (installTrend == Profile.APP_TREND_INCREASING) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_red));
             cardText.setText(getResources().getString(R.string.card_install_trend_positive));
@@ -264,7 +238,6 @@ public class MainActivity extends ActionBarActivity {
     private void createUninstallTrendCard() {
 
         int uninstallTrend = profile.getUninstallTrendRiskIncreasing();
-        System.out.println("UN TREND " + uninstallTrend);
 
         backgroundColor = (LinearLayout) findViewById(R.id.card_background_uninstall_trend);
         cardText = (TextView) findViewById(R.id.main_card_uninstalltrend_text);
@@ -274,7 +247,7 @@ public class MainActivity extends ActionBarActivity {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText(getResources().getString(R.string.card_uninstall_trend_positive));
             cardImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_trending_down_grey600_24dp));
-        } else if(uninstallTrend == Profile.APP_TREND_FIXED_HIGH) {
+        } else if (uninstallTrend == Profile.APP_TREND_FIXED_HIGH) {
             backgroundColor.setBackgroundColor(getResources().getColor(R.color.risk_green));
             cardText.setText("Det har den siste tiden blitt avinstallert flere apper med høy risikofaktor.");
             cardImage.setImageDrawable(getResources().getDrawable(R.mipmap.ic_trending_down_black_48dp));
@@ -306,19 +279,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void createHarmonyCard() {
-        //TODO sjekke om appen er sletta
-
         ArrayList<String> disharmonyApps = profile.getDisharmonyApps();
 
         int installedCount = 0;
 
-        for(ExtendedPackageInfo extendedPackageInfo : applicationHelperSingleton.getApplications()) {
-            if(disharmonyApps.contains(extendedPackageInfo.getPackageInfo().packageName)){
+        for (ExtendedPackageInfo extendedPackageInfo : applicationHelperSingleton.getApplications()) {
+            if (disharmonyApps.contains(extendedPackageInfo.getPackageInfo().packageName)) {
                 installedCount++;
             }
         }
 
-        if(installedCount > 0) {
+        if (installedCount > 0) {
             LinearLayout harmonyLayout = (LinearLayout) findViewById(R.id.main_card_harmony_layout);
             harmonyLayout.setOnClickListener(new MainButtonListener());
         }
@@ -385,92 +356,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public boolean checkAnsweredQuestionsState() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        return settings.getBoolean("answeredQuestions", false);
-    }
-
-    private boolean isScreenLockActivated() {
-        String LOCKSCREEN_UTILS = "com.android.internal.widget.LockPatternUtils";
-        try {
-            Class<?> lockUtilsClass = Class.forName(LOCKSCREEN_UTILS);
-            Object lockUtils = lockUtilsClass.getConstructor(Context.class).newInstance(this);
-
-            Method method = lockUtilsClass.getMethod("getActivePasswordQuality");
-
-            int lockProtectionLevel = Integer.valueOf(String.valueOf(method.invoke(lockUtils)));
-
-            if (lockProtectionLevel >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("reflectInternalUtils", "ex:" + e);
-        }
-        return false;
-    }
-
-    private void setDataUsageSendingAlarm() {
-
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), DataUsageService.class);
-        intent.putExtra("dataUsageSendingAlarm", true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 1234, intent, 0);
-        try {
-            alarmManager.cancel(pendingIntent);
-        } catch (Exception e) {
-
-        }
-        int timeForAlarm = 5000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
-    }
-
-    private void setDatabaseLoggingAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), DataUsagePosterService.class);
-        intent.putExtra("databaseLoggingAlarm", true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 8888, intent, 0);
-        try {
-            alarmManager.cancel(pendingIntent);
-        } catch (Exception e) {
-
-        }
-//        long timeForAlarm = AlarmManager.INTERVAL_HOUR;
-        long timeForAlarm = 20000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + timeForAlarm, timeForAlarm, pendingIntent);
-    }
-
-    private class MainButtonListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.main_apps_btn) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                startActivity(i);
-            } else if (v.getId() == R.id.main_permissions_btn) {
-                Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
-                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelperSingleton.ALL_PERMISSIONS_KEY);
-                startActivity(i);
-            } else if (v.getId() == R.id.main_card_harmony_layout) {
-                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
-                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_HARMONY_APPS);
-                startActivity(i);
-            } else if(v.getId() == R.id.main_card_update_layout) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                startActivity(i);
-            } else if(v.getId() == R.id.main_card_threatlevel_layout) {
-                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
-                startActivity(i);
-            } else if(v.getId() == R.id.main_card_installtrend_layout) {
-                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
-                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_INSTALLED_APPS);
-            }
-        }
-
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -500,5 +387,34 @@ public class MainActivity extends ActionBarActivity {
 
         builder.create();
         builder.show();
+    }
+
+    private class MainButtonListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.main_apps_btn) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if (v.getId() == R.id.main_permissions_btn) {
+                Intent i = new Intent(MainActivity.this, PermissionListActivity.class);
+                i.putExtra(ApplicationListActivity.PACKAGE_NAME, PermissionHelperSingleton.ALL_PERMISSIONS_KEY);
+                startActivity(i);
+            } else if (v.getId() == R.id.main_card_harmony_layout) {
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_HARMONY_APPS);
+                startActivity(i);
+            } else if (v.getId() == R.id.main_card_update_layout) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if (v.getId() == R.id.main_card_threatlevel_layout) {
+                Intent i = new Intent(MainActivity.this, ApplicationListActivity.class);
+                startActivity(i);
+            } else if (v.getId() == R.id.main_card_installtrend_layout) {
+                Intent i = new Intent(MainActivity.this, BehaviorApplicationListActivity.class);
+                i.putExtra(Profile.BEHAVIOR_APPS_KEY, Profile.BEHAVIOR_INSTALLED_APPS);
+            }
+        }
+
     }
 }

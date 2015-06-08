@@ -18,10 +18,10 @@ public class ApplicationUpdatesDataSource {
     private SQLiteDatabase db;
     private ApplicationUpdatesSQLiteHelper dbHelper;
     private String[] allColumns = {ApplicationUpdatesSQLiteHelper.COLUMN_ID,
-        ApplicationUpdatesSQLiteHelper.COLUMN_PACKAGE_NAME,
-        ApplicationUpdatesSQLiteHelper.COLUMN_PERMISSIONS,
-        ApplicationUpdatesSQLiteHelper.COLUMN_VERSION_CODE,
-        ApplicationUpdatesSQLiteHelper.COLUMN_LAST_UPDATE_TIME};
+            ApplicationUpdatesSQLiteHelper.COLUMN_PACKAGE_NAME,
+            ApplicationUpdatesSQLiteHelper.COLUMN_PERMISSIONS,
+            ApplicationUpdatesSQLiteHelper.COLUMN_VERSION_CODE,
+            ApplicationUpdatesSQLiteHelper.COLUMN_LAST_UPDATE_TIME};
 
     public ApplicationUpdatesDataSource(Context context) {
         dbHelper = new ApplicationUpdatesSQLiteHelper(context);

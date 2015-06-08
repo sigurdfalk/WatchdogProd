@@ -187,7 +187,7 @@ public class ApplicationListActivity extends ActionBarActivity {
 
             String deletedPackage = "";
 
-            if(data != null) {
+            if (data != null) {
                 deletedPackage = data.getExtras().getString(ApplicationDetailActivity.APP_DELETED_INTENT_KEY, "");
 
                 if (!deletedPackage.equals("")) {

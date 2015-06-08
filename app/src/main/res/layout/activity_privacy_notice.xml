@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_terms_of_use"
-        android:textSize="25sp"
         android:gravity="center"
-        android:padding="10sp"/>
+        android:padding="10sp"
+        android:text="@string/app_terms_of_use"
+        android:textSize="25sp" />
 
     <no.ntnu.idi.watchdogprod.views.InteractiveScrollView
+        android:id="@+id/privacy_notice_scrollView"
         android:layout_width="fill_parent"
         android:layout_height="0sp"
-        android:layout_weight="1"
-        android:background="@color/white"
         android:layout_margin="6sp"
-        android:id="@+id/privacy_notice_scrollView">
+        android:layout_weight="1"
+        android:background="@color/white">
 
         <TextView
+            android:id="@+id/privacy_notice_text"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="slkdhflkjashflkjahsdfkljahsdf"
-            android:textColor="@color/black"
             android:padding="5sp"
-            android:id="@+id/privacy_notice_text"/>
+            android:text="slkdhflkjashflkjahsdfkljahsdf"
+            android:textColor="@color/black" />
     </no.ntnu.idi.watchdogprod.views.InteractiveScrollView>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="5sp">
+        android:layout_margin="5sp"
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/privacy_notice_decline"
             android:layout_width="0sp"
-            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:text="@string/decline"
-            android:id="@+id/privacy_notice_decline"/>
+            android:layout_weight="0.5"
+            android:text="@string/decline" />
 
         <Button
+            android:id="@+id/privacy_notice_accept"
             android:layout_width="0sp"
-            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:text="@string/accept"
-            android:id="@+id/privacy_notice_accept"/>
+            android:layout_weight="0.5"
+            android:text="@string/accept" />
 
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -26,14 +26,6 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
         this.privacyScore = privacyScoreCalculator.calculatePrivacyScore(this);
     }
 
-    public void setPrivacyScore(double privacyScore) {
-        this.privacyScore = privacyScore;
-    }
-
-    public void setUpdateLog(ArrayList<AppInfo> updateLog) {
-        this.updateLog = updateLog;
-    }
-
     public PackageInfo getPackageInfo() {
         return packageInfo;
     }
@@ -54,8 +46,16 @@ public class ExtendedPackageInfo implements Comparable<ExtendedPackageInfo> {
         return updateLog;
     }
 
+    public void setUpdateLog(ArrayList<AppInfo> updateLog) {
+        this.updateLog = updateLog;
+    }
+
     public double getPrivacyScore() {
         return privacyScore;
+    }
+
+    public void setPrivacyScore(double privacyScore) {
+        this.privacyScore = privacyScore;
     }
 
     @Override

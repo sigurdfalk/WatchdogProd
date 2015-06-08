@@ -15,12 +15,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
-import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
-import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
-import no.ntnu.idi.watchdogprod.helpers.PermissionHelperSingleton;
-import no.ntnu.idi.watchdogprod.adapters.PermissionListAdapter;
 import no.ntnu.idi.watchdogprod.R;
+import no.ntnu.idi.watchdogprod.adapters.PermissionListAdapter;
+import no.ntnu.idi.watchdogprod.domain.ExtendedPackageInfo;
+import no.ntnu.idi.watchdogprod.domain.PermissionDescription;
+import no.ntnu.idi.watchdogprod.helpers.ApplicationHelperSingleton;
+import no.ntnu.idi.watchdogprod.helpers.PermissionHelperSingleton;
 
 /**
  * Created by sigurdhf on 09.03.2015.
@@ -42,11 +42,11 @@ public class PermissionListActivity extends ActionBarActivity {
         View emptyView = findViewById(R.id.list_item_permissions_empty);
         listView.setEmptyView(emptyView);
 
-        if(applicationPackageName.equals(PermissionHelperSingleton.ALL_PERMISSIONS_KEY)) {
+        if (applicationPackageName.equals(PermissionHelperSingleton.ALL_PERMISSIONS_KEY)) {
 
             ArrayList<PermissionDescription> permissionDescriptions = applicationHelperSingleton.getPermissionHelper().getPermissionDescriptions();
             Collections.sort(permissionDescriptions);
-            PermissionListAdapter adapter = new PermissionListAdapter(this,permissionDescriptions);
+            PermissionListAdapter adapter = new PermissionListAdapter(this, permissionDescriptions);
             listView.setAdapter(adapter);
 
         } else {
